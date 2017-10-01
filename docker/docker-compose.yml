@@ -1,0 +1,10 @@
+version: '3'
+services:
+    node:
+      build: ./node
+      working_dir: /var/www/FindMyFriends
+      command: "yarn start"
+      volumes:
+          - ./..:/var/www/FindMyFriends
+      ports:
+        - 3000:3000
