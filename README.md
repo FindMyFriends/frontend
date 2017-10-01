@@ -1,1 +1,1 @@
-# Find My Friends - frontend
+# Frontend - Find My Friends
