@@ -21,7 +21,7 @@ class All extends React.Component {
 };
 
 All.propTypes = {
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };
 
 export default connect(state => state)(All);
