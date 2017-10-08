@@ -1,4 +1,5 @@
 import React from 'react';
+import BoxInList from './BoxInList';
 
 const List = ({ demands }) => {
   const loaded = demands => Object.keys(demands).length !== 0;
@@ -8,7 +9,7 @@ const List = ({ demands }) => {
   }
   return (
     <div>
-      {demands.map(demand => <ul key={demand.id}><li>{demand.general.age}</li></ul>)}
+      {demands.map(demand => <BoxInList key={demand.id} demand={demand} />)}
     </div>
   );
 };
