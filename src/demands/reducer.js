@@ -1,6 +1,6 @@
 import { RECEIVED_ALL_DEMANDS, REQUESTED_ALL_DEMANDS } from './actions';
 
-const demands = (state = {}, action) => {
+const demands = (state = [], action) => {
   const { type } = action;
   switch (type) {
     case RECEIVED_ALL_DEMANDS:
