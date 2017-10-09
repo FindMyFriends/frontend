@@ -7,7 +7,8 @@ import { single } from './../../demands/endpoints';
 
 class Single extends React.Component {
   componentDidMount() {
-    single(1)(this.props.dispatch);
+    const { dispatch, match: { params: { id } } } = this.props;
+    single(id)(dispatch);
   }
 
   render() {
