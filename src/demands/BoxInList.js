@@ -13,11 +13,9 @@ export default class BoxInList extends React.Component {
     return (
       <ul>
         {more ? this.more(demand) : this.less(demand)}
-        {
-          more
-            ? <a onClick={() => this.setState({ more: false })}>Less</a>
-            : <a onClick={() => this.setState({ more: true })}>More</a>
-        }
+        <a onClick={() => this.setState({ more: !this.state.more })}>
+          {more ? 'Less' : 'More'}
+        </a>
       </ul>
     );
   }
