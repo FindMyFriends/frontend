@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Detail = ({ demand }) => {
   if (!demand.id) {
@@ -13,6 +14,10 @@ const Detail = ({ demand }) => {
       <li>{demand.general.lastname}</li>
     </ul>
   );
+};
+
+Detail.propTypes = {
+  demand: PropTypes.object.isRequired,
 };
 
 export default Detail;
