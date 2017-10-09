@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class BoxInList extends React.Component {
   constructor(props) {
@@ -13,9 +14,14 @@ export default class BoxInList extends React.Component {
     return (
       <ul>
         {more ? this.more(demand) : this.less(demand)}
-        <a onClick={() => this.setState({ more: !this.state.more })}>
-          {more ? 'Less' : 'More'}
-        </a>
+        <li>
+          <Link to={`/demands/${demand.id}`}>Detail</Link>
+        </li>
+        <li>
+          <a onClick={() => this.setState({ more: !this.state.more })}>
+            {more ? 'Less' : 'More'}
+          </a>
+        </li>
       </ul>
     );
   }

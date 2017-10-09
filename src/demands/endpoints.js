@@ -16,6 +16,6 @@ export const single = id => {
     dispatch(requestedSingle(id));
     fetch(baseUrl(`/v1/demands/${id}`), unauthorized())
     .then(response => response.json())
-    .then(demands => dispatch(receivedSingle(id)));
+    .then(demand => dispatch(receivedSingle(id, demand)));
   };
-}
+};

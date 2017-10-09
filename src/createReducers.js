@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import demands from './demands/reducer.js';
+import { demand, demands } from './demands/reducers.js';
 
 const createReducers = combineReducers({
+  demand,
   demands,
 });
 
