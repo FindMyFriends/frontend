@@ -2,7 +2,7 @@ import React from 'react';
 import BoxInList from './BoxInList';
 
 const List = ({ demands }) => {
-  const loaded = demands => Object.keys(demands).length !== 0;
+  const loaded = demands => demands.length;
 
   if (!loaded(demands)) {
     return <h1>Loading...</h1>
