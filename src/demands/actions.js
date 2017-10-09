@@ -12,9 +12,10 @@ export const requestedAll = () => ({
   type: REQUESTED_ALL_DEMANDS,
 });
 
-export const receivedSingle = id => ({
+export const receivedSingle = (id, demand) => ({
   type: RECEIVED_SINGLE_DEMAND,
   id,
+  demand,
 });
 
 export const requestedSingle = id => ({
