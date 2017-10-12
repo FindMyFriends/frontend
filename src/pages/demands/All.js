@@ -24,4 +24,7 @@ All.propTypes = {
   dispatch: PropTypes.func,
 };
 
-export default connect(state => state)(All);
+export default connect(state => ({
+  demands: state.demands.all || [],
+  pages: state.demands.pages,
+}))(All);

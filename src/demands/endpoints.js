@@ -1,10 +1,20 @@
 import { unauthorized } from './../http/requests';
 import baseUrl from './../http/baseUrl';
-import { receivedAll, requestedAll, receivedSingle, requestedSingle } from './actions';
+import {
+  receivedAll,
+  requestedAll,
+  receivedSingle,
+  requestedSingle,
+  receivedPaginationForAll
+} from './actions';
 
 export const all = () => dispatch => {
   dispatch(requestedAll());
   fetch(baseUrl('/v1/demands'), unauthorized())
+  .then(response => {
+    dispatch(receivedPaginationForAll(response.headers.get('Link')));
+    return response;
+  })
   .then(response => response.json())
   .then(demands => dispatch(receivedAll(demands)));
 };
