@@ -1,5 +1,4 @@
-import { unauthorized } from './../http/requests';
-import baseUrl from './../http/baseUrl';
+import axios from 'axios';
 import {
   receivedAll,
   requestedAll,
@@ -10,18 +9,15 @@ import {
 
 export const all = () => dispatch => {
   dispatch(requestedAll());
-  fetch(baseUrl('/v1/demands'), unauthorized())
+  axios.get('/v1/demands')
   .then(response => {
-    dispatch(receivedPaginationForAll(response.headers.get('Link')));
-    return response;
+    dispatch(receivedPaginationForAll(response.headers['Link']));
+    dispatch(receivedAll(response.data));
   })
-  .then(response => response.json())
-  .then(demands => dispatch(receivedAll(demands)));
 };
 
 export const single = id => dispatch => {
   dispatch(requestedSingle(id));
-  fetch(baseUrl(`/v1/demands/${id}`), unauthorized())
-  .then(response => response.json())
-  .then(demand => dispatch(receivedSingle(id, demand)));
+  axios.get(`/v1/demands/${id}`)
+  .then(response => dispatch(receivedSingle(id, response.data)));
 };
