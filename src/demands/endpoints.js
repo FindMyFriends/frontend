@@ -7,11 +7,11 @@ import {
   receivedPaginationForAll
 } from './actions';
 
-export const all = () => dispatch => {
+export const all = (pagination = { page: 1, perPage: 1 }) => dispatch => {
   dispatch(requestedAll());
-  axios.get('/v1/demands')
+  axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}`)
   .then(response => {
-    dispatch(receivedPaginationForAll(response.headers['Link']));
+    dispatch(receivedPaginationForAll(response.headers['link']));
     dispatch(receivedAll(response.data));
   })
 };
