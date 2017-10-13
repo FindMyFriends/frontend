@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import List from './../../demands/List';
 import { all } from './../../demands/endpoints';
+import PaginationBasic from './../../components/PaginationBasic';
 
 class All extends React.Component {
   componentDidMount() {
@@ -13,6 +14,7 @@ class All extends React.Component {
   render() {
     return (
       <div>
+        <PaginationBasic />
         <PageHeader>All demands</PageHeader>
         <List demands={this.props.demands} />
       </div>
