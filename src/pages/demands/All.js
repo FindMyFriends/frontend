@@ -4,19 +4,38 @@ import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import List from './../../demands/List';
 import { all } from './../../demands/endpoints';
-import PaginationBasic from './../../components/PaginationBasic';
+import Pagination from './../../components/Pagination';
 
 class All extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pagination: {
+        current: 1,
+      }
+    };
+    this.onPaginationChange = this.onPaginationChange.bind(this);
+  }
+
   componentDidMount() {
     all()(this.props.dispatch);
   }
 
+  onPaginationChange(event) {
+    this.setState({
+      pagination: {
+        current: event,
+      }
+    });
+  }
+
   render() {
+    const { pagination: { current } } = this.state;
     return (
       <div>
-        <PaginationBasic />
-        <PageHeader>All demands</PageHeader>
-        <List demands={this.props.demands} />
+      <PageHeader>All demands</PageHeader>
+        {this.props.pages && <Pagination pages={this.props.pages} current={current} onChange={this.onPaginationChange} />}
+        {this.props.demands && <List demands={this.props.demands} />}
       </div>
     );
   }
