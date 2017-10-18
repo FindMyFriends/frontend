@@ -7,7 +7,7 @@ import {
   receivedPaginationForAll
 } from './actions';
 
-export const all = (pagination = { page: 1, perPage: 1 }) => dispatch => {
+export const all = (pagination = { page: 1, perPage: 20 }) => dispatch => {
   dispatch(requestedAll());
   axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}`)
   .then(response => {
