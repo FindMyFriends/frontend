@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
-import List from './../../demands/List';
+import Box from './../../demands/Box';
 import { all } from './../../demands/endpoints';
 import Pagination from './../../components/Pagination';
 
@@ -12,9 +12,11 @@ class All extends React.Component {
     this.state = {
       pagination: {
         current: 1,
-      }
+      },
+      boxes: {},
     };
     this.onPaginationChange = this.onPaginationChange.bind(this);
+    this.onListing = this.onListing.bind(this);
   }
 
   componentDidMount() {
@@ -29,13 +31,42 @@ class All extends React.Component {
     });
   }
 
+  onListing(box) {
+    const { boxes } = this.state;
+    this.setState({
+      boxes: {
+        [box]: {
+          more: boxes.hasOwnProperty(box) ? !boxes[box].more : true,
+        }
+      }
+    });
+  }
+
   render() {
-    const { pagination: { current } } = this.state;
+    const { pagination: { current }, boxes } = this.state;
     return (
       <div>
       <PageHeader>All demands</PageHeader>
-        {this.props.pages && <Pagination pages={this.props.pages} current={current} onChange={this.onPaginationChange} />}
-        {this.props.demands && <List demands={this.props.demands} />}
+        {
+          this.props.pages &&
+            <Pagination
+              pages={this.props.pages}
+              current={current}
+              onChange={this.onPaginationChange}
+            />
+        }
+        {
+          this.props.demands &&
+            this.props.demands.map(
+              demand =>
+                <Box
+                  more={boxes.hasOwnProperty(demand.id) ? boxes[demand.id].more : false}
+                  onListing={this.onListing}
+                  key={demand.id}
+                  demand={demand}
+                />
+              )
+        }
       </div>
     );
   }
