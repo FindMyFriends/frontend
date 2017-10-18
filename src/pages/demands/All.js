@@ -44,20 +44,21 @@ class All extends React.Component {
 
   render() {
     const { pagination: { current }, boxes } = this.state;
+    const { pages, demands } = this.props;
     return (
       <div>
       <PageHeader>All demands</PageHeader>
         {
-          this.props.pages &&
+          pages &&
             <Pagination
-              pages={this.props.pages}
+              pages={pages}
               current={current}
               onChange={this.onPaginationChange}
             />
         }
         {
-          this.props.demands &&
-            this.props.demands.map(
+          demands &&
+            demands.map(
               demand =>
                 <Box
                   more={boxes.hasOwnProperty(demand.id) ? boxes[demand.id].more : false}
