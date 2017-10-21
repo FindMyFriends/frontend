@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination as BootstrapPagination } from 'react-bootstrap';
 
-const Pagination = ({ pages, current, onChange }) => {
+const Pagination = ({ pages, page, onChange }) => {
   const { first, last } = pages;
   if (first.page === last.page) {
     return null;
@@ -17,14 +17,14 @@ const Pagination = ({ pages, current, onChange }) => {
         boundaryLinks
         items={parseInt(last.page)}
         maxButtons={3}
-        activePage={current}
+        activePage={page}
         onSelect={onChange} />
   );
 };
 
 Pagination.propTypes = {
   pages: PropTypes.object,
-  current: PropTypes.number,
+  page: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };
 

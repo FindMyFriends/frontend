@@ -11,7 +11,8 @@ class All extends React.Component {
     super(props);
     this.state = {
       pagination: {
-        current: 1,
+        page: 1,
+        perPage: 2,
       },
       boxes: {},
     };
@@ -20,15 +21,18 @@ class All extends React.Component {
   }
 
   componentDidMount() {
-    all()(this.props.dispatch);
+    all({ ...this.state.pagination })(this.props.dispatch);
   }
 
   onPaginationChange(event) {
     this.setState({
-      pagination: {
-        current: event,
-      }
+      pagination: Object.assign(
+        {},
+        this.state.pagination,
+        { page: event }
+      )
     });
+    all({ ...this.state.pagination })(this.props.dispatch);
   }
 
   onListing(box) {
@@ -43,7 +47,7 @@ class All extends React.Component {
   }
 
   render() {
-    const { pagination: { current }, boxes } = this.state;
+    const { pagination: { page }, boxes } = this.state;
     const { pages, demands } = this.props;
     return (
       <div>
@@ -52,7 +56,7 @@ class All extends React.Component {
           pages &&
             <Pagination
               pages={pages}
-              current={current}
+              page={page}
               onChange={this.onPaginationChange}
             />
         }
