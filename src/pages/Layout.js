@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
 
-const App = ({ children }) => (
+const Layout = ({ children }) => (
   <div>
     <Header />
     <div className="container-fluid text-center">
@@ -14,4 +15,8 @@ const App = ({ children }) => (
   </div>
 );
 
-export default App;
+Layout.propTypes = {
+  children: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+export default Layout;

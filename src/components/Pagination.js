@@ -9,22 +9,23 @@ const Pagination = ({ pages, page, onChange }) => {
   }
   return (
     <BootstrapPagination
-        prev
-        next
-        first
-        last
-        ellipsis
-        boundaryLinks
-        items={parseInt(last.page)}
-        maxButtons={3}
-        activePage={page}
-        onSelect={onChange} />
+      prev
+      next
+      first
+      last
+      ellipsis
+      boundaryLinks
+      items={parseInt(last.page, 10)}
+      maxButtons={3}
+      activePage={page}
+      onSelect={onChange}
+    />
   );
 };
 
 Pagination.propTypes = {
-  pages: PropTypes.object,
-  page: PropTypes.number,
+  pages: PropTypes.shape({ }).isRequired,
+  page: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

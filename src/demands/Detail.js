@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Detail = ({ demand }) => {
   if (!demand.id) {
-    return <h1>Loading...</h1>
+    return <h1>Loading...</h1>;
   }
   return (
     <ul>
@@ -17,7 +17,7 @@ const Detail = ({ demand }) => {
 };
 
 Detail.propTypes = {
-  demand: PropTypes.object.isRequired,
+  demand: PropTypes.shape({ general: { } }).isRequired,
 };
 
 export default Detail;

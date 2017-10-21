@@ -29,8 +29,8 @@ class All extends React.Component {
       pagination: Object.assign(
         {},
         this.state.pagination,
-        { page: event }
-      )
+        { page: event },
+      ),
     });
     all({ ...this.state.pagination })(this.props.dispatch);
   }
@@ -40,9 +40,9 @@ class All extends React.Component {
     this.setState({
       boxes: {
         [box]: {
-          more: boxes.hasOwnProperty(box) ? !boxes[box].more : true,
-        }
-      }
+          more: Object.prototype.hasOwnProperty.call(boxes, box) ? !boxes[box].more : true,
+        },
+      },
     });
   }
 
@@ -51,7 +51,7 @@ class All extends React.Component {
     const { pages, demands } = this.props;
     return (
       <div>
-      <PageHeader>All demands</PageHeader>
+        <PageHeader>All demands</PageHeader>
         {
           pages &&
             <Pagination
@@ -62,23 +62,27 @@ class All extends React.Component {
         }
         {
           demands &&
-            demands.map(
-              demand =>
-                <Box
-                  more={boxes.hasOwnProperty(demand.id) ? boxes[demand.id].more : false}
+            demands.map(demand =>
+                (<Box
+                  more={
+                    Object.prototype.hasOwnProperty.call(boxes, demand.id)
+                      ? boxes[demand.id].more
+                      : false
+                  }
                   onListing={this.onListing}
                   key={demand.id}
                   demand={demand}
-                />
-              )
+                />))
         }
       </div>
     );
   }
-};
+}
 
 All.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
+  pages: PropTypes.shape({ }).isRequired,
+  demands: PropTypes.shape({ }).isRequired,
 };
 
 export default connect(state => ({
