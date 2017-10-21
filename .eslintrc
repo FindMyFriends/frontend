@@ -7,16 +7,14 @@
     "import/no-named-as-default": 0, // Multiple exports because of Redux state and tests
     "import/prefer-default-export": 0, // Multiple exports because of Redux state and tests
     "arrow-body-style": 0,
-    "no-nested-ternary": 0, // It's nice for JSX.
-    "no-param-reassign": 0, // We love param reassignment. Naming is hard.
     "no-shadow": 0, // Shadowing is a nice language feature. Naming is hard.
     "react/jsx-filename-extension": 0, // No, JSX belongs to .js files
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
   },
   env: {
     browser: true, // because of document in tests
-  },
-  globals: {
-    "expect": true, // create-react-app tests
-    "test": true, // create-react-app tests
   }
 }

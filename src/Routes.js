@@ -7,9 +7,9 @@ import Single from './pages/demands/Single';
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path='/' component={Layout} />
-      <Route path='/demands/:id' component={Single} />
-      <Route path='/demands' component={All} />
+      <Route exact path="/" component={Layout} />
+      <Route path="/demands/:id" component={Single} />
+      <Route path="/demands" component={All} />
     </Switch>
   </BrowserRouter>
 );

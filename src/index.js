@@ -5,7 +5,7 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import Routes from './Routes';
-import createReducers from './createReducers.js';
+import createReducers from './createReducers';
 import registerServiceWorker from './registerServiceWorker';
 import './css/bootstrap.min.css';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
   <Provider store={createStore(createReducers, applyMiddleware(logger))}>
     <Routes />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 registerServiceWorker();

@@ -19,10 +19,12 @@ class Single extends React.Component {
       </div>
     );
   }
-};
+}
 
 Single.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
+  match: PropTypes.shape({ params: { } }).isRequired,
+  demand: PropTypes.shape({ }).isRequired,
 };
 
 export default connect(state => state)(Single);
