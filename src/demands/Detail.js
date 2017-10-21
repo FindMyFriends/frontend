@@ -17,7 +17,7 @@ const Detail = ({ demand }) => {
 };
 
 Detail.propTypes = {
-  demand: PropTypes.shape({ general: { } }).isRequired,
+  demand: PropTypes.shape({ general: PropTypes.shape({ }) }).isRequired,
 };
 
 export default Detail;

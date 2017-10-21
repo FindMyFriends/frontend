@@ -24,7 +24,7 @@ const Pagination = ({ pages, page, onChange }) => {
 };
 
 Pagination.propTypes = {
-  pages: PropTypes.shape({ }).isRequired,
+  pages: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };

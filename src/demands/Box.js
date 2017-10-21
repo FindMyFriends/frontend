@@ -32,7 +32,7 @@ const Box = ({ demand, more, onListing }) => {
 };
 
 Box.propTypes = {
-  demand: PropTypes.shape({ }).isRequired,
+  demand: PropTypes.object.isRequired,
   more: PropTypes.bool.isRequired,
   onListing: PropTypes.func.isRequired,
 };
