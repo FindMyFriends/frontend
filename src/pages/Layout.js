@@ -16,7 +16,7 @@ const Layout = ({ children }) => (
 );
 
 Layout.propTypes = {
-  children: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.element,
 };
 
 export default Layout;

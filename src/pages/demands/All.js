@@ -81,8 +81,8 @@ class All extends React.Component {
 
 All.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  pages: PropTypes.shape({ }).isRequired,
-  demands: PropTypes.shape({ }).isRequired,
+  pages: PropTypes.object,
+  demands: PropTypes.array,
 };
 
 export default connect(state => ({

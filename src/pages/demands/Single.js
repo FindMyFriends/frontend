@@ -23,8 +23,8 @@ class Single extends React.Component {
 
 Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  match: PropTypes.shape({ params: { } }).isRequired,
-  demand: PropTypes.shape({ }).isRequired,
+  match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
+  demand: PropTypes.object.isRequired,
 };
 
 export default connect(state => state)(Single);
