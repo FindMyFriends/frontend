@@ -1,7 +1,9 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "babel-preset-es2015": "^6.24.1",
