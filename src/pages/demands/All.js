@@ -16,18 +16,18 @@ class All extends React.Component {
       },
       boxes: {},
     };
-    this.onPaginationChange = this.onPaginationChange.bind(this);
-    this.onListing = this.onListing.bind(this);
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
+    this.handleListing = this.handleListing.bind(this);
   }
 
   componentDidMount() {
     all({ ...this.state.pagination })(this.props.dispatch);
   }
 
-  onPaginationChange(event) {
+  handlePaginationChange(event) {
     this.setState({
       pagination: Object.assign(
-        {},
+        { },
         this.state.pagination,
         { page: event },
       ),
@@ -35,7 +35,7 @@ class All extends React.Component {
     all({ ...this.state.pagination })(this.props.dispatch);
   }
 
-  onListing(box) {
+  handleListing(box) {
     const { boxes } = this.state;
     this.setState({
       boxes: {
@@ -57,7 +57,7 @@ class All extends React.Component {
             <Pagination
               pages={pages}
               page={page}
-              onChange={this.onPaginationChange}
+              onChange={this.handlePaginationChange}
             />
         }
         {
@@ -69,7 +69,7 @@ class All extends React.Component {
                       ? boxes[demand.id].more
                       : false
                   }
-                  onListing={this.onListing}
+                  onListing={this.handleListing}
                   key={demand.id}
                   demand={demand}
                 />))
