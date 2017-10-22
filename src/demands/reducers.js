@@ -4,6 +4,7 @@ import {
   RECEIVED_PAGINATION_FOR_ALL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
   REQUESTED_SINGLE_DEMAND,
+  RECEIVED_DEMAND_SCHEMA,
 } from './actions';
 
 export const demands = (state = [], action) => {
@@ -25,6 +26,16 @@ export const demand = (state = {}, action) => {
     case RECEIVED_SINGLE_DEMAND:
       return action.demand;
     case REQUESTED_SINGLE_DEMAND:
+    default:
+      return state;
+  }
+};
+
+export const schema = (state = {}, action) => {
+  const { type } = action;
+  switch (type) {
+    case RECEIVED_DEMAND_SCHEMA:
+      return Object.assign({}, state, { schema: action.schema });
     default:
       return state;
   }

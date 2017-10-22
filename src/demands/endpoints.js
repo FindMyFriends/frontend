@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+  requestedSchema,
+  receivedSchema,
   requestedAdding,
   addedDemand,
   receivedAll,
@@ -28,4 +30,10 @@ export const add = demand => (dispatch) => {
   dispatch(requestedAdding(demand));
   axios.post('/v1/demands', demand)
     .then(response => dispatch(addedDemand(demand, response.headers.location)));
+};
+
+export const schema = () => (dispatch) => {
+  dispatch(requestedSchema('POST'));
+  axios.get('/demand/post.json')
+    .then(response => dispatch(receivedSchema(response.data)));
 };
