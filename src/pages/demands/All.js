@@ -26,11 +26,10 @@ class All extends React.Component {
 
   handlePaginationChange(event) {
     this.setState({
-      pagination: Object.assign(
-        { },
-        this.state.pagination,
-        { page: event },
-      ),
+      pagination: {
+        ...this.state.pagination,
+        page: event,
+      }
     });
     this.props.dispatch(all({ ...this.state.pagination }));
   }

@@ -22,11 +22,10 @@ class Add extends React.Component {
 
   handleChange(event) {
     this.setState({
-      demand: Object.assign(
-        { },
-        this.state.demand,
-        { [event.target.name]: event.target.value },
-      ),
+      demand: {
+        ...this.state.demand,
+        [event.target.name]: event.target.value,
+      }
     });
   }
 
