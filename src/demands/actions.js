@@ -9,6 +9,8 @@ export const ADDED_DEMAND = 'ADDED_DEMAND';
 export const REQUESTED_ADDING_DEMAND = 'REQUESTED_ADDING_DEMAND';
 export const REQUESTED_DEMAND_SCHEMA = 'REQUESTED_DEMAND_SCHEMA';
 export const RECEIVED_DEMAND_SCHEMA = 'RECEIVED_DEMAND_SCHEMA';
+export const REQUESTED_DEMAND_PROPERTY = 'REQUESTED_DEMAND_PROPERTY';
+export const RECEIVED_DEMAND_PROPERTY = 'RECEIVED_DEMAND_PROPERTY';
 
 export const receivedAll = demands => ({
   type: RECEIVED_ALL_DEMANDS,
@@ -54,4 +56,15 @@ export const requestedSchema = schema => ({
 export const receivedSchema = schema => ({
   type: RECEIVED_DEMAND_SCHEMA,
   schema,
+});
+
+export const requestedProperty = property => ({
+  type: REQUESTED_DEMAND_PROPERTY,
+  property,
+});
+
+export const receivedProperty = (property, value) => ({
+  type: RECEIVED_DEMAND_PROPERTY,
+  property,
+  value,
 });
