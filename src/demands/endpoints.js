@@ -9,6 +9,8 @@ import {
   receivedSingle,
   requestedSingle,
   receivedPaginationForAll,
+  requestedProperty,
+  receivedProperty,
 } from './actions';
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
@@ -32,8 +34,17 @@ export const add = demand => (dispatch) => {
     .then(response => dispatch(addedDemand(demand, response.headers.location)));
 };
 
-export const schema = () => (dispatch) => {
-  dispatch(requestedSchema('POST'));
-  axios.get('/demand/post.json')
-    .then(response => dispatch(receivedSchema(response.data)));
+const schema = (method = 'GET') => (dispatch) => {
+  dispatch(requestedSchema(method.toUpperCase()));
+  return axios.get(`/demand/${method.toLowerCase()}.json`)
+    .then((response) => {
+      dispatch(receivedSchema(response.data));
+      return response.data;
+    });
+};
+
+export const genders = () => (dispatch) => {
+  dispatch(requestedProperty('genders'));
+  dispatch(schema('POST'))
+    .then(schema => dispatch(receivedProperty('genders', schema.properties.general.properties.gender.enum)));
 };

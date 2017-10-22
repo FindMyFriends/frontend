@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import AddForm from './../../demands/AddForm';
-import { add, schema } from './../../demands/endpoints';
+import { add, genders } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
 
 class Add extends React.Component {
@@ -17,7 +17,7 @@ class Add extends React.Component {
   }
 
   componentDidMount() {
-    schema()(this.props.dispatch);
+    this.props.dispatch(genders());
   }
 
   handleChange(event) {
@@ -56,8 +56,8 @@ Add.propTypes = {
 };
 
 export default connect((state) => {
-  const { demandSchema: { schema } } = state;
+  const { demandSchema: { genders } } = state;
   return {
-    genders: schema ? schema.properties.general.properties.gender.enum : [],
+    genders: genders || [],
   };
 })(Add);
