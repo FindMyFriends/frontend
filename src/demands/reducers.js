@@ -10,9 +10,9 @@ export const demands = (state = [], action) => {
   const { type } = action;
   switch (type) {
     case RECEIVED_ALL_DEMANDS:
-      return Object.assign({}, state, { all: action.demands });
+      return { ...state, all: action.demands };
     case RECEIVED_PAGINATION_FOR_ALL_DEMANDS:
-      return Object.assign({}, state, { pages: action.pages });
+      return { ...state, pages: action.pages };
     default:
       return state;
   }
@@ -32,9 +32,9 @@ export const schema = (state = {}, action) => {
   const { type } = action;
   switch (type) {
     case RECEIVED_DEMAND_SCHEMA:
-      return Object.assign({}, state, { schema: action.schema });
+      return { ...state, schema: action.schema };
     case RECEIVED_DEMAND_PROPERTY:
-      return Object.assign({}, state, { [action.property]: action.value });
+      return { ...state, [action.property]: action.value };
     default:
       return state;
   }
