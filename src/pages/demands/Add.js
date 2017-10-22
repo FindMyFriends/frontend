@@ -25,7 +25,7 @@ class Add extends React.Component {
       demand: {
         ...this.state.demand,
         [event.target.name]: event.target.value,
-      }
+      },
     });
   }
 
