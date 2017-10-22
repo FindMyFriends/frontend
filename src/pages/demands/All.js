@@ -29,7 +29,7 @@ class All extends React.Component {
       pagination: {
         ...this.state.pagination,
         page: event,
-      }
+      },
     });
     this.props.dispatch(all({ ...this.state.pagination }));
   }
