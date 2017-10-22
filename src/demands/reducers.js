@@ -7,8 +7,7 @@ import {
 } from './actions';
 
 export const demands = (state = [], action) => {
-  const { type } = action;
-  switch (type) {
+  switch (action.type) {
     case RECEIVED_ALL_DEMANDS:
       return { ...state, all: action.demands };
     case RECEIVED_PAGINATION_FOR_ALL_DEMANDS:
@@ -19,8 +18,7 @@ export const demands = (state = [], action) => {
 };
 
 export const demand = (state = {}, action) => {
-  const { type } = action;
-  switch (type) {
+  switch (action.type) {
     case RECEIVED_SINGLE_DEMAND:
       return action.demand;
     default:
@@ -29,8 +27,7 @@ export const demand = (state = {}, action) => {
 };
 
 export const schema = (state = {}, action) => {
-  const { type } = action;
-  switch (type) {
+  switch (action.type) {
     case RECEIVED_DEMAND_SCHEMA:
       return { ...state, schema: action.schema };
     case RECEIVED_DEMAND_PROPERTY:
