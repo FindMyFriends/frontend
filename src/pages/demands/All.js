@@ -21,7 +21,7 @@ class All extends React.Component {
   }
 
   componentDidMount() {
-    all({ ...this.state.pagination })(this.props.dispatch);
+    this.props.dispatch(all({ ...this.state.pagination }));
   }
 
   handlePaginationChange(event) {
@@ -32,7 +32,7 @@ class All extends React.Component {
         { page: event },
       ),
     });
-    all({ ...this.state.pagination })(this.props.dispatch);
+    this.props.dispatch(all({ ...this.state.pagination }));
   }
 
   handleListing(box) {

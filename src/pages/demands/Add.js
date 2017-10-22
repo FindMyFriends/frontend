@@ -31,7 +31,7 @@ class Add extends React.Component {
   }
 
   handleSubmit(event) {
-    add(toRequest(this.state.demand))(this.props.dispatch);
+    this.props.dispatch(add(toRequest(this.state.demand)));
     event.preventDefault();
   }
 
