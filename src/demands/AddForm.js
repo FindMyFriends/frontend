@@ -19,7 +19,6 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
         <Col sm={2}>
           <FormControl
             componentClass="select"
-            placeholder="Gender"
             onChange={onChange}
             name="general_gender"
           >
@@ -37,11 +36,15 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
         </Col>
         <Col sm={2}>
           <FormControl
-            type="text"
-            placeholder="Race"
+            componentClass="select"
             onChange={onChange}
             name="general_race"
-          />
+          >
+            <option defaultValue="">--choose--</option>
+            {
+              selects.races.map(race => <option key={race} value={race}>{race}</option>)
+            }
+          </FormControl>
         </Col>
       </FormGroup>
 

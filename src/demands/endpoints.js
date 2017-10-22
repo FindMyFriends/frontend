@@ -45,6 +45,12 @@ const schema = (method = 'GET') => (dispatch) => {
 
 export const genders = () => (dispatch) => {
   dispatch(requestedProperty('genders'));
-  dispatch(schema('POST'))
+  dispatch(schema())
     .then(schema => dispatch(receivedProperty('genders', schema.properties.general.properties.gender.enum)));
+};
+
+export const races = () => (dispatch) => {
+  dispatch(requestedProperty('races'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.enum)));
 };

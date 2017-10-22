@@ -27,4 +27,6 @@ Single.propTypes = {
   demand: PropTypes.object.isRequired,
 };
 
-export default connect(state => state)(Single);
+export default connect(state => ({
+  demand: state.demand.single || { },
+}))(Single);
