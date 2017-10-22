@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import AddForm from './../../demands/AddForm';
-import { add } from './../../demands/endpoints';
+import { add, schema } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
 
 class Add extends React.Component {
@@ -14,6 +14,10 @@ class Add extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    schema()(this.props.dispatch);
   }
 
   handleChange(event) {
@@ -32,12 +36,14 @@ class Add extends React.Component {
   }
 
   render() {
+    const { genders } = this.props;
     return (
       <div>
         <PageHeader>Add demand</PageHeader>
         <AddForm
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
+          selects={{ genders }}
         />
       </div>
     );
@@ -46,6 +52,12 @@ class Add extends React.Component {
 
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  genders: PropTypes.array.isRequired,
 };
 
-export default connect()(Add);
+export default connect((state) => {
+  const { demandSchema: { schema } } = state;
+  return {
+    genders: schema ? schema.properties.general.properties.gender.enum : [],
+  };
+})(Add);

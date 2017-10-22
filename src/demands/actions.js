@@ -7,6 +7,8 @@ export const RECEIVED_SINGLE_DEMAND = 'RECEIVED_SINGLE_DEMAND';
 export const REQUESTED_SINGLE_DEMAND = 'REQUSTED_SINGLE_DEMAND';
 export const ADDED_DEMAND = 'ADDED_DEMAND';
 export const REQUESTED_ADDING_DEMAND = 'REQUESTED_ADDING_DEMAND';
+export const REQUESTED_DEMAND_SCHEMA = 'REQUESTED_DEMAND_SCHEMA';
+export const RECEIVED_DEMAND_SCHEMA = 'RECEIVED_DEMAND_SCHEMA';
 
 export const receivedAll = demands => ({
   type: RECEIVED_ALL_DEMANDS,
@@ -42,4 +44,14 @@ export const addedDemand = (demand, location) => ({
 export const requestedAdding = demand => ({
   type: REQUESTED_ADDING_DEMAND,
   demand,
+});
+
+export const requestedSchema = schema => ({
+  type: REQUESTED_DEMAND_SCHEMA,
+  schema,
+});
+
+export const receivedSchema = schema => ({
+  type: RECEIVED_DEMAND_SCHEMA,
+  schema,
 });

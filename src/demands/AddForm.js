@@ -9,7 +9,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-const AddForm = ({ onChange, onSubmit }) => {
+const AddForm = ({ onChange, onSubmit, selects }) => {
   return (
     <Form onSubmit={onSubmit} horizontal>
       <FormGroup controlId="general_gender">
@@ -24,8 +24,9 @@ const AddForm = ({ onChange, onSubmit }) => {
             name="general_gender"
           >
             <option defaultValue="">--choose--</option>
-            <option value="man">Man</option>
-            <option value="woman">Woman</option>
+            {
+              selects.genders.map(gender => <option key={gender} value={gender}>{gender}</option>)
+            }
           </FormControl>
         </Col>
       </FormGroup>
@@ -76,6 +77,7 @@ const AddForm = ({ onChange, onSubmit }) => {
 AddForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
 };
 
 export default AddForm;
