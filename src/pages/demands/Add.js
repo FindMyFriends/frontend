@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import AddForm from './../../demands/AddForm';
-import { add, genders } from './../../demands/endpoints';
+import { add, genders, races } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
 
 class Add extends React.Component {
@@ -18,6 +18,7 @@ class Add extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(genders());
+    this.props.dispatch(races());
   }
 
   handleChange(event) {
@@ -35,14 +36,14 @@ class Add extends React.Component {
   }
 
   render() {
-    const { genders } = this.props;
+    const { genders, races } = this.props;
     return (
       <div>
         <PageHeader>Add demand</PageHeader>
         <AddForm
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
-          selects={{ genders }}
+          selects={{ genders, races }}
         />
       </div>
     );
@@ -52,11 +53,10 @@ class Add extends React.Component {
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
+  races: PropTypes.array.isRequired,
 };
 
-export default connect((state) => {
-  const { demandSchema: { genders } } = state;
-  return {
-    genders: genders || [],
-  };
-})(Add);
+export default connect(state => ({
+  genders: state.demand.genders || [],
+  races: state.demand.races || [],
+}))(Add);

@@ -85,6 +85,6 @@ All.propTypes = {
 };
 
 export default connect(state => ({
-  demands: state.demands.all || [],
-  pages: state.demands.pages,
+  demands: state.demand.all || [],
+  pages: state.demand.pages,
 }))(All);
