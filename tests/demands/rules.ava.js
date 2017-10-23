@@ -34,7 +34,7 @@ test('throwing on swapped from and to age', t => {
   );
 });
 
-test('keeping strucute on validatedDemand', t => {
+test('keeping structure on validatedDemand', t => {
   t.deepEqual(
     {
       general: {
