@@ -5,6 +5,7 @@ import { PageHeader } from 'react-bootstrap';
 import AddForm from './../../demands/AddForm';
 import { add, genders, races } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
+import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   constructor(props) {
@@ -31,7 +32,11 @@ class Add extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.dispatch(add(toRequest(this.state.demand)));
+    const { genders, races } = this.props;
+    this.props.dispatch(add(validatedDemand(
+      toRequest(this.state.demand),
+      { genders, races },
+    )));
     event.preventDefault();
   }
 

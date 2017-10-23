@@ -20,8 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "ava tests/**/*.js",
+    "tests": "ava tests/**/*.js",
     "lint": "eslint -c .eslintrc src/ --ignore-path .eslintignore",
+    "default": "yarn lint && yarn tests",
     "eject": "react-scripts eject"
   },
   "ava": {
