@@ -21,9 +21,9 @@ export const validatedAge = (age) => {
   return age;
 };
 
-const validatedDemand = (demand, selects) => {
+export const validatedDemand = (demand, selects) => {
   const { races, genders } = selects;
-  const { demand: { general } } = demand;
+  const { general } = demand;
   return {
     general: {
       race: validatedRace(general.race, races),

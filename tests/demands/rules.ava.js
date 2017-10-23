@@ -1,5 +1,5 @@
 import test from 'ava';
-import { validatedGender, validatedRace, validatedAge } from './../../src/demands/rules';
+import { validatedGender, validatedRace, validatedAge, validatedDemand } from './../../src/demands/rules';
 
 test('passing with allowed gender', t => {
   t.deepEqual('man', validatedGender('man', ['man', 'woman']));
@@ -31,5 +31,27 @@ test('throwing on swapped from and to age', t => {
   t.is(
     'Ages are swapped',
     t.throws(() => { validatedAge('[20,10]'); }).message
+  );
+});
+
+test('keeping strucute on validatedDemand', t => {
+  t.deepEqual(
+    {
+      general: {
+        race: 'european',
+        age: '[10,20]',
+        gender: 'man',
+      }
+    },
+    validatedDemand(
+      {
+        general: {
+          race: 'european',
+          age: '[10,20]',
+          gender: 'man',
+        }
+      },
+      { genders: ['man', 'woman'], races: ['european', 'asian'] }
+    )
   );
 });
