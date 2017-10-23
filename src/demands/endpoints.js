@@ -36,7 +36,7 @@ export const add = demand => (dispatch) => {
 
 const schema = (method = 'GET') => (dispatch) => {
   dispatch(requestedSchema(method.toUpperCase()));
-  return axios.get(`/demand/${method.toLowerCase()}.json`)
+  return axios.get(`schema/v1/demand/${method.toLowerCase()}.json`)
     .then((response) => {
       dispatch(receivedSchema(response.data));
       return response.data;
