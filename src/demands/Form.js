@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form,
+  Form as BootstrapForm,
   FormGroup,
   Col,
   ControlLabel,
@@ -9,9 +9,11 @@ import {
   Button,
 } from 'react-bootstrap';
 
-const AddForm = ({ onChange, onSubmit, selects }) => {
+const Form = ({
+  onChange, onSubmit, selects, values, label,
+}) => {
   return (
-    <Form onSubmit={onSubmit} horizontal>
+    <BootstrapForm onSubmit={onSubmit} horizontal>
       <FormGroup controlId="general_gender">
         <Col componentClass={ControlLabel} sm={2}>
           Gender
@@ -20,9 +22,10 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
           <FormControl
             componentClass="select"
             onChange={onChange}
+            value={values.general_gender}
             name="general_gender"
           >
-            <option defaultValue="">--choose--</option>
+            <option>--choose--</option>
             {
               selects.genders.map(gender => <option key={gender} value={gender}>{gender}</option>)
             }
@@ -39,8 +42,9 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
             componentClass="select"
             onChange={onChange}
             name="general_race"
+            value={values.general_race}
           >
-            <option defaultValue="">--choose--</option>
+            <option>--choose--</option>
             {
               selects.races.map(race => <option key={race} value={race}>{race}</option>)
             }
@@ -53,7 +57,13 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
           From age
         </Col>
         <Col sm={2}>
-          <FormControl type="number" placeholder="From age" onChange={onChange} name="general_age_from" />
+          <FormControl
+            type="number"
+            placeholder="From age"
+            onChange={onChange}
+            value={values.general_age}
+            name="general_age_from"
+          />
         </Col>
       </FormGroup>
 
@@ -62,25 +72,33 @@ const AddForm = ({ onChange, onSubmit, selects }) => {
           To age
         </Col>
         <Col sm={2}>
-          <FormControl type="number" placeholder="To age" onChange={onChange} name="general_age_to" />
+          <FormControl
+            type="number"
+            placeholder="To age"
+            onChange={onChange}
+            value={values.general_age}
+            name="general_age_to"
+          />
         </Col>
       </FormGroup>
 
       <FormGroup>
         <Col smOffset={2} sm={10}>
           <Button type="submit">
-            Add
+            {label}
           </Button>
         </Col>
       </FormGroup>
-    </Form>
+    </BootstrapForm>
   );
 };
 
-AddForm.propTypes = {
+Form.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
+  values: PropTypes.array.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
-export default AddForm;
+export default Form;
