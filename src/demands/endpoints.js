@@ -11,6 +11,8 @@ import {
   receivedPaginationForAll,
   requestedProperty,
   receivedProperty,
+  receivedReconsideration,
+  requestedReconsidering,
 } from './actions';
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
@@ -24,14 +26,23 @@ export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
 
 export const single = id => (dispatch) => {
   dispatch(requestedSingle(id));
-  axios.get(`/v1/demands/${id}`)
-    .then(response => dispatch(receivedSingle(id, response.data)));
+  return axios.get(`/v1/demands/${id}`)
+    .then((response) => {
+      dispatch(receivedSingle(id, response.data, response.headers.etag));
+      return response.data;
+    });
 };
 
 export const add = demand => (dispatch) => {
   dispatch(requestedAdding(demand));
   axios.post('/v1/demands', demand)
     .then(response => dispatch(addedDemand(demand, response.headers.location)));
+};
+
+export const reconsider = (id, demand, etag) => (dispatch) => {
+  dispatch(requestedReconsidering(id, demand));
+  axios.put(`/v1/demands/${id}`, demand, { headers: { 'if-match': etag } })
+    .then(response => dispatch(receivedReconsideration(id, response.data)));
 };
 
 const schema = (method = 'GET') => (dispatch) => {
