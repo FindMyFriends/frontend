@@ -6,14 +6,14 @@ test('transforming to request', (t) => {
     {
       general: {
         race: 'european',
-        age: '[10,20)',
+        birth_year: '[10,20)',
         gender: 'man',
       },
     },
     toRequest({
       general_race: 'european',
-      general_age_from: 10,
-      general_age_to: 20,
+      general_birth_year_from: 10,
+      general_birth_year_to: 20,
       general_gender: 'man',
     }),
   );
@@ -24,7 +24,7 @@ test('ingoring missing field', (t) => {
     {
       general: {
         race: undefined,
-        age: '[,)',
+        birth_year: '[,)',
         gender: 'man',
       },
     },
