@@ -12,13 +12,16 @@ export const validatedGender = (gender, genders) => {
   throw new Error(`Gender ${gender} is not allowed`);
 };
 
-export const validatedAge = (age) => {
-  const splitted = age.split(',');
+export const validatedBirthYear = (birthYear) => {
+  const constraint = { from: 1800, to: (new Date()).getFullYear() };
+  const splitted = birthYear.split(',');
   const ranges = { from: splitted[0].slice(1), to: splitted[1].slice(0, -1) };
   if (ranges.from > ranges.to) {
-    throw new Error('Ages are swapped');
+    throw new Error('Years are swapped');
+  } else if (ranges.from < constraint.from || ranges.to > constraint.to) {
+    throw new Error(`Years must be in range from ${constraint.from} to ${constraint.to}`);
   }
-  return age;
+  return birthYear;
 };
 
 export const validatedDemand = (demand, selects) => {
@@ -28,7 +31,7 @@ export const validatedDemand = (demand, selects) => {
     general: {
       race: validatedRace(general.race, races),
       gender: validatedGender(general.gender, genders),
-      age: validatedAge(general.age),
+      birth_year: validatedBirthYear(general.birth_year),
     },
   };
 };

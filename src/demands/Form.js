@@ -52,32 +52,32 @@ const Form = ({
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_age_from">
+      <FormGroup controlId="general_birth_year_from">
         <Col componentClass={ControlLabel} sm={2}>
-          From age
+          From year
         </Col>
         <Col sm={2}>
           <FormControl
             type="number"
-            placeholder="From age"
+            placeholder="From year"
             onChange={onChange}
-            value={values.general_age}
-            name="general_age_from"
+            value={values.general_from_year}
+            name="general_birth_year_from"
           />
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_age_to">
+      <FormGroup controlId="general_birth_year_to">
         <Col componentClass={ControlLabel} sm={2}>
-          To age
+          To year
         </Col>
         <Col sm={2}>
           <FormControl
             type="number"
-            placeholder="To age"
+            placeholder="To year"
             onChange={onChange}
-            value={values.general_age}
-            name="general_age_to"
+            value={values.general_to_year}
+            name="general_birth_year_to"
           />
         </Col>
       </FormGroup>
@@ -97,7 +97,7 @@ Form.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
-  values: PropTypes.array.isRequired,
+  values: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
 };
 

@@ -7,7 +7,7 @@ const Detail = ({ demand }) => {
   }
   return (
     <ul>
-      <li>{demand.general.age}</li>
+      <li>{demand.general.birth_year}</li>
       <li>{demand.general.race}</li>
       <li>{demand.general.gender}</li>
       <li>{demand.general.firstname}</li>

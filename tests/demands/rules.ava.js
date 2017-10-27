@@ -1,5 +1,5 @@
 import test from 'ava';
-import { validatedGender, validatedRace, validatedAge, validatedDemand } from './../../src/demands/rules';
+import { validatedGender, validatedRace, validatedBirthYear, validatedDemand } from './../../src/demands/rules';
 
 test('passing with allowed gender', (t) => {
   t.deepEqual('man', validatedGender('man', ['man', 'woman']));
@@ -23,14 +23,25 @@ test('throwing on unknown race', (t) => {
   );
 });
 
-test('passing with allowed age', (t) => {
-  t.deepEqual('[10,20]', validatedAge('[10,20]'));
+test('passing with allowed birth year', (t) => {
+  t.deepEqual('[1996,1997]', validatedBirthYear('[1996,1997]'));
 });
 
-test('throwing on swapped from and to age', (t) => {
+test('throwing on swapped from and to birth year', (t) => {
   t.is(
-    'Ages are swapped',
-    t.throws(() => { validatedAge('[20,10]'); }).message,
+    'Years are swapped',
+    t.throws(() => { validatedBirthYear('[1997,1996]'); }).message,
+  );
+});
+
+test('throwing on too old or too young birth year', (t) => {
+  t.is(
+    `Years must be in range from 1800 to ${(new Date()).getFullYear()}`,
+    t.throws(() => { validatedBirthYear('[1700,1996]'); }).message,
+  );
+  t.is(
+    `Years must be in range from 1800 to ${(new Date()).getFullYear()}`,
+    t.throws(() => { validatedBirthYear('[1996,2222]'); }).message,
   );
 });
 
@@ -39,7 +50,7 @@ test('keeping structure on validatedDemand', (t) => {
     {
       general: {
         race: 'european',
-        age: '[10,20]',
+        birth_year: '[1996,1997]',
         gender: 'man',
       },
     },
@@ -47,7 +58,7 @@ test('keeping structure on validatedDemand', (t) => {
       {
         general: {
           race: 'european',
-          age: '[10,20]',
+          birth_year: '[1996,1997]',
           gender: 'man',
         },
       },

@@ -2,7 +2,7 @@ const toRequest = (demand) => {
   return {
     general: {
       race: demand.general_race,
-      age: `[${demand.general_age_from || ''},${demand.general_age_to || ''})`,
+      birth_year: `[${demand.general_birth_year_from || ''},${demand.general_birth_year_to || ''})`,
       gender: demand.general_gender,
     },
   };
