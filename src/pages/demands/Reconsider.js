@@ -9,14 +9,11 @@ import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      demand: { },
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    demand: { },
+  };
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
 
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
