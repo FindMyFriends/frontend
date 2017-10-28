@@ -14,12 +14,13 @@ class All extends React.Component {
     },
     boxes: {},
   };
-  handlePaginationChange = this.handlePaginationChange.bind(this);
-  handleListing = this.handleListing.bind(this);
 
   componentDidMount() {
     this.props.dispatch(all({ ...this.state.pagination }));
   }
+
+  handlePaginationChange = this.handlePaginationChange.bind(this);
+  handleListing = this.handleListing.bind(this);
 
   handlePaginationChange(event) {
     this.setState({
