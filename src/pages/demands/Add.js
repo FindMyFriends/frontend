@@ -11,13 +11,14 @@ class Add extends React.Component {
   state = {
     demand: { },
   };
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
 
   componentDidMount() {
     this.props.dispatch(genders());
     this.props.dispatch(races());
   }
+
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
     this.setState({

@@ -12,8 +12,6 @@ class Reconsider extends React.Component {
   state = {
     demand: { },
   };
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
 
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
@@ -28,6 +26,9 @@ class Reconsider extends React.Component {
     dispatch(genders());
     dispatch(races());
   }
+
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
     this.setState({
