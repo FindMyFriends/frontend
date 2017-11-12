@@ -1,5 +1,5 @@
 import test from 'ava';
-import { validatedGender, validatedRace, validatedBirthYear, validatedDemand } from './../../src/demands/rules';
+import { validatedGender, validatedRace, validatedAge, validatedDemand } from './../../src/demands/rules';
 
 test('passing with allowed gender', (t) => {
   t.deepEqual('man', validatedGender('man', ['man', 'woman']));
@@ -23,25 +23,18 @@ test('throwing on unknown race', (t) => {
   );
 });
 
-test('passing with allowed birth year', (t) => {
-  t.deepEqual('[1996,1997]', validatedBirthYear('[1996,1997]'));
+test('passing with allowed age', (t) => {
+  t.deepEqual(20, validatedAge(20, { from: 15, maximum: 130 }));
 });
 
-test('throwing on swapped from and to birth year', (t) => {
+test('throwing on too old or too young age', (t) => {
   t.is(
-    'Years are swapped',
-    t.throws(() => { validatedBirthYear('[1997,1996]'); }).message,
-  );
-});
-
-test('throwing on too old or too young birth year', (t) => {
-  t.is(
-    `Years must be in range from 1800 to ${(new Date()).getFullYear()}`,
-    t.throws(() => { validatedBirthYear('[1700,1996]'); }).message,
+    'Age must be in range from 15 to 130',
+    t.throws(() => { validatedAge(11, { minimum: 15, maximum: 130 }); }).message,
   );
   t.is(
-    `Years must be in range from 1800 to ${(new Date()).getFullYear()}`,
-    t.throws(() => { validatedBirthYear('[1996,2222]'); }).message,
+    'Age must be in range from 15 to 130',
+    t.throws(() => { validatedAge(140, { minimum: 15, maximum: 130 }); }).message,
   );
 });
 
@@ -50,7 +43,7 @@ test('keeping structure on validatedDemand', (t) => {
     {
       general: {
         race: 'european',
-        birth_year: '[1996,1997]',
+        age: 20,
         gender: 'man',
       },
     },
@@ -58,11 +51,11 @@ test('keeping structure on validatedDemand', (t) => {
       {
         general: {
           race: 'european',
-          birth_year: '[1996,1997]',
+          age: 20,
           gender: 'man',
         },
       },
-      { genders: ['man', 'woman'], races: ['european', 'asian'] },
+      { genders: ['man', 'woman'], races: ['european', 'asian'], ages: { minimum: 15, maximum: 130 } },
     ),
   );
 });

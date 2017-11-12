@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import Form from './../../demands/Form';
-import { add, genders, races } from './../../demands/endpoints';
+import { add, genders, races, ages } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
@@ -15,6 +15,7 @@ class Add extends React.Component {
   componentDidMount() {
     this.props.dispatch(genders());
     this.props.dispatch(races());
+    this.props.dispatch(ages());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -30,10 +31,12 @@ class Add extends React.Component {
   }
 
   handleSubmit(event) {
-    const { genders, races, dispatch } = this.props;
+    const {
+      genders, races, ages, dispatch,
+    } = this.props;
     dispatch(add(validatedDemand(
       toRequest(this.state.demand),
-      { genders, races },
+      { genders, races, ages },
     )));
     event.preventDefault();
   }
@@ -59,9 +62,11 @@ Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
   races: PropTypes.array.isRequired,
+  ages: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demand.genders || [],
   races: state.demand.races || [],
+  ages: state.demand.ages || {},
 }))(Add);

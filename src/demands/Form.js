@@ -52,32 +52,32 @@ const Form = ({
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_birth_year_from">
+      <FormGroup controlId="general_age_from">
         <Col componentClass={ControlLabel} sm={2}>
-          From year
+          From age
         </Col>
         <Col sm={2}>
           <FormControl
             type="number"
-            placeholder="From year"
+            placeholder="From age"
             onChange={onChange}
-            value={values.general_from_year}
-            name="general_birth_year_from"
+            value={values.general_age_from}
+            name="general_age_from"
           />
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_birth_year_to">
+      <FormGroup controlId="general_age_to">
         <Col componentClass={ControlLabel} sm={2}>
-          To year
+          To age
         </Col>
         <Col sm={2}>
           <FormControl
             type="number"
-            placeholder="To year"
+            placeholder="To age"
             onChange={onChange}
-            value={values.general_to_year}
-            name="general_birth_year_to"
+            value={values.general_age_to}
+            name="general_age_to"
           />
         </Col>
       </FormGroup>

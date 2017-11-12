@@ -65,3 +65,9 @@ export const races = () => (dispatch) => {
   dispatch(schema())
     .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.enum)));
 };
+
+export const ages = () => (dispatch) => {
+  dispatch(requestedProperty('races'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
+};
