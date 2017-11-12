@@ -8,19 +8,17 @@ import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      demand: { },
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    demand: { },
+  };
 
   componentDidMount() {
     this.props.dispatch(genders());
     this.props.dispatch(races());
   }
+
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
     this.setState({

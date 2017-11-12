@@ -7,22 +7,20 @@ import { all } from './../../demands/endpoints';
 import Pagination from './../../components/Pagination';
 
 class All extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pagination: {
-        page: 1,
-        perPage: 2,
-      },
-      boxes: {},
-    };
-    this.handlePaginationChange = this.handlePaginationChange.bind(this);
-    this.handleListing = this.handleListing.bind(this);
-  }
+  state = {
+    pagination: {
+      page: 1,
+      perPage: 2,
+    },
+    boxes: {},
+  };
 
   componentDidMount() {
     this.props.dispatch(all({ ...this.state.pagination }));
   }
+
+  handlePaginationChange = this.handlePaginationChange.bind(this);
+  handleListing = this.handleListing.bind(this);
 
   handlePaginationChange(event) {
     this.setState({

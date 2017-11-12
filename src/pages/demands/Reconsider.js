@@ -9,14 +9,9 @@ import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      demand: { },
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    demand: { },
+  };
 
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
@@ -31,6 +26,9 @@ class Reconsider extends React.Component {
     dispatch(genders());
     dispatch(races());
   }
+
+  handleChange = this.handleChange.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
     this.setState({
