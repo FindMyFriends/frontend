@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import extend from 'extend';
 import * as R from 'ramda';
+import flat from 'flat';
 import Form from './../../demands/Form';
 import { reconsider, genders, races, ages, single } from './../../demands/endpoints';
 import toRequest from './../../demands/toRequest';
@@ -18,13 +19,10 @@ class Reconsider extends React.Component {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(single(id))
       .then(demand => this.setState({
-        demand: {
+        demand: flat({
           ...this.state.demand,
-          general_gender: demand.general.gender,
-          general_race: demand.general.race,
-          general_age_from: demand.general.age.from,
-          general_age_to: demand.general.age.to,
-        },
+          ...demand,
+        }),
       }));
     dispatch(genders());
     dispatch(races());

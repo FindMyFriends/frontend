@@ -14,7 +14,7 @@ const Form = ({
 }) => {
   return (
     <BootstrapForm onSubmit={onSubmit} horizontal>
-      <FormGroup controlId="general_gender">
+      <FormGroup controlId="general.gender">
         <Col componentClass={ControlLabel} sm={2}>
           Gender
         </Col>
@@ -22,8 +22,8 @@ const Form = ({
           <FormControl
             componentClass="select"
             onChange={onChange}
-            value={values.general_gender}
-            name="general_gender"
+            value={values['general.gender']}
+            name="general.gender"
           >
             <option>--choose--</option>
             {
@@ -33,7 +33,7 @@ const Form = ({
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_race">
+      <FormGroup controlId="general.race">
         <Col componentClass={ControlLabel} sm={2}>
           Race
         </Col>
@@ -41,8 +41,8 @@ const Form = ({
           <FormControl
             componentClass="select"
             onChange={onChange}
-            name="general_race"
-            value={values.general_race}
+            name="general.race"
+            value={values['general.race']}
           >
             <option>--choose--</option>
             {
@@ -52,7 +52,7 @@ const Form = ({
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_age_from">
+      <FormGroup controlId="general.age.from">
         <Col componentClass={ControlLabel} sm={2}>
           From age
         </Col>
@@ -61,13 +61,13 @@ const Form = ({
             type="number"
             placeholder="From age"
             onChange={onChange}
-            value={values.general_age_from}
-            name="general_age_from"
+            value={values['general.age.from']}
+            name="general.age.from"
           />
         </Col>
       </FormGroup>
 
-      <FormGroup controlId="general_age_to">
+      <FormGroup controlId="general.age.to">
         <Col componentClass={ControlLabel} sm={2}>
           To age
         </Col>
@@ -76,8 +76,8 @@ const Form = ({
             type="number"
             placeholder="To age"
             onChange={onChange}
-            value={values.general_age_to}
-            name="general_age_to"
+            value={values['general.age.to']}
+            name="general.age.to"
           />
         </Col>
       </FormGroup>
