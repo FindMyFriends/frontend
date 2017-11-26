@@ -22,7 +22,7 @@ const Layout = ({ component: Component, ...rest }) => (
 );
 
 Layout.propTypes = {
-  component: PropTypes.element,
+  component: PropTypes.any,
 };
 
 export default Layout;
