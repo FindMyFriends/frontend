@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PageHeader } from 'react-bootstrap';
 import Box from './../../demands/Box';
 import { all } from './../../demands/endpoints';
 import Pagination from './../../components/Pagination';
@@ -48,7 +47,7 @@ class All extends React.Component {
     const { pages, demands } = this.props;
     return (
       <div>
-        <PageHeader>All demands</PageHeader>
+        <h1>All demands</h1>
         {
           pages &&
             <Pagination

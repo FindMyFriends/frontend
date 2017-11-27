@@ -8,7 +8,6 @@ import { applyMiddleware, createStore } from 'redux';
 import Routes from './Routes';
 import createReducers from './createReducers';
 import registerServiceWorker from './registerServiceWorker';
-import './css/bootstrap.min.css';
 
 axios.defaults.baseURL = 'http://localhost';
 axios.defaults.data = null;

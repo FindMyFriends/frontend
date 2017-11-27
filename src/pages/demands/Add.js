@@ -1,15 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PageHeader } from 'react-bootstrap';
 import Form from './../../demands/Form';
+import flat from 'flat';
+import { unflatten as unflat } from 'flat';
 import { add, genders, races, ages } from './../../demands/endpoints';
-import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    demand: { },
+    step: 1,
+    demand: {
+      general: {
+        gender: 'man',
+        race: 'asian',
+        age: {
+          from: 18,
+          to: 22,
+        }
+      }
+    }
   };
 
   componentDidMount() {
@@ -20,6 +30,8 @@ class Add extends React.Component {
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleNext = this.handleNext.bind(this);
+  handlePrevious = this.handlePrevious.bind(this);
 
   handleChange(event) {
     this.setState({
@@ -35,22 +47,39 @@ class Add extends React.Component {
       genders, races, ages, dispatch,
     } = this.props;
     dispatch(add(validatedDemand(
-      toRequest(this.state.demand),
+      unflat(this.state.demand),
       { genders, races, ages },
     )));
     event.preventDefault();
+  }
+
+  handleNext() {
+    this.setState({
+      ...this.state,
+      step: ++this.state.step,
+    });
+  }
+
+  handlePrevious() {
+    this.setState({
+      ...this.state,
+      step: --this.state.step,
+    });
   }
 
   render() {
     const { genders, races } = this.props;
     return (
       <div>
-        <PageHeader>Add demand</PageHeader>
+        <h1>Add demand</h1>
         <Form
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
+          onNext={this.handleNext}
+          onPrevious={this.handlePrevious}
           selects={{ genders, races }}
-          values={this.state.demand}
+          values={flat(this.state.demand)}
+          step={this.state.step}
           label="Add"
         />
       </div>
