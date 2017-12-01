@@ -9,7 +9,7 @@ import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    step: 1,
+    step: 3,
     demand: {
       general: {
         gender: 'man',
@@ -18,7 +18,13 @@ class Add extends React.Component {
           from: 18,
           to: 22,
         }
-      }
+      },
+      body: {
+        build: 'skinny',
+        skin: 'white',
+        weight: 60,
+        height: 181,
+      },
     }
   };
 
@@ -30,8 +36,7 @@ class Add extends React.Component {
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
-  handleNext = this.handleNext.bind(this);
-  handlePrevious = this.handlePrevious.bind(this);
+  handleTurn = this.handleTurn.bind(this);
 
   handleChange(event) {
     this.setState({
@@ -43,9 +48,7 @@ class Add extends React.Component {
   }
 
   handleSubmit(event) {
-    const {
-      genders, races, ages, dispatch,
-    } = this.props;
+    const {genders, races, ages, dispatch} = this.props;
     dispatch(add(validatedDemand(
       unflat(this.state.demand),
       { genders, races, ages },
@@ -53,17 +56,10 @@ class Add extends React.Component {
     event.preventDefault();
   }
 
-  handleNext() {
+  handleTurn(move) {
     this.setState({
       ...this.state,
-      step: ++this.state.step,
-    });
-  }
-
-  handlePrevious() {
-    this.setState({
-      ...this.state,
-      step: --this.state.step,
+      step: this.state.step + move,
     });
   }
 
@@ -75,8 +71,7 @@ class Add extends React.Component {
         <Form
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
-          onNext={this.handleNext}
-          onPrevious={this.handlePrevious}
+          onTurn={this.handleTurn}
           selects={{ genders, races }}
           values={flat(this.state.demand)}
           step={this.state.step}

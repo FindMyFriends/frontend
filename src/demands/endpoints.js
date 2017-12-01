@@ -67,7 +67,7 @@ export const races = () => (dispatch) => {
 };
 
 export const ages = () => (dispatch) => {
-  dispatch(requestedProperty('races'));
+  dispatch(requestedProperty('ages'));
   dispatch(schema())
     .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
 };

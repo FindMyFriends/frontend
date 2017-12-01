@@ -4,6 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import Checkbox from 'material-ui/Checkbox';
 
 const General = ({ selects, values, onChange }) => (
   <div>
@@ -79,27 +80,49 @@ const Body = ({ selects, values, onChange }) => (
   </div>
 );
 
-const Current = ({ step, label, onPrevious, onNext, ...rest }) => {
-  let current = null;
-  const last = step === 2,
+const Face = ({ selects, values, onChange }) => (
+  <div>
+    <h2>Face</h2>
+    <h3>Teeth</h3>
+    <SelectField
+      floatingLabelText="Care"
+      onChange={(event, index, value) => onChange({ target: { name: 'face.teeth.care', value} })}
+      value={values['face.teeth.care']}
+      name="face.teeth.care"
+    >
+    {['high'].map(care => <MenuItem key={care} value={care} primaryText={care} />)}
+    </SelectField>
+    <br />
+    <Checkbox
+      name="face.teeth.braces"
+      onChange={onChange}
+      label='Braces'
+      onCheck={(event, isChecked) => onChange({ target: { name: event.target.name, value: isChecked } })}
+      checked={values['face.teeth.braces'] ? true : false}
+    />
+  </div>
+);
+
+const Current = ({ step, label, onTurn, steps, ...rest }) => {
+  const last = step === Math.max(Object.keys(steps)),
     first = step === 1;
-  if (step === 1) {
-    current = <General {...rest} />
-  } else if (step === 2) {
-    current = <Body {...rest} />
-  }
   return [
-    current,
-    first || <RaisedButton onClick={onPrevious} label={'Previous'} primary={true} />,
-    <RaisedButton onClick={last ? rest.onSubmit : onNext} label={last ? label : 'Next'} primary={true} />
+    steps[step],
+    first || <RaisedButton key="previous" onClick={() => onTurn(-1)} label={'Previous'} primary={true} />,
+    <RaisedButton key="next|submit" onClick={last ? rest.onSubmit : () => onTurn(+1)} label={last ? label : 'Next'} primary={true} />
   ];
 };
 
 const Form = props => {
   return (
-    <form>
-      <Current {...props} />
-    </form>
+    <Current
+      {...props}
+      steps={{
+        1: <General key={1} {...props} />,
+        2: <Body key={2} {...props} />,
+        3: <Face key={3} {...props} />,
+      }}
+    />
   );
 };
 
