@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Form from './../../demands/Form';
 import flat from 'flat';
 import { unflatten as unflat } from 'flat';
-import { add, genders, races, ages } from './../../demands/endpoints';
+import { add, genders, races, ages, bodyBuilds, skinColors, hairColors } from './../../demands/endpoints';
 import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
@@ -12,6 +12,7 @@ class Add extends React.Component {
     step: 3,
     demand: {
       general: {
+        firstname: 'Dominik',
         gender: 'man',
         race: 'asian',
         age: {
@@ -25,6 +26,9 @@ class Add extends React.Component {
         weight: 60,
         height: 181,
       },
+      hair: {
+        style: 'normal',
+      }
     }
   };
 
@@ -32,6 +36,9 @@ class Add extends React.Component {
     this.props.dispatch(genders());
     this.props.dispatch(races());
     this.props.dispatch(ages());
+    this.props.dispatch(bodyBuilds());
+    this.props.dispatch(skinColors());
+    this.props.dispatch(hairColors());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -45,10 +52,11 @@ class Add extends React.Component {
         [event.target.name]: event.target.value,
       },
     });
+    console.log(this.state);
   }
 
   handleSubmit(event) {
-    const {genders, races, ages, dispatch} = this.props;
+    const { genders, races, ages, dispatch } = this.props;
     dispatch(add(validatedDemand(
       unflat(this.state.demand),
       { genders, races, ages },
@@ -64,7 +72,6 @@ class Add extends React.Component {
   }
 
   render() {
-    const { genders, races } = this.props;
     return (
       <div>
         <h1>Add demand</h1>
@@ -72,7 +79,7 @@ class Add extends React.Component {
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
           onTurn={this.handleTurn}
-          selects={{ genders, races }}
+          selects={{...this.props}}
           values={flat(this.state.demand)}
           step={this.state.step}
           label="Add"
@@ -87,10 +94,16 @@ Add.propTypes = {
   genders: PropTypes.array.isRequired,
   races: PropTypes.array.isRequired,
   ages: PropTypes.object.isRequired,
+  bodyBuilds: PropTypes.array.isRequired,
+  skinColors: PropTypes.array.isRequired,
+  hairColors: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demand.genders || [],
   races: state.demand.races || [],
   ages: state.demand.ages || {},
+  bodyBuilds: state.demand.bodyBuilds || [],
+  skinColors: state.demand.skinColors || [],
+  hairColors: state.demand.hairColors || { hex: [], name: [] },
 }))(Add);

@@ -63,11 +63,42 @@ export const genders = () => (dispatch) => {
 export const races = () => (dispatch) => {
   dispatch(requestedProperty('races'));
   dispatch(schema())
-    .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.enum)));
+    .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.properties.value.enum)));
 };
 
 export const ages = () => (dispatch) => {
   dispatch(requestedProperty('ages'));
   dispatch(schema())
     .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
+};
+
+export const bodyBuilds = () => (dispatch) => {
+  dispatch(requestedProperty('bodyBuilds'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('bodyBuilds', schema.properties.body.properties.build.properties.value.enum)));
+};
+
+export const skinColors = () => (dispatch) => {
+  dispatch(requestedProperty('skinColors'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('skinColors', schema.properties.body.properties.skin_color.properties.name.enum)));
+};
+
+export const hairColors = () => (dispatch) => {
+  dispatch(requestedProperty('hairColors'));
+  dispatch(schema())
+    .then(schema => {
+      return dispatch(
+        receivedProperty(
+          'hairColors',
+          {
+            hex: schema.properties.hair.properties.color.properties.hex.enum
+              .filter(hex => hex)
+              .map(hex => `#${hex}`),
+            name: schema.properties.hair.properties.color.properties.name.enum
+              .filter(name => name),
+          }
+        )
+      );
+    });
 };

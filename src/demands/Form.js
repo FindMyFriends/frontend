@@ -5,10 +5,18 @@ import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
+import { GithubPicker } from 'react-color';
 
 const General = ({ selects, values, onChange }) => (
   <div>
     <h2>General</h2>
+    <TextField
+      floatingLabelText="Firstname"
+      onChange={onChange}
+      value={values['general.firstname']}
+      name="general.firstname"
+    />
+    <br />
     <SelectField
       floatingLabelText="Gender"
       onChange={(event, index, value) => onChange({ target: { name: 'general.gender', value} })}
@@ -48,19 +56,23 @@ const General = ({ selects, values, onChange }) => (
 const Body = ({ selects, values, onChange }) => (
   <div>
     <h2>Body</h2>
-    <TextField
+    <SelectField
       floatingLabelText="Build"
-      onChange={onChange}
+      onChange={(event, index, value) => onChange({ target: { name: 'body.build', value} })}
       value={values['body.build']}
       name="body.build"
-    />
+    >
+    {selects.bodyBuilds.map(build => <MenuItem key={build} value={build} primaryText={build} />)}
+    </SelectField>
     <br />
-    <TextField
+    <SelectField
       floatingLabelText="Skin"
-      onChange={onChange}
+      onChange={(event, index, value) => onChange({ target: { name: 'body.skin', value} })}
       value={values['body.skin']}
       name="body.skin"
-    />
+    >
+    {selects.skinColors.map(color => <MenuItem key={color} value={color} primaryText={color} />)}
+    </SelectField>
     <br />
     <TextField
       type="number"
@@ -80,26 +92,28 @@ const Body = ({ selects, values, onChange }) => (
   </div>
 );
 
-const Face = ({ selects, values, onChange }) => (
+const Hair = ({ selects, values, onChange }) => (
   <div>
-    <h2>Face</h2>
-    <h3>Teeth</h3>
-    <SelectField
-      floatingLabelText="Care"
-      onChange={(event, index, value) => onChange({ target: { name: 'face.teeth.care', value} })}
-      value={values['face.teeth.care']}
-      name="face.teeth.care"
-    >
-    {['high'].map(care => <MenuItem key={care} value={care} primaryText={care} />)}
-    </SelectField>
+    <h2>Hair</h2>
     <br />
-    <Checkbox
-      name="face.teeth.braces"
+    <TextField
+      floatingLabelText="Style"
       onChange={onChange}
-      label='Braces'
-      onCheck={(event, isChecked) => onChange({ target: { name: event.target.name, value: isChecked } })}
-      checked={values['face.teeth.braces'] ? true : false}
+      value={values['hair.style']}
+      name="hair.style"
     />
+    <br />
+    <TextField
+      floatingLabelText="Color"
+      onChange={onChange}
+      value={selects.hairColors.name[selects.hairColors.hex.indexOf(values['hair.color'])]}
+      disabled
+    />
+    <GithubPicker
+      onChange={({ hex: value }) => onChange({ target: { name: 'hair.color', value } })}
+      colors={selects.hairColors.hex}
+    />
+    <br />
   </div>
 );
 
@@ -120,7 +134,7 @@ const Form = props => {
       steps={{
         1: <General key={1} {...props} />,
         2: <Body key={2} {...props} />,
-        3: <Face key={3} {...props} />,
+        3: <Hair key={3} {...props} />,
       }}
     />
   );
