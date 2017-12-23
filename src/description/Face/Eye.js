@@ -1,7 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
-import { GithubPicker } from 'react-color';
+import Color from './../components/Color.js';
 
 const Eye = ({ selects, values, onChange, side }) => {
   const identifier = {
@@ -10,16 +9,12 @@ const Eye = ({ selects, values, onChange, side }) => {
   };
   return (
     <div>
-      <TextField
-        floatingLabelText="Color"
-        onChange={onChange}
-        value={selects.eyeColors.name[selects.eyeColors.hex.indexOf(values[identifier.color])]}
-        disabled
-      />
-      <GithubPicker
-        onChange={({ hex: value }) => onChange({ target: { name: identifier.color, value } })}
-        colors={selects.eyeColors.hex}
-      />
+    <Color
+      name={identifier.color}
+      values={values}
+      onChange={onChange}
+      colors={selects.eyeColors}
+    />
       <br />
       <Checkbox
         label="Lenses"

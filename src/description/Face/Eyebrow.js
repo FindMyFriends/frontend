@@ -1,7 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
-import { GithubPicker } from 'react-color';
+import Color from './../components/Color.js';
 
 const Eyebrow = ({ selects, values, onChange }) => (
   <div>
@@ -16,15 +15,11 @@ const Eyebrow = ({ selects, values, onChange }) => (
       value={values['face.eyebrow.care']}
       onChange={onChange}
     />
-    <TextField
-      floatingLabelText="Color"
+    <Color
+      name="face.eyebrow.color"
+      values={values}
       onChange={onChange}
-      value={selects.eyebrowColors.name[selects.eyebrowColors.hex.indexOf(values['face.eyebrow.color'])]}
-      disabled
-    />
-    <GithubPicker
-      onChange={({ hex: value }) => onChange({ target: { name: 'face.eyebrow.color', value } })}
-      colors={selects.eyebrowColors.hex}
+      colors={selects.eyebrowColors}
     />
     <br />
   </div>

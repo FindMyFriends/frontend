@@ -1,9 +1,8 @@
 import React from 'react';
-import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
-import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
-import { GithubPicker } from 'react-color';
+import LengthWithUnit from './components/LengthWithUnit.js';
+import Color from './components/Color.js';
 
 const Hair = ({ selects, values, onChange }) => (
   <div>
@@ -16,33 +15,19 @@ const Hair = ({ selects, values, onChange }) => (
       name="hair.style"
     />
     <br />
-    <TextField
-      floatingLabelText="Color"
+    <Color
+      name="hair.color"
+      colors={selects.hairColors}
       onChange={onChange}
-      value={selects.hairColors.name[selects.hairColors.hex.indexOf(values['hair.color'])]}
-      disabled
-    />
-    <GithubPicker
-      onChange={({ hex: value }) => onChange({ target: { name: 'hair.color', value } })}
-      colors={selects.hairColors.hex}
+      values={values}
     />
     <br />
-    <TextField
-      type="number"
-      floatingLabelText="Length"
+    <LengthWithUnit
+      name="hair.length"
+      values={values}
       onChange={onChange}
-      name="hair.length.value"
-      value={values['hair.length.value']}
+      units={selects.lengthUnits}
     />
-    <br />
-    <SelectField
-      floatingLabelText="Unit"
-      onChange={(event, index, value) => onChange({ target: { name: 'hair.length.unit', value} })}
-      value={values['hair.length.unit']}
-      name="hair.length.unit"
-    >
-    {selects.lengthUnits.map(unit => <MenuItem key={unit} value={unit} primaryText={unit} />)}
-    </SelectField>
     <br />
     <Checkbox
       label="Highlights"
