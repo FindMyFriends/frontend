@@ -9,7 +9,7 @@ import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    step: 7,
+    step: 5,
     demand: {
       general: {
         firstname: 'Dominik',
