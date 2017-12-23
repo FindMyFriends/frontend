@@ -84,6 +84,24 @@ export const skinColors = () => (dispatch) => {
     .then(schema => dispatch(receivedProperty('skinColors', schema.properties.body.properties.skin_color.properties.name.enum)));
 };
 
+export const lengthUnits = () => (dispatch) => {
+  dispatch(requestedProperty('lengthUnits'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('lengthUnits', schema.properties.hair.properties.length.properties.unit.enum.filter(unit => unit))));
+};
+
+export const shapes = () => (dispatch) => {
+  dispatch(requestedProperty('shapes'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('shapes', schema.properties.face.properties.shape.enum.filter(shape => shape))));
+};
+
+export const ratings = () => (dispatch) => {
+  dispatch(requestedProperty('ratings'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('ratings', schema.definitions.rating)));
+};
+
 export const hairColors = () => (dispatch) => {
   dispatch(requestedProperty('hairColors'));
   dispatch(schema())
@@ -96,6 +114,63 @@ export const hairColors = () => (dispatch) => {
               .filter(hex => hex)
               .map(hex => `#${hex}`),
             name: schema.properties.hair.properties.color.properties.name.enum
+              .filter(name => name),
+          }
+        )
+      );
+    });
+};
+
+export const beardColors = () => (dispatch) => {
+  dispatch(requestedProperty('beardColors'));
+  dispatch(schema())
+    .then(schema => {
+      return dispatch(
+        receivedProperty(
+          'beardColors',
+          {
+            hex: schema.properties.face.properties.beard.properties.color.properties.hex.enum
+              .filter(hex => hex)
+              .map(hex => `#${hex}`),
+            name: schema.properties.face.properties.beard.properties.color.properties.name.enum
+              .filter(name => name),
+          }
+        )
+      );
+    });
+};
+
+export const eyebrowColors = () => (dispatch) => {
+  dispatch(requestedProperty('eyebrowColors'));
+  dispatch(schema())
+    .then(schema => {
+      return dispatch(
+        receivedProperty(
+          'eyebrowColors',
+          {
+            hex: schema.properties.face.properties.eyebrow.properties.color.properties.hex.enum
+              .filter(hex => hex)
+              .map(hex => `#${hex}`),
+            name: schema.properties.face.properties.eyebrow.properties.color.properties.name.enum
+              .filter(name => name),
+          }
+        )
+      );
+    });
+};
+
+export const eyeColors = () => (dispatch) => {
+  dispatch(requestedProperty('eyeColors'));
+  dispatch(schema())
+    .then(schema => {
+      return dispatch(
+        receivedProperty(
+          'eyeColors',
+          {
+            hex: schema.definitions.eye.properties.color.properties.hex.enum
+              .filter(hex => hex)
+              .map(hex => `#${hex}`),
+            name: schema.definitions.eye.properties.color.properties.name.enum
               .filter(name => name),
           }
         )
