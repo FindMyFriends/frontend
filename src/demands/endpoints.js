@@ -109,13 +109,7 @@ export const hairColors = () => (dispatch) => {
       return dispatch(
         receivedProperty(
           'hairColors',
-          {
-            hex: schema.properties.hair.properties.color.properties.hex.enum
-              .filter(hex => hex)
-              .map(hex => `#${hex}`),
-            name: schema.properties.hair.properties.color.properties.name.enum
-              .filter(name => name),
-          }
+          colorEnum(schema.properties.hair.properties.color)
         )
       );
     });
@@ -128,13 +122,7 @@ export const beardColors = () => (dispatch) => {
       return dispatch(
         receivedProperty(
           'beardColors',
-          {
-            hex: schema.properties.face.properties.beard.properties.color.properties.hex.enum
-              .filter(hex => hex)
-              .map(hex => `#${hex}`),
-            name: schema.properties.face.properties.beard.properties.color.properties.name.enum
-              .filter(name => name),
-          }
+          colorEnum(schema.properties.face.properties.beard.properties.color)
         )
       );
     });
@@ -147,13 +135,7 @@ export const eyebrowColors = () => (dispatch) => {
       return dispatch(
         receivedProperty(
           'eyebrowColors',
-          {
-            hex: schema.properties.face.properties.eyebrow.properties.color.properties.hex.enum
-              .filter(hex => hex)
-              .map(hex => `#${hex}`),
-            name: schema.properties.face.properties.eyebrow.properties.color.properties.name.enum
-              .filter(name => name),
-          }
+          colorEnum(schema.properties.face.properties.eyebrow.properties.color)
         )
       );
     });
@@ -166,14 +148,31 @@ export const eyeColors = () => (dispatch) => {
       return dispatch(
         receivedProperty(
           'eyeColors',
-          {
-            hex: schema.definitions.eye.properties.color.properties.hex.enum
-              .filter(hex => hex)
-              .map(hex => `#${hex}`),
-            name: schema.definitions.eye.properties.color.properties.name.enum
-              .filter(name => name),
-          }
+          colorEnum(schema.definitions.eye.properties.color)
         )
       );
     });
+};
+
+export const nailColors = () => (dispatch) => {
+  dispatch(requestedProperty('nailColors'));
+  dispatch(schema())
+    .then(schema => {
+      return dispatch(
+        receivedProperty(
+          'nailColors',
+          colorEnum(schema.properties.hands.properties.nails.properties.color)
+        )
+      );
+    });
+};
+
+const colorEnum = color => {
+  return {
+    hex: color.properties.hex.enum
+      .filter(hex => hex)
+      .map(hex => `#${hex}`),
+    name: color.properties.name.enum
+      .filter(name => name),
+    }
 };

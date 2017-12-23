@@ -10,6 +10,8 @@ import FaceEye from './../description/Face/Eye.js';
 import FaceBeard from './../description/Face/Beard.js';
 import Teeth from './../description/Face/Teeth.js';
 import HandsGeneral from './../description/Hands/General.js';
+import HandsNails from './../description/Hands/Nails.js';
+import HandsHair from './../description/Hands/Hair.js';
 
 const GENERAL = 1,
   BODY = 2,
@@ -19,7 +21,9 @@ const GENERAL = 1,
   FACE_EYEBROW = 6,
   FACE_EYES = 7,
   TEETH = 8,
-  HANDS_GENERAL = 9;
+  HANDS_GENERAL = 9,
+  HANDS_NAILS = 10,
+  HANDS_HAIR = 11;
 
 const Current = ({ step, label, onTurn, steps, ...rest }) => {
   const last = step === Math.max(Object.keys(steps)),
@@ -42,6 +46,8 @@ const Form = props => {
     [FACE_EYES]: <FaceEye key={FACE_EYES} {...props} />,
     [TEETH]: <Teeth key={TEETH} {...props} />,
     [HANDS_GENERAL]: <HandsGeneral key={HANDS_GENERAL} {...props} />,
+    [HANDS_NAILS]: <HandsNails key={HANDS_NAILS} {...props} />,
+    [HANDS_HAIR]: <HandsHair key={HANDS_HAIR} {...props} />,
   };
   if (props.values['general.gender'] === 'woman') {
     delete steps[FACE_BEARD];
