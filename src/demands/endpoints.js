@@ -45,7 +45,7 @@ export const reconsider = (id, demand, etag) => (dispatch) => {
     .then(response => dispatch(receivedReconsideration(id, response.data)));
 };
 
-const schema = (method = 'GET') => (dispatch) => {
+const schema = (method = 'GET') => (dispatch, getState) => {
   dispatch(requestedSchema(method.toUpperCase()));
   return axios.get(`schema/v1/demand/${method.toLowerCase()}.json`)
     .then((response) => {

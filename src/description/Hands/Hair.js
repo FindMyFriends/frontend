@@ -12,7 +12,6 @@ const Hair = ({ selects, values, onChange }) => (
       colors={selects.nailColors}
     />
     <br />
-    <br />
     <p><span>{'Amount'}</span></p>
     <Rating
       name="hands.hair.amount"
