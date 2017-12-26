@@ -33,19 +33,19 @@ const Hair = ({ selects, values, onChange }) => (
     <Checkbox
       label="Highlights"
       name="hair.highlights"
-      value={values['hair.highlights']}
+      checked={values['hair.highlights']}
     />
     <br />
     <Checkbox
       label="Roots"
       name="hair.roots"
-      value={values['hair.roots']}
+      checked={values['hair.roots']}
     />
     <br />
     <Checkbox
       label="Nature"
       name="hair.nature"
-      value={values['hair.nature']}
+      checked={values['hair.nature']}
     />
     <br />
   </div>

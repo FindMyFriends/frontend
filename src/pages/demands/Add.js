@@ -8,7 +8,7 @@ import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    step: 10,
+    step: 3,
     demand: {
       general: {
         firstname: 'Dominik',
@@ -21,12 +21,41 @@ class Add extends React.Component {
       },
       body: {
         build: 'skinny',
-        skin: 'white',
+        skin: 'White',
         weight: 60,
         height: 181,
       },
       hair: {
         style: 'normal',
+        color: '#000000',
+        length: {
+          value: 5,
+          unit: 'cm'
+        },
+        highlights: false,
+        roots: false,
+        nature: true,
+      },
+      face: {
+        care: 8,
+        shape: 'oval',
+        beard: {
+          color: '#000000',
+          length: {
+            value: 2,
+            unit: 'mm'
+          },
+        },
+        eyebrow: {
+          care: 7,
+          color: '#000000',
+        },
+        eye: {
+          left: {
+            color: 'Blue',
+            lenses: true,
+          }
+        }
       },
     },
   };
@@ -114,7 +143,7 @@ export default connect(state => ({
   eyebrowColors: state.demandSchema.eyebrowColors || { hex: [], name: [] },
   eyeColors: state.demandSchema.eyeColors || { hex: [], name: [] },
   nailColors: state.demandSchema.nailColors || { hex: [], name: [] },
-  ratings: state.demandSchema.ratings || { minimum: 0, maximum: 1 },
+  ratings: state.demandSchema.ratings || { minimum: 0, maximum: 10 },
   lengthUnits: state.demandSchema.lengthUnits || [],
   shapes: state.demandSchema.shapes || [],
 }))(Add);

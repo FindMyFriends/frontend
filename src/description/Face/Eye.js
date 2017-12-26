@@ -7,8 +7,8 @@ const Eye = ({
   selects, values, onChange, side,
 }) => {
   const identifier = {
-    color: `face.${side}_eye.color`,
-    lenses: `face.${side}_eye.lenses`,
+    color: `face.eye.${side}.color`,
+    lenses: `face.eye.${side}.lenses`,
   };
   return (
     <div>
@@ -22,7 +22,7 @@ const Eye = ({
       <Checkbox
         label="Lenses"
         name={identifier.lenses}
-        value={values[identifier.lenses]}
+        checked={values[identifier.lenses]}
       />
       <br />
     </div>

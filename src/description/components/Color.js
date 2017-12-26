@@ -10,7 +10,7 @@ const Color = ({
     <TextField
       floatingLabelText="Color"
       onChange={onChange}
-      value={colors.name[colors.hex.indexOf(values[name])]}
+      value={values[name]}
       disabled
     />
     <GithubPicker
