@@ -28,7 +28,7 @@ const HANDS_HAIR = 11;
 const Current = ({
   step, label, onTurn, steps, ...rest
 }) => {
-  const last = step === Math.max(Object.keys(steps));
+  const last = step === Object.values(steps).length;
   const first = step === 1;
   return [
     steps[step],

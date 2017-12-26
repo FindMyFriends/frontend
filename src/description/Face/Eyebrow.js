@@ -17,7 +17,7 @@ const Eyebrow = ({ selects, values, onChange }) => (
       onChange={onChange}
     />
     <Color
-      name="face.eyebrow.color"
+      name="face.eyebrow.color_id"
       values={values}
       onChange={onChange}
       colors={selects.eyebrowColors}

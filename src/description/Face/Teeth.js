@@ -19,7 +19,7 @@ const Teeth = ({ selects, values, onChange }) => (
     <Checkbox
       label="Braces"
       name="face.teeth.braces"
-      value={values['face.teeth.braces']}
+      checked={values['face.teeth.braces']}
     />
     <br />
   </div>

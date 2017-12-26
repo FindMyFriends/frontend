@@ -7,7 +7,7 @@ const Hair = ({ selects, values, onChange }) => (
   <div>
     <h3>Hand hair</h3>
     <Color
-      name="hands.hair.color"
+      name="hands.hair.color_id"
       values={values}
       onChange={onChange}
       colors={selects.nailColors}

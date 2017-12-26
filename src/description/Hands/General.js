@@ -1,37 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slider from 'material-ui/Slider';
+import Rating from './../components/Rating';
 
 const General = ({ selects, values, onChange }) => (
   <div>
     <h2>Hands</h2>
     <h3>General</h3>
     <p><span>Care</span></p>
-    <Slider
-      style={{ width: 200 }}
-      min={selects.ratings.minimum}
-      max={selects.ratings.maximum}
-      step={1}
-      value={values['hands.care']}
+    <Rating
+      name="hands.care"
       onChange={onChange}
+      values={values}
+      ratings={selects.ratings}
     />
     <p><span>Vein visibility</span></p>
-    <Slider
-      style={{ width: 200 }}
-      min={selects.ratings.minimum}
-      max={selects.ratings.maximum}
-      step={1}
-      value={values['hands.vein_visibility']}
+    <Rating
+      name="hands.vein_visibility"
       onChange={onChange}
+      values={values}
+      ratings={selects.ratings}
     />
     <p><span>Joint visibility</span></p>
-    <Slider
-      style={{ width: 200 }}
-      min={selects.ratings.minimum}
-      max={selects.ratings.maximum}
-      step={1}
-      value={values['hands.joint_visibility']}
+    <Rating
+      name="hands.joint_visibility"
       onChange={onChange}
+      values={values}
+      ratings={selects.ratings}
     />
     <br />
   </div>

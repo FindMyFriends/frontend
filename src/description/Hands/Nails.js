@@ -8,7 +8,7 @@ const Nails = ({ selects, values, onChange }) => (
   <div>
     <h3>Nails</h3>
     <Color
-      name="hands.nails.color"
+      name="hands.nails.color_id"
       values={values}
       onChange={onChange}
       colors={selects.nailColors}

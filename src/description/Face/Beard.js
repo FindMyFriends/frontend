@@ -8,7 +8,7 @@ const Beard = ({ selects, values, onChange }) => (
     <h2>Face</h2>
     <h3>Beard</h3>
     <Color
-      name="face.beard.color"
+      name="face.beard.color_id"
       values={values}
       onChange={onChange}
       colors={selects.beardColors}

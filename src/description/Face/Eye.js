@@ -7,13 +7,13 @@ const Eye = ({
   selects, values, onChange, side,
 }) => {
   const identifier = {
-    color: `face.eye.${side}.color`,
+    color_id: `face.eye.${side}.color_id`,
     lenses: `face.eye.${side}.lenses`,
   };
   return (
     <div>
       <Color
-        name={identifier.color}
+        name={identifier.color_id}
         values={values}
         onChange={onChange}
         colors={selects.eyeColors}

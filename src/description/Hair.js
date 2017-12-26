@@ -17,7 +17,7 @@ const Hair = ({ selects, values, onChange }) => (
     />
     <br />
     <Color
-      name="hair.color"
+      name="hair.color_id"
       colors={selects.hairColors}
       onChange={onChange}
       values={values}

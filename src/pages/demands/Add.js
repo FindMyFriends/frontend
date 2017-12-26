@@ -8,7 +8,7 @@ import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    step: 3,
+    step: 11,
     demand: {
       general: {
         firstname: 'Dominik',
@@ -27,7 +27,7 @@ class Add extends React.Component {
       },
       hair: {
         style: 'normal',
-        color: '#000000',
+        color_id: 8,
         length: {
           value: 5,
           unit: 'cm'
@@ -40,7 +40,7 @@ class Add extends React.Component {
         care: 8,
         shape: 'oval',
         beard: {
-          color: '#000000',
+          color_id: 8,
           length: {
             value: 2,
             unit: 'mm'
@@ -48,15 +48,40 @@ class Add extends React.Component {
         },
         eyebrow: {
           care: 7,
-          color: '#000000',
+          color_id: 8,
         },
         eye: {
           left: {
-            color: 'Blue',
+            color_id: 8,
             lenses: true,
-          }
-        }
+          },
+          right: {
+            color_id: 8,
+            lenses: true,
+          },
+        },
+        teeth: {
+          care: 6,
+          braces: false,
+        },
       },
+      hands: {
+        care: 9,
+        vein_visibility: 5,
+        joint_visibility: 8,
+        nails: {
+          color_id: 8,
+          length: {
+            value: 1,
+            unit: 'cm'
+          },
+          care: 4,
+        },
+        hair: {
+          amount: 3,
+          color_id: 8,
+        }
+      }
     },
   };
 

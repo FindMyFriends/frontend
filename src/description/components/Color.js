@@ -3,6 +3,24 @@ import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import { GithubPicker } from 'react-color';
 
+const ID_COLORS = {
+  8: {
+    name: 'Black',
+  },
+  10: {
+    name: 'Blue',
+  }
+};
+
+const HEX_COLORS = {
+  '#000000': {
+    id: 8,
+  },
+  '#0000ff': {
+    id: 10,
+  },
+};
+
 const Color = ({
   colors, name, onChange, values,
 }) => (
@@ -10,11 +28,11 @@ const Color = ({
     <TextField
       floatingLabelText="Color"
       onChange={onChange}
-      value={values[name]}
+      value={ID_COLORS[values[name]].name}
       disabled
     />
     <GithubPicker
-      onChange={({ hex: value }) => onChange({ target: { name, value } })}
+      onChange={({ hex: value }) => onChange({ target: { name, value: HEX_COLORS[value].id } })}
       colors={colors.hex}
     />
   </div>
