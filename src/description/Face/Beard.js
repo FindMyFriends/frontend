@@ -1,6 +1,7 @@
 import React from 'react';
-import LengthWithUnit from './../components/LengthWithUnit.js';
-import Color from './../components/Color.js';
+import PropTypes from 'prop-types';
+import LengthWithUnit from './../components/LengthWithUnit';
+import Color from './../components/Color';
 
 const Beard = ({ selects, values, onChange }) => (
   <div>
@@ -22,5 +23,11 @@ const Beard = ({ selects, values, onChange }) => (
     <br />
   </div>
 );
+
+Beard.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default Beard;

@@ -1,41 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-import General from './../description/General.js';
-import Body from './../description/Body.js';
-import Hair from './../description/Hair.js';
-import FaceGeneral from './../description/Face/General.js';
-import FaceEyebrow from './../description/Face/Eyebrow.js';
-import FaceEye from './../description/Face/Eye.js';
-import FaceBeard from './../description/Face/Beard.js';
-import Teeth from './../description/Face/Teeth.js';
-import HandsGeneral from './../description/Hands/General.js';
-import HandsNails from './../description/Hands/Nails.js';
-import HandsHair from './../description/Hands/Hair.js';
+import General from './../description/General';
+import Body from './../description/Body';
+import Hair from './../description/Hair';
+import FaceGeneral from './../description/Face/General';
+import FaceEyebrow from './../description/Face/Eyebrow';
+import FaceEye from './../description/Face/Eye';
+import FaceBeard from './../description/Face/Beard';
+import Teeth from './../description/Face/Teeth';
+import HandsGeneral from './../description/Hands/General';
+import HandsNails from './../description/Hands/Nails';
+import HandsHair from './../description/Hands/Hair';
 
-const GENERAL = 1,
-  BODY = 2,
-  HAIR = 3,
-  FACE_GENERAL = 4,
-  FACE_BEARD = 5,
-  FACE_EYEBROW = 6,
-  FACE_EYES = 7,
-  TEETH = 8,
-  HANDS_GENERAL = 9,
-  HANDS_NAILS = 10,
-  HANDS_HAIR = 11;
+const GENERAL = 1;
+const BODY = 2;
+const HAIR = 3;
+const FACE_GENERAL = 4;
+const FACE_BEARD = 5;
+const FACE_EYEBROW = 6;
+const FACE_EYES = 7;
+const TEETH = 8;
+const HANDS_GENERAL = 9;
+const HANDS_NAILS = 10;
+const HANDS_HAIR = 11;
 
-const Current = ({ step, label, onTurn, steps, ...rest }) => {
-  const last = step === Math.max(Object.keys(steps)),
-    first = step === 1;
+const Current = ({
+  step, label, onTurn, steps, ...rest
+}) => {
+  const last = step === Math.max(Object.keys(steps));
+  const first = step === 1;
   return [
     steps[step],
     first || <RaisedButton key="previous" onClick={() => onTurn(-1)} label="Previous" primary />,
-    <RaisedButton key="next|submit" onClick={last ? rest.onSubmit : () => onTurn(+1)} label={last ? label : 'Next'} primary />
+    <RaisedButton key="next|submit" onClick={last ? rest.onSubmit : () => onTurn(+1)} label={last ? label : 'Next'} primary />,
   ];
 };
 
-const Form = props => {
+const Form = (props) => {
   const steps = {
     [GENERAL]: <General key={GENERAL} {...props} />,
     [BODY]: <Body key={BODY} {...props} />,
@@ -52,7 +54,7 @@ const Form = props => {
   if (props.values['general.gender'] === 'woman') {
     delete steps[FACE_BEARD];
   }
-  return <Current {...props} steps={steps} />
+  return <Current {...props} steps={steps} />;
 };
 
 Form.propTypes = {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Pagination = ({ pages, page, onChange }) => {
+const Pagination = ({ pages }) => {
   const { first, last } = pages;
   if (first.page === last.page) {
     return null;
@@ -10,8 +10,6 @@ const Pagination = ({ pages, page, onChange }) => {
 
 Pagination.propTypes = {
   pages: PropTypes.object.isRequired,
-  page: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Pagination;

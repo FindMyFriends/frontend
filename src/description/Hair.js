@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
-import LengthWithUnit from './components/LengthWithUnit.js';
-import Color from './components/Color.js';
+import LengthWithUnit from './components/LengthWithUnit';
+import Color from './components/Color';
 
 const Hair = ({ selects, values, onChange }) => (
   <div>
@@ -49,5 +50,11 @@ const Hair = ({ selects, values, onChange }) => (
     <br />
   </div>
 );
+
+Hair.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default Hair;

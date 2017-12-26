@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
@@ -15,20 +16,20 @@ const General = ({ selects, values, onChange }) => (
     <br />
     <SelectField
       floatingLabelText="Gender"
-      onChange={(event, index, value) => onChange({ target: { name: 'general.gender', value} })}
+      onChange={(event, index, value) => onChange({ target: { name: 'general.gender', value } })}
       value={values['general.gender']}
       name="general.gender"
     >
-    {selects.genders.map(gender => <MenuItem key={gender} value={gender} primaryText={gender} />)}
+      {selects.genders.map(gender => <MenuItem key={gender} value={gender} primaryText={gender} />)}
     </SelectField>
     <br />
     <SelectField
       floatingLabelText="Race"
-      onChange={(event, index, value) => onChange({ target: { name: 'general.race', value} })}
+      onChange={(event, index, value) => onChange({ target: { name: 'general.race', value } })}
       value={values['general.race']}
       name="general.race"
     >
-    {selects.races.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
+      {selects.races.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
     </SelectField>
     <br />
     <TextField
@@ -48,5 +49,11 @@ const General = ({ selects, values, onChange }) => (
     />
   </div>
 );
+
+General.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default General;

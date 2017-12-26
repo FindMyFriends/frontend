@@ -1,6 +1,7 @@
 import React from 'react';
-import Color from './../components/Color.js';
-import Rating from './../components/Rating.js';
+import PropTypes from 'prop-types';
+import Color from './../components/Color';
+import Rating from './../components/Rating';
 
 const Hair = ({ selects, values, onChange }) => (
   <div>
@@ -12,7 +13,7 @@ const Hair = ({ selects, values, onChange }) => (
       colors={selects.nailColors}
     />
     <br />
-    <p><span>{'Amount'}</span></p>
+    <p><span>Amount</span></p>
     <Rating
       name="hands.hair.amount"
       onChange={onChange}
@@ -21,5 +22,11 @@ const Hair = ({ selects, values, onChange }) => (
     />
   </div>
 );
+
+Hair.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default Hair;

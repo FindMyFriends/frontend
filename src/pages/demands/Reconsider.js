@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import extend from 'extend';
-import { unflatten as unflat } from 'flat';
+import flat, * as f from 'flat';
 import * as R from 'ramda';
-import flat from 'flat';
 import Form from './../../demands/Form';
 import { reconsider, genders, races, ages, single } from './../../demands/endpoints';
 import validatedDemand from './../../demands/rules';
@@ -51,7 +50,7 @@ class Reconsider extends React.Component {
         true,
         {},
         demand,
-        validatedDemand(unflat(this.state.demand), { genders, races, ages }),
+        validatedDemand(f.unflatten(this.state.demand), { genders, races, ages }),
       ),
       etag,
     ));

@@ -1,7 +1,8 @@
 import React from 'react';
-import Color from './../components/Color.js';
-import LengthWithUnit from './../components/LengthWithUnit.js';
-import Rating from './../components/Rating.js';
+import PropTypes from 'prop-types';
+import Color from './../components/Color';
+import LengthWithUnit from './../components/LengthWithUnit';
+import Rating from './../components/Rating';
 
 const Nails = ({ selects, values, onChange }) => (
   <div>
@@ -20,7 +21,7 @@ const Nails = ({ selects, values, onChange }) => (
       units={selects.lengthUnits}
     />
     <br />
-    <p><span>{'Care'}</span></p>
+    <p><span>Care</span></p>
     <Rating
       name="hands.nails.care"
       onChange={onChange}
@@ -29,5 +30,11 @@ const Nails = ({ selects, values, onChange }) => (
     />
   </div>
 );
+
+Nails.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default Nails;

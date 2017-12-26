@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'material-ui/Slider';
-import Color from './../components/Color.js';
+import Color from './../components/Color';
 
 const Eyebrow = ({ selects, values, onChange }) => (
   <div>
     <h2>Face</h2>
     <h3>Eyebrow</h3>
-    <p><span>{'Care'}</span></p>
+    <p><span>Care</span></p>
     <Slider
-      style={{width: 200}}
+      style={{ width: 200 }}
       min={selects.ratings.minimum}
       max={selects.ratings.maximum}
       step={1}
@@ -24,5 +25,11 @@ const Eyebrow = ({ selects, values, onChange }) => (
     <br />
   </div>
 );
+
+Eyebrow.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
 
 export default Eyebrow;

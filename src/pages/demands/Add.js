@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Form from './../../demands/Form';
-import flat from 'flat';
-import { unflatten as unflat } from 'flat';
+import flat, * as f from 'flat';
 import { add, genders, races, ages, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors } from './../../demands/endpoints';
+import Form from './../../demands/Form';
 import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
@@ -18,7 +17,7 @@ class Add extends React.Component {
         age: {
           from: 18,
           to: 22,
-        }
+        },
       },
       body: {
         build: 'skinny',
@@ -28,8 +27,8 @@ class Add extends React.Component {
       },
       hair: {
         style: 'normal',
-      }
-    }
+      },
+    },
   };
 
   componentDidMount() {
@@ -59,13 +58,14 @@ class Add extends React.Component {
         [event.target.name]: event.target.value,
       },
     });
-    console.log(this.state);
   }
 
   handleSubmit(event) {
-    const { genders, races, ages, dispatch } = this.props;
+    const {
+      genders, races, ages, dispatch,
+    } = this.props;
     dispatch(add(validatedDemand(
-      unflat(this.state.demand),
+      f.unflatten(this.state.demand),
       { genders, races, ages },
     )));
     event.preventDefault();
@@ -86,7 +86,7 @@ class Add extends React.Component {
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
           onTurn={this.handleTurn}
-          selects={{...this.props}}
+          selects={{ ...this.props }}
           values={flat(this.state.demand)}
           step={this.state.step}
           label="Add"
@@ -101,16 +101,6 @@ Add.propTypes = {
   genders: PropTypes.array.isRequired,
   races: PropTypes.array.isRequired,
   ages: PropTypes.object.isRequired,
-  bodyBuilds: PropTypes.array.isRequired,
-  skinColors: PropTypes.array.isRequired,
-  hairColors: PropTypes.object.isRequired,
-  beardColors: PropTypes.object.isRequired,
-  eyebrowColors: PropTypes.object.isRequired,
-  eyeColors: PropTypes.object.isRequired,
-  nailColors: PropTypes.object.isRequired,
-  ratings: PropTypes.object.isRequired,
-  lengthUnits: PropTypes.array.isRequired,
-  shapes: PropTypes.array.isRequired,
 };
 
 export default connect(state => ({
