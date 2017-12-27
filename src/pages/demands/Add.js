@@ -30,7 +30,7 @@ class Add extends React.Component {
         color_id: 8,
         length: {
           value: 5,
-          unit: 'cm'
+          unit: 'cm',
         },
         highlights: false,
         roots: false,
@@ -43,7 +43,7 @@ class Add extends React.Component {
           color_id: 8,
           length: {
             value: 2,
-            unit: 'mm'
+            unit: 'mm',
           },
         },
         eyebrow: {
@@ -73,15 +73,15 @@ class Add extends React.Component {
           color_id: 8,
           length: {
             value: 1,
-            unit: 'cm'
+            unit: 'cm',
           },
           care: 4,
         },
         hair: {
           amount: 3,
           color_id: 8,
-        }
-      }
+        },
+      },
     },
   };
 
