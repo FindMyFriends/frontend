@@ -8,7 +8,7 @@ import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
-    step: 11,
+    step: 12,
     demand: {
       general: {
         firstname: 'Dominik',
@@ -81,6 +81,16 @@ class Add extends React.Component {
           amount: 3,
           color_id: 8,
         },
+      },
+      location: {
+        coordinates: {
+          latitude: 50.5,
+          longitude: 50.6,
+        },
+        met_at: {
+          from: '2017-01-01T13:58:10+00:00',
+          to: '2017-01-01T16:58:10+00:00',
+        }
       },
     },
   };
