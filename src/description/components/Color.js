@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import { GithubPicker } from 'react-color';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const ID_COLORS = {
   8: {
@@ -13,10 +13,10 @@ const ID_COLORS = {
 };
 
 const HEX_COLORS = {
-  '#000000': {
+  Black: {
     id: 8,
   },
-  '#0000ff': {
+  Blue: {
     id: 10,
   },
 };
@@ -25,16 +25,14 @@ const Color = ({
   colors, name, onChange, values,
 }) => (
   <div>
-    <TextField
+    <SelectField
       floatingLabelText="Color"
-      onChange={onChange}
+      onChange={(event, index, value) => onChange({ target: { name, value: HEX_COLORS[value].id } })}
       value={ID_COLORS[values[name]].name}
-      disabled
-    />
-    <GithubPicker
-      onChange={({ hex: value }) => onChange({ target: { name, value: HEX_COLORS[value].id } })}
-      colors={colors.hex}
-    />
+      name={name}
+    >
+      {colors.name.map(name => <MenuItem style={{color: 'blue'}} key={name} value={name} primaryText={name} />)}
+    </SelectField>
   </div>
 );
 
