@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import { add, genders, races, ages, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors } from './../../demands/endpoints';
 import Form from './../../demands/Form';
-import validatedDemand from './../../demands/rules';
 
 class Add extends React.Component {
   state = {
@@ -12,16 +11,17 @@ class Add extends React.Component {
     demand: {
       general: {
         firstname: 'Dominik',
+        lastname: null,
         gender: 'man',
-        race: 'asian',
+        race_id: 1, // translate
         age: {
           from: 18,
           to: 22,
         },
       },
       body: {
-        build: 'skinny',
-        skin: 'White',
+        build_id: 1, // translate
+        skin_color_id: 8, // translate
         weight: 60,
         height: 181,
       },
@@ -37,9 +37,11 @@ class Add extends React.Component {
         nature: true,
       },
       face: {
+        freckles: false,
         care: 8,
         shape: 'oval',
         beard: {
+          style: null,
           color_id: 8,
           length: {
             value: 2,
@@ -90,7 +92,7 @@ class Add extends React.Component {
         met_at: {
           from: '2017-01-01T13:58:10+00:00',
           to: '2017-01-01T16:58:10+00:00',
-        }
+        },
       },
     },
   };
@@ -128,10 +130,7 @@ class Add extends React.Component {
     const {
       genders, races, ages, dispatch,
     } = this.props;
-    dispatch(add(validatedDemand(
-      f.unflatten(this.state.demand),
-      { genders, races, ages },
-    )));
+    dispatch(add(f.unflatten(this.state.demand), { genders, races, ages }));
     event.preventDefault();
   }
 

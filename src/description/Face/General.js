@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
+import Checkbox from 'material-ui/Checkbox';
 
 const General = ({ selects, values, onChange }) => (
   <div>
@@ -18,6 +19,11 @@ const General = ({ selects, values, onChange }) => (
       step={1}
       value={values['face.care']}
       onChange={onChange}
+    />
+    <Checkbox
+      label="Freckles"
+      name="face.freckles"
+      checked={values['face.freckles']}
     />
     <SelectField
       floatingLabelText="Shape"

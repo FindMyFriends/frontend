@@ -81,8 +81,7 @@ export const bodyBuilds = () => (dispatch) => {
 const colorEnum = (color) => {
   return {
     hex: color.properties.hex.enum
-      .filter(hex => hex)
-      .map(hex => `#${hex}`),
+      .filter(hex => hex),
     name: color.properties.name.enum
       .filter(name => name),
   };

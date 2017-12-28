@@ -9,7 +9,7 @@ const ID_COLORS = {
   },
   10: {
     name: 'Blue',
-  }
+  },
 };
 
 const HEX_COLORS = {
@@ -27,11 +27,13 @@ const Color = ({
   <div>
     <SelectField
       floatingLabelText="Color"
-      onChange={(event, index, value) => onChange({ target: { name, value: HEX_COLORS[value].id } })}
+      onChange={
+        (event, index, value) => onChange({ target: { name, value: HEX_COLORS[value].id } })
+      }
       value={ID_COLORS[values[name]].name}
       name={name}
     >
-      {colors.name.map(name => <MenuItem style={{color: 'blue'}} key={name} value={name} primaryText={name} />)}
+      {colors.name.map(name => <MenuItem style={{ color: 'blue' }} key={name} value={name} primaryText={name} />)}
     </SelectField>
   </div>
 );
