@@ -63,11 +63,105 @@ export const genders = () => (dispatch) => {
 export const races = () => (dispatch) => {
   dispatch(requestedProperty('races'));
   dispatch(schema())
-    .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.enum)));
+    .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.properties.value.enum)));
 };
 
 export const ages = () => (dispatch) => {
-  dispatch(requestedProperty('races'));
+  dispatch(requestedProperty('ages'));
   dispatch(schema())
     .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
+};
+
+export const bodyBuilds = () => (dispatch) => {
+  dispatch(requestedProperty('bodyBuilds'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('bodyBuilds', schema.properties.body.properties.build.properties.value.enum)));
+};
+
+const colorEnum = (color) => {
+  return {
+    hex: color.properties.hex.enum
+      .filter(hex => hex),
+    name: color.properties.name.enum
+      .filter(name => name),
+  };
+};
+
+export const skinColors = () => (dispatch) => {
+  dispatch(requestedProperty('skinColors'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('skinColors', schema.properties.body.properties.skin_color.properties.name.enum)));
+};
+
+export const lengthUnits = () => (dispatch) => {
+  dispatch(requestedProperty('lengthUnits'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('lengthUnits', schema.properties.hair.properties.length.properties.unit.enum.filter(unit => unit))));
+};
+
+export const shapes = () => (dispatch) => {
+  dispatch(requestedProperty('shapes'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('shapes', schema.properties.face.properties.shape.enum.filter(shape => shape))));
+};
+
+export const ratings = () => (dispatch) => {
+  dispatch(requestedProperty('ratings'));
+  dispatch(schema())
+    .then(schema => dispatch(receivedProperty('ratings', schema.definitions.rating)));
+};
+
+export const hairColors = () => (dispatch) => {
+  dispatch(requestedProperty('hairColors'));
+  dispatch(schema())
+    .then((schema) => {
+      return dispatch(receivedProperty(
+        'hairColors',
+        colorEnum(schema.properties.hair.properties.color),
+      ));
+    });
+};
+
+export const beardColors = () => (dispatch) => {
+  dispatch(requestedProperty('beardColors'));
+  dispatch(schema())
+    .then((schema) => {
+      return dispatch(receivedProperty(
+        'beardColors',
+        colorEnum(schema.properties.face.properties.beard.properties.color),
+      ));
+    });
+};
+
+export const eyebrowColors = () => (dispatch) => {
+  dispatch(requestedProperty('eyebrowColors'));
+  dispatch(schema())
+    .then((schema) => {
+      return dispatch(receivedProperty(
+        'eyebrowColors',
+        colorEnum(schema.properties.face.properties.eyebrow.properties.color),
+      ));
+    });
+};
+
+export const eyeColors = () => (dispatch) => {
+  dispatch(requestedProperty('eyeColors'));
+  dispatch(schema())
+    .then((schema) => {
+      return dispatch(receivedProperty(
+        'eyeColors',
+        colorEnum(schema.definitions.eye.properties.color),
+      ));
+    });
+};
+
+export const nailColors = () => (dispatch) => {
+  dispatch(requestedProperty('nailColors'));
+  dispatch(schema())
+    .then((schema) => {
+      return dispatch(receivedProperty(
+        'nailColors',
+        colorEnum(schema.properties.hands.properties.nails.properties.color),
+      ));
+    });
 };

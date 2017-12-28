@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PageHeader } from 'react-bootstrap';
 import extend from 'extend';
+import flat, * as f from 'flat';
 import * as R from 'ramda';
-import flat from 'flat';
 import Form from './../../demands/Form';
 import { reconsider, genders, races, ages, single } from './../../demands/endpoints';
-import toRequest from './../../demands/toRequest';
 import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
@@ -52,7 +50,7 @@ class Reconsider extends React.Component {
         true,
         {},
         demand,
-        validatedDemand(toRequest(this.state.demand), { genders, races, ages }),
+        validatedDemand(f.unflatten(this.state.demand), { genders, races, ages }),
       ),
       etag,
     ));
@@ -65,7 +63,7 @@ class Reconsider extends React.Component {
     }
     return (
       <div>
-        <PageHeader>Reconsider demand</PageHeader>
+        <h1>Reconsider demand</h1>
         <Form
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}

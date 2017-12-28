@@ -1,32 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Pagination as BootstrapPagination } from 'react-bootstrap';
 
-const Pagination = ({ pages, page, onChange }) => {
+const Pagination = ({ pages }) => {
   const { first, last } = pages;
   if (first.page === last.page) {
     return null;
   }
-  return (
-    <BootstrapPagination
-      prev
-      next
-      first
-      last
-      ellipsis
-      boundaryLinks
-      items={parseInt(last.page, 10)}
-      maxButtons={3}
-      activePage={page}
-      onSelect={onChange}
-    />
-  );
+  return null;
 };
 
 Pagination.propTypes = {
   pages: PropTypes.object.isRequired,
-  page: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Pagination;
