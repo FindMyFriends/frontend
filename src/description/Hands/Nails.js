@@ -4,21 +4,21 @@ import Color from './../components/Color';
 import LengthWithUnit from './../components/LengthWithUnit';
 import Rating from './../components/Rating';
 
-const Nails = ({ selects, values, onChange }) => (
+const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange }) => (
   <div>
     <h3>Nails</h3>
     <Color
       name="hands.nails.color_id"
       values={values}
       onChange={onChange}
-      colors={selects.nailColors}
+      colors={nailColors}
     />
     <br />
     <LengthWithUnit
       name="hands.nails.length"
       values={values}
       onChange={onChange}
-      units={selects.lengthUnits}
+      units={lengthUnits}
     />
     <br />
     <p><span>Care</span></p>
@@ -26,7 +26,7 @@ const Nails = ({ selects, values, onChange }) => (
       name="hands.nails.care"
       onChange={onChange}
       values={values}
-      ratings={selects.ratings}
+      ratings={ratings}
     />
   </div>
 );

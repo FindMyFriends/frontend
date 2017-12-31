@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
+import { onSelectChange } from './../../forms/onChange';
 
 const LengthWithUnit = ({
   name, onChange, units, values,
@@ -18,7 +19,7 @@ const LengthWithUnit = ({
     <br />
     <SelectField
       floatingLabelText="Unit"
-      onChange={(event, index, value) => onChange({ target: { name: `${name}.unit`, value } })}
+      onChange={onSelectChange(onChange, `${name}.unit`)}
       value={values[`${name}.unit`]}
       name={`${name}.unit`}
     >

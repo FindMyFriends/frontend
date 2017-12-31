@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import Slider from 'material-ui/Slider';
 import Color from './../components/Color';
 
-const Eyebrow = ({ selects, values, onChange }) => (
+const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
     <h2>Face</h2>
     <h3>Eyebrow</h3>
     <p><span>Care</span></p>
     <Slider
       style={{ width: 200 }}
-      min={selects.ratings.minimum}
-      max={selects.ratings.maximum}
+      min={ratings.minimum}
+      max={ratings.maximum}
       step={1}
       value={values['face.eyebrow.care']}
       onChange={onChange}
@@ -20,7 +20,7 @@ const Eyebrow = ({ selects, values, onChange }) => (
       name="face.eyebrow.color_id"
       values={values}
       onChange={onChange}
-      colors={selects.eyebrowColors}
+      colors={eyebrowColors}
     />
     <br />
   </div>

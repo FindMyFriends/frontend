@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Color from './../components/Color';
 import Rating from './../components/Rating';
 
-const Hair = ({ selects, values, onChange }) => (
+const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
   <div>
     <h3>Hand hair</h3>
     <Color
       name="hands.hair.color_id"
       values={values}
       onChange={onChange}
-      colors={selects.nailColors}
+      colors={nailColors}
     />
     <br />
     <p><span>Amount</span></p>
@@ -18,7 +18,7 @@ const Hair = ({ selects, values, onChange }) => (
       name="hands.hair.amount"
       onChange={onChange}
       values={values}
-      ratings={selects.ratings}
+      ratings={ratings}
     />
   </div>
 );

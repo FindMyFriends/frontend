@@ -2,41 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
-const ID_COLORS = {
-  8: {
-    name: 'Black',
-  },
-  10: {
-    name: 'Blue',
-  },
-};
-
-const HEX_COLORS = {
-  Black: {
-    id: 8,
-  },
-  Blue: {
-    id: 10,
-  },
-};
+import { name as enumName, combined } from './../../enum';
+import { onSelectEnumChange } from './../../forms/onChange';
 
 const Color = ({
   colors, name, onChange, values,
-}) => (
-  <div>
-    <SelectField
-      floatingLabelText="Color"
-      onChange={
-        (event, index, value) => onChange({ target: { name, value: HEX_COLORS[value].id } })
-      }
-      value={ID_COLORS[values[name]].name}
-      name={name}
-    >
-      {colors.name.map(name => <MenuItem style={{ color: 'blue' }} key={name} value={name} primaryText={name} />)}
-    </SelectField>
-  </div>
-);
+}) => {
+  const nameWithHex = {
+    ...combined(colors.name, colors.hex),
+    White: '#000000',
+  };
+  return (
+    <div>
+      <SelectField
+        floatingLabelText="Color"
+        onChange={onSelectEnumChange(onChange, name, colors)}
+        value={enumName(values[name], colors.id, colors.name)}
+        name={name}
+      >
+        {
+          colors.name.map((name) => {
+            return (
+              <MenuItem
+                style={{ color: nameWithHex[name] }}
+                key={name}
+                value={name}
+                primaryText={name}
+              />
+            );
+          })
+        }
+      </SelectField>
+    </div>
+  );
+};
 
 Color.propTypes = {
   onChange: PropTypes.func.isRequired,
