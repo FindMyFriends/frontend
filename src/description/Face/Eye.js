@@ -4,7 +4,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Color from './../components/Color';
 
 const Eye = ({
-  selects, values, onChange, side,
+  selects: { eyeColors }, values, onChange, side,
 }) => {
   const identifier = {
     color_id: `face.eye.${side}.color_id`,
@@ -16,7 +16,7 @@ const Eye = ({
         name={identifier.color_id}
         values={values}
         onChange={onChange}
-        colors={selects.eyeColors}
+        colors={eyeColors}
       />
       <br />
       <Checkbox

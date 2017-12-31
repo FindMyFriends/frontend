@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LengthWithUnit from './../components/LengthWithUnit';
 import Color from './../components/Color';
 
-const Beard = ({ selects, values, onChange }) => (
+const Beard = ({ selects: { beardColors, lengthUnits }, values, onChange }) => (
   <div>
     <h2>Face</h2>
     <h3>Beard</h3>
@@ -11,14 +11,14 @@ const Beard = ({ selects, values, onChange }) => (
       name="face.beard.color_id"
       values={values}
       onChange={onChange}
-      colors={selects.beardColors}
+      colors={beardColors}
     />
     <br />
     <LengthWithUnit
       name="face.beard.length"
       values={values}
       onChange={onChange}
-      units={selects.lengthUnits}
+      units={lengthUnits}
     />
     <br />
   </div>

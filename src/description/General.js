@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
+import { name as enumName } from './../enum';
+import { onSelectChange, onSelectEnumChange } from './../forms/onChange';
 
-const General = ({ selects, values, onChange }) => (
+const General = ({ selects: { races, genders }, values, onChange }) => (
   <div>
     <h2>General</h2>
     <TextField
@@ -16,20 +18,20 @@ const General = ({ selects, values, onChange }) => (
     <br />
     <SelectField
       floatingLabelText="Gender"
-      onChange={(event, index, value) => onChange({ target: { name: 'general.gender', value } })}
+      onChange={onSelectChange(onChange, 'general.gender')}
       value={values['general.gender']}
       name="general.gender"
     >
-      {selects.genders.map(gender => <MenuItem key={gender} value={gender} primaryText={gender} />)}
+      {genders.map(gender => <MenuItem key={gender} value={gender} primaryText={gender} />)}
     </SelectField>
     <br />
     <SelectField
       floatingLabelText="Race"
-      onChange={(event, index, value) => onChange({ target: { name: 'general.race', value } })}
-      value={values['general.race']}
-      name="general.race"
+      onChange={onSelectEnumChange(onChange, 'general.race_id', races)}
+      value={enumName(values['general.race_id'], races.id, races.name)}
+      name="general.race_id"
     >
-      {selects.races.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
+      {races.name.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
     </SelectField>
     <br />
     <TextField

@@ -3,26 +3,19 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
+import { name as enumName } from './../enum';
+import { onSelectEnumChange } from './../forms/onChange';
 
-const Body = ({ selects, values, onChange }) => (
+const Body = ({ selects: { bodyBuilds }, values, onChange }) => (
   <div>
     <h2>Body</h2>
     <SelectField
       floatingLabelText="Build"
-      onChange={(event, index, value) => onChange({ target: { name: 'body.build', value } })}
-      value={values['body.build']}
-      name="body.build"
+      onChange={onSelectEnumChange(onChange, 'body.build_id', bodyBuilds)}
+      value={enumName(values['body.build_id'], bodyBuilds.id, bodyBuilds.name)}
+      name="body.build_id"
     >
-      {selects.bodyBuilds.map(build => <MenuItem key={build} value={build} primaryText={build} />)}
-    </SelectField>
-    <br />
-    <SelectField
-      floatingLabelText="Skin"
-      onChange={(event, index, value) => onChange({ target: { name: 'body.skin', value } })}
-      value={values['body.skin']}
-      name="body.skin"
-    >
-      {selects.skinColors.map(color => <MenuItem key={color} value={color} primaryText={color} />)}
+      {bodyBuilds.name.map(build => <MenuItem key={build} value={build} primaryText={build} />)}
     </SelectField>
     <br />
     <TextField

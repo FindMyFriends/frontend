@@ -3,25 +3,26 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import { add, genders, races, ages, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors } from './../../demands/endpoints';
+import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
-    step: 12,
+    step: 3,
     demand: {
       general: {
         firstname: 'Dominik',
         lastname: null,
         gender: 'man',
-        race_id: 1, // translate
+        race_id: 1,
         age: {
           from: 18,
           to: 22,
         },
       },
       body: {
-        build_id: 1, // translate
-        skin_color_id: 8, // translate
+        build_id: 1,
+        skin_color_id: 8, // remove
         weight: 60,
         height: 181,
       },
@@ -162,22 +163,22 @@ class Add extends React.Component {
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
-  races: PropTypes.array.isRequired,
+  races: PropTypes.object.isRequired,
   ages: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demandSchema.genders || [],
-  races: state.demandSchema.races || [],
+  races: state.demandSchema.races || enumSet.empty(),
   ages: state.demandSchema.ages || {},
-  bodyBuilds: state.demandSchema.bodyBuilds || [],
-  skinColors: state.demandSchema.skinColors || [],
-  hairColors: state.demandSchema.hairColors || { hex: [], name: [] },
-  beardColors: state.demandSchema.beardColors || { hex: [], name: [] },
-  eyebrowColors: state.demandSchema.eyebrowColors || { hex: [], name: [] },
-  eyeColors: state.demandSchema.eyeColors || { hex: [], name: [] },
-  nailColors: state.demandSchema.nailColors || { hex: [], name: [] },
-  ratings: state.demandSchema.ratings || { minimum: 0, maximum: 10 },
+  bodyBuilds: state.demandSchema.bodyBuilds || enumSet.empty(),
+  skinColors: state.demandSchema.skinColors || enumSet.emptyColor(),
+  hairColors: state.demandSchema.hairColors || enumSet.emptyColor(),
+  beardColors: state.demandSchema.beardColors || enumSet.emptyColor(),
+  eyebrowColors: state.demandSchema.eyebrowColors || enumSet.emptyColor(),
+  eyeColors: state.demandSchema.eyeColors || enumSet.emptyColor(),
+  nailColors: state.demandSchema.nailColors || enumSet.emptyColor(),
+  ratings: state.demandSchema.ratings || enumSet.emptyRange(),
   lengthUnits: state.demandSchema.lengthUnits || [],
   shapes: state.demandSchema.shapes || [],
 }))(Add);

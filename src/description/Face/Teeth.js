@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import Slider from 'material-ui/Slider';
 
-const Teeth = ({ selects, values, onChange }) => (
+const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>
     <h2>Teeth</h2>
     <p><span>Care</span></p>
     <Slider
       style={{ width: 200 }}
-      min={selects.ratings.minimum}
-      max={selects.ratings.maximum}
+      min={ratings.minimum}
+      max={ratings.maximum}
       step={1}
       value={values['face.teeth.care']}
       onChange={onChange}

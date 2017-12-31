@@ -5,7 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 import LengthWithUnit from './components/LengthWithUnit';
 import Color from './components/Color';
 
-const Hair = ({ selects, values, onChange }) => (
+const Hair = ({ selects: { hairColors, lengthUnits }, values, onChange }) => (
   <div>
     <h2>Hair</h2>
     <br />
@@ -18,7 +18,7 @@ const Hair = ({ selects, values, onChange }) => (
     <br />
     <Color
       name="hair.color_id"
-      colors={selects.hairColors}
+      colors={hairColors}
       onChange={onChange}
       values={values}
     />
@@ -27,7 +27,7 @@ const Hair = ({ selects, values, onChange }) => (
       name="hair.length"
       values={values}
       onChange={onChange}
-      units={selects.lengthUnits}
+      units={lengthUnits}
     />
     <br />
     <Checkbox
