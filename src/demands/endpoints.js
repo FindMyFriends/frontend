@@ -1,7 +1,5 @@
 import axios from 'axios';
 import {
-  requestedSchema,
-  receivedSchema,
   requestedAdding,
   addedDemand,
   receivedAll,
@@ -14,6 +12,9 @@ import {
   receivedReconsideration,
   requestedReconsidering,
 } from './actions';
+import loadSchema from './../schema';
+
+const schema = (method = 'GET') => loadSchema(`schema/v1/demand/${method.toLowerCase()}.json`);
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
   dispatch(requestedAll());
@@ -45,36 +46,27 @@ export const reconsider = (id, demand, etag) => (dispatch) => {
     .then(response => dispatch(receivedReconsideration(id, response.data)));
 };
 
-const schema = (method = 'GET') => (dispatch) => {
-  dispatch(requestedSchema(method.toUpperCase()));
-  return axios.get(`schema/v1/demand/${method.toLowerCase()}.json`)
-    .then((response) => {
-      dispatch(receivedSchema(response.data));
-      return response.data;
-    });
-};
-
 export const genders = () => (dispatch) => {
   dispatch(requestedProperty('genders'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('genders', schema.properties.general.properties.gender.enum)));
 };
 
 export const races = () => (dispatch) => {
   dispatch(requestedProperty('races'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('races', schema.properties.general.properties.race.properties.value.enum)));
 };
 
 export const ages = () => (dispatch) => {
   dispatch(requestedProperty('ages'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
 };
 
 export const bodyBuilds = () => (dispatch) => {
   dispatch(requestedProperty('bodyBuilds'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('bodyBuilds', schema.properties.body.properties.build.properties.value.enum)));
 };
 
@@ -89,31 +81,31 @@ const colorEnum = (color) => {
 
 export const skinColors = () => (dispatch) => {
   dispatch(requestedProperty('skinColors'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('skinColors', schema.properties.body.properties.skin_color.properties.name.enum)));
 };
 
 export const lengthUnits = () => (dispatch) => {
   dispatch(requestedProperty('lengthUnits'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('lengthUnits', schema.properties.hair.properties.length.properties.unit.enum.filter(unit => unit))));
 };
 
 export const shapes = () => (dispatch) => {
   dispatch(requestedProperty('shapes'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('shapes', schema.properties.face.properties.shape.enum.filter(shape => shape))));
 };
 
 export const ratings = () => (dispatch) => {
   dispatch(requestedProperty('ratings'));
-  dispatch(schema())
+  schema()
     .then(schema => dispatch(receivedProperty('ratings', schema.definitions.rating)));
 };
 
 export const hairColors = () => (dispatch) => {
   dispatch(requestedProperty('hairColors'));
-  dispatch(schema())
+  schema()
     .then((schema) => {
       return dispatch(receivedProperty(
         'hairColors',
@@ -124,7 +116,7 @@ export const hairColors = () => (dispatch) => {
 
 export const beardColors = () => (dispatch) => {
   dispatch(requestedProperty('beardColors'));
-  dispatch(schema())
+  schema()
     .then((schema) => {
       return dispatch(receivedProperty(
         'beardColors',
@@ -135,7 +127,7 @@ export const beardColors = () => (dispatch) => {
 
 export const eyebrowColors = () => (dispatch) => {
   dispatch(requestedProperty('eyebrowColors'));
-  dispatch(schema())
+  schema()
     .then((schema) => {
       return dispatch(receivedProperty(
         'eyebrowColors',
@@ -146,7 +138,7 @@ export const eyebrowColors = () => (dispatch) => {
 
 export const eyeColors = () => (dispatch) => {
   dispatch(requestedProperty('eyeColors'));
-  dispatch(schema())
+  schema()
     .then((schema) => {
       return dispatch(receivedProperty(
         'eyeColors',
@@ -157,7 +149,7 @@ export const eyeColors = () => (dispatch) => {
 
 export const nailColors = () => (dispatch) => {
   dispatch(requestedProperty('nailColors'));
-  dispatch(schema())
+  schema()
     .then((schema) => {
       return dispatch(receivedProperty(
         'nailColors',

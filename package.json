@@ -8,6 +8,7 @@
     "axios": "^0.17.0",
     "extend": "^3.0.1",
     "flat": "^4.0.0",
+    "lscache": "^1.1.0",
     "material-ui": "^0.19.4",
     "parse-link-header": "^1.0.1",
     "prop-types": "^15.6.0",
@@ -19,7 +20,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "trim-character": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
