@@ -7,7 +7,7 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import _ from 'lodash';
 import { name as enumName, combined } from './../enum';
-import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/onChange';
+import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
 
 const General = ({ selects: { races, genders }, values, onChange }) => (
   <div>

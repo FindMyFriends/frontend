@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import Color from './../components/Color';
-import { onCheck } from './../../forms/onChange';
+import { onCheck } from './../../forms/events';
 
 const Eye = ({
   selects: { eyeColors }, values, onChange, side,

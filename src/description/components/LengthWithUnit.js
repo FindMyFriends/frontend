@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
-import { onSelectChange } from './../../forms/onChange';
+import { onSelectChange } from './../../forms/events';
 
 const LengthWithUnit = ({
   name, onChange, units, values,

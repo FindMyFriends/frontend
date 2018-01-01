@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import { name as enumName } from './../enum';
-import { onSelectEnumChange } from './../forms/onChange';
+import { onSelectEnumChange } from './../forms/events';
 
 const Body = ({ selects: { bodyBuilds }, values, onChange }) => (
   <div>
