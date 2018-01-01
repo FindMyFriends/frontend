@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
-import { onSelectChange } from './../../forms/onChange';
+import { onSelectChange, onCheck } from './../../forms/onChange';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
@@ -24,6 +24,7 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
     <Checkbox
       label="Freckles"
       name="face.freckles"
+      onCheck={onCheck(onChange, values['face.freckles'])}
       checked={values['face.freckles']}
     />
     <SelectField

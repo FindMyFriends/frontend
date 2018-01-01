@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import LengthWithUnit from './components/LengthWithUnit';
 import Color from './components/Color';
+import { onCheck } from './../forms/onChange';
 
 const Hair = ({ selects: { hairColors, lengthUnits }, values, onChange }) => (
   <div>
@@ -33,18 +34,21 @@ const Hair = ({ selects: { hairColors, lengthUnits }, values, onChange }) => (
     <Checkbox
       label="Highlights"
       name="hair.highlights"
+      onCheck={onCheck(onChange, 'hair.highlights')}
       checked={values['hair.highlights']}
     />
     <br />
     <Checkbox
       label="Roots"
       name="hair.roots"
+      onCheck={onCheck(onChange, 'hair.roots')}
       checked={values['hair.roots']}
     />
     <br />
     <Checkbox
       label="Nature"
       name="hair.nature"
+      onCheck={onCheck(onChange, 'hair.nature')}
       checked={values['hair.nature']}
     />
     <br />
