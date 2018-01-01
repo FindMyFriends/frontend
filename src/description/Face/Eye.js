@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import Color from './../components/Color';
+import { onCheck } from './../../forms/onChange';
 
 const Eye = ({
   selects: { eyeColors }, values, onChange, side,
@@ -22,6 +23,7 @@ const Eye = ({
       <Checkbox
         label="Lenses"
         name={identifier.lenses}
+        onCheck={onCheck(onChange, identifier.lenses)}
         checked={values[identifier.lenses]}
       />
       <br />

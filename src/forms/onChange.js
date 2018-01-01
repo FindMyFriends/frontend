@@ -12,3 +12,7 @@ export const onRangeChange = (classic, names) => (range) => {
   classic({ target: { name: names[0], value: range[0] } });
   classic({ target: { name: names[1], value: range[1] } });
 };
+
+export const onCheck = (classic, name) => (self, checked) => {
+  return classic({ target: { name, value: checked } });
+};

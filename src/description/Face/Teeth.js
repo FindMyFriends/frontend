@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import Slider from 'material-ui/Slider';
+import { onCheck } from './../../forms/onChange';
 
 const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>
@@ -19,6 +20,7 @@ const Teeth = ({ selects: { ratings }, values, onChange }) => (
     <Checkbox
       label="Braces"
       name="face.teeth.braces"
+      onCheck={onCheck(onChange, 'face.teeth.braces')}
       checked={values['face.teeth.braces']}
     />
     <br />
