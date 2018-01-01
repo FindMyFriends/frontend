@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import Slider from 'material-ui/Slider';
-import { onCheck } from './../../forms/onChange';
+import { onCheck } from './../../forms/events';
 
 const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>

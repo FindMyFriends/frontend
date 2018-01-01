@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import LengthWithUnit from './components/LengthWithUnit';
 import Color from './components/Color';
-import { onCheck } from './../forms/onChange';
+import { onCheck } from './../forms/events';
 
 const Hair = ({ selects: { hairColors, lengthUnits }, values, onChange }) => (
   <div>
