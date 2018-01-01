@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
-import { name as enumName } from './../enum';
-import { onSelectChange, onSelectEnumChange } from './../forms/onChange';
+import { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import _ from 'lodash';
+import { name as enumName, combined } from './../enum';
+import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/onChange';
 
 const General = ({ selects: { races, genders }, values, onChange }) => (
   <div>
@@ -34,21 +37,19 @@ const General = ({ selects: { races, genders }, values, onChange }) => (
       {races.name.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
     </SelectField>
     <br />
-    <TextField
-      type="number"
-      floatingLabelText="Age from"
-      onChange={onChange}
-      value={values['general.age.from']}
-      name="general.age.from"
-    />
+    <div style={{ width: 400 }}>
+      <span>Age</span>
+      <Range
+        step={5}
+        min={15}
+        max={100}
+        marks={combined(_.range(15, 105, 5), _.range(15, 105, 5))}
+        onChange={onRangeChange(onChange, ['general.age.from', 'general.age.to'])}
+        value={[values['general.age.from'], values['general.age.to']]}
+      />
+    </div>
     <br />
-    <TextField
-      type="number"
-      floatingLabelText="Age to"
-      onChange={onChange}
-      value={values['general.age.to']}
-      name="general.age.to"
-    />
+    <br />
   </div>
 );
 
