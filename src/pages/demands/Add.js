@@ -8,7 +8,7 @@ import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
-    step: 3,
+    step: 12,
     demand: {
       general: {
         firstname: 'Dominik',
