@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import { onSelectChange } from './../forms/events';
 
-const Location = ({ values, onChange }) => (
+const Location = ({ values, selects: { timelineSides }, onChange }) => (
   <div>
     <h2>Location</h2>
     <TextField
@@ -19,22 +22,26 @@ const Location = ({ values, onChange }) => (
     />
     <br />
     <TextField
-      floatingLabelText="Met at from"
+      floatingLabelText="Moment"
       onChange={onChange}
-      value={values['location.met_at.from']}
-      name="location.met_at.from"
+      value={values['location.met_at.moment']}
+      name="location.met_at.moment"
     />
-    <TextField
-      floatingLabelText="Met at to"
-      onChange={onChange}
-      value={values['location.met_at.to']}
-      name="location.met_at.to"
-    />
+    <br />
+    <SelectField
+      floatingLabelText="Timeline side"
+      onChange={onSelectChange(onChange, 'location.met_at.timeline_side')}
+      value={values['location.met_at.timeline_side']}
+      name="location.met_at.timeline_side"
+    >
+      {timelineSides.map(timelineSide => <MenuItem key={timelineSide} value={timelineSide} primaryText={timelineSide} />)}
+    </SelectField>
   </div>
 );
 
 Location.propTypes = {
   onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
 };
 

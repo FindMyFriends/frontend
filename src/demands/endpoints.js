@@ -116,6 +116,13 @@ export const ratings = () => (dispatch) => {
     .then(schema => dispatch(receivedProperty('ratings', schema.definitions.rating)));
 };
 
+
+export const timelineSides = () => (dispatch) => {
+  dispatch(requestedProperty('timelineSides'));
+  schema()
+    .then(schema => dispatch(receivedProperty('timelineSides', schema.properties.location.properties.met_at.properties.timeline_side.enum.filter(side => side))));
+};
+
 export const hairColors = () => (dispatch) => {
   dispatch(requestedProperty('hairColors'));
   schema()
