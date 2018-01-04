@@ -8,8 +8,8 @@ const Eye = ({
   selects: { eyeColors }, values, onChange, side,
 }) => {
   const identifier = {
-    color_id: `face.eye.${side}.color_id`,
-    lenses: `face.eye.${side}.lenses`,
+    color_id: `eye.${side}.color_id`,
+    lenses: `eye.${side}.lenses`,
   };
   return (
     <div>

@@ -8,14 +8,14 @@ const Beard = ({ selects: { beardColors, lengthUnits }, values, onChange }) => (
     <h2>Face</h2>
     <h3>Beard</h3>
     <Color
-      name="face.beard.color_id"
+      name="beard.color_id"
       values={values}
       onChange={onChange}
       colors={beardColors}
     />
     <br />
     <LengthWithUnit
-      name="face.beard.length"
+      name="beard.length"
       values={values}
       onChange={onChange}
       units={lengthUnits}

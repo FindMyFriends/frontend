@@ -13,11 +13,11 @@ const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
       min={ratings.minimum}
       max={ratings.maximum}
       step={1}
-      value={values['face.eyebrow.care']}
+      value={values['eyebrow.care']}
       onChange={onChange}
     />
     <Color
-      name="face.eyebrow.color_id"
+      name="eyebrow.color_id"
       values={values}
       onChange={onChange}
       colors={eyebrowColors}

@@ -37,36 +37,36 @@ class Add extends React.Component {
         roots: false,
         nature: true,
       },
+      beard: {
+        style: null,
+        color_id: 8,
+        length: {
+          value: 2,
+          unit: 'mm',
+        },
+      },
+      eyebrow: {
+        care: 7,
+        color_id: 8,
+      },
+      eye: {
+        left: {
+          color_id: 8,
+          lenses: true,
+        },
+        right: {
+          color_id: 8,
+          lenses: true,
+        },
+      },
+      teeth: {
+        care: 6,
+        braces: false,
+      },
       face: {
         freckles: false,
         care: 8,
         shape: 'oval',
-        beard: {
-          style: null,
-          color_id: 8,
-          length: {
-            value: 2,
-            unit: 'mm',
-          },
-        },
-        eyebrow: {
-          care: 7,
-          color_id: 8,
-        },
-        eye: {
-          left: {
-            color_id: 8,
-            lenses: true,
-          },
-          right: {
-            color_id: 8,
-            lenses: true,
-          },
-        },
-        teeth: {
-          care: 6,
-          braces: false,
-        },
       },
       hands: {
         care: 9,

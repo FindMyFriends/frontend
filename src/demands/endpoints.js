@@ -133,7 +133,7 @@ export const beardColors = () => (dispatch) => {
     .then((schema) => {
       return dispatch(receivedProperty(
         'beardColors',
-        colorEnum(schema.properties.face.properties.beard.properties.color),
+        colorEnum(schema.properties.beard.properties.color),
       ));
     });
 };
@@ -144,7 +144,7 @@ export const eyebrowColors = () => (dispatch) => {
     .then((schema) => {
       return dispatch(receivedProperty(
         'eyebrowColors',
-        colorEnum(schema.properties.face.properties.eyebrow.properties.color),
+        colorEnum(schema.properties.eyebrow.properties.color),
       ));
     });
 };

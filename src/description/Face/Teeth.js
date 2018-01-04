@@ -13,15 +13,15 @@ const Teeth = ({ selects: { ratings }, values, onChange }) => (
       min={ratings.minimum}
       max={ratings.maximum}
       step={1}
-      value={values['face.teeth.care']}
+      value={values['teeth.care']}
       onChange={onChange}
     />
     <br />
     <Checkbox
       label="Braces"
-      name="face.teeth.braces"
-      onCheck={onCheck(onChange, 'face.teeth.braces')}
-      checked={values['face.teeth.braces']}
+      name="teeth.braces"
+      onCheck={onCheck(onChange, 'teeth.braces')}
+      checked={values['teeth.braces']}
     />
     <br />
   </div>
