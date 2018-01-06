@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
-import { add, genders, races, ages, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides } from './../../demands/endpoints';
+import { add, genders, races, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
@@ -102,7 +102,6 @@ class Add extends React.Component {
   componentDidMount() {
     this.props.dispatch(genders());
     this.props.dispatch(races());
-    this.props.dispatch(ages());
     this.props.dispatch(bodyBuilds());
     this.props.dispatch(skinColors());
     this.props.dispatch(hairColors());
@@ -131,9 +130,9 @@ class Add extends React.Component {
 
   handleSubmit(event) {
     const {
-      genders, races, ages, dispatch,
+      genders, races, dispatch,
     } = this.props;
-    dispatch(add(f.unflatten(this.state.demand), { genders, races, ages }));
+    dispatch(add(f.unflatten(this.state.demand), { genders, races }));
     event.preventDefault();
   }
 
@@ -166,14 +165,12 @@ Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
   races: PropTypes.object.isRequired,
-  ages: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demandSchema.genders || [],
   timelineSides: state.demandSchema.timelineSides || [],
   races: state.demandSchema.races || enumSet.empty(),
-  ages: state.demandSchema.ages || {},
   bodyBuilds: state.demandSchema.bodyBuilds || enumSet.empty(),
   skinColors: state.demandSchema.skinColors || enumSet.emptyColor(),
   hairColors: state.demandSchema.hairColors || enumSet.emptyColor(),
