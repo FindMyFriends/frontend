@@ -93,7 +93,7 @@ class Add extends React.Component {
         met_at: {
           moment: '2017-01-01T13:58:10+00:00',
           timeline_side: 'sooner or later',
-          approximation: 'PT2H',
+          approximation: 'PT10H',
         },
       },
     },
