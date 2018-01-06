@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import _ from 'lodash';
+import range from 'lodash/range';
 import { name as enumName, combined } from './../enum';
 import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
 
@@ -43,7 +43,7 @@ const General = ({ selects: { races, genders }, values, onChange }) => (
         step={5}
         min={15}
         max={100}
-        marks={combined(_.range(15, 105, 5), _.range(15, 105, 5))}
+        marks={combined(range(15, 105, 5), range(15, 105, 5))}
         onChange={onRangeChange(onChange, ['general.age.from', 'general.age.to'])}
         value={[values['general.age.from'], values['general.age.to']]}
       />

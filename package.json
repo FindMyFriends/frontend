@@ -11,6 +11,8 @@
     "lodash": "^4.17.4",
     "lscache": "^1.1.0",
     "material-ui": "^0.19.4",
+    "material-ui-datetimepicker": "^1.0.5",
+    "moment": "^2.20.1",
     "parse-link-header": "^1.0.1",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",

@@ -61,12 +61,6 @@ export const races = () => (dispatch) => {
     });
 };
 
-export const ages = () => (dispatch) => {
-  dispatch(requestedProperty('ages'));
-  schema()
-    .then(schema => dispatch(receivedProperty('ages', schema.properties.general.properties.age.properties.from)));
-};
-
 export const bodyBuilds = () => (dispatch) => {
   dispatch(requestedProperty('bodyBuilds'));
   schema()
@@ -101,7 +95,7 @@ export const skinColors = () => (dispatch) => {
 export const lengthUnits = () => (dispatch) => {
   dispatch(requestedProperty('lengthUnits'));
   schema()
-    .then(schema => dispatch(receivedProperty('lengthUnits', schema.properties.hair.properties.length.properties.unit.enum.filter(unit => unit))));
+    .then(schema => dispatch(receivedProperty('lengthUnits', schema.definitions.length_unit.enum.filter(unit => unit))));
 };
 
 export const shapes = () => (dispatch) => {
@@ -114,6 +108,13 @@ export const ratings = () => (dispatch) => {
   dispatch(requestedProperty('ratings'));
   schema()
     .then(schema => dispatch(receivedProperty('ratings', schema.definitions.rating)));
+};
+
+
+export const timelineSides = () => (dispatch) => {
+  dispatch(requestedProperty('timelineSides'));
+  schema()
+    .then(schema => dispatch(receivedProperty('timelineSides', schema.properties.location.properties.met_at.properties.timeline_side.enum.filter(side => side))));
 };
 
 export const hairColors = () => (dispatch) => {

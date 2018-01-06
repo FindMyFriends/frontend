@@ -5,7 +5,7 @@ import extend from 'extend';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
-import { reconsider, genders, races, ages, single } from './../../demands/endpoints';
+import { reconsider, genders, races, single } from './../../demands/endpoints';
 import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
@@ -24,7 +24,6 @@ class Reconsider extends React.Component {
       }));
     dispatch(genders());
     dispatch(races());
-    dispatch(ages());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -42,7 +41,7 @@ class Reconsider extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      dispatch, etag, demand, match: { params: { id } }, genders, races, ages,
+      dispatch, etag, demand, match: { params: { id } }, genders, races,
     } = this.props;
     dispatch(reconsider(
       id,
@@ -50,7 +49,7 @@ class Reconsider extends React.Component {
         true,
         {},
         demand,
-        validatedDemand(f.unflatten(this.state.demand), { genders, races, ages }),
+        validatedDemand(f.unflatten(this.state.demand), { genders, races }),
       ),
       etag,
     ));
@@ -81,7 +80,6 @@ Reconsider.propTypes = {
   genders: PropTypes.array.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   races: PropTypes.array.isRequired,
-  ages: PropTypes.object.isRequired,
   etag: PropTypes.string.isRequired,
   demand: PropTypes.object.isRequired,
 };
@@ -89,7 +87,6 @@ Reconsider.propTypes = {
 export default connect(state => ({
   genders: state.demand.genders || [],
   races: state.demand.races || [],
-  ages: state.demand.ages || {},
   demand: state.demand.single || {},
   etag: state.demand.etag || '',
 }))(Reconsider);
