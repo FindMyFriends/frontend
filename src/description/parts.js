@@ -16,46 +16,76 @@ export const GENERAL = 1;
 export const BODY = 2;
 export const HAIR = 3;
 export const FACE_GENERAL = 4;
-export const FACE_BEARD = 5;
-export const FACE_EYEBROW = 6;
-export const FACE_EYES = 7;
+export const BEARD = 5;
+export const EYEBROW = 6;
+export const EYES = 7;
 export const TEETH = 8;
 export const HANDS_GENERAL = 9;
 export const HANDS_NAILS = 10;
 export const HANDS_HAIR = 11;
 
-export const steps = () => {
-  return [
-    GENERAL,
-    BODY,
-    HAIR,
-    FACE_GENERAL,
-    FACE_BEARD,
-    FACE_EYEBROW,
-    FACE_EYES,
-    TEETH,
-    HANDS_GENERAL,
-    HANDS_NAILS,
-    HANDS_HAIR,
-  ];
-};
+export const MAIN_GENERAL = 1;
+export const MAIN_BODY = 2;
+export const MAIN_HEAD = 3;
+export const MAIN_HANDS = 4;
+
+export const titles = () => ({
+  [GENERAL]: 'General',
+  [BODY]: 'Body',
+  [HAIR]: 'Hair',
+  [FACE_GENERAL]: 'General info about face',
+  [BEARD]: 'Beard',
+  [EYEBROW]: 'Eyebrow',
+  [EYES]: 'Eyes',
+  [TEETH]: 'Teeth',
+  [HANDS_GENERAL]: 'General info about hands',
+  [HANDS_NAILS]: 'Nails',
+  [HANDS_HAIR]: 'Hand hair',
+});
+
+export const steps = () => ({
+  [MAIN_GENERAL]: {
+    parts: [GENERAL],
+    title: 'General',
+  },
+  [MAIN_BODY]: {
+    parts: [BODY],
+    title: 'Body',
+  },
+  [MAIN_HEAD]: {
+    parts: [HAIR, FACE_GENERAL, BEARD, EYEBROW, EYES, TEETH],
+    title: 'Head',
+  },
+  [MAIN_HANDS]: {
+    parts: [HANDS_GENERAL, HANDS_NAILS, HANDS_HAIR],
+    title: 'Hands',
+  },
+});
 
 export const parts = (props) => {
   const steps = {
-    [GENERAL]: <General key={GENERAL} {...props} />,
-    [BODY]: <Body key={BODY} {...props} />,
-    [HAIR]: <Hair key={HAIR} {...props} />,
-    [FACE_GENERAL]: <FaceGeneral key={FACE_GENERAL} {...props} />,
-    [FACE_BEARD]: <FaceBeard key={FACE_BEARD} {...props} />,
-    [FACE_EYEBROW]: <FaceEyebrow key={FACE_EYEBROW} {...props} />,
-    [FACE_EYES]: <FaceEye key={FACE_EYES} {...props} />,
-    [TEETH]: <Teeth key={TEETH} {...props} />,
-    [HANDS_GENERAL]: <HandsGeneral key={HANDS_GENERAL} {...props} />,
-    [HANDS_NAILS]: <HandsNails key={HANDS_NAILS} {...props} />,
-    [HANDS_HAIR]: <HandsHair key={HANDS_HAIR} {...props} />,
+    [MAIN_GENERAL]: {
+      [GENERAL]: <General key={GENERAL} {...props} />,
+    },
+    [MAIN_BODY]: {
+      [BODY]: <Body key={BODY} {...props} />,
+    },
+    [MAIN_HEAD]: {
+      [HAIR]: <Hair key={HAIR} {...props} />,
+      [FACE_GENERAL]: <FaceGeneral key={FACE_GENERAL} {...props} />,
+      [BEARD]: <FaceBeard key={BEARD} {...props} />,
+      [EYEBROW]: <FaceEyebrow key={EYEBROW} {...props} />,
+      [EYES]: <FaceEye key={EYES} {...props} />,
+      [TEETH]: <Teeth key={TEETH} {...props} />,
+    },
+    [MAIN_HANDS]: {
+      [HANDS_GENERAL]: <HandsGeneral key={HANDS_GENERAL} {...props} />,
+      [HANDS_NAILS]: <HandsNails key={HANDS_NAILS} {...props} />,
+      [HANDS_HAIR]: <HandsHair key={HANDS_HAIR} {...props} />,
+    },
   };
   if (props.values['general.gender'] === 'woman') {
-    delete steps[FACE_BEARD];
+    delete steps[MAIN_HEAD][BEARD];
   }
   return steps;
 };

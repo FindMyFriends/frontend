@@ -8,7 +8,10 @@ import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
-    step: 12,
+    step: {
+      major: 1,
+      minor: 1,
+    },
     demand: {
       general: {
         firstname: 'Dominik',
@@ -136,10 +139,10 @@ class Add extends React.Component {
     event.preventDefault();
   }
 
-  handleTurn(move) {
+  handleTurn(major, minor) {
     this.setState({
       ...this.state,
-      step: this.state.step + move,
+      step: { major, minor },
     });
   }
 
