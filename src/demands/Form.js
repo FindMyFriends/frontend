@@ -2,44 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
-import { parts, titles, steps } from './parts';
+import { parts } from './parts';
 
 const Current = ({
-  step, label, onTurn, parts, ...rest
+  step, label, onTurn, steps, ...rest
 }) => {
-  const last = step === Object.values(parts).length;
+  const last = step === Object.values(steps).length;
   return [
-    parts[step.major][step.minor],
-    step === 1 || <RaisedButton key="previous" onClick={() => onTurn(step - 1)} label="Previous" primary />,
-    <RaisedButton key="next|submit" onClick={last ? rest.onSubmit : () => onTurn(step + 1)} label={last ? label : 'Next'} primary />,
+    steps[step.major].parts[step.minor].component,
+    // step === 1 || <RaisedButton key="previous" onClick={() => onTurn(step - 1)} label="Previous" primary />,
+    // <RaisedButton key="next|submit" onClick={last ? rest.onSubmit : () => onTurn(step + 1)} label={last ? label : 'Next'} primary />,
   ];
 };
 
+const toTitle = part => ({
+  title: part[1].title,
+  position: part[0],
+});
+
 const Form = (props) => {
-  const majorTitles = Object.entries(steps()).map(part => ({
-    title: part[1].title,
-    position: part[0],
-  }));
-  const minorTitles = steps()[props.step.major].parts.map(part => ({
-    title: titles()[part],
-    position: part,
-  }));
+  const allParts = parts(props);
+  const majorTitles = Object.entries(allParts).map(part => toTitle(part));
+  const minorTitles = Object.entries(allParts[props.step.major].parts).map(part => toTitle(part));
   return (
     <div>
-      <MajorStepper {...props} majorTitles={majorTitles} minorTitles={minorTitles} />
+      <MajorStepper {...props} majorTitles={majorTitles} steps={allParts} />
       {minorTitles.length !== 1 ? <MinorStepper {...props} minorTitles={minorTitles} /> : null}
-      <Current {...props} parts={parts(props)} />
+      <Current {...props} steps={allParts} />
     </div>
   );
 };
 
 const MajorStepper = ({
-  step, majorTitles, minorTitles, onTurn,
+  step, majorTitles, minorTitles, onTurn, steps
 }) => (
   <Stepper linear={false} activeStep={step.major - 1}>
     {majorTitles.map(entry => (
       <Step key={entry.position}>
-        <StepButton onClick={() => onTurn(entry.position, minorTitles[0].position)}>
+        <StepButton onClick={() => onTurn(entry.position, Object.keys(steps[entry.position].parts)[0])}>
           {entry.title}
         </StepButton>
       </Step>
