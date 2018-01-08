@@ -12,24 +12,26 @@ import HandsGeneral from './Hands/General';
 import HandsNails from './Hands/Nails';
 import HandsHair from './Hands/Hair';
 
-export const GENERAL = 1;
-export const BODY = 2;
-export const HAIR = 3;
-export const FACE_GENERAL = 4;
-export const BEARD = 5;
-export const EYEBROW = 6;
-export const EYES = 7;
-export const TEETH = 8;
-export const HANDS_GENERAL = 9;
-export const HANDS_NAILS = 10;
-export const HANDS_HAIR = 11;
+const GENERAL = 1;
 
-export const MAIN_GENERAL = 1;
-export const MAIN_BODY = 2;
-export const MAIN_HEAD = 3;
-export const MAIN_HANDS = 4;
+const BODY = 1;
 
-export const parts = (props) => {
+const HAIR = 1;
+const FACE_GENERAL = 2;
+const BEARD = 3;
+const EYEBROW = 4;
+const EYES = 5;
+const TEETH = 6;
+
+const HANDS_GENERAL = 1;
+const HANDS_NAILS = 2;
+const HANDS_HAIR = 3;
+
+export const steps = (props) => {
+  const MAIN_GENERAL = 1;
+  const MAIN_BODY = 2;
+  const MAIN_HEAD = 3;
+  const MAIN_HANDS = 4;
   const steps = {
     [MAIN_GENERAL]: {
       title: 'General',
@@ -82,18 +84,18 @@ export const parts = (props) => {
       title: 'Hands',
       parts: {
         [HANDS_GENERAL]: {
-          component:  <HandsGeneral key={HANDS_GENERAL} {...props} />,
+          component: <HandsGeneral key={HANDS_GENERAL} {...props} />,
           title: 'General info about hands',
         },
         [HANDS_NAILS]: {
-          component:  <HandsNails key={HANDS_NAILS} {...props} />,
+          component: <HandsNails key={HANDS_NAILS} {...props} />,
           title: 'Nails',
         },
         [HANDS_HAIR]: {
-          component:  <HandsHair key={HANDS_HAIR} {...props} />,
+          component: <HandsHair key={HANDS_HAIR} {...props} />,
           title: 'Hand hair',
         },
-      }
+      },
     },
   };
   if (props.values['general.gender'] === 'woman') {
@@ -102,6 +104,6 @@ export const parts = (props) => {
   return steps;
 };
 
-parts.propTypes = {
+steps.propTypes = {
   values: PropTypes.object.isRequired,
 };
