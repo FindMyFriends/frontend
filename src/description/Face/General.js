@@ -24,7 +24,7 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
     <Checkbox
       label="Freckles"
       name="face.freckles"
-      onCheck={onCheck(onChange, values['face.freckles'])}
+      onCheck={onCheck(onChange, 'face.freckles')}
       checked={values['face.freckles']}
     />
     <SelectField
