@@ -5,10 +5,11 @@ import { steps as descriptionSteps } from './../description/steps';
 const LOCATION = 1;
 
 export const steps = (props) => {
-  const LAST_STEP = Object.keys(descriptionSteps(props)).length;
+  const previousSteps = descriptionSteps(props);
+  const LAST_STEP = Object.keys(previousSteps).length;
   const MAIN_LOCATION = LAST_STEP + 1;
   return {
-    ...descriptionSteps(props),
+    ...previousSteps,
     [MAIN_LOCATION]: {
       title: 'Location',
       parts: {
