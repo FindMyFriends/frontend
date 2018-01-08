@@ -12,7 +12,8 @@ const Current = ({
   return [
     steps[step.major].parts[step.minor].component,
     step.major === 1 && step.minor === 1
-      ? <RaisedButton
+      ? null
+      : <RaisedButton
         key="previous"
         onClick={() => {
           const { step: { major, minor } } = previousStep(step, steps);
@@ -20,8 +21,7 @@ const Current = ({
         }}
         label="Previous"
         primary
-      />
-      : null,
+      />,
     <RaisedButton
       key="next|submit"
       onClick={last ? rest.onSubmit : () => {
