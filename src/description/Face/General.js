@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
-import { onSelectChange, onCheck } from './../../forms/events';
+import { onSelectChange, onCheck, onSlideChange } from './../../forms/events';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
@@ -19,7 +19,8 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
       max={ratings.maximum}
       step={1}
       value={values['face.care']}
-      onChange={onChange}
+      onChange={onSlideChange(onChange, 'face.care')}
+      name="face.care"
     />
     <Checkbox
       label="Freckles"

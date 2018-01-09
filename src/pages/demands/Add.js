@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
+import extend from 'extend';
 import { add, genders, races, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
@@ -125,8 +126,12 @@ class Add extends React.Component {
   handleChange(event) {
     this.setState({
       demand: {
-        ...this.state.demand,
-        [event.target.name]: event.target.value,
+        ...extend(
+          true,
+          {},
+          this.state.demand,
+          f.unflatten({ [event.target.name]: event.target.value }),
+        ),
       },
     });
   }
@@ -135,7 +140,7 @@ class Add extends React.Component {
     const {
       genders, races, dispatch,
     } = this.props;
-    dispatch(add(f.unflatten(this.state.demand), { genders, races }));
+    dispatch(add(this.state.demand, { genders, races }));
     event.preventDefault();
   }
 
