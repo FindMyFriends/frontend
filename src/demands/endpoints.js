@@ -78,6 +78,15 @@ export const bodyBuilds = () => (dispatch) => {
     });
 };
 
+export const hairStyles = () => (dispatch) => {
+  dispatch(requestedProperty('hairStyles'));
+  schema()
+    .then((schema) => {
+      const styles = schema.properties.hair.properties.style.properties;
+      return dispatch(receivedProperty('hairStyles', { id: styles.id.enum, name: styles.name.enum }));
+    });
+};
+
 const colorEnum = (color) => {
   return {
     id: color.properties.id.enum

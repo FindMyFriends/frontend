@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import extend from 'extend';
-import { add, genders, ethnicGroups, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes } from './../../demands/endpoints';
+import { add, genders, ethnicGroups, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes, hairStyles } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
     step: {
-      major: 2,
+      major: 3,
       minor: 1,
     },
     demand: {
@@ -27,12 +27,18 @@ class Add extends React.Component {
       body: {
         build_id: 1,
         skin_color_id: 8, // remove
-        weight: 60,
-        height: 181,
+        weight: {
+          unit: 'kg',
+          value: 60,
+        },
+        height: {
+          unit: 'cm',
+          value: 180,
+        },
         breast_size: 'A',
       },
       hair: {
-        style: 'normal',
+        style_id: 1,
         color_id: 8,
         length: {
           value: 5,
@@ -119,6 +125,7 @@ class Add extends React.Component {
     this.props.dispatch(nailColors());
     this.props.dispatch(timelineSides());
     this.props.dispatch(breastSizes());
+    this.props.dispatch(hairStyles());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -192,4 +199,5 @@ export default connect(state => ({
   lengthUnits: state.demandSchema.lengthUnits || [],
   shapes: state.demandSchema.shapes || [],
   breastSizes: state.demandSchema.breastSizes || [],
+  hairStyles: state.demandSchema.hairStyles || enumSet.empty(),
 }))(Add);

@@ -46,16 +46,16 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
       type="number"
       floatingLabelText="Weight"
       onChange={onChange}
-      value={values['body.weight']}
-      name="body.weight"
+      value={values['body.weight.value']}
+      name="body.weight.value"
     />
     <br />
     <TextField
       type="number"
       floatingLabelText="Height"
       onChange={onChange}
-      value={values['body.height']}
-      name="body.height"
+      value={values['body.height.value']}
+      name="body.height.value"
     />
     <BreastSizeByGender values={values} onChange={onChange} selects={{ breastSizes }} />
   </div>

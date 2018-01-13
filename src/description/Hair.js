@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import LengthWithUnit from './components/LengthWithUnit';
 import Color from './components/Color';
-import { onCheck } from './../forms/events';
+import { name as enumName } from './../enum';
+import { onCheck, onSelectEnumChange } from './../forms/events';
 
-const Hair = ({ selects: { hairColors, lengthUnits }, values, onChange }) => (
+const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChange }) => (
   <div>
     <h2>Hair</h2>
     <br />
-    <TextField
-      floatingLabelText="Style"
-      onChange={onChange}
-      value={values['hair.style']}
-      name="hair.style"
-    />
+    <SelectField
+      floatingLabelText="Styles"
+      onChange={onSelectEnumChange(onChange, 'hair.style_id', hairStyles)}
+      value={enumName(values['hair.style_id'], hairStyles.id, hairStyles.name)}
+      name="body.build_id"
+    >
+      {hairStyles.name.map(style => <MenuItem key={style} value={style} primaryText={style} />)}
+    </SelectField>
     <br />
     <Color
       name="hair.color_id"
