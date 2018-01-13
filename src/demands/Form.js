@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
 import { steps } from './steps';
-import { nextStep, previousStep } from './../stepFork';
+import { nextStep, previousStep, isLastStep } from './../stepFork';
 
 const Current = ({
   step, label, onTurn, steps, ...rest
 }) => {
-  const last = step === Object.values(steps).length;
+  const last = isLastStep(step, steps);
   return [
     steps[step.major].parts[step.minor].component,
     step.major === 1 && step.minor === 1

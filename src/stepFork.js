@@ -22,3 +22,8 @@ export const nextStep = (step, allSteps) => {
   }
   return { step: { major: major + 1, minor: 1 } };
 };
+
+export const isLastStep = (step, allSteps) => {
+  const { step: { major } } = nextStep(step, allSteps);
+  return allSteps[major] === undefined;
+};

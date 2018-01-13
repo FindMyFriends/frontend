@@ -1,5 +1,5 @@
 import test from 'ava';
-import { nextStep, previousStep } from './../src/stepFork';
+import { nextStep, previousStep, isLastStep } from './../src/stepFork';
 
 test('going to minor', (t) => {
   const allParts = { 1: { parts: { 1: [], 2: [], 3: [] } } };
@@ -65,4 +65,10 @@ test('minors, then majors', (t) => {
     },
     previousStep({ major: 2, minor: 1 }, allParts),
   );
+});
+
+test('checking last step', (t) => {
+  const allParts = { 1: { parts: { 1: [], 2: [], 3: [] } }, 2: { parts: { 1: [] } } };
+  t.deepEqual(false, isLastStep({ major: 1, minor: 3 }, allParts));
+  t.deepEqual(true, isLastStep({ major: 2, minor: 1 }, allParts));
 });
