@@ -5,7 +5,7 @@ import extend from 'extend';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
-import { reconsider, genders, races, single } from './../../demands/endpoints';
+import { reconsider, genders, ethnicGroups, single } from './../../demands/endpoints';
 import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
@@ -23,7 +23,7 @@ class Reconsider extends React.Component {
         }),
       }));
     dispatch(genders());
-    dispatch(races());
+    dispatch(ethnicGroups());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -41,7 +41,7 @@ class Reconsider extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      dispatch, etag, demand, match: { params: { id } }, genders, races,
+      dispatch, etag, demand, match: { params: { id } }, genders, ethnicGroups,
     } = this.props;
     dispatch(reconsider(
       id,
@@ -49,14 +49,14 @@ class Reconsider extends React.Component {
         true,
         {},
         demand,
-        validatedDemand(f.unflatten(this.state.demand), { genders, races }),
+        validatedDemand(f.unflatten(this.state.demand), { genders, ethnicGroups }),
       ),
       etag,
     ));
   }
 
   render() {
-    const { genders, races } = this.props;
+    const { genders, ethnicGroups } = this.props;
     if (R.isEmpty(this.state.demand)) {
       return <h1>Loading...</h1>;
     }
@@ -66,7 +66,7 @@ class Reconsider extends React.Component {
         <Form
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
-          selects={{ genders, races }}
+          selects={{ genders, ethnicGroups }}
           values={this.state.demand}
           label="Reconsider"
         />
@@ -79,14 +79,14 @@ Reconsider.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
-  races: PropTypes.array.isRequired,
+  ethnicGroups: PropTypes.array.isRequired,
   etag: PropTypes.string.isRequired,
   demand: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demand.genders || [],
-  races: state.demand.races || [],
+  ethnicGroups: state.demand.ethnicGroups || [],
   demand: state.demand.single || {},
   etag: state.demand.etag || '',
 }))(Reconsider);

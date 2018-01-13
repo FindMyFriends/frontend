@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import extend from 'extend';
-import { add, genders, races, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides } from './../../demands/endpoints';
+import { add, genders, ethnicGroups, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
     step: {
-      major: 3,
-      minor: 2,
+      major: 2,
+      minor: 1,
     },
     demand: {
       general: {
         firstname: 'Dominik',
         lastname: null,
-        gender: 'man',
-        race_id: 1,
+        gender: 'woman',
+        ethnic_group_id: 1,
         age: {
           from: 15,
           to: 20,
@@ -29,6 +29,7 @@ class Add extends React.Component {
         skin_color_id: 8, // remove
         weight: 60,
         height: 181,
+        breast_size: 'A',
       },
       hair: {
         style: 'normal',
@@ -105,7 +106,7 @@ class Add extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(genders());
-    this.props.dispatch(races());
+    this.props.dispatch(ethnicGroups());
     this.props.dispatch(bodyBuilds());
     this.props.dispatch(skinColors());
     this.props.dispatch(hairColors());
@@ -117,6 +118,7 @@ class Add extends React.Component {
     this.props.dispatch(eyeColors());
     this.props.dispatch(nailColors());
     this.props.dispatch(timelineSides());
+    this.props.dispatch(breastSizes());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -138,9 +140,9 @@ class Add extends React.Component {
 
   handleSubmit(event) {
     const {
-      genders, races, dispatch,
+      genders, ethnicGroups, dispatch,
     } = this.props;
-    dispatch(add(this.state.demand, { genders, races }));
+    dispatch(add(this.state.demand, { genders, ethnicGroups }));
     event.preventDefault();
   }
 
@@ -172,13 +174,13 @@ class Add extends React.Component {
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
   genders: PropTypes.array.isRequired,
-  races: PropTypes.object.isRequired,
+  ethnicGroups: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
   genders: state.demandSchema.genders || [],
   timelineSides: state.demandSchema.timelineSides || [],
-  races: state.demandSchema.races || enumSet.empty(),
+  ethnicGroups: state.demandSchema.ethnicGroups || enumSet.empty(),
   bodyBuilds: state.demandSchema.bodyBuilds || enumSet.empty(),
   skinColors: state.demandSchema.skinColors || enumSet.emptyColor(),
   hairColors: state.demandSchema.hairColors || enumSet.emptyColor(),
@@ -189,4 +191,5 @@ export default connect(state => ({
   ratings: state.demandSchema.ratings || enumSet.emptyRange(),
   lengthUnits: state.demandSchema.lengthUnits || [],
   shapes: state.demandSchema.shapes || [],
+  breastSizes: state.demandSchema.breastSizes || [],
 }))(Add);

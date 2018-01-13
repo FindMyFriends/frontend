@@ -9,7 +9,7 @@ import range from 'lodash/range';
 import { name as enumName, combined } from './../enum';
 import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
 
-const General = ({ selects: { races, genders }, values, onChange }) => (
+const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
   <div>
     <h2>General</h2>
     <TextField
@@ -29,12 +29,12 @@ const General = ({ selects: { races, genders }, values, onChange }) => (
     </SelectField>
     <br />
     <SelectField
-      floatingLabelText="Race"
-      onChange={onSelectEnumChange(onChange, 'general.race_id', races)}
-      value={enumName(values['general.race_id'], races.id, races.name)}
-      name="general.race_id"
+      floatingLabelText="Ethnic group"
+      onChange={onSelectEnumChange(onChange, 'general.ethnic_group_id', ethnicGroups)}
+      value={enumName(values['general.ethnic_group_id'], ethnicGroups.id, ethnicGroups.name)}
+      name="general.ethnic_group_id"
     >
-      {races.name.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
+      {ethnicGroups.name.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
     </SelectField>
     <br />
     <div style={{ width: 400 }}>

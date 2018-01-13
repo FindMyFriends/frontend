@@ -3,10 +3,34 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
-import { name as enumName } from './../enum';
+import Slider from 'rc-slider';
+import { name as enumName, combined } from './../enum';
 import { onSelectEnumChange } from './../forms/events';
 
-const Body = ({ selects: { bodyBuilds }, values, onChange }) => (
+const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
+  if (values['general.gender'] === 'man') {
+    return null;
+  }
+  const numericSizes = combined([0, 1, 2, 3], breastSizes);
+  const letterSizes = combined(breastSizes, [0, 1, 2, 3]);
+  return (
+    <div style={{ width: 400 }}>
+      <span>Breast size</span>
+      <Slider
+        step={1}
+        min={0}
+        max={3}
+        marks={numericSizes}
+        onChange={numericSize => onChange({ target: { name: 'body.breast_size', value: numericSizes[numericSize] } })}
+        value={letterSizes[values['body.breast_size']]}
+      />
+      <br />
+      <br />
+    </div>
+  );
+};
+
+const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
   <div>
     <h2>Body</h2>
     <SelectField
@@ -33,10 +57,17 @@ const Body = ({ selects: { bodyBuilds }, values, onChange }) => (
       value={values['body.height']}
       name="body.height"
     />
+    <BreastSizeByGender values={values} onChange={onChange} selects={{ breastSizes }} />
   </div>
 );
 
 Body.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
+
+BreastSizeByGender.propTypes = {
   onChange: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,

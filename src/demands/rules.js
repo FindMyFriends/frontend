@@ -1,5 +1,5 @@
-export const validatedRace = (race, races) => {
-  if (races.includes(race)) {
+export const validatedRace = (race, ethnicGroups) => {
+  if (ethnicGroups.includes(race)) {
     return race;
   }
   throw new Error(`Race ${race} is not allowed`);
@@ -20,11 +20,11 @@ export const validatedAge = (age, { minimum, maximum }) => {
 };
 
 export const validatedDemand = (demand, selects) => {
-  const { races, genders, ages } = selects;
+  const { ethnicGroups, genders, ages } = selects;
   const { general } = demand;
   return {
     general: {
-      race: validatedRace(general.race, races),
+      race: validatedRace(general.race, ethnicGroups),
       gender: validatedGender(general.gender, genders),
       age: validatedAge(general.age, ages),
     },

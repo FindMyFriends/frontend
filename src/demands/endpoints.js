@@ -52,12 +52,20 @@ export const genders = () => (dispatch) => {
     .then(schema => dispatch(receivedProperty('genders', schema.properties.general.properties.gender.enum)));
 };
 
-export const races = () => (dispatch) => {
-  dispatch(requestedProperty('races'));
+export const ethnicGroups = () => (dispatch) => {
+  dispatch(requestedProperty('ethnicGroups'));
   schema()
     .then((schema) => {
-      const race = schema.properties.general.properties.race.properties;
-      return dispatch(receivedProperty('races', { id: race.id.enum, name: race.name.enum }));
+      const ethnicGroup = schema.properties.general.properties.ethnic_group.properties;
+      return dispatch(receivedProperty('ethnicGroups', { id: ethnicGroup.id.enum, name: ethnicGroup.name.enum }));
+    });
+};
+
+export const breastSizes = () => (dispatch) => {
+  dispatch(requestedProperty('breastSizes'));
+  schema()
+    .then((schema) => {
+      return dispatch(receivedProperty('breastSizes', schema.properties.body.properties.breast_size.enum.filter(size => size)));
     });
 };
 
