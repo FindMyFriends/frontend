@@ -6,7 +6,6 @@ import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
 import { reconsider, genders, ethnicGroups, single } from './../../demands/endpoints';
-import validatedDemand from './../../demands/rules';
 
 class Reconsider extends React.Component {
   state = {
@@ -41,7 +40,7 @@ class Reconsider extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      dispatch, etag, demand, match: { params: { id } }, genders, ethnicGroups,
+      dispatch, etag, demand, match: { params: { id } },
     } = this.props;
     dispatch(reconsider(
       id,
@@ -49,7 +48,7 @@ class Reconsider extends React.Component {
         true,
         {},
         demand,
-        validatedDemand(f.unflatten(this.state.demand), { genders, ethnicGroups }),
+        f.unflatten(this.state.demand),
       ),
       etag,
     ));
