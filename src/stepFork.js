@@ -24,6 +24,7 @@ export const nextStep = (step, allSteps) => {
 };
 
 export const isLastStep = (step, allSteps) => {
-  const { step: { major } } = nextStep(step, allSteps);
+  const typedStep = { major: parseInt(step.major, 10), minor: parseInt(step.minor, 10) };
+  const { step: { major } } = nextStep(typedStep, allSteps);
   return allSteps[major] === undefined;
 };
