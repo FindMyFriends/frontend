@@ -1,5 +1,5 @@
 import { requestedProperty, receivedProperty } from './actions';
-import loadSchema from './../schema';
+import loadSchema, { replaceNull } from './../schema';
 
 const schema = (method = 'GET') => loadSchema(`schema/v1/description/${method.toLowerCase()}.json`);
 
@@ -22,7 +22,7 @@ export const breastSizes = () => (dispatch) => {
   dispatch(requestedProperty('breastSizes'));
   schema()
     .then((schema) => {
-      return dispatch(receivedProperty('breastSizes', schema.properties.body.properties.breast_size.enum.filter(size => size)));
+      return dispatch(receivedProperty('breastSizes', replaceNull(schema.properties.body.properties.breast_size.enum, 'N/A')));
     });
 };
 
@@ -31,7 +31,7 @@ export const bodyBuilds = () => (dispatch) => {
   schema()
     .then((schema) => {
       const builds = schema.properties.body.properties.build.properties;
-      return dispatch(receivedProperty('bodyBuilds', { id: builds.id.enum, name: builds.name.enum }));
+      return dispatch(receivedProperty('bodyBuilds', { id: builds.id.enum, name: replaceNull(builds.name.enum, 'not sure') }));
     });
 };
 
@@ -40,7 +40,7 @@ export const hairStyles = () => (dispatch) => {
   schema()
     .then((schema) => {
       const styles = schema.properties.hair.properties.style.properties;
-      return dispatch(receivedProperty('hairStyles', { id: styles.id.enum, name: styles.name.enum }));
+      return dispatch(receivedProperty('hairStyles', { id: styles.id.enum, name: replaceNull(styles.name.enum, 'not sure') }));
     });
 };
 
@@ -48,10 +48,8 @@ const colorEnum = (color) => {
   return {
     id: color.properties.id.enum
       .filter(id => id),
-    hex: color.properties.hex.enum
-      .filter(hex => hex),
-    name: color.properties.name.enum
-      .filter(name => name),
+    hex: replaceNull(color.properties.hex.enum, '#000000'),
+    name: replaceNull(color.properties.name.enum, 'not sure'),
   };
 };
 
@@ -64,7 +62,10 @@ export const lengthUnits = () => (dispatch) => {
 export const shapes = () => (dispatch) => {
   dispatch(requestedProperty('shapes'));
   schema()
-    .then(schema => dispatch(receivedProperty('shapes', schema.properties.face.properties.shape.enum.filter(shape => shape))));
+    .then((schema) => {
+      const shapes = schema.properties.face.properties.shape.properties;
+      return dispatch(receivedProperty('shapes', { id: shapes.id.enum, name: replaceNull(shapes.name.enum, 'not sure') }));
+    });
 };
 
 export const ratings = () => (dispatch) => {

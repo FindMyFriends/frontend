@@ -35,7 +35,7 @@ class Add extends React.Component {
           unit: 'cm',
           value: 180,
         },
-        breast_size: 'A',
+        breast_size: null,
       },
       hair: {
         style_id: 1,
@@ -77,7 +77,7 @@ class Add extends React.Component {
       face: {
         freckles: false,
         care: 8,
-        shape: 'oval',
+        shape_id: 1,
       },
       hands: {
         care: 9,
@@ -195,7 +195,7 @@ export default connect(state => ({
   nailColors: state.descriptionSchema.nailColors || enumSet.emptyColor(),
   ratings: state.descriptionSchema.ratings || enumSet.emptyRange(),
   lengthUnits: state.descriptionSchema.lengthUnits || [],
-  shapes: state.descriptionSchema.shapes || [],
+  shapes: state.descriptionSchema.shapes || enumSet.empty(),
   breastSizes: state.descriptionSchema.breastSizes || [],
   hairStyles: state.descriptionSchema.hairStyles || enumSet.empty(),
 }))(Add);

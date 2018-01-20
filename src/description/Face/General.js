@@ -4,7 +4,8 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
-import { onSelectChange, onCheck, onSlideChange } from './../../forms/events';
+import { onCheck, onSlideChange, onSelectEnumChange } from './../../forms/events';
+import { name as enumName } from './../../enum';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
@@ -30,11 +31,11 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
     />
     <SelectField
       floatingLabelText="Shape"
-      onChange={onSelectChange(onChange, 'face.shape')}
-      value={values['face.shape']}
-      name="face.shape"
+      onChange={onSelectEnumChange(onChange, 'face.shape_id', shapes)}
+      value={enumName(values['face.shape_id'], shapes.id, shapes.name)}
+      name="face.shape_id"
     >
-      {shapes.map(shape => <MenuItem key={shape} value={shape} primaryText={shape} />)}
+      {shapes.name.map(shape => <MenuItem key={shape} value={shape} primaryText={shape} />)}
     </SelectField>
     <br />
   </div>

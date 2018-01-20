@@ -28,4 +28,14 @@ const load = (uri) => {
   return Promise.resolve(schema(uri));
 };
 
+export const replaceNull = (values, replacement) => {
+  const index = values.indexOf(null);
+  if (index !== -1) {
+    const v = values;
+    v[index] = replacement;
+    return v;
+  }
+  return values;
+};
+
 export default load;
