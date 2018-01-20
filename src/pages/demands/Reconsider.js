@@ -5,7 +5,8 @@ import extend from 'extend';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
-import { reconsider, genders, ethnicGroups, single } from './../../demands/endpoints';
+import { genders, ethnicGroups } from './../../description/endpoints';
+import { reconsider, single } from './../../demands/endpoints';
 
 class Reconsider extends React.Component {
   state = {

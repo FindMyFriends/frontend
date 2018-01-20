@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import extend from 'extend';
-import { add, genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes, hairStyles } from './../../demands/endpoints';
+import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
+import { add, timelineSides } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
     step: {
-      major: 1,
+      major: 2,
       minor: 0,
     },
     demand: {
@@ -183,18 +184,18 @@ Add.propTypes = {
 };
 
 export default connect(state => ({
-  genders: state.demandSchema.genders || [],
+  genders: state.descriptionSchema.genders || [],
   timelineSides: state.demandSchema.timelineSides || [],
-  ethnicGroups: state.demandSchema.ethnicGroups || enumSet.empty(),
-  bodyBuilds: state.demandSchema.bodyBuilds || enumSet.empty(),
-  hairColors: state.demandSchema.hairColors || enumSet.emptyColor(),
-  beardColors: state.demandSchema.beardColors || enumSet.emptyColor(),
-  eyebrowColors: state.demandSchema.eyebrowColors || enumSet.emptyColor(),
-  eyeColors: state.demandSchema.eyeColors || enumSet.emptyColor(),
-  nailColors: state.demandSchema.nailColors || enumSet.emptyColor(),
-  ratings: state.demandSchema.ratings || enumSet.emptyRange(),
-  lengthUnits: state.demandSchema.lengthUnits || [],
-  shapes: state.demandSchema.shapes || [],
-  breastSizes: state.demandSchema.breastSizes || [],
-  hairStyles: state.demandSchema.hairStyles || enumSet.empty(),
+  ethnicGroups: state.descriptionSchema.ethnicGroups || enumSet.empty(),
+  bodyBuilds: state.descriptionSchema.bodyBuilds || enumSet.empty(),
+  hairColors: state.descriptionSchema.hairColors || enumSet.emptyColor(),
+  beardColors: state.descriptionSchema.beardColors || enumSet.emptyColor(),
+  eyebrowColors: state.descriptionSchema.eyebrowColors || enumSet.emptyColor(),
+  eyeColors: state.descriptionSchema.eyeColors || enumSet.emptyColor(),
+  nailColors: state.descriptionSchema.nailColors || enumSet.emptyColor(),
+  ratings: state.descriptionSchema.ratings || enumSet.emptyRange(),
+  lengthUnits: state.descriptionSchema.lengthUnits || [],
+  shapes: state.descriptionSchema.shapes || [],
+  breastSizes: state.descriptionSchema.breastSizes || [],
+  hairStyles: state.descriptionSchema.hairStyles || enumSet.empty(),
 }))(Add);

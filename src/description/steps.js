@@ -12,6 +12,8 @@ import HandsGeneral from './Hands/General';
 import HandsNails from './Hands/Nails';
 import HandsHair from './Hands/Hair';
 
+const reindex = parts => parts.filter(part => part);
+
 export const steps = (props) => {
   const MAIN_GENERAL = 1;
   const MAIN_BODY = 2;
@@ -85,7 +87,7 @@ export const steps = (props) => {
   };
   if (props.values['general.gender'] === 'woman') {
     delete steps[MAIN_HEAD].parts[2];
-    steps[MAIN_HEAD].parts = steps[MAIN_HEAD].parts.filter(part => part);
+    steps[MAIN_HEAD].parts = reindex(steps[MAIN_HEAD].parts);
   }
   return steps;
 };
