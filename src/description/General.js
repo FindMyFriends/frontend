@@ -40,11 +40,12 @@ const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
     <div style={{ width: 400 }}>
       <span>Age</span>
       <Range
+        dots
         step={5}
         min={15}
         max={100}
         marks={combined(range(15, 105, 5), range(15, 105, 5))}
-        onChange={onRangeChange(onChange, ['general.age.from', 'general.age.to'])}
+        onChange={onRangeChange(onChange, 'general.age', ['from', 'to'])}
         value={[values['general.age.from'], values['general.age.to']]}
       />
     </div>

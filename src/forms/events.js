@@ -12,9 +12,8 @@ export const onSlideChange = (classic, name) => (self, value) => {
   return classic({ target: { name, value } });
 };
 
-export const onRangeChange = (classic, names) => (range) => {
-  classic({ target: { name: names[0], value: range[0] } });
-  classic({ target: { name: names[1], value: range[1] } });
+export const onRangeChange = (classic, name, ranges) => (range) => {
+  classic({ target: { name, value: { [ranges[0]]: range[0], [ranges[1]]: range[1] } } });
 };
 
 export const onCheck = (classic, name) => (self, checked) => {
