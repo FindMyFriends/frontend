@@ -98,17 +98,6 @@ const colorEnum = (color) => {
   };
 };
 
-export const skinColors = () => (dispatch) => {
-  dispatch(requestedProperty('skinColors'));
-  schema()
-    .then((schema) => {
-      return dispatch(receivedProperty(
-        'skinColors',
-        colorEnum(schema.properties.body.properties.skin_color),
-      ));
-    });
-};
-
 export const lengthUnits = () => (dispatch) => {
   dispatch(requestedProperty('lengthUnits'));
   schema()

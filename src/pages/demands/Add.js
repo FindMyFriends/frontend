@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import extend from 'extend';
-import { add, genders, ethnicGroups, bodyBuilds, skinColors, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes, hairStyles } from './../../demands/endpoints';
+import { add, genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, timelineSides, breastSizes, hairStyles } from './../../demands/endpoints';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
@@ -26,7 +26,6 @@ class Add extends React.Component {
       },
       body: {
         build_id: 1,
-        skin_color_id: 8, // remove
         weight: {
           unit: 'kg',
           value: 60,
@@ -114,7 +113,6 @@ class Add extends React.Component {
     this.props.dispatch(genders());
     this.props.dispatch(ethnicGroups());
     this.props.dispatch(bodyBuilds());
-    this.props.dispatch(skinColors());
     this.props.dispatch(hairColors());
     this.props.dispatch(lengthUnits());
     this.props.dispatch(beardColors());
@@ -189,7 +187,6 @@ export default connect(state => ({
   timelineSides: state.demandSchema.timelineSides || [],
   ethnicGroups: state.demandSchema.ethnicGroups || enumSet.empty(),
   bodyBuilds: state.demandSchema.bodyBuilds || enumSet.empty(),
-  skinColors: state.demandSchema.skinColors || enumSet.emptyColor(),
   hairColors: state.demandSchema.hairColors || enumSet.emptyColor(),
   beardColors: state.demandSchema.beardColors || enumSet.emptyColor(),
   eyebrowColors: state.demandSchema.eyebrowColors || enumSet.emptyColor(),
