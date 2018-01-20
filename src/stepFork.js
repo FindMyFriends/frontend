@@ -14,7 +14,7 @@ export const previousStep = (step, allSteps) => {
 };
 
 export const nextStep = (step, allSteps) => {
-  const { major, minor } = step;
+  const { major, minor } = { major: parseInt(step.major, 10), minor: parseInt(step.minor, 10) };
   if (allSteps[major].parts[minor + 1]) {
     return { step: { major, minor: minor + 1 } };
   } else if (allSteps[major + 1] && allSteps[major + 1].parts[minor]) {

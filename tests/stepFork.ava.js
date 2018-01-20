@@ -45,6 +45,19 @@ test('going only to majors', (t) => {
   );
 });
 
+test('majors as integers', (t) => {
+  const allParts = { 1: { parts: { 1: [] } }, 2: { parts: { 1: [] } } };
+  t.deepEqual(
+    {
+      step: {
+        major: 2,
+        minor: 1,
+      },
+    },
+    nextStep({ major: '1', minor: 1 }, allParts),
+  );
+});
+
 test('minors, then majors', (t) => {
   const allParts = { 1: { parts: { 1: [], 2: [], 3: [] } }, 2: { parts: { 1: [] } } };
   t.deepEqual(
