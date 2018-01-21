@@ -46,8 +46,7 @@ export const hairStyles = () => (dispatch) => {
 
 const colorEnum = (color) => {
   return {
-    id: color.properties.id.enum
-      .filter(id => id),
+    id: color.properties.id.enum,
     hex: replaceNull(color.properties.hex.enum, '#000000'),
     name: replaceNull(color.properties.name.enum, 'not sure'),
   };

@@ -8,6 +8,30 @@ import Color from './components/Color';
 import { name as enumName } from './../enum';
 import { onCheck, onSelectEnumChange } from './../forms/events';
 
+const NotNatureHair = ({ values, onChange }) => {
+  if (values['hair.nature'] === true) {
+    return null;
+  }
+  return (
+    <span>
+      <Checkbox
+        label="Highlights"
+        name="hair.highlights"
+        onCheck={onCheck(onChange, 'hair.highlights')}
+        checked={values['hair.highlights']}
+      />
+      <br />
+      <Checkbox
+        label="Roots"
+        name="hair.roots"
+        onCheck={onCheck(onChange, 'hair.roots')}
+        checked={values['hair.roots']}
+      />
+      <br />
+    </span>
+  );
+};
+
 const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChange }) => (
   <div>
     <h2>Hair</h2>
@@ -36,32 +60,24 @@ const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChan
     />
     <br />
     <Checkbox
-      label="Highlights"
-      name="hair.highlights"
-      onCheck={onCheck(onChange, 'hair.highlights')}
-      checked={values['hair.highlights']}
-    />
-    <br />
-    <Checkbox
-      label="Roots"
-      name="hair.roots"
-      onCheck={onCheck(onChange, 'hair.roots')}
-      checked={values['hair.roots']}
-    />
-    <br />
-    <Checkbox
       label="Nature"
       name="hair.nature"
       onCheck={onCheck(onChange, 'hair.nature')}
       checked={values['hair.nature']}
     />
     <br />
+    <NotNatureHair values={values} onChange={onChange} />
   </div>
 );
 
 Hair.propTypes = {
   onChange: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
+};
+
+NotNatureHair.propTypes = {
+  onChange: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
 };
 

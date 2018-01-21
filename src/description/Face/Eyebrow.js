@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slider from 'material-ui/Slider';
 import Color from './../components/Color';
+import Rating from './../components/Rating';
 
 const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
     <h2>Face</h2>
     <h3>Eyebrow</h3>
     <p><span>Care</span></p>
-    <Slider
+    <Rating
       style={{ width: 200 }}
-      min={ratings.minimum}
-      max={ratings.maximum}
-      step={1}
-      value={values['eyebrow.care']}
+      ratings={ratings}
+      name="eyebrow.care"
+      values={values}
       onChange={onChange}
     />
     <Color

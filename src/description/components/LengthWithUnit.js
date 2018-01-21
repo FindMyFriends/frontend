@@ -18,6 +18,8 @@ const LengthWithUnit = ({
     />
     <br />
     <SelectField
+      disabled={!values[`${name}.value`]}
+      title={values[`${name}.value`] ? null : 'To change unit, type value'}
       floatingLabelText="Unit"
       onChange={onSelectChange(onChange, `${name}.unit`)}
       value={values[`${name}.unit`]}

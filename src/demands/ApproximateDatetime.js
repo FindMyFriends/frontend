@@ -41,13 +41,9 @@ const Approximation = ({ values, selects: { timelineSides }, onChange }) => {
       value={values['location.met_at.timeline_side']}
       name="location.met_at.timeline_side"
     >
-      {
-        timelineSides.map((timelineSide) => {
-          return (
-            <MenuItem key={timelineSide} value={timelineSide} primaryText={timelineSide} />
-          );
-        })
-      }
+      {timelineSides.map(timelineSide => (
+        <MenuItem key={timelineSide} value={timelineSide} primaryText={timelineSide} />
+        ))}
     </SelectField>
   );
   if (values['location.met_at.timeline_side'] === 'exactly') {
