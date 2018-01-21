@@ -5,109 +5,17 @@ import flat, * as f from 'flat';
 import extend from 'extend';
 import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
 import { add, timelineSides } from './../../demands/endpoints';
+import { initial } from './../../demands/sample';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
     step: {
-      major: 2,
+      major: 1,
       minor: 0,
     },
-    demand: {
-      general: {
-        firstname: 'Dominik',
-        lastname: null,
-        gender: 'woman',
-        ethnic_group_id: 1,
-        age: {
-          from: 15,
-          to: 20,
-        },
-      },
-      body: {
-        build_id: 1,
-        weight: {
-          unit: 'kg',
-          value: 60,
-        },
-        height: {
-          unit: 'cm',
-          value: 180,
-        },
-        breast_size: null,
-      },
-      hair: {
-        style_id: 1,
-        color_id: 8,
-        length: {
-          value: 5,
-          unit: 'cm',
-        },
-        highlights: false,
-        roots: false,
-        nature: true,
-      },
-      beard: {
-        style: null,
-        color_id: 8,
-        length: {
-          value: 2,
-          unit: 'mm',
-        },
-      },
-      eyebrow: {
-        care: 7,
-        color_id: 8,
-      },
-      eye: {
-        left: {
-          color_id: 8,
-          lenses: true,
-        },
-        right: {
-          color_id: 8,
-          lenses: true,
-        },
-      },
-      teeth: {
-        care: 6,
-        braces: false,
-      },
-      face: {
-        freckles: false,
-        care: 8,
-        shape_id: 1,
-      },
-      hands: {
-        care: 9,
-        vein_visibility: 5,
-        joint_visibility: 8,
-        nails: {
-          color_id: 8,
-          length: {
-            value: 1,
-            unit: 'cm',
-          },
-          care: 4,
-        },
-        hair: {
-          amount: 3,
-          color_id: 8,
-        },
-      },
-      location: {
-        coordinates: {
-          latitude: 50.5,
-          longitude: 50.6,
-        },
-        met_at: {
-          moment: '2017-01-01T13:58:10+00:00',
-          timeline_side: 'sooner or later',
-          approximation: 'PT10H',
-        },
-      },
-    },
+    demand: initial(),
   };
 
   componentDidMount() {

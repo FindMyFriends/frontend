@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
-import { onCheck, onSlideChange, onSelectEnumChange } from './../../forms/events';
+import Rating from './../components/Rating';
+import { onCheck, onSelectEnumChange } from './../../forms/events';
 import { name as enumName } from './../../enum';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
@@ -14,15 +14,14 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
     <p>
       <span>Care</span>
     </p>
-    <Slider
+    <Rating
       style={{ width: 200 }}
-      min={ratings.minimum}
-      max={ratings.maximum}
-      step={1}
-      value={values['face.care']}
-      onChange={onSlideChange(onChange, 'face.care')}
+      ratings={ratings}
       name="face.care"
+      values={values}
+      onChange={onChange}
     />
+    <br />
     <Checkbox
       label="Freckles"
       name="face.freckles"
