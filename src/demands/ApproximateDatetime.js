@@ -28,10 +28,7 @@ const onUnitChange = (classic, duration) => (event, index, value) => {
   onSelectChange(classic({ target: { name: 'location.met_at.approximation', value: moment.duration({ [value]: number(duration) }).toISOString() } }));
 };
 
-const hours = range(1, 24);
-const days = range(1, 15);
-
-const time = duration => ({ hours, days }[unit(duration)]);
+const time = duration => ({ hours: range(1, 24), days: range(1, 15) }[unit(duration)]);
 
 const Approximation = ({ values, selects: { timelineSides }, onChange }) => {
   const side = (
