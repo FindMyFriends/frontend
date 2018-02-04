@@ -7,7 +7,6 @@ import * as R from 'ramda';
 import Form from './../../demands/Form';
 import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
 import { reconsider, single, timelineSides } from './../../demands/endpoints';
-import { initial } from './../../demands/sample';
 import * as enumSet from './../../enum';
 
 class Reconsider extends React.Component {
@@ -16,17 +15,17 @@ class Reconsider extends React.Component {
       major: 1,
       minor: 0,
     },
-    demand: initial(),
+    demand: {},
   };
 
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(single(id))
       .then(demand => this.setState({
-        demand: flat({
+        demand: {
           ...this.state.demand,
           ...demand,
-        }),
+        },
       }));
     this.props.dispatch(genders());
     this.props.dispatch(ethnicGroups());
