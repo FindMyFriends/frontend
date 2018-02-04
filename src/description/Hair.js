@@ -5,7 +5,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import LengthWithUnit from './components/LengthWithUnit';
 import Color from './components/Color';
-import { name as enumName } from './../enum';
 import { onCheck, onSelectEnumChange } from './../forms/events';
 
 const NotNatureHair = ({ values, onChange }) => {
@@ -39,10 +38,12 @@ const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChan
     <SelectField
       floatingLabelText="Styles"
       onChange={onSelectEnumChange(onChange, 'hair.style_id', hairStyles)}
-      value={enumName(values['hair.style_id'], hairStyles.id, hairStyles.name)}
+      value={hairStyles[values['hair.style_id']]}
       name="body.build_id"
     >
-      {hairStyles.name.map(style => <MenuItem key={style} value={style} primaryText={style} />)}
+      {Object.values(hairStyles).map(style => (
+        <MenuItem key={style} value={style} primaryText={style} />
+      ))}
     </SelectField>
     <br />
     <Color

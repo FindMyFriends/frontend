@@ -34,10 +34,10 @@ export const test = () => ({
   },
   beard: {
     style: null,
-    color_id: 8,
+    color_id: null,
     length: {
-      value: 2,
-      unit: 'mm',
+      value: null,
+      unit: null,
     },
   },
   eyebrow: {

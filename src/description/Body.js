@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'rc-slider';
-import { name as enumName, combined } from './../enum';
+import { combined } from './../enum';
 import { onSelectEnumChange } from './../forms/events';
 
 const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
@@ -36,10 +36,12 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
     <SelectField
       floatingLabelText="Build"
       onChange={onSelectEnumChange(onChange, 'body.build_id', bodyBuilds)}
-      value={enumName(values['body.build_id'], bodyBuilds.id, bodyBuilds.name)}
+      value={bodyBuilds[values['body.build_id']]}
       name="body.build_id"
     >
-      {bodyBuilds.name.map(build => <MenuItem key={build} value={build} primaryText={build} />)}
+      {Object.values(bodyBuilds).map(build => (
+        <MenuItem key={build} value={build} primaryText={build} />
+      ))}
     </SelectField>
     <br />
     <TextField

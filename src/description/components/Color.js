@@ -2,32 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { name as enumName, combined } from './../../enum';
-import { onSelectEnumChange } from './../../forms/events';
+import { onSelectChange } from './../../forms/events';
 
 const Color = ({
   colors, name, onChange, values,
 }) => {
-  const nameWithHex = {
-    ...combined(colors.name, colors.hex),
-    White: '#000000',
-  };
   return (
     <div>
       <SelectField
         floatingLabelText="Color"
-        onChange={onSelectEnumChange(onChange, name, colors)}
-        value={enumName(values[name], colors.id, colors.name)}
+        onChange={onSelectChange(onChange, name)}
+        value={values[name]}
         name={name}
       >
         {
-          colors.name.map((name) => {
+          Object.entries(colors).map((entry) => {
+            const id = parseInt(entry[0], 10);
+            const color = entry[1];
             return (
               <MenuItem
-                style={{ color: nameWithHex[name] }}
-                key={name}
-                value={name}
-                primaryText={name}
+                style={{ color: color.hex }}
+                key={id}
+                value={id}
+                primaryText={color.name}
               />
             );
           })

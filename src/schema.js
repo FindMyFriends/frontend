@@ -7,7 +7,9 @@ const setExpiration = uri => lscache.set(`${uri}-ttl`, true, 10);
 const download = (uri) => {
   setExpiration(uri);
   return axios.get(uri)
-    .then(response => lscache.set(uri, { schema: response.data, etag: trim.left(response.headers.etag, 'W/') }));
+    .then((response) => {
+      lscache.set(uri, { schema: response.data, etag: trim.left(response.headers.etag, 'W/') });
+    });
 };
 
 const item = uri => lscache.get(uri);
@@ -16,7 +18,7 @@ const etag = uri => item(uri).etag;
 const schema = uri => item(uri).schema;
 const expired = uri => !item(`${uri}-ttl`);
 
-const load = (uri) => {
+export const loadSchema = (uri) => {
   lscache.flushExpired();
   if (!exists(uri)) {
     return download(uri);
@@ -28,6 +30,11 @@ const load = (uri) => {
   return Promise.resolve(schema(uri));
 };
 
+export const loadOptions = (uri) => {
+  return axios.options(uri)
+    .then(response => response.data);
+};
+
 export const replaceNull = (values, replacement) => {
   const index = values.indexOf(null);
   if (index !== -1) {
@@ -37,5 +44,3 @@ export const replaceNull = (values, replacement) => {
   }
   return values;
 };
-
-export default load;

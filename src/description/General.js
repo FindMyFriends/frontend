@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import range from 'lodash/range';
-import { name as enumName, combined } from './../enum';
+import { combined } from './../enum';
 import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
 
 const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
@@ -31,10 +31,12 @@ const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
     <SelectField
       floatingLabelText="Ethnic group"
       onChange={onSelectEnumChange(onChange, 'general.ethnic_group_id', ethnicGroups)}
-      value={enumName(values['general.ethnic_group_id'], ethnicGroups.id, ethnicGroups.name)}
+      value={ethnicGroups[values['general.ethnic_group_id']]}
       name="general.ethnic_group_id"
     >
-      {ethnicGroups.name.map(race => <MenuItem key={race} value={race} primaryText={race} />)}
+      {Object.values(ethnicGroups).map(ethnicity => (
+        <MenuItem key={ethnicity} value={ethnicity} primaryText={ethnicity} />
+      ))}
     </SelectField>
     <br />
     <div style={{ width: 400 }}>

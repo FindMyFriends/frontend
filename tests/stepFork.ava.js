@@ -64,7 +64,7 @@ test('minors, then majors', (t) => {
     {
       step: {
         major: 2,
-        minor: 1,
+        minor: 0,
       },
     },
     nextStep({ major: 1, minor: 3 }, allParts),

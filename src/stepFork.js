@@ -20,7 +20,7 @@ export const nextStep = (step, allSteps) => {
   } else if (allSteps[major + 1] && allSteps[major + 1].parts[minor]) {
     return { step: { major: major + 1, minor } };
   }
-  return { step: { major: major + 1, minor: 1 } };
+  return { step: { major: major + 1, minor: 0 } };
 };
 
 export const isLastStep = (step, allSteps) => {

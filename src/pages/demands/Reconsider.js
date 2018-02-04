@@ -5,12 +5,18 @@ import extend from 'extend';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
-import { genders, ethnicGroups } from './../../description/endpoints';
-import { reconsider, single } from './../../demands/endpoints';
+import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
+import { reconsider, single, timelineSides } from './../../demands/endpoints';
+import { initial } from './../../demands/sample';
+import * as enumSet from './../../enum';
 
 class Reconsider extends React.Component {
   state = {
-    demand: { },
+    step: {
+      major: 1,
+      minor: 0,
+    },
+    demand: initial(),
   };
 
   componentDidMount() {
@@ -22,18 +28,35 @@ class Reconsider extends React.Component {
           ...demand,
         }),
       }));
-    dispatch(genders());
-    dispatch(ethnicGroups());
+    this.props.dispatch(genders());
+    this.props.dispatch(ethnicGroups());
+    this.props.dispatch(bodyBuilds());
+    this.props.dispatch(hairColors());
+    this.props.dispatch(lengthUnits());
+    this.props.dispatch(beardColors());
+    this.props.dispatch(shapes());
+    this.props.dispatch(ratings());
+    this.props.dispatch(eyebrowColors());
+    this.props.dispatch(eyeColors());
+    this.props.dispatch(nailColors());
+    this.props.dispatch(timelineSides());
+    this.props.dispatch(breastSizes());
+    this.props.dispatch(hairStyles());
   }
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleTurn = this.handleTurn.bind(this);
 
   handleChange(event) {
     this.setState({
       demand: {
-        ...this.state.demand,
-        [event.target.name]: event.target.value,
+        ...extend(
+          true,
+          {},
+          this.state.demand,
+          f.unflatten({ [event.target.name]: event.target.value }),
+        ),
       },
     });
   }
@@ -55,8 +78,14 @@ class Reconsider extends React.Component {
     ));
   }
 
+  handleTurn(major, minor) {
+    this.setState({
+      ...this.state,
+      step: { major, minor },
+    });
+  }
+
   render() {
-    const { genders, ethnicGroups } = this.props;
     if (R.isEmpty(this.state.demand)) {
       return <h1>Loading...</h1>;
     }
@@ -66,8 +95,10 @@ class Reconsider extends React.Component {
         <Form
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
-          selects={{ genders, ethnicGroups }}
-          values={this.state.demand}
+          onTurn={this.handleTurn}
+          selects={{ ...this.props }}
+          values={flat(this.state.demand)}
+          step={this.state.step}
           label="Reconsider"
         />
       </div>
@@ -77,16 +108,26 @@ class Reconsider extends React.Component {
 
 Reconsider.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  genders: PropTypes.array.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
-  ethnicGroups: PropTypes.array.isRequired,
   etag: PropTypes.string.isRequired,
   demand: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
-  genders: state.demand.genders || [],
-  ethnicGroups: state.demand.ethnicGroups || [],
+  genders: state.descriptionSchema.genders || [],
+  timelineSides: state.demandSchema.timelineSides || [],
+  ethnicGroups: state.descriptionSchema.ethnicGroups || enumSet.empty(),
+  bodyBuilds: state.descriptionSchema.bodyBuilds || enumSet.empty(),
+  hairColors: state.descriptionSchema.hairColors || enumSet.emptyColor(),
+  beardColors: state.descriptionSchema.beardColors || enumSet.emptyColor(),
+  eyebrowColors: state.descriptionSchema.eyebrowColors || enumSet.emptyColor(),
+  eyeColors: state.descriptionSchema.eyeColors || enumSet.emptyColor(),
+  nailColors: state.descriptionSchema.nailColors || enumSet.emptyColor(),
+  ratings: state.descriptionSchema.ratings || enumSet.emptyRange(),
+  lengthUnits: state.descriptionSchema.lengthUnits || [],
+  shapes: state.descriptionSchema.shapes || enumSet.empty(),
+  breastSizes: state.descriptionSchema.breastSizes || [],
+  hairStyles: state.descriptionSchema.hairStyles || enumSet.empty(),
   demand: state.demand.single || {},
   etag: state.demand.etag || '',
 }))(Reconsider);

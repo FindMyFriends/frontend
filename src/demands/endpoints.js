@@ -1,4 +1,5 @@
 import axios from 'axios';
+import omit from 'lodash/omit';
 import {
   requestedAdding,
   addedDemand,
@@ -12,9 +13,9 @@ import {
   receivedReconsideration,
   requestedReconsidering,
 } from './actions';
-import loadSchema from './../schema';
+import { loadOptions } from './../schema';
 
-const schema = (method = 'GET') => loadSchema(`schema/v1/demand/${method.toLowerCase()}.json`);
+const options = () => loadOptions('v1/demands');
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
   dispatch(requestedAll());
@@ -41,13 +42,14 @@ export const add = demand => (dispatch) => {
 };
 
 export const reconsider = (id, demand, etag) => (dispatch) => {
-  dispatch(requestedReconsidering(id, demand));
-  axios.put(`/v1/demands/${id}`, demand, { headers: { 'if-match': etag } })
+  const reconsidered = omit(omit(omit(demand, 'created_at'), 'id'), 'seeker_id');
+  dispatch(requestedReconsidering(id, reconsidered));
+  axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
     .then(response => dispatch(receivedReconsideration(id, response.data)));
 };
 
 export const timelineSides = () => (dispatch) => {
   dispatch(requestedProperty('timelineSides'));
-  schema()
-    .then(schema => dispatch(receivedProperty('timelineSides', schema.properties.location.properties.met_at.properties.timeline_side.enum.filter(side => side))));
+  options()
+    .then(option => dispatch(receivedProperty('timelineSides', option.location.met_at.timeline_side)));
 };

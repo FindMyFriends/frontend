@@ -5,17 +5,17 @@ import flat, * as f from 'flat';
 import extend from 'extend';
 import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
 import { add, timelineSides } from './../../demands/endpoints';
-import { initial } from './../../demands/sample';
+import { test } from './../../demands/sample';
 import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
   state = {
     step: {
-      major: 1,
-      minor: 0,
+      major: 4,
+      minor: 2,
     },
-    demand: initial(),
+    demand: test(),
   };
 
   componentDidMount() {

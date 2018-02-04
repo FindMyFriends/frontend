@@ -18,9 +18,10 @@ export const empty = () => {
 
 export const emptyColor = () => {
   return {
-    id: [],
-    hex: [],
-    name: [],
+    0: {
+      hex: null,
+      name: null,
+    },
   };
 };
 

@@ -9,13 +9,14 @@ const Layout = ({ component: Component, ...rest }) => (
     {...rest}
     render={matchProps => (
       <MuiThemeProvider>
-        <div>
+        <span>
           <AppBar
-            title="Title"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
+            showMenuIconButton={false}
+            iconElementLeft={<span>A</span>}
+            title="FMF"
           />
           <Component {...matchProps} />
-        </div>
+        </span>
       </MuiThemeProvider>
   )}
   />
