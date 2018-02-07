@@ -5,7 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { discardedError } from './../ui/actions';
 
-const FlashMessage = ({ error, dispatch }) => {
+const Alert = ({ error, dispatch }) => {
   if (!error) {
     return null;
   }
@@ -31,11 +31,11 @@ const FlashMessage = ({ error, dispatch }) => {
   );
 };
 
-FlashMessage.propTypes = {
+Alert.propTypes = {
   dispatch: PropTypes.func.isRequired,
   error: PropTypes.string,
 };
 
 export default connect(state => ({
   error: state.uiError.message,
-}))(FlashMessage);
+}))(Alert);
