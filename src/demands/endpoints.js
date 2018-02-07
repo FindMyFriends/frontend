@@ -13,6 +13,7 @@ import {
   receivedReconsideration,
   requestedReconsidering,
 } from './actions';
+import { receivedApiError } from './../ui/actions';
 import { loadOptions } from './../schema';
 
 const options = () => loadOptions('v1/demands');
@@ -38,14 +39,16 @@ export const single = id => (dispatch) => {
 export const add = demand => (dispatch) => {
   dispatch(requestedAdding(demand));
   axios.post('/v1/demands', demand)
-    .then(response => dispatch(addedDemand(demand, response.headers.location)));
+    .then(response => dispatch(addedDemand(demand, response.headers.location)))
+    .catch(error => dispatch(receivedApiError(error)));
 };
 
 export const reconsider = (id, demand, etag) => (dispatch) => {
   const reconsidered = omit(omit(omit(demand, 'created_at'), 'id'), 'seeker_id');
   dispatch(requestedReconsidering(id, reconsidered));
   axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
-    .then(response => dispatch(receivedReconsideration(id, response.data)));
+    .then(response => dispatch(receivedReconsideration(id, response.data)))
+    .catch(error => dispatch(receivedApiError(error)));
 };
 
 export const timelineSides = () => (dispatch) => {
