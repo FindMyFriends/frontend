@@ -1,11 +1,11 @@
-import { RECEIVED_API_ERROR, DISCARDED_ERROR } from './actions';
+import { RECEIVED_API_ERROR, DISCARDED_MESSAGE, RECEIVED_SUCCESS } from './actions';
 
-export const error = (state = {}, action) => {
+export const message = (state = {}, action) => {
   switch (action.type) {
     case RECEIVED_API_ERROR:
-      return { ...state, message: action.message };
-    case DISCARDED_ERROR:
-      return { ...state, message: null };
+    case RECEIVED_SUCCESS:
+    case DISCARDED_MESSAGE:
+      return { ...state, content: action.content, severity: action.severity };
     default:
       return state;
   }

@@ -13,7 +13,7 @@ import {
   receivedReconsideration,
   requestedReconsidering,
 } from './actions';
-import { receivedApiError } from './../ui/actions';
+import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions } from './../schema';
 
 const options = () => loadOptions('v1/demands');
@@ -40,6 +40,7 @@ export const add = demand => (dispatch) => {
   dispatch(requestedAdding(demand));
   axios.post('/v1/demands', demand)
     .then(response => dispatch(addedDemand(demand, response.headers.location)))
+    .then(() => dispatch(receivedSuccessMessage('Demand has been added')))
     .catch(error => dispatch(receivedApiError(error)));
 };
 
