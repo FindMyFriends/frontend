@@ -1,4 +1,5 @@
-export const previousStep = (step, allSteps) => {
+// @flow
+export const previousStep = (step: Object, allSteps: Object) => {
   const { major, minor } = step;
   if (allSteps[major].parts[minor - 1]) {
     return { step: { major, minor: minor - 1 } };
@@ -13,7 +14,7 @@ export const previousStep = (step, allSteps) => {
   return { step };
 };
 
-export const nextStep = (step, allSteps) => {
+export const nextStep = (step: Object, allSteps: Object) => {
   const { major, minor } = { major: parseInt(step.major, 10), minor: parseInt(step.minor, 10) };
   if (allSteps[major].parts[minor + 1]) {
     return { step: { major, minor: minor + 1 } };
@@ -23,7 +24,7 @@ export const nextStep = (step, allSteps) => {
   return { step: { major: major + 1, minor: 0 } };
 };
 
-export const isLastStep = (step, allSteps) => {
+export const isLastStep = (step: Object, allSteps: Object) => {
   const typedStep = { major: parseInt(step.major, 10), minor: parseInt(step.minor, 10) };
   const { step: { major } } = nextStep(typedStep, allSteps);
   return allSteps[major] === undefined;
