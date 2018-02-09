@@ -2,9 +2,9 @@ import axios from 'axios';
 import lscache from 'lscache';
 import trim from 'trim-character';
 
-const setExpiration = uri => lscache.set(`${uri}-ttl`, true, 10);
+const setExpiration = (uri: string) => lscache.set(`${uri}-ttl`, true, 10);
 
-const download = (uri) => {
+const download = (uri: string) => {
   setExpiration(uri);
   return axios.get(uri)
     .then((response) => {
@@ -12,13 +12,13 @@ const download = (uri) => {
     });
 };
 
-const item = uri => lscache.get(uri);
-const exists = uri => item(uri);
-const etag = uri => item(uri).etag;
-const schema = uri => item(uri).schema;
-const expired = uri => !item(`${uri}-ttl`);
+const item = (uri: string) => lscache.get(uri);
+const exists = (uri: string) => item(uri);
+const etag = (uri: string) => item(uri).etag;
+const schema = (uri: string) => item(uri).schema;
+const expired = (uri: string) => !item(`${uri}-ttl`);
 
-export const loadSchema = (uri) => {
+export const loadSchema = (uri: string) => {
   lscache.flushExpired();
   if (!exists(uri)) {
     return download(uri);
@@ -30,17 +30,7 @@ export const loadSchema = (uri) => {
   return Promise.resolve(schema(uri));
 };
 
-export const loadOptions = (uri) => {
+export const loadOptions = (uri: string) => {
   return axios.options(uri)
     .then(response => response.data);
-};
-
-export const replaceNull = (values, replacement) => {
-  const index = values.indexOf(null);
-  if (index !== -1) {
-    const v = values;
-    v[index] = replacement;
-    return v;
-  }
-  return values;
 };
