@@ -9,7 +9,7 @@ import range from 'lodash/range';
 import { combined } from './../enum';
 import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
 
-const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
+export const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
   <div>
     <h2>General</h2>
     <TextField

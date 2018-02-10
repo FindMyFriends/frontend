@@ -1,8 +1,55 @@
+import extend from 'extend';
 import { requestedProperty, receivedProperty } from './actions';
 import { loadSchema, loadOptions } from './../schema';
 
 const options = () => loadOptions('v1/demands');
 const schema = (method = 'GET') => loadSchema(`schema/v1/demand/${method.toLowerCase()}.json`);
+
+export const readableDescription = (description, options) => {
+  return extend(
+    true,
+    {},
+    description,
+    {
+      general: {
+        ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id],
+      },
+      body: {
+        build: options.body.build[description.body.build_id],
+        weight: `${description.body.weight.value} ${description.body.weight.unit}`,
+        height: `${description.body.height.value} ${description.body.height.unit}`,
+      },
+      hair: {
+        style: options.hair.style[description.hair.style_id],
+        color: options.hair.color[description.hair.color_id].name,
+        length: `${description.hair.length.value} ${description.hair.length.unit}`,
+      },
+      face: {
+        shape: options.face.shape[description.face.shape_id],
+      },
+      eyebrow: {
+        color: options.eyebrow.color[description.eyebrow.color_id].name,
+      },
+      eye: {
+        left: {
+          color: options.definitions.eye.color[description.eye.left.color_id].name,
+        },
+        right: {
+          color: options.definitions.eye.color[description.eye.right.color_id].name,
+        },
+      },
+      hands: {
+        nails: {
+          color: options.hands.nails.color[description.hands.nails.color_id].name,
+          length: `${description.hands.nails.length.value} ${description.hands.nails.length.unit}`,
+        },
+        hair: {
+          color: options.hands.hair.color[description.hands.hair.color_id].name,
+        },
+      },
+    },
+  );
+};
 
 export const genders = () => (dispatch) => {
   dispatch(requestedProperty('genders'));

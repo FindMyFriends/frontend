@@ -15,8 +15,9 @@ import {
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions } from './../schema';
+import { readableDescription } from './../description/endpoints';
 
-const options = () => loadOptions('v1/demands');
+const options = async () => loadOptions('v1/demands');
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
   dispatch(requestedAll());
@@ -30,8 +31,12 @@ export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
 export const single = id => (dispatch) => {
   dispatch(requestedSingle(id));
   return axios.get(`/v1/demands/${id}`)
-    .then((response) => {
-      dispatch(receivedSingle(id, response.data, response.headers.etag));
+    .then(async (response) => {
+      dispatch(receivedSingle(
+        id,
+        readableDescription(response.data, await options()),
+        response.headers.etag,
+      ));
       return response.data;
     });
 };
