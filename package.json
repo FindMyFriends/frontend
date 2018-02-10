@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "tests": "ava tests/**/*.js tests/*.js",
     "lint": "eslint -c .eslintrc src/ tests/ --ignore-path .eslintignore",
-    "check": "yarn lint && yarn tests",
+    "check": "yarn lint && yarn tests && yarn flow src/",
     "eject": "react-scripts eject"
   },
   "ava": {
