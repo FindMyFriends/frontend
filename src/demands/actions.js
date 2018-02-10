@@ -26,11 +26,12 @@ export const requestedAll = () => ({
   type: REQUESTED_ALL_DEMANDS,
 });
 
-export const receivedSingle = (id, demand, etag) => ({
+export const receivedSingle = (id, demand, etag, format = 'plain') => ({
   type: RECEIVED_SINGLE_DEMAND,
   id,
   demand,
   etag,
+  format,
 });
 
 export const requestedSingle = id => ({
@@ -41,7 +42,7 @@ export const requestedSingle = id => ({
 export const addedDemand = (demand, location) => ({
   type: ADDED_DEMAND,
   demand,
-  location,
+  id: location.substring(location.lastIndexOf('/') + 1),
 });
 
 export const requestedAdding = demand => ({
@@ -66,8 +67,7 @@ export const requestedReconsidering = (id, demand) => ({
   demand,
 });
 
-export const receivedReconsideration = (id, demand) => ({
+export const receivedReconsideration = id => ({
   type: RECEIVED_DEMAND_RECONSIDER,
   id,
-  demand,
 });

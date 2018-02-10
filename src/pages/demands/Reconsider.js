@@ -12,7 +12,7 @@ import * as enumSet from './../../enum';
 class Reconsider extends React.Component {
   state = {
     step: {
-      major: 1,
+      major: 5,
       minor: 0,
     },
     demand: {},
@@ -63,7 +63,7 @@ class Reconsider extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      dispatch, etag, demand, match: { params: { id } },
+      dispatch, etag, demand, match: { params: { id } }, history,
     } = this.props;
     dispatch(reconsider(
       id,
@@ -74,6 +74,7 @@ class Reconsider extends React.Component {
         f.unflatten(this.state.demand),
       ),
       etag,
+      history,
     ));
   }
 
@@ -110,6 +111,7 @@ Reconsider.propTypes = {
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   etag: PropTypes.string.isRequired,
   demand: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({

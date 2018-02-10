@@ -12,7 +12,7 @@ import Form from './../../demands/Form';
 class Add extends React.Component {
   state = {
     step: {
-      major: 1,
+      major: 5,
       minor: 0,
     },
     demand: test(),
@@ -53,10 +53,8 @@ class Add extends React.Component {
   }
 
   handleSubmit(event) {
-    const {
-      genders, ethnicGroups, dispatch,
-    } = this.props;
-    dispatch(add(this.state.demand, { genders, ethnicGroups }));
+    const { dispatch, history } = this.props;
+    dispatch(add(this.state.demand, history));
     event.preventDefault();
   }
 
@@ -87,8 +85,7 @@ class Add extends React.Component {
 
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  genders: PropTypes.array.isRequired,
-  ethnicGroups: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({

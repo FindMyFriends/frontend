@@ -5,7 +5,7 @@ import { loadSchema, loadOptions } from './../schema';
 const options = () => loadOptions('v1/demands');
 const schema = (method = 'GET') => loadSchema(`schema/v1/demand/${method.toLowerCase()}.json`);
 
-export const readableDescription = (description, options) => {
+export const prettyDescription = (description, options) => {
   return extend(
     true,
     {},

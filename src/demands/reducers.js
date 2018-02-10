@@ -8,7 +8,9 @@ import {
 export const demand = (state = {}, action) => {
   switch (action.type) {
     case RECEIVED_SINGLE_DEMAND:
-      return { ...state, single: action.demand, etag: action.etag };
+      return {
+        ...state, single: action.demand, format: action.format, etag: action.etag,
+      };
     case RECEIVED_ALL_DEMANDS:
       return { ...state, all: action.demands };
     case RECEIVED_PAGINATION_FOR_ALL_DEMANDS:
