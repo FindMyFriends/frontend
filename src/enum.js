@@ -1,5 +1,5 @@
 // @flow
-export const combined = (keys: [], values: []): Object => {
+export const combined = (keys: [any], values: [any]): Object => {
   return keys.reduce((map, key, index) => {
     return {
       ...map,
@@ -8,8 +8,8 @@ export const combined = (keys: [], values: []): Object => {
   }, { });
 };
 
-export const id = (name: string, ids: [], names: []): Object => combined(names, ids)[name];
-export const name = (id: number, ids: [], names: []): Object => combined(ids, names)[id];
+export const id = (name: string, ids: any, names: any): Object => combined(names, ids)[name];
+export const name = (id: number, ids: any, names: any): Object => combined(ids, names)[id];
 
 export const empty = (): Object => {
   return {

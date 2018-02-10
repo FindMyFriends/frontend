@@ -13,7 +13,9 @@ export const onSelectEnumChange = (
   name: string,
   selection: Object,
 ) => (event: Object, index: any, value: any) => {
-  return classic({ target: { name, value: enumId(value, selection.id, selection.name) } });
+  return classic({
+    target: { name, value: enumId(value, Object.keys(selection), Object.values(selection)) },
+  });
 };
 
 export const onSlideChange = (
