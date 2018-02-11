@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, CardHeader } from 'material-ui/Card';
 import * as R from 'ramda';
-import { readableSingle } from './../../demands/endpoints';
+import { getPrettyDemand } from './../../demands/reducers';
+import { single, options } from './../../demands/endpoints';
 
 class Single extends React.Component {
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(readableSingle(id));
+    dispatch(options());
+    dispatch(single(id));
   }
 
   render() {
-    const { demand, format } = this.props;
-    if (R.isEmpty(demand) || format !== 'pretty') {
+    const { demand } = this.props;
+    if (R.isEmpty(demand)) {
       return <h1>Loading...</h1>;
     }
     return (
@@ -154,12 +156,10 @@ class Single extends React.Component {
 
 Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  format: PropTypes.string,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
-  demand: state.demand.single || { },
-  format: state.demand.format,
+  demand: getPrettyDemand(state.demand.single || { }, state.demand.options || { }),
 }))(Single);

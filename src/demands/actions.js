@@ -11,6 +11,12 @@ export const REQUESTED_DEMAND_PROPERTY = 'REQUESTED_DEMAND_PROPERTY';
 export const RECEIVED_DEMAND_SCHEMA_PROPERTY = 'RECEIVED_DEMAND_SCHEMA_PROPERTY';
 export const REQUESTED_DEMAND_RECONSIDER = 'REQUESTED_DEMAND_RECONSIDER';
 export const RECEIVED_DEMAND_RECONSIDER = 'RECEIVED_DEMAND_RECONSIDER';
+export const RECEIVED_DEMAND_OPTIONS = 'RECEIVED_DEMAND_OPTIONS';
+
+export const receivedOptions = options => ({
+  type: RECEIVED_DEMAND_OPTIONS,
+  options,
+});
 
 export const receivedAll = demands => ({
   type: RECEIVED_ALL_DEMANDS,
@@ -26,12 +32,11 @@ export const requestedAll = () => ({
   type: REQUESTED_ALL_DEMANDS,
 });
 
-export const receivedSingle = (id, demand, etag, format = 'plain') => ({
+export const receivedSingle = (id, demand, etag) => ({
   type: RECEIVED_SINGLE_DEMAND,
   id,
   demand,
   etag,
-  format,
 });
 
 export const requestedSingle = id => ({

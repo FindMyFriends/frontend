@@ -12,12 +12,16 @@ import {
   receivedProperty,
   receivedReconsideration,
   requestedReconsidering,
+  receivedOptions,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions } from './../schema';
-import { prettyDescription } from './../description/endpoints';
 
-const options = async () => loadOptions('/v1/demands');
+export const options = () => (dispatch) => {
+  return loadOptions('/v1/demands')
+    .then(options => dispatch(receivedOptions(options)))
+    .then(meta => meta.options);
+};
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
   dispatch(requestedAll());
@@ -37,14 +41,6 @@ export const single = id => (dispatch) => {
     });
 };
 
-export const readableSingle = id => (dispatch) => {
-  dispatch(requestedSingle(id));
-  axios.get(`/v1/demands/${id}`)
-    .then(async (response) => {
-      dispatch(receivedSingle(id, prettyDescription(response.data, await options()), response.headers.etag, 'pretty'));
-    });
-};
-
 export const add = (demand, history) => (dispatch) => {
   dispatch(requestedAdding(demand));
   return axios.post('/v1/demands', demand)
@@ -61,12 +57,13 @@ export const reconsider = (id, demand, etag, history) => (dispatch) => {
   dispatch(requestedReconsidering(id, reconsidered));
   axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
     .then(() => dispatch(receivedReconsideration(id)))
+    .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     .then(() => history.push(`/demands/${id}`))
     .catch(error => dispatch(receivedApiError(error)));
 };
 
 export const timelineSides = () => (dispatch) => {
   dispatch(requestedProperty('timelineSides'));
-  options()
-    .then(option => dispatch(receivedProperty('timelineSides', option.location.met_at.timeline_side)));
+  dispatch(options())
+    .then(options => dispatch(receivedProperty('timelineSides', options.location.met_at.timeline_side)));
 };
