@@ -3,10 +3,24 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import extend from 'extend';
-import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
-import { add, timelineSides } from './../../demands/endpoints';
+import {
+  getGenders,
+  getEthnicGroups,
+  getBreastSizes,
+  getBodyBuilds,
+  getHairStyles,
+  getLengthUnits,
+  getShapes,
+  getHairColors,
+  getBeardColors,
+  getEyebrowColors,
+  getEyeColors,
+  getNailColors,
+  getRatings,
+} from './../../description/selects';
+import { getTimelineSides } from './../../demands/reducers';
+import { add, options, schema } from './../../demands/endpoints';
 import { test } from './../../demands/sample';
-import * as enumSet from './../../enum';
 import Form from './../../demands/Form';
 
 class Add extends React.Component {
@@ -19,20 +33,9 @@ class Add extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(genders());
-    this.props.dispatch(ethnicGroups());
-    this.props.dispatch(bodyBuilds());
-    this.props.dispatch(hairColors());
-    this.props.dispatch(lengthUnits());
-    this.props.dispatch(beardColors());
-    this.props.dispatch(shapes());
-    this.props.dispatch(ratings());
-    this.props.dispatch(eyebrowColors());
-    this.props.dispatch(eyeColors());
-    this.props.dispatch(nailColors());
-    this.props.dispatch(timelineSides());
-    this.props.dispatch(breastSizes());
-    this.props.dispatch(hairStyles());
+    const { dispatch } = this.props;
+    dispatch(options());
+    dispatch(schema());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -89,18 +92,18 @@ Add.propTypes = {
 };
 
 export default connect(state => ({
-  genders: state.descriptionSchema.genders || [],
-  timelineSides: state.demandSchema.timelineSides || [],
-  ethnicGroups: state.descriptionSchema.ethnicGroups || enumSet.empty(),
-  bodyBuilds: state.descriptionSchema.bodyBuilds || enumSet.empty(),
-  hairColors: state.descriptionSchema.hairColors || enumSet.emptyColor(),
-  beardColors: state.descriptionSchema.beardColors || enumSet.emptyColor(),
-  eyebrowColors: state.descriptionSchema.eyebrowColors || enumSet.emptyColor(),
-  eyeColors: state.descriptionSchema.eyeColors || enumSet.emptyColor(),
-  nailColors: state.descriptionSchema.nailColors || enumSet.emptyColor(),
-  ratings: state.descriptionSchema.ratings || enumSet.emptyRange(),
-  lengthUnits: state.descriptionSchema.lengthUnits || [],
-  shapes: state.descriptionSchema.shapes || enumSet.empty(),
-  breastSizes: state.descriptionSchema.breastSizes || [],
-  hairStyles: state.descriptionSchema.hairStyles || enumSet.empty(),
+  genders: getGenders(state.demand.options),
+  ethnicGroups: getEthnicGroups(state.demand.options),
+  bodyBuilds: getBodyBuilds(state.demand.options),
+  hairColors: getHairColors(state.demand.options),
+  beardColors: getBeardColors(state.demand.options),
+  eyebrowColors: getEyebrowColors(state.demand.options),
+  eyeColors: getEyeColors(state.demand.options),
+  nailColors: getNailColors(state.demand.options),
+  ratings: getRatings(state.demand.options),
+  lengthUnits: getLengthUnits(state.demand.options),
+  shapes: getShapes(state.demand.options),
+  breastSizes: getBreastSizes(state.demand.options),
+  hairStyles: getHairStyles(state.demand.options),
+  timelineSides: getTimelineSides(state.demand.options),
 }))(Add);

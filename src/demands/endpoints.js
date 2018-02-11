@@ -8,19 +8,22 @@ import {
   receivedSingle,
   requestedSingle,
   receivedPaginationForAll,
-  requestedProperty,
-  receivedProperty,
   receivedReconsideration,
   requestedReconsidering,
   receivedOptions,
+  receivedSchema,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
-import { loadOptions } from './../schema';
+import { loadOptions, loadSchema } from './../schema';
 
 export const options = () => (dispatch) => {
   return loadOptions('/v1/demands')
-    .then(options => dispatch(receivedOptions(options)))
-    .then(meta => meta.options);
+    .then(options => dispatch(receivedOptions(options)));
+};
+
+export const schema = () => (dispatch) => {
+  return loadSchema('/schema/v1/demand/get.json')
+    .then(schema => dispatch(receivedSchema(schema)));
 };
 
 export const all = (pagination = { page: 1, perPage: 20 }) => (dispatch) => {
@@ -60,10 +63,4 @@ export const reconsider = (id, demand, etag, history) => (dispatch) => {
     .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     .then(() => history.push(`/demands/${id}`))
     .catch(error => dispatch(receivedApiError(error)));
-};
-
-export const timelineSides = () => (dispatch) => {
-  dispatch(requestedProperty('timelineSides'));
-  dispatch(options())
-    .then(options => dispatch(receivedProperty('timelineSides', options.location.met_at.timeline_side)));
 };

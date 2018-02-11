@@ -5,14 +5,28 @@ import extend from 'extend';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demands/Form';
-import { genders, ethnicGroups, bodyBuilds, hairColors, lengthUnits, beardColors, shapes, ratings, eyebrowColors, eyeColors, nailColors, breastSizes, hairStyles } from './../../description/endpoints';
-import { reconsider, single, timelineSides } from './../../demands/endpoints';
-import * as enumSet from './../../enum';
+import {
+  getGenders,
+  getEthnicGroups,
+  getBreastSizes,
+  getBodyBuilds,
+  getHairStyles,
+  getLengthUnits,
+  getShapes,
+  getHairColors,
+  getBeardColors,
+  getEyebrowColors,
+  getEyeColors,
+  getNailColors,
+  getRatings,
+} from './../../description/selects';
+import { getTimelineSides } from './../../demands/reducers';
+import { reconsider, single, options, schema } from './../../demands/endpoints';
 
 class Reconsider extends React.Component {
   state = {
     step: {
-      major: 5,
+      major: 1,
       minor: 0,
     },
     demand: {},
@@ -20,6 +34,8 @@ class Reconsider extends React.Component {
 
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
+    dispatch(options());
+    dispatch(schema());
     dispatch(single(id))
       .then(demand => this.setState({
         demand: {
@@ -27,20 +43,6 @@ class Reconsider extends React.Component {
           ...demand,
         },
       }));
-    this.props.dispatch(genders());
-    this.props.dispatch(ethnicGroups());
-    this.props.dispatch(bodyBuilds());
-    this.props.dispatch(hairColors());
-    this.props.dispatch(lengthUnits());
-    this.props.dispatch(beardColors());
-    this.props.dispatch(shapes());
-    this.props.dispatch(ratings());
-    this.props.dispatch(eyebrowColors());
-    this.props.dispatch(eyeColors());
-    this.props.dispatch(nailColors());
-    this.props.dispatch(timelineSides());
-    this.props.dispatch(breastSizes());
-    this.props.dispatch(hairStyles());
   }
 
   handleChange = this.handleChange.bind(this);
@@ -115,20 +117,20 @@ Reconsider.propTypes = {
 };
 
 export default connect(state => ({
-  genders: state.descriptionSchema.genders || [],
-  timelineSides: state.demandSchema.timelineSides || [],
-  ethnicGroups: state.descriptionSchema.ethnicGroups || enumSet.empty(),
-  bodyBuilds: state.descriptionSchema.bodyBuilds || enumSet.empty(),
-  hairColors: state.descriptionSchema.hairColors || enumSet.emptyColor(),
-  beardColors: state.descriptionSchema.beardColors || enumSet.emptyColor(),
-  eyebrowColors: state.descriptionSchema.eyebrowColors || enumSet.emptyColor(),
-  eyeColors: state.descriptionSchema.eyeColors || enumSet.emptyColor(),
-  nailColors: state.descriptionSchema.nailColors || enumSet.emptyColor(),
-  ratings: state.descriptionSchema.ratings || enumSet.emptyRange(),
-  lengthUnits: state.descriptionSchema.lengthUnits || [],
-  shapes: state.descriptionSchema.shapes || enumSet.empty(),
-  breastSizes: state.descriptionSchema.breastSizes || [],
-  hairStyles: state.descriptionSchema.hairStyles || enumSet.empty(),
+  genders: getGenders(state.demand.options),
+  ethnicGroups: getEthnicGroups(state.demand.options),
+  bodyBuilds: getBodyBuilds(state.demand.options),
+  hairColors: getHairColors(state.demand.options),
+  beardColors: getBeardColors(state.demand.options),
+  eyebrowColors: getEyebrowColors(state.demand.options),
+  eyeColors: getEyeColors(state.demand.options),
+  nailColors: getNailColors(state.demand.options),
+  ratings: getRatings(state.demand.schema),
+  lengthUnits: getLengthUnits(state.demand.options),
+  shapes: getShapes(state.demand.options),
+  breastSizes: getBreastSizes(state.demand.options),
+  hairStyles: getHairStyles(state.demand.options),
+  timelineSides: getTimelineSides(state.demand.options),
   demand: state.demand.single || {},
   etag: state.demand.etag || '',
 }))(Reconsider);
