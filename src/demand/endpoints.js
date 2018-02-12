@@ -14,7 +14,7 @@ import {
   receivedSchema,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
-import { loadOptions, loadSchema } from './../schema';
+import { loadOptions, loadSchema } from './../api/schema';
 
 export const options = () => (dispatch) => {
   return loadOptions('/v1/demands')

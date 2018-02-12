@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from './../components/Color';
-import Rating from './../components/Rating';
+import Color from './../../input/Color';
+import Rating from './../../input/Rating';
 
 const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
   <div>

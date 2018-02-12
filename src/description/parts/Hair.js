@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import LengthWithUnit from './components/LengthWithUnit';
-import Color from './components/Color';
-import { onCheck, onSelectEnumChange } from './../forms/events';
+import LengthWithUnit from './../input/LengthWithUnit';
+import Color from './../input/Color';
+import { onCheck, onSelectEnumChange } from './../../forms/events';
 
 const NotNatureHair = ({ values, onChange }) => {
   if (values['hair.nature'] === true) {

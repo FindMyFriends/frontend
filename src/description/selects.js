@@ -1,6 +1,6 @@
-import extend from 'extend';
+import merge from 'lodash/merge';
 import * as R from 'ramda';
-import * as enumSet from './../enum';
+import * as enumSet from './../api/enum';
 
 export const getGenders = options => (options ? options.general.gender : []);
 export const getEthnicGroups = (options) => {
@@ -26,9 +26,7 @@ export const getPrettyDescription = (description, options) => {
   if (R.isEmpty(description) || R.isEmpty(options)) {
     return { };
   }
-  return extend(
-    true,
-    {},
+  return merge(
     description,
     {
       general: {

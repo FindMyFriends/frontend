@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
-import ApproximateDatetime from './ApproximateDatetime';
+import ApproximateDatetime from './../input/ApproximateDatetime';
 
 const Location = ({ values, selects, onChange }) => {
   return (

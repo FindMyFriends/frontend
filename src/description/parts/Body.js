@@ -4,8 +4,8 @@ import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'rc-slider';
-import { combined } from './../enum';
-import { onSelectEnumChange } from './../forms/events';
+import { combined } from './../../api/enum';
+import { onSelectEnumChange } from './../../forms/events';
 
 const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
   if (values['general.gender'] === 'man') {

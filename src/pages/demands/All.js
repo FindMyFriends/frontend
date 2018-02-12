@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Box from './../../demands/Box';
-import { all } from './../../demands/endpoints';
+import Box from './../../demand/output/Box';
+import { all } from './../../demand/endpoints';
 import Pagination from './../../components/Pagination';
 
 class All extends React.Component {

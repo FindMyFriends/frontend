@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rating from './../components/Rating';
+import Rating from './../../input/Rating';
 
 const General = ({ selects: { ratings }, values, onChange }) => (
   <div>

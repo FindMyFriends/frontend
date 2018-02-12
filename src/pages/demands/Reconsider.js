@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import extend from 'extend';
+import merge from 'lodash/merge';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
-import Form from './../../demands/Form';
+import Form from './../../demand/input/Form';
 import {
   getGenders,
   getEthnicGroups,
@@ -20,8 +20,8 @@ import {
   getNailColors,
   getRatings,
 } from './../../description/selects';
-import { getTimelineSides } from './../../demands/reducers';
-import { reconsider, single, options, schema } from './../../demands/endpoints';
+import { getTimelineSides } from './../../demand/reducers';
+import { reconsider, single, options, schema } from './../../demand/endpoints';
 
 class Reconsider extends React.Component {
   state = {
@@ -52,9 +52,7 @@ class Reconsider extends React.Component {
   handleChange(event) {
     this.setState({
       demand: {
-        ...extend(
-          true,
-          {},
+        ...merge(
           this.state.demand,
           f.unflatten({ [event.target.name]: event.target.value }),
         ),
@@ -69,9 +67,7 @@ class Reconsider extends React.Component {
     } = this.props;
     dispatch(reconsider(
       id,
-      extend(
-        true,
-        {},
+      merge(
         demand,
         f.unflatten(this.state.demand),
       ),

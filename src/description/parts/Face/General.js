@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
-import Rating from './../components/Rating';
-import { onCheck, onSelectEnumChange } from './../../forms/events';
+import Rating from './../../input/Rating';
+import { onCheck, onSelectEnumChange } from './../../../forms/events';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>

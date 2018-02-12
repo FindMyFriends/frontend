@@ -7,7 +7,7 @@ import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
 import * as moment from 'moment';
 import range from 'lodash/range';
-import { onSelectChange } from './../forms/events';
+import { onSelectChange } from './../../forms/events';
 
 const number = duration => duration.hours() || duration.days();
 

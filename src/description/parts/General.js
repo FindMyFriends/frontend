@@ -6,8 +6,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import range from 'lodash/range';
-import { combined } from './../enum';
-import { onSelectChange, onSelectEnumChange, onRangeChange } from './../forms/events';
+import { combined } from './../../api/enum';
+import { onSelectChange, onSelectEnumChange, onRangeChange } from './../../forms/events';
 
 export const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
   <div>

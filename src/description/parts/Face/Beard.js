@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LengthWithUnit from './../components/LengthWithUnit';
-import Color from './../components/Color';
+import LengthWithUnit from './../../input/LengthWithUnit';
+import Color from './../../input/Color';
 
 const Beard = ({ selects: { beardColors, lengthUnits }, values, onChange }) => (
   <div>

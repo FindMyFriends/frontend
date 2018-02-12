@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
-import { steps } from './steps';
-import { nextStep, previousStep, isLastStep } from './../stepFork';
+import { steps } from './../parts/steps';
+import { nextStep, previousStep, isLastStep } from './../../stepFork';
 
 const Current = ({
   step, label, onTurn, steps, ...rest

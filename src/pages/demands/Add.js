@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
-import extend from 'extend';
+import merge from 'lodash/merge';
 import {
   getGenders,
   getEthnicGroups,
@@ -18,10 +18,10 @@ import {
   getNailColors,
   getRatings,
 } from './../../description/selects';
-import { getTimelineSides } from './../../demands/reducers';
-import { add, options, schema } from './../../demands/endpoints';
-import { test } from './../../demands/sample';
-import Form from './../../demands/Form';
+import { getTimelineSides } from './../../demand/reducers';
+import { add, options, schema } from './../../demand/endpoints';
+import { test } from './../../demand/sample';
+import Form from './../../demand/input/Form';
 
 class Add extends React.Component {
   state = {
@@ -45,9 +45,7 @@ class Add extends React.Component {
   handleChange(event) {
     this.setState({
       demand: {
-        ...extend(
-          true,
-          {},
+        ...merge(
           this.state.demand,
           f.unflatten({ [event.target.name]: event.target.value }),
         ),

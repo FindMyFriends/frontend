@@ -1,6 +1,6 @@
 import React from 'react';
 import Location from './Location';
-import { steps as descriptionSteps } from './../description/steps';
+import { steps as descriptionSteps } from './../../description/parts/steps';
 
 export const steps = (props) => {
   const previousSteps = descriptionSteps(props);

@@ -8,10 +8,9 @@ import { applyMiddleware, createStore } from 'redux';
 import Routes from './Routes';
 import createReducers from './createReducers';
 import registerServiceWorker from './registerServiceWorker';
+import { defaults } from './api/connection';
 
-axios.defaults.baseURL = 'http://localhost';
-axios.defaults.data = null;
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults = defaults(axios.defaults);
 
 ReactDOM.render(
   <Provider store={createStore(createReducers, applyMiddleware(thunk, logger))}>

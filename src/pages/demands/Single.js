@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, CardHeader } from 'material-ui/Card';
 import * as R from 'ramda';
-import { getPrettyDemand } from './../../demands/reducers';
-import { single, options } from './../../demands/endpoints';
+import { getPrettyDemand } from './../../demand/reducers';
+import { single, options } from './../../demand/endpoints';
 
 class Single extends React.Component {
   componentDidMount() {

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { demand } from './demands/reducers';
+import { demand } from './demand/reducers';
 import { message } from './ui/reducers';
 
 const createReducers = combineReducers({

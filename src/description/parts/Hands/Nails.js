@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Color from './../components/Color';
-import LengthWithUnit from './../components/LengthWithUnit';
-import Rating from './../components/Rating';
+import Color from './../../input/Color';
+import LengthWithUnit from './../../input/LengthWithUnit';
+import Rating from './../../input/Rating';
 
 const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange }) => (
   <div>

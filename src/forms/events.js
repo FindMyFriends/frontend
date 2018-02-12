@@ -1,5 +1,5 @@
 // @flow
-import { id as enumId } from './../enum';
+import { id as enumId } from './../api/enum';
 
 export const onSelectChange = (
   classic: (x: Object) => any,
