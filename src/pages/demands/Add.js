@@ -98,7 +98,7 @@ export default connect(state => ({
   eyebrowColors: getEyebrowColors(state.demand.options),
   eyeColors: getEyeColors(state.demand.options),
   nailColors: getNailColors(state.demand.options),
-  ratings: getRatings(state.demand.options),
+  ratings: getRatings(state.demand.schema),
   lengthUnits: getLengthUnits(state.demand.options),
   shapes: getShapes(state.demand.options),
   breastSizes: getBreastSizes(state.demand.options),
