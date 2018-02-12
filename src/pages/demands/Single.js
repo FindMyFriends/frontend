@@ -6,6 +6,13 @@ import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 
+const Eye = ({ eye }) => (
+  <ul>
+    {eye.color ? <li><small>Color</small> {eye.color}</li> : null}
+    {eye.lenses !== null ? (<li><small>Lenses</small> {eye.lenses ? 'Yes' : 'No'}</li>) : null}
+  </ul>
+);
+
 class Single extends React.Component {
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
@@ -73,11 +80,18 @@ class Single extends React.Component {
         </Card>
         <Card>
           <CardHeader title="Eyes" />
-          {/* TODO: Compare left and right */}
-          <ul>
-            {demand.eye.left.color ? <li><small>Color</small> {demand.eye.left.color}</li> : null}
-            {demand.eye.left.lenses !== null ? (<li><small>Lenses</small> {demand.eye.left.lenses ? 'Yes' : 'No'}</li>) : null}
-          </ul>
+          {
+            JSON.stringify(demand.eye.left) === JSON.stringify(demand.eye.right)
+              ? <Eye eye={demand.eye.left} />
+              : (
+                <React.Fragment>
+                  <h3>Left</h3>
+                  <Eye eye={demand.eye.left} />
+                  <h3>Right</h3>
+                  <Eye eye={demand.eye.right} />
+                </React.Fragment>
+              )
+          }
         </Card>
         <Card>
           <CardHeader title="Teeth" />
@@ -158,6 +172,10 @@ Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
+};
+
+Eye.propTypes = {
+  eye: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
