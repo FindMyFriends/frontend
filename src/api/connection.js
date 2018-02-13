@@ -1,6 +1,7 @@
+// @flow
 import merge from 'lodash/merge';
 
-export const defaults = inherited => (
+export const defaults = (inherited: Object): Object => (
   merge(
     inherited,
     {

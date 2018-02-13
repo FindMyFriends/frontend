@@ -1,11 +1,17 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { discardedMessage } from './../ui/actions';
 import FlashMessage from './FlashMessage';
 import Alert from './Alert';
 
-const Notification = ({ content, severity, dispatch }) => {
+type Props = {
+  content: string,
+  severity: string,
+  dispatch: (any) => mixed,
+};
+
+const Notification = ({ content, severity, dispatch }: Props) => {
   if (!content) {
     return null;
   }
@@ -18,12 +24,6 @@ const Notification = ({ content, severity, dispatch }) => {
     return <Alert onClose={handleHide} content={content} />;
   }
   return null;
-};
-
-Notification.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  content: PropTypes.string,
-  severity: PropTypes.string,
 };
 
 export default connect(state => ({

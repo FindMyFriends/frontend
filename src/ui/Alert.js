@@ -1,9 +1,14 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-const Alert = ({ content, onClose }) => (
+type Props = {
+  content: string,
+  onClose: () => mixed,
+};
+
+const Alert = ({ content, onClose }: Props) => (
   <Dialog
     title="Error"
     actions={
@@ -20,10 +25,5 @@ const Alert = ({ content, onClose }) => (
     {content}
   </Dialog>
 );
-
-Alert.propTypes = {
-  content: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default Alert;
