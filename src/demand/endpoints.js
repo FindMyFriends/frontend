@@ -2,15 +2,11 @@
 import axios from 'axios';
 import omit from 'lodash/omit';
 import {
-  requestedAdding,
   addedDemand,
   receivedAll,
-  requestedAll,
   receivedSingle,
-  requestedSingle,
   receivedPaginationForAll,
   receivedReconsideration,
-  requestedReconsidering,
   receivedOptions,
   receivedSchema,
 } from './actions';
@@ -31,7 +27,6 @@ export const all = (pagination: Object = {
   page: 1,
   perPage: 20,
 }) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedAll());
   axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(response.headers.link));
@@ -40,7 +35,6 @@ export const all = (pagination: Object = {
 };
 
 export const single = (id: string) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedSingle(id));
   return axios.get(`/v1/demands/${id}`)
     .then((response) => {
       dispatch(receivedSingle(id, response.data, response.headers.etag));
@@ -49,7 +43,6 @@ export const single = (id: string) => (dispatch: (mixed) => Object) => {
 };
 
 export const add = (demand: Object, history: Object) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedAdding(demand));
   return axios.post('/v1/demands', demand)
     .then((response) => {
       const newDemand = dispatch(addedDemand(demand, response.headers.location));
@@ -66,10 +59,19 @@ export const reconsider = (
   history: Object,
 ) => (dispatch: (mixed) => Object) => {
   const reconsidered = omit(omit(omit(demand, 'created_at'), 'id'), 'seeker_id');
-  dispatch(requestedReconsidering(id, reconsidered));
   axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
     .then(() => dispatch(receivedReconsideration(id)))
     .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     .then(() => history.push(`/demands/${id}`))
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+
+export const retract = (id: string, history: Object) => (dispatch: (mixed) => Object) => {
+  return axios.delete(`/v1/demands/${id}`)
+    .then(() => {
+      dispatch(receivedSuccessMessage('Demand has been retracted'));
+      history.push('/demands');
+    })
     .catch(error => dispatch(receivedApiError(error)));
 };

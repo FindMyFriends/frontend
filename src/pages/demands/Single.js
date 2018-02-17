@@ -2,9 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, CardHeader } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
-import { single, options } from './../../demand/endpoints';
+import { single, options, retract } from './../../demand/endpoints';
+import { requestedConfirm } from './../../ui/actions';
 
 const Eye = ({ eye }) => (
   <ul>
@@ -21,12 +23,17 @@ class Single extends React.Component {
   }
 
   render() {
-    const { demand } = this.props;
+    const { demand, dispatch, history } = this.props;
     if (R.isEmpty(demand)) {
       return <h1>Loading...</h1>;
     }
     return (
       <React.Fragment>
+        <RaisedButton
+          label="Retract"
+          secondary
+          onClick={() => dispatch(requestedConfirm('Are you sure, you want to retract demand?', () => dispatch(retract(demand.id, history))))}
+        />
         <Card>
           <CardHeader title="General" />
           <ul>
@@ -170,6 +177,7 @@ class Single extends React.Component {
 
 Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
 };
