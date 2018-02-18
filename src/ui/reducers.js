@@ -6,10 +6,10 @@ export const message = (state: Object = {}, action: Object): Object => {
     case RECEIVED_API_ERROR:
     case RECEIVED_SUCCESS:
     case DISCARDED_MESSAGE:
-      return { ...state, content: action.content, severity: action.severity };
+      return { ...state, content: action.content, type: action.type };
     case REQUESTED_CONFIRM:
       return {
-        ...state, content: action.content, severity: action.severity, action: action.action,
+        ...state, content: action.content, type: action.type, action: action.action,
       };
     default:
       return state;

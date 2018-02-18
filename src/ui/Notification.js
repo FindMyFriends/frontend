@@ -1,20 +1,20 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { discardedMessage } from './../ui/actions';
+import { discardedMessage, RECEIVED_API_ERROR, RECEIVED_SUCCESS, REQUESTED_CONFIRM } from './../ui/actions';
 import FlashMessage from './FlashMessage';
 import Alert from './Alert';
 import Confirmation from './Confirmation';
 
 type Props = {
   content: string,
-  severity: string,
+  type: string,
   dispatch: (any) => mixed,
   action: () => mixed,
 };
 
 const Notification = ({
-  content, severity, action, dispatch,
+  content, type, action, dispatch,
 }: Props) => {
   if (!content) {
     return null;
@@ -22,11 +22,11 @@ const Notification = ({
 
   const handleHide = () => dispatch(discardedMessage());
 
-  if (severity === 'success') {
+  if (type === RECEIVED_SUCCESS) {
     return <FlashMessage onClose={handleHide} content={content} />;
-  } else if (severity === 'error') {
+  } else if (type === RECEIVED_API_ERROR) {
     return <Alert onClose={handleHide} content={content} />;
-  } else if (severity === 'confirmation') {
+  } else if (type === REQUESTED_CONFIRM) {
     return <Confirmation onClose={handleHide} onConfirm={action} content={content} />;
   }
   return null;
@@ -34,6 +34,6 @@ const Notification = ({
 
 export default connect(state => ({
   content: state.message.content,
-  severity: state.message.severity,
+  type: state.message.type,
   action: state.message.action,
 }))(Notification);

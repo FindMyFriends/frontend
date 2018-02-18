@@ -7,24 +7,21 @@ export const REQUESTED_CONFIRM = 'REQUESTED_CONFIRM';
 export const requestedConfirm = (content: string, action: () => mixed) => ({
   type: REQUESTED_CONFIRM,
   content,
-  severity: 'confirmation',
   action,
 });
 
 export const receivedApiError = (error: Object) => ({
   type: RECEIVED_API_ERROR,
   content: error.response.data.message,
-  severity: 'error',
 });
 
 export const receivedSuccess = (content: string) => ({
   type: RECEIVED_SUCCESS,
   content,
-  severity: 'success',
 });
 
 export const discardedMessage = () => ({
   type: DISCARDED_MESSAGE,
   content: null,
-  severity: null,
+  action: () => null,
 });
