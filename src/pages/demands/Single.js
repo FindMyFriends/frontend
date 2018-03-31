@@ -6,7 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options, retract } from './../../demand/endpoints';
+import { allByDemand } from './../../soulmate/endpoints';
 import { requestedConfirm } from './../../ui/actions';
+import { Box as SoulmateBox } from './../../soulmate/output/Box';
 
 const Eye = ({ eye }) => (
   <ul>
@@ -20,15 +22,19 @@ class Single extends React.Component {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(single(id));
+    dispatch(allByDemand(id, { page: 1, perPage: 10 }));
   }
 
   render() {
-    const { demand, dispatch, history } = this.props;
+    const {
+      demand, dispatch, history, soulmates,
+    } = this.props;
     if (R.isEmpty(demand)) {
       return <h1>Loading...</h1>;
     }
     return (
       <React.Fragment>
+        <SoulmateBox soulmates={soulmates} />
         <RaisedButton
           label="Retract"
           secondary
@@ -180,6 +186,7 @@ Single.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
+  soulmates: PropTypes.array.isRequired,
 };
 
 Eye.propTypes = {
@@ -188,4 +195,5 @@ Eye.propTypes = {
 
 export default connect(state => ({
   demand: getPrettyDemand(state.demand.single || { }, state.demand.options || { }),
+  soulmates: state.soulmate.all || [],
 }))(Single);

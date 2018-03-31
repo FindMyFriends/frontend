@@ -1,4 +1,5 @@
 {
+  "plugins": ["jest"],
   "parser"  : "babel-eslint",
   "extends" : [
     "airbnb",
@@ -18,6 +19,7 @@
     import/no-extraneous-dependencies: [error, { devDependencies: true }],
   },
   env: {
-    browser: true, // because of document in tests
+    browser: true, // because of document in tests,
+    "jest/globals": true
   }
 }
