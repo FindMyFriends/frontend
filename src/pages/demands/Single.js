@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options, retract } from './../../demand/endpoints';
-import { allByDemand } from './../../soulmate/endpoints';
+import { all as allSoulmates, requests as soulmateRequests, refresh } from './../../soulmate/endpoints';
 import { requestedConfirm } from './../../ui/actions';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
 
@@ -22,19 +22,31 @@ class Single extends React.Component {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(single(id));
-    dispatch(allByDemand(id, { page: 1, perPage: 10 }));
+    dispatch(allSoulmates(id, { page: 1, perPage: 10 }));
+    dispatch(soulmateRequests(id));
+  }
+
+  handleRefresh = this.handleRefresh.bind(this);
+
+  handleRefresh() {
+    const { dispatch, match: { params: { id } } } = this.props;
+    dispatch(refresh(id));
   }
 
   render() {
     const {
-      demand, dispatch, history, soulmates,
+      demand, dispatch, history, soulmates, requests,
     } = this.props;
     if (R.isEmpty(demand)) {
       return <h1>Loading...</h1>;
     }
     return (
       <React.Fragment>
-        <SoulmateBox soulmates={soulmates} />
+        <SoulmateBox
+          soulmates={soulmates}
+          requests={requests}
+          onRefresh={() => this.handleRefresh()}
+        />
         <RaisedButton
           label="Retract"
           secondary
@@ -187,6 +199,7 @@ Single.propTypes = {
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
   soulmates: PropTypes.array.isRequired,
+  requests: PropTypes.array.isRequired,
 };
 
 Eye.propTypes = {
@@ -196,4 +209,5 @@ Eye.propTypes = {
 export default connect(state => ({
   demand: getPrettyDemand(state.demand.single || { }, state.demand.options || { }),
   soulmates: state.soulmate.all || [],
+  requests: state.soulmate.requests || [],
 }))(Single);

@@ -7,7 +7,7 @@ import { Box } from './../../src/soulmate/output/Box';
 it('try again for no searches', () => {
   const match = (
     <MuiThemeProvider>
-      <Box soulmates={[{ id: null }]} />
+      <Box soulmates={[{ id: null }]} requests={[]} onRefresh={() => {}} />
     </MuiThemeProvider>
   );
   const tree = renderer
@@ -16,10 +16,24 @@ it('try again for no searches', () => {
   expect(tree).toMatchSnapshot();
 });
 
+it('try again for no searches with again button', () => {
+  const match = (
+    <MuiThemeProvider>
+      <Box soulmates={[{ id: null }]} requests={[{ is_refreshable: true }]} onRefresh={() => {}} />
+    </MuiThemeProvider>
+  );
+  const tree = renderer
+    .create(match)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+
 it('table with matches for some searches', () => {
   const match = (
     <MuiThemeProvider>
-      <Box soulmates={
+      <Box
+        soulmates={
           [
             {
               related_at: '2018-03-31T12:37:08+00:00',
@@ -35,6 +49,8 @@ it('table with matches for some searches', () => {
             },
           ]
         }
+        requests={[{ is_refreshable: true }]}
+        onRefresh={() => {}}
       />
     </MuiThemeProvider>
   );
