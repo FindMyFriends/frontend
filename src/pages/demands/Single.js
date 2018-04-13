@@ -35,6 +35,28 @@ const ResizedCard = styled(Card)`
   margin-top: 10px;
 `;
 
+const Row = styled.tr`
+  text-align: left;
+`;
+
+const SolidCard = ({ title, rows }) => {
+  return (
+    <ResizedCard>
+      <CardHeader title={title} titleStyle={{'font-size': '20px'}} />
+      <CardText>
+        <table>
+          {rows.filter(row => row.text).map(row => (
+            <Row>
+              <th>{row.title}</th>
+              <td>{row.text}</td>
+            </Row>
+          ))}
+        </table>
+      </CardText>
+    </ResizedCard>
+  );
+};
+
 class Single extends React.Component {
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
@@ -71,57 +93,48 @@ class Single extends React.Component {
           onClick={() => dispatch(requestedConfirm('Are you sure, you want to retract demand?', () => dispatch(retract(demand.id, history))))}
         />
         <Cards>
-          <ResizedCard>
-            <CardHeader title="General" />
-            <Ul>
-              <li><small>Age</small> {demand.general.age.from} - {demand.general.age.to}</li>
-              <li><small>Ethnic group</small>{demand.general.ethnic_group}</li>
-              <li><small>Gender</small>{demand.general.gender}</li>
-              <li><small>Firstname</small>{demand.general.firstname}</li>
-              {
-                demand.general.lastname
-                  ? <li><small>Lastname</small>{demand.general.lastname}</li>
-                  : null
-              }
-            </Ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Body" />
-            <ul>
-              {demand.body.build ? <li><small>Build</small> {demand.body.build}</li> : null}
-              {demand.body.weight ? <li><small>Weight</small>{demand.body.weight}</li> : null}
-              {demand.body.height ? <li><small>Height</small>{demand.body.height}</li> : null}
-              {
-                demand.body.breast_size
-                  ? <li><small>Breast size</small>{demand.body.breast_size}</li>
-                  : null
-              }
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Hair" />
-            <ul>
-              {demand.hair.style ? <li><small>Style</small> {demand.hair.style}</li> : null}
-              {demand.hair.color ? <li><small>Color</small> {demand.hair.color}</li> : null}
-              {demand.hair.length ? <li><small>Length</small> {demand.hair.length}</li> : null}
-              {demand.hair.nature !== null ? (<li><small>Nature</small> {demand.hair.nature ? 'Yes' : 'No'}</li>) : null}
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Face" />
-            <ul>
-              {demand.face.care ? <li><small>Care</small> {demand.face.care}</li> : null}
-              {demand.face.freckles !== null ? (<li><small>Care</small> {demand.face.freckles ? 'Yes' : 'No'}</li>) : null}
-              {demand.face.shape ? <li><small>Shape</small> {demand.face.shape}</li> : null}
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Eyebrow" />
-            <ul>
-              {demand.eyebrow.care ? <li><small>Care</small> {demand.eyebrow.care}</li> : null}
-              {demand.eyebrow.color ? <li><small>Color</small> {demand.eyebrow.color}</li> : null}
-            </ul>
-          </ResizedCard>
+          <SolidCard
+            title="General"
+            rows={[
+              { title: 'Age', text: `${demand.general.age.from} - ${demand.general.age.to}` },
+              { title: 'Ethnic group', text: demand.general.ethnic_group },
+              { title: 'Gender', text: demand.general.gender },
+              { title: 'Firstname', text: demand.general.firstname },
+            ]}
+          />
+          <SolidCard
+            title="Body"
+            rows={[
+              { title: 'Build', text: demand.body.build },
+              { title: 'Weight', text: demand.body.weight },
+              { title: 'Height', text: demand.body.height },
+              { title: 'Breast size', text: demand.body.breast_size },
+            ]}
+          />
+          <SolidCard
+            title="Hair"
+            rows={[
+              { title: 'Style', text: demand.hair.style },
+              { title: 'Color', text: demand.hair.color },
+              { title: 'Length', text: demand.hair.length },
+              { title: 'Nature', text: demand.hair.nature ? 'Yes' : 'No' },
+            ]}
+          />
+          <SolidCard
+            title="Face"
+            rows={[
+              { title: 'Care', text: demand.face.care },
+              { title: 'Freckles', text: demand.face.freckles ? 'Yes' : 'No' },
+              { title: 'Shape', text: demand.face.shape },
+            ]}
+          />
+          <SolidCard
+            title="Eyebrow"
+            rows={[
+              { title: 'Care', text: demand.eyebrow.care },
+              { title: 'Color', text: demand.eyebrow.color },
+            ]}
+          />
           <ResizedCard>
             <CardHeader title="Eyes" />
             {
@@ -137,76 +150,43 @@ class Single extends React.Component {
                 )
             }
           </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Teeth" />
-            <ul>
-              {demand.teeth.care ? <li><small>Care</small> {demand.teeth.care}</li> : null}
-              {demand.teeth.braces !== null ? (<li><small>Braces</small> {demand.teeth.braces ? 'Yes' : 'No'}</li>) : null}
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Hands" />
-            <ul>
-              {demand.hands.care ? <li><small>Care</small> {demand.hands.care}</li> : null}
-              {
-                demand.hands.vein_visibility
-                  ? <li><small>Vein visibility</small> {demand.hands.vein_visibility}</li>
-                  : null
-              }
-              {
-                demand.hands.joint_visibility
-                  ? <li><small>Joint visibility</small> {demand.hands.joint_visibility}</li>
-                  : null
-              }
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Nails" />
-            <ul>
-              {
-                demand.hands.nails.care
-                  ? <li><small>Care</small> {demand.hands.nails.care}</li>
-                  : null
-              }
-              {
-                demand.hands.nails.color
-                  ? <li><small>Color</small> {demand.hands.nails.color}</li>
-                  : null
-              }
-              {
-                demand.hands.nails.length
-                  ? <li><small>Length</small> {demand.hands.nails.length}</li>
-                  : null
-                }
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Hand hair" />
-            <ul>
-              {
-                demand.hands.hair.amount
-                  ? <li><small>Amount</small> {demand.hands.hair.amount}</li>
-                  : null
-              }
-              {
-                demand.hands.hair.color
-                  ? <li><small>Color</small> {demand.hands.hair.color}</li>
-                  : null
-              }
-            </ul>
-          </ResizedCard>
-          <ResizedCard>
-            <CardHeader title="Location" />
-            <ul>
-              {
-                <li>
-                  <small>Coordinates</small>
-                  {demand.location.coordinates.latitude}, {demand.location.coordinates.longitude}
-                </li>
-              }
-              {<li><small>Met at</small> {demand.location.met_at.moment}</li>} {/* TODO: Add side */}
-            </ul>
-          </ResizedCard>
+          <SolidCard
+            title="Teeth"
+            rows={[
+              { title: 'Care', text: demand.teeth.care },
+              { title: 'Braces', text: demand.teeth.braces ? 'Yes' : 'No' },
+            ]}
+          />
+          <SolidCard
+            title="Hands"
+            rows={[
+              { title: 'Care', text: demand.hands.care },
+              { title: 'Vein visibility', text: demand.hands.vein_visibility },
+              { title: 'Joint visibility', text: demand.hands.joint_visibility },
+            ]}
+          />
+          <SolidCard
+            title="Nails"
+            rows={[
+              { title: 'Care', text: demand.hands.nails.care },
+              { title: 'Color', text: demand.hands.nails.color },
+              { title: 'Length', text: demand.hands.nails.length },
+            ]}
+          />
+          <SolidCard
+            title="Hand hair"
+            rows={[
+              { title: 'Amount', text: demand.hands.hair.amount },
+              { title: 'Color', text: demand.hands.hair.color },
+            ]}
+          />
+          <SolidCard
+            title="Location"
+            rows={[
+              { title: 'Coordinates', text: `${demand.location.coordinates.latitude}, ${demand.location.coordinates.longitude}` },
+              { title: 'Coordinates', text: demand.location.met_at.moment },
+            ]}
+          />
         </Cards>
       </React.Fragment>
     );
