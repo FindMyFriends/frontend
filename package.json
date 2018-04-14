@@ -7,6 +7,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "flat": "^4.0.0",
+    "history": "^4.7.2",
     "lodash": "^4.17.4",
     "lscache": "^1.1.0",
     "material-ui": "^0.20.0",
@@ -24,6 +25,7 @@
     "react-scripts": "1.0.14",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "styled-components": "^3.2.5",
     "trim-character": "^2.0.1"
   },
   "scripts": {
