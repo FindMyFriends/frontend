@@ -20,19 +20,28 @@ const Row = styled.tr`
   text-align: left;
 `;
 
+const ProgressTd = styled.td`
+  min-width: 40px;
+`;
+
 type TextRowProps = {
   title: string,
   text: string,
 };
-export const TextRow = ({ title, text }: TextRowProps) => (
-  // $FlowFixMe
-  <React.Fragment>
-    <Row>
-      <th>{title}</th>
-      <td>{text}</td>
-    </Row>
-  </React.Fragment>
-);
+export const TextRow = ({ title, text }: TextRowProps) => {
+  if (text) {
+    return (
+      // $FlowFixMe
+      <React.Fragment>
+        <Row>
+          <th>{title}</th>
+          <td>{text}</td>
+        </Row>
+      </React.Fragment>
+    );
+  }
+  return null;
+};
 
 type ProgressRowProps = {
   title: string,
@@ -43,12 +52,12 @@ export const ProgressRow = ({ title, value }: ProgressRowProps) => (
   <React.Fragment>
     <Row>
       <th>{title}</th>
-      <td><LinearProgress mode="determinate" value={value * 10} /></td>
+      <ProgressTd><LinearProgress mode="determinate" value={value * 10} /></ProgressTd>
     </Row>
   </React.Fragment>
 );
 
-export const yesNo = (value: mixed) => (value ? 'Yes' : 'no');
+export const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 type SolidCardProps = {
   title: string,

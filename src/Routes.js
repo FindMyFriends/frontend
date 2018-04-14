@@ -6,6 +6,7 @@ import Reconsider from './pages/demands/Reconsider';
 import Add from './pages/demands/Add';
 import Single from './pages/demands/Single';
 import Default from './pages/Default';
+import Soulmates from './pages/demands/Soulmates';
 
 const Routes = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ const Routes = () => (
       <Layout exact path="/" component={Default} />
       <Layout path="/demands/add" component={Add} />
       <Layout path="/demands/reconsider/:id" component={Reconsider} />
+      <Layout path="/demands/:id/soulmates" component={Soulmates} />
       <Layout path="/demands/:id" component={Single} />
       <Layout path="/demands" component={All} />
     </Switch>
