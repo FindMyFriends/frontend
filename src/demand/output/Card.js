@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -20,7 +21,12 @@ const Row = styled.tr`
   text-align: left;
 `;
 
-export const TextRow = ({ title, text }) => (
+type TextRowProps = {
+  title: string,
+  text: string,
+};
+export const TextRow = ({ title, text }: TextRowProps) => (
+  // $FlowFixMe
   <React.Fragment>
     <Row>
       <th>{title}</th>
@@ -29,7 +35,12 @@ export const TextRow = ({ title, text }) => (
   </React.Fragment>
 );
 
-export const ProgressRow = ({ title, value }) => (
+type ProgressRowProps = {
+  title: string,
+  value: number,
+};
+export const ProgressRow = ({ title, value }: ProgressRowProps) => (
+  // $FlowFixMe
   <React.Fragment>
     <Row>
       <th>{title}</th>
@@ -38,9 +49,13 @@ export const ProgressRow = ({ title, value }) => (
   </React.Fragment>
 );
 
-export const yesNo = value => (value ? 'Yes' : 'no');
+export const yesNo = (value: mixed) => (value ? 'Yes' : 'no');
 
-export const SolidCard = ({ title, rows }) => {
+type SolidCardProps = {
+  title: string,
+  rows: Array<Object>,
+};
+export const SolidCard = ({ title, rows }: SolidCardProps) => {
   return (
     <ResizedCard>
       <CardHeader title={title} titleStyle={{ fontSize: '20px' }} />
