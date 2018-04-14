@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import LinearProgress from 'material-ui/LinearProgress';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
@@ -68,20 +67,4 @@ export const SolidCard = ({ title, rows }: SolidCardProps) => {
       </CardText>
     </ResizedCard>
   );
-};
-
-
-TextRow.propTypes = {
-  text: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-ProgressRow.propTypes = {
-  value: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-SolidCard.propTypes = {
-  rows: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
 };
