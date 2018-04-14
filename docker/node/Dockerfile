@@ -18,5 +18,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # REACT
 RUN yarn global add create-react-app
 
+RUN yarn install
+
 # CLEANING
 RUN apt-get clean
