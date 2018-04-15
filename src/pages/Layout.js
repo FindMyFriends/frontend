@@ -20,8 +20,11 @@ class Layout extends React.Component {
   }
 
   menuItems(history, match, dispatch) {
-    const menuItems = demandMenuItems(history, match, dispatch);
-    return menuItems[match.path]();
+    const menuItems = dispatch(demandMenuItems(history, match));
+    if (menuItems.hasOwnProperty(match.path)) {
+      return menuItems[match.path](this.handleDrawerOpening);
+    }
+    return null;
   }
 
   render() {
