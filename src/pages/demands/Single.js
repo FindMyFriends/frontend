@@ -1,46 +1,15 @@
 import React from 'react';
-import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import moment from 'moment';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
-import { single, options, retract } from './../../demand/endpoints';
-import { requestedConfirm, receivedMenuItems } from './../../ui/actions';
+import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow, yesNo } from './../../demand/output/Card';
-
-const handleRetract = ({ dispatch, history, id }) => {
-  dispatch(requestedConfirm(
-    'Are you sure, you want to retract demand?',
-    () => dispatch(retract(id, history)),
-  ));
-};
-
-const menuItems = (props) => {
-  const { history, match: { params: { id } } } = props;
-  return [
-    <MenuItem key={1} onClick={() => history.push(`/demands/${id}`)}>Overview</MenuItem>,
-    <MenuItem key={2} onClick={() => history.push(`/demands/${id}/soulmates`)}>Soulmates</MenuItem>,
-    <MenuItem
-      rightIcon={<ArrowDropRight />}
-      key={3}
-      menuItems={[
-        <MenuItem key={4} onClick={() => history.push(`/demands/${id}/edit`)}>Edit</MenuItem>,
-        <MenuItem key={5} style={{ color: 'red' }} onClick={() => handleRetract({ ...props, id })}>
-          Retract
-        </MenuItem>,
-    ]}
-    >
-      Settings
-    </MenuItem>,
-  ];
-};
 
 class Single extends React.Component {
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(receivedMenuItems(menuItems(this.props)));
     dispatch(options());
     dispatch(single(id));
   }

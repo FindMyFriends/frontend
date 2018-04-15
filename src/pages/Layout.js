@@ -6,6 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
+import { items as demandMenuItems } from './../demand/output/menu';
 
 class Layout extends React.Component {
   state = {
@@ -18,8 +19,13 @@ class Layout extends React.Component {
     this.setState(...this.state, { opened: !this.state.opened });
   }
 
+  menuItems(history, match, dispatch) {
+    const menuItems = demandMenuItems(history, match, dispatch);
+    return menuItems[match.path]();
+  }
+
   render() {
-    const { component: Component, menuItems, ...rest } = this.props;
+    const { component: Component, ...rest } = this.props;
     return (
       <Route
         {...rest}
@@ -37,7 +43,7 @@ class Layout extends React.Component {
                 docked={false}
                 onRequestChange={this.handleDrawerOpening}
               >
-                {menuItems}
+              {this.menuItems(matchProps.history, matchProps.match, this.props.dispatch)}
               </Drawer>
               <Component {...matchProps} />
             </span>
@@ -50,9 +56,6 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   component: PropTypes.any,
-  menuItems: PropTypes.array.isRequired,
 };
 
-export default connect(state => ({
-  menuItems: state.menu.items || [],
-}))(Layout);
+export default connect()(Layout);
