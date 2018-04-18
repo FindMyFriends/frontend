@@ -6,9 +6,12 @@ import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } f
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
 
 class Soulmates extends React.Component {
+  state = {
+    sorts: ['+position'],
+  };
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(allSoulmates(id, { page: 1, perPage: 10 }));
+    dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts));
     dispatch(soulmateRequests(id));
   }
 
@@ -21,7 +24,16 @@ class Soulmates extends React.Component {
 
   handleClarify(soulmate, clarification) {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(clarify(soulmate, clarification, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }))));
+    dispatch(clarify(soulmate, clarification, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts))));
+  }
+
+  handleSort(sorts) {
+    const { dispatch, match: { params: { id } } } = this.props;
+    this.setState({
+      ...this.state,
+      sorts,
+    });
+    dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts));
   }
 
   render() {
@@ -35,6 +47,7 @@ class Soulmates extends React.Component {
         requests={requests}
         onRefresh={() => this.handleRefresh()}
         onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
+        onSort={sorts => this.handleSort(sorts)}
       />
     );
   }

@@ -27,7 +27,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
   return null;
 };
 
-export const Box = ({ soulmates, requests, onRefresh, onClarify }) => {
+export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort }) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
       <div>
@@ -42,11 +42,27 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify }) => {
       <Table selectable={false}>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
-            <TableHeaderColumn>Position</TableHeaderColumn>
-            <TableHeaderColumn>Evolution</TableHeaderColumn>
-            <TableHeaderColumn>Is correct</TableHeaderColumn>
-            <TableHeaderColumn>Is new</TableHeaderColumn>
-            <TableHeaderColumn>Ownership</TableHeaderColumn>
+            <TableHeaderColumn tooltip='Sort'>
+              <a href="#" onClick={() => onSort(['position'])}>
+                <i className="material-icons">sort</i>
+              </a>
+                Position
+            </TableHeaderColumn>
+            <TableHeaderColumn tooltip='Sort'>
+              <i className="material-icons">sort</i>
+              Is correct
+            </TableHeaderColumn>
+            <TableHeaderColumn tooltip='Sort'>
+              <i className="material-icons">sort</i>
+              Is new
+            </TableHeaderColumn>
+            <TableHeaderColumn tooltip='Sort'>
+              <i className="material-icons">sort</i>
+              Ownership
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              Evolution
+          </TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
@@ -54,7 +70,6 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify }) => {
             return (
               <TableRow key={index}>
                 <TableRowColumn>{soulmate.position}</TableRowColumn>
-                <TableRowColumn>{soulmate.evolution_id}</TableRowColumn>
                 <TableRowColumn>
                   <Toggle
                     toggled={soulmate.is_correct}
@@ -63,6 +78,13 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify }) => {
                 </TableRowColumn>
                 <TableRowColumn>{yesNo(soulmate.is_new)}</TableRowColumn>
                 <TableRowColumn>{soulmate.ownership}</TableRowColumn>
+                <TableRowColumn>
+                  <span title='Visit'>
+                    <a href={`${soulmate.evolution_id}`}>
+                      <i className="material-icons">visibility</i>
+                    </a>
+                  </span>
+                </TableRowColumn>
               </TableRow>
             );
         })}
