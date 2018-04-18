@@ -5,6 +5,7 @@ import {
   receivedPaginationForAll,
   receivedRequestsByDemand,
   receivedRefresh,
+  receivedClarify,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 
@@ -12,7 +13,7 @@ export const all = (demand: string, pagination: Object = {
   page: 1,
   perPage: 20,
 }) => (dispatch: (mixed) => Object) => {
-  const fields = ['id', 'evolution_id', 'is_correct', 'is_new', 'position'];
+  const fields = ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'ownership'];
   axios.get(`/v1/demands/${demand}/soulmates?page=${pagination.page}&per_page=${pagination.perPage}&fields=${fields.join(',')}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(demand, response.headers.link));
@@ -34,5 +35,15 @@ export const refresh = (demand: string) => (dispatch: (mixed) => Object) => {
       dispatch(receivedRefresh(demand));
       dispatch(receivedSuccessMessage('Refresh has began'));
     })
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+export const clarify = (soulmate: string, clarification: Object, next: () => void) => (dispatch: (mixed) => Object) => {
+  axios.patch(`/v1/soulmates/${soulmate}`, clarification)
+    .then(() => {
+      dispatch(receivedClarify(soulmate));
+      dispatch(receivedSuccessMessage('Soulmate was clarified'));
+    })
+    .then(() => next())
     .catch(error => dispatch(receivedApiError(error)));
 };

@@ -5,7 +5,9 @@ import moment from 'moment';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
-import { SolidCard, Cards, TextRow, ProgressRow, yesNo } from './../../demand/output/Card';
+import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
+
+const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 class Single extends React.Component {
   componentDidMount() {

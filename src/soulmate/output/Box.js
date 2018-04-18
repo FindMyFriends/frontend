@@ -1,6 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
+const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 export const RefreshButton = ({ requests, onRefresh }) => {
   if (requests.length === 1 && requests[0].is_refreshable) {
@@ -15,7 +27,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
   return null;
 };
 
-export const Box = ({ soulmates, requests, onRefresh }) => {
+export const Box = ({ soulmates, requests, onRefresh, onClarify }) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
       <div>
@@ -27,27 +39,35 @@ export const Box = ({ soulmates, requests, onRefresh }) => {
   return (
     <React.Fragment>
       <RefreshButton requests={requests} onRefresh={onRefresh} />
-      <table>
-        <tbody>
-          <tr>
-            <th>Evolution</th>
-            <th>Is correct</th>
-            <th>Is new</th>
-            <th>Position</th>
-            <th>Ownership</th>
-          </tr>
-          {soulmates.map((soulmate) => {
-          return (
-            <React.Fragment key={soulmate.id}>
-              <td>{soulmate.evolution_id}</td>
-              <td>{soulmate.is_correct ? 'Yes' : 'No'}</td>
-              <td>{soulmate.is_new ? 'Yes' : 'No'}</td>
-              <td>{soulmate.position}</td>
-            </React.Fragment>
-          );
+      <Table selectable={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>Position</TableHeaderColumn>
+            <TableHeaderColumn>Evolution</TableHeaderColumn>
+            <TableHeaderColumn>Is correct</TableHeaderColumn>
+            <TableHeaderColumn>Is new</TableHeaderColumn>
+            <TableHeaderColumn>Ownership</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {soulmates.map((soulmate, index) => {
+            return (
+              <TableRow key={index}>
+                <TableRowColumn>{soulmate.position}</TableRowColumn>
+                <TableRowColumn>{soulmate.evolution_id}</TableRowColumn>
+                <TableRowColumn>
+                  <Toggle
+                    toggled={soulmate.is_correct}
+                    onToggle={(event, checked) => onClarify(soulmate.id, { is_correct: checked })}
+                  />
+                </TableRowColumn>
+                <TableRowColumn>{yesNo(soulmate.is_new)}</TableRowColumn>
+                <TableRowColumn>{soulmate.ownership}</TableRowColumn>
+              </TableRow>
+            );
         })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </React.Fragment>
   );
 };

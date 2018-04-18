@@ -3,6 +3,7 @@ import {
   RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES,
   RECEIVED_SOULMATE_REQUESTS,
   RECEIVED_SOULMATE_REFRESH,
+  RECEIVED_SOULMATE_CLARIFY,
 } from './actions';
 
 export const soulmate = (state = {}, action) => {
@@ -15,6 +16,8 @@ export const soulmate = (state = {}, action) => {
       return { ...state, requests: action.requests };
     case RECEIVED_SOULMATE_REFRESH:
       return { ...state, refreshAt: action.refreshAt, demand: action.demand };
+    case RECEIVED_SOULMATE_CLARIFY:
+      return { ...state, soulmate: action.soulmate };
     default:
       return state;
   }

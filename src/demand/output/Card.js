@@ -55,8 +55,6 @@ export const ProgressRow = ({ title, value }: ProgressRowProps) => (
   </Row>
 );
 
-export const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
-
 type SolidCardProps = {
   title: string,
   rows: Array<Object>,
