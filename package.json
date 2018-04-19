@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "tests": "ava tests/**/*.ava.js tests/*.ava.js src/**/*.ava.js",
+    "tests": "ava **/__tests__/**/*.ava.js",
     "lint": "eslint -c .eslintrc src/ tests/ --ignore-path .eslintignore",
     "check": "yarn lint && yarn tests && yarn flow src/",
     "eject": "react-scripts eject"
