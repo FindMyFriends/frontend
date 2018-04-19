@@ -53,6 +53,7 @@ class Soulmates extends React.Component {
         onRefresh={() => this.handleRefresh()}
         onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
         onSort={sort => this.handleSort(sort)}
+        sorts={this.state.sorts}
       />
     );
   }

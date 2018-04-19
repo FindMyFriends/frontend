@@ -26,7 +26,18 @@ export const RefreshButton = ({ requests, onRefresh }) => {
   return null;
 };
 
-export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort }) => {
+export const orderArrow = (sort, sorts) => {
+  if (sorts.hasOwnProperty(sort)) {
+    return (
+      sorts[sort][0] === '+'
+        ? <i className="material-icons">arrow_drop_up</i>
+        : <i className="material-icons">arrow_drop_down</i>
+    );
+  }
+  return null;
+};
+
+export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort, sorts }) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
       <div>
@@ -45,25 +56,25 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort }) => {
               <a href="#" onClick={() => onSort('position')}>
                 <i className="material-icons">sort</i>
               </a>
-                Position
+                Position {orderArrow('position', sorts)}
             </TableHeaderColumn>
             <TableHeaderColumn>
               <a href="#" onClick={() => onSort('is_correct')}>
                 <i className="material-icons">sort</i>
               </a>
-              Is correct
+              Is correct {orderArrow('is_correct', sorts)}
             </TableHeaderColumn>
             <TableHeaderColumn>
               <a href="#" onClick={() => onSort('new')}>
                 <i className="material-icons">sort</i>
               </a>
-              Is new
+              Is new {orderArrow('new', sorts)}
             </TableHeaderColumn>
             <TableHeaderColumn>
               <a href="#" onClick={() => onSort('ownership')}>
                 <i className="material-icons">sort</i>
               </a>
-              Ownership
+              Ownership {orderArrow('ownership', sorts)}
             </TableHeaderColumn>
             <TableHeaderColumn>
               Evolution
