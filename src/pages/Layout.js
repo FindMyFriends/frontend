@@ -21,7 +21,7 @@ class Layout extends React.Component {
 
   menuItems(history, match, dispatch) {
     const menuItems = dispatch(demandMenuItems(history, match));
-    if (menuItems.hasOwnProperty(match.path)) {
+    if (Object.prototype.hasOwnProperty.call(menuItems, match.path)) {
       return menuItems[match.path](this.handleDrawerOpening);
     }
     return null;
@@ -46,7 +46,7 @@ class Layout extends React.Component {
                 docked={false}
                 onRequestChange={this.handleDrawerOpening}
               >
-              {this.menuItems(matchProps.history, matchProps.match, this.props.dispatch)}
+                {this.menuItems(matchProps.history, matchProps.match, this.props.dispatch)}
               </Drawer>
               <Component {...matchProps} />
             </span>
@@ -59,6 +59,7 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   component: PropTypes.any,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect()(Layout);

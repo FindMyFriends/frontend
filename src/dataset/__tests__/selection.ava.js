@@ -7,7 +7,7 @@ test('adding first with +', (t) => {
       position: '+position',
     },
     twoSideSort(
-      { } ,
+      { },
       { position: 'position' },
     ),
   );
@@ -19,7 +19,7 @@ test('rewriting', (t) => {
       position: '+position',
     },
     twoSideSort(
-      { foo: 'bar' } ,
+      { foo: 'bar' },
       { position: 'position' },
     ),
   );

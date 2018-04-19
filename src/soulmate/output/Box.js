@@ -27,7 +27,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
 };
 
 export const orderArrow = (sort, sorts) => {
-  if (sorts.hasOwnProperty(sort)) {
+  if (Object.prototype.hasOwnProperty.call(sorts, sort)) {
     return (
       sorts[sort][0] === '+'
         ? <i className="material-icons">arrow_drop_up</i>
@@ -37,7 +37,9 @@ export const orderArrow = (sort, sorts) => {
   return null;
 };
 
-export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort, sorts }) => {
+export const Box = ({
+  soulmates, requests, onRefresh, onClarify, onSort, sorts,
+}) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
       <div>
@@ -78,13 +80,13 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort, sorts }
             </TableHeaderColumn>
             <TableHeaderColumn>
               Evolution
-          </TableHeaderColumn>
+            </TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {soulmates.map((soulmate, index) => {
+          {soulmates.map((soulmate) => {
             return (
-              <TableRow key={index}>
+              <TableRow key={soulmate.id}>
                 <TableRowColumn>{soulmate.position}</TableRowColumn>
                 <TableRowColumn>
                   <Toggle
@@ -95,7 +97,7 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort, sorts }
                 <TableRowColumn>{yesNo(soulmate.new)}</TableRowColumn>
                 <TableRowColumn>{soulmate.ownership}</TableRowColumn>
                 <TableRowColumn>
-                  <span title='Visit'>
+                  <span title="Visit">
                     <a href={`${soulmate.evolution_id}`}>
                       <i className="material-icons">visibility</i>
                     </a>
@@ -114,6 +116,9 @@ Box.propTypes = {
   soulmates: PropTypes.array.isRequired,
   requests: PropTypes.array.isRequired,
   onRefresh: PropTypes.func.isRequired,
+  onClarify: PropTypes.func.isRequired,
+  onSort: PropTypes.func.isRequired,
+  sorts: PropTypes.object.isRequired,
 };
 
 RefreshButton.propTypes = {

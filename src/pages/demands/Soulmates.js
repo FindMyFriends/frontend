@@ -28,7 +28,11 @@ class Soulmates extends React.Component {
 
   handleClarify(soulmate, clarification) {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(clarify(soulmate, clarification, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)))));
+    dispatch(clarify(
+      soulmate,
+      clarification,
+      () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts))),
+    ));
   }
 
   handleSort(sort) {

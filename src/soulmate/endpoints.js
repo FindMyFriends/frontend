@@ -38,7 +38,11 @@ export const refresh = (demand: string) => (dispatch: (mixed) => Object) => {
     .catch(error => dispatch(receivedApiError(error)));
 };
 
-export const clarify = (soulmate: string, clarification: Object, next: () => void) => (dispatch: (mixed) => Object) => {
+export const clarify = (
+  soulmate: string,
+  clarification: Object,
+  next: () => void,
+) => (dispatch: (mixed) => Object) => {
   axios.patch(`/v1/soulmates/${soulmate}`, clarification)
     .then(() => {
       dispatch(receivedClarify(soulmate));
