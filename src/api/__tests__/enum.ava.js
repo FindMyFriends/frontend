@@ -1,5 +1,5 @@
 import test from 'ava';
-import { combined } from './../src/api/enum';
+import { combined } from './../enum';
 
 test('combining key and value', (t) => {
   t.deepEqual(
