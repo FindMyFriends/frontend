@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
+import { twoSideSort } from './../../dataset/selection';
 
 class Soulmates extends React.Component {
   state = {
-    sorts: ['+position'],
+    sorts: {
+      position: '+position',
+    },
   };
+
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts));
+    dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)));
     dispatch(soulmateRequests(id));
   }
 
@@ -24,16 +28,17 @@ class Soulmates extends React.Component {
 
   handleClarify(soulmate, clarification) {
     const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(clarify(soulmate, clarification, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts))));
+    dispatch(clarify(soulmate, clarification, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)))));
   }
 
-  handleSort(sorts) {
+  handleSort(sort) {
     const { dispatch, match: { params: { id } } } = this.props;
     this.setState({
       ...this.state,
-      sorts,
-    });
-    dispatch(allSoulmates(id, { page: 1, perPage: 10 }, this.state.sorts));
+      sorts: {
+        ...twoSideSort(this.state.sorts, { [sort]: sort }),
+      },
+    }, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts))));
   }
 
   render() {
@@ -47,7 +52,7 @@ class Soulmates extends React.Component {
         requests={requests}
         onRefresh={() => this.handleRefresh()}
         onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
-        onSort={sorts => this.handleSort(sorts)}
+        onSort={sort => this.handleSort(sort)}
       />
     );
   }

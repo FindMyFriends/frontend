@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
 import {
   Table,
   TableBody,
@@ -42,22 +41,28 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort }) => {
       <Table selectable={false}>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
-            <TableHeaderColumn tooltip='Sort'>
-              <a href="#" onClick={() => onSort(['position'])}>
+            <TableHeaderColumn>
+              <a href="#" onClick={() => onSort('position')}>
                 <i className="material-icons">sort</i>
               </a>
                 Position
             </TableHeaderColumn>
-            <TableHeaderColumn tooltip='Sort'>
-              <i className="material-icons">sort</i>
+            <TableHeaderColumn>
+              <a href="#" onClick={() => onSort('is_correct')}>
+                <i className="material-icons">sort</i>
+              </a>
               Is correct
             </TableHeaderColumn>
-            <TableHeaderColumn tooltip='Sort'>
-              <i className="material-icons">sort</i>
+            <TableHeaderColumn>
+              <a href="#" onClick={() => onSort('new')}>
+                <i className="material-icons">sort</i>
+              </a>
               Is new
             </TableHeaderColumn>
-            <TableHeaderColumn tooltip='Sort'>
-              <i className="material-icons">sort</i>
+            <TableHeaderColumn>
+              <a href="#" onClick={() => onSort('ownership')}>
+                <i className="material-icons">sort</i>
+              </a>
               Ownership
             </TableHeaderColumn>
             <TableHeaderColumn>
@@ -76,7 +81,7 @@ export const Box = ({ soulmates, requests, onRefresh, onClarify, onSort }) => {
                     onToggle={(event, checked) => onClarify(soulmate.id, { is_correct: checked })}
                   />
                 </TableRowColumn>
-                <TableRowColumn>{yesNo(soulmate.is_new)}</TableRowColumn>
+                <TableRowColumn>{yesNo(soulmate.new)}</TableRowColumn>
                 <TableRowColumn>{soulmate.ownership}</TableRowColumn>
                 <TableRowColumn>
                   <span title='Visit'>
