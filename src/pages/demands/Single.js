@@ -1,51 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import * as R from 'ramda';
 import { getPrettyDemand } from './../../demand/reducers';
-import { single, options, retract } from './../../demand/endpoints';
-import { all as allSoulmates, requests as soulmateRequests, refresh } from './../../soulmate/endpoints';
-import { requestedConfirm } from './../../ui/actions';
-import { Box as SoulmateBox } from './../../soulmate/output/Box';
-import { SolidCard, Cards, TextRow, ProgressRow, yesNo } from './../../demand/output/Card';
+import { single, options } from './../../demand/endpoints';
+import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
+
+const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 class Single extends React.Component {
   componentDidMount() {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(single(id));
-    dispatch(allSoulmates(id, { page: 1, perPage: 10 }));
-    dispatch(soulmateRequests(id));
-  }
-
-  handleRefresh = this.handleRefresh.bind(this);
-
-  handleRefresh() {
-    const { dispatch, match: { params: { id } } } = this.props;
-    dispatch(refresh(id));
   }
 
   render() {
-    const {
-      demand, dispatch, history, soulmates, requests,
-    } = this.props;
+    const { demand } = this.props;
     if (R.isEmpty(demand)) {
       return <h1>Loading...</h1>;
     }
     return (
       <React.Fragment>
-        <SoulmateBox
-          soulmates={soulmates}
-          requests={requests}
-          onRefresh={() => this.handleRefresh()}
-        />
-        <RaisedButton
-          label="Retract"
-          secondary
-          onClick={() => dispatch(requestedConfirm('Are you sure, you want to retract demand?', () => dispatch(retract(demand.id, history))))}
-        />
         <Cards>
           <SolidCard
             title="General"
@@ -141,15 +118,10 @@ class Single extends React.Component {
 
 Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
-  soulmates: PropTypes.array.isRequired,
-  requests: PropTypes.array.isRequired,
 };
 
 export default connect(state => ({
   demand: getPrettyDemand(state.demand.single || { }, state.demand.options || { }),
-  soulmates: state.soulmate.all || [],
-  requests: state.soulmate.requests || [],
 }))(Single);

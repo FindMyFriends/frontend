@@ -4,6 +4,7 @@ import moment from 'moment';
 export const RECEIVED_ALL_DEMAND_SOULMATES = 'RECEIVED_ALL_DEMAND_SOULMATES';
 export const RECEIVED_SOULMATE_REQUESTS = 'RECEIVED_SOULMATE_REQUESTS';
 export const RECEIVED_SOULMATE_REFRESH = 'RECEIVED_SOULMATE_REFRESH';
+export const RECEIVED_SOULMATE_CLARIFY = 'RECEIVED_SOULMATE_CLARIFY';
 export const RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES = 'RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES';
 
 export const receivedAllByDemand = (soulmates, demand) => ({
@@ -27,4 +28,9 @@ export const receivedRefresh = demand => ({
   type: RECEIVED_SOULMATE_REFRESH,
   demand,
   refreshAt: moment(),
+});
+
+export const receivedClarify = soulmate => ({
+  type: RECEIVED_SOULMATE_CLARIFY,
+  soulmate,
 });

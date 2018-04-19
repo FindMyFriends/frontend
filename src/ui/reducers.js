@@ -1,5 +1,10 @@
 // @flow
-import { RECEIVED_API_ERROR, DISCARDED_MESSAGE, RECEIVED_SUCCESS, REQUESTED_CONFIRM } from './actions';
+import {
+  RECEIVED_API_ERROR,
+  DISCARDED_MESSAGE,
+  RECEIVED_SUCCESS,
+  REQUESTED_CONFIRM,
+} from './actions';
 
 export const message = (state: Object = {}, action: Object): Object => {
   switch (action.type) {
