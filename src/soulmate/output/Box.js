@@ -22,12 +22,10 @@ const Center = styled.div`
 `;
 
 export const RefreshButton = ({ requests, onRefresh }) => {
+  const style = {
+    position: 'relative',
+  };
   const properties = {
-    style: {
-      position: 'relative',
-      cursor: 'pointer',
-      maxWidth: '50%',
-    },
     size: 40,
     left: 0,
     top: 10,
@@ -37,7 +35,11 @@ export const RefreshButton = ({ requests, onRefresh }) => {
     if (request.status === 'pending') {
       return (
         <Center>
-          <RefreshIndicator {...properties} status="loading" />
+          <RefreshIndicator
+            {...properties}
+            style={{...style, cursor: 'progress'}}
+            status="loading"
+          />
         </Center>
       );
     } else if (request.is_refreshable) {
@@ -45,6 +47,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
         <Center>
           <RefreshIndicator
               {...properties}
+              style={style}
               onClick={onRefresh}
               percentage={100}
               status="ready"
