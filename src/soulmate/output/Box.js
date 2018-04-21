@@ -69,6 +69,17 @@ export const orderArrow = (sort, sorts) => {
   return null;
 };
 
+const SortColumn = ({
+  children, name, sorts, onSort,
+}) => (
+  <React.Fragment>
+    <a href="#" onClick={() => onSort(name)}>
+      <i className="material-icons">sort</i>
+    </a>
+    {children} {orderArrow(name, sorts)}
+  </React.Fragment>
+);
+
 export const Box = ({
   soulmates, requests, onRefresh, onClarify, onSort, sorts,
 }) => {
@@ -87,28 +98,40 @@ export const Box = ({
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('position')}>
-                <i className="material-icons">sort</i>
-              </a>
-                Position {orderArrow('position', sorts)}
+              <SortColumn
+                name="position"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Position
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('is_correct')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Is correct {orderArrow('is_correct', sorts)}
+              <SortColumn
+                name="is_correct"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Is correct
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('new')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Is new {orderArrow('new', sorts)}
+              <SortColumn
+                name="new"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Is new
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('ownership')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Ownership {orderArrow('ownership', sorts)}
+              <SortColumn
+                name="ownership"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Ownership
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
               Evolution
@@ -156,6 +179,13 @@ Box.propTypes = {
 RefreshButton.propTypes = {
   requests: PropTypes.array.isRequired,
   onRefresh: PropTypes.func.isRequired,
+};
+
+SortColumn.propTypes = {
+  children: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  sorts: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
 };
 
 export default Box;
