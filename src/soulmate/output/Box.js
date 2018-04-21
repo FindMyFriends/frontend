@@ -31,7 +31,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
   };
   const request = requests[0];
   if (request) {
-    if (request.status === 'pending') {
+    if (request.status === 'pending' || request.status === 'processing') {
       return (
         <Center>
           <RefreshIndicator
