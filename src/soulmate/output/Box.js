@@ -1,7 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
-import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table,
   TableBody,
@@ -10,18 +10,50 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const RefreshButton = ({ requests, onRefresh }) => {
-  if (requests.length === 1 && requests[0].is_refreshable) {
-    return (
-      <RaisedButton
-        onClick={onRefresh}
-        label="Try it again"
-        primary
-      />
-    );
+  const style = {
+    position: 'relative',
+  };
+  const properties = {
+    size: 40,
+    left: 0,
+    top: 10,
+  };
+  const request = requests[0];
+  if (request) {
+    if (request.status === 'pending') {
+      return (
+        <Center>
+          <RefreshIndicator
+            {...properties}
+            style={{ ...style, cursor: 'progress' }}
+            status="loading"
+          />
+        </Center>
+      );
+    } else if (request.is_refreshable) {
+      return (
+        <Center>
+          <RefreshIndicator
+            {...properties}
+            style={style}
+            onClick={onRefresh}
+            percentage={100}
+            status="ready"
+          />
+        </Center>
+      );
+    }
   }
   return null;
 };
@@ -36,6 +68,17 @@ export const orderArrow = (sort, sorts) => {
   }
   return null;
 };
+
+const SortColumn = ({
+  children, name, sorts, onSort,
+}) => (
+  <React.Fragment>
+    <a href="#" onClick={() => onSort(name)}>
+      <i className="material-icons">sort</i>
+    </a>
+    {children} {orderArrow(name, sorts)}
+  </React.Fragment>
+);
 
 export const Box = ({
   soulmates, requests, onRefresh, onClarify, onSort, sorts,
@@ -55,28 +98,40 @@ export const Box = ({
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('position')}>
-                <i className="material-icons">sort</i>
-              </a>
-                Position {orderArrow('position', sorts)}
+              <SortColumn
+                name="position"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Position
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('is_correct')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Is correct {orderArrow('is_correct', sorts)}
+              <SortColumn
+                name="is_correct"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Is correct
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('new')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Is new {orderArrow('new', sorts)}
+              <SortColumn
+                name="new"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Is new
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
-              <a href="#" onClick={() => onSort('ownership')}>
-                <i className="material-icons">sort</i>
-              </a>
-              Ownership {orderArrow('ownership', sorts)}
+              <SortColumn
+                name="ownership"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Ownership
+              </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
               Evolution
@@ -124,6 +179,13 @@ Box.propTypes = {
 RefreshButton.propTypes = {
   requests: PropTypes.array.isRequired,
   onRefresh: PropTypes.func.isRequired,
+};
+
+SortColumn.propTypes = {
+  children: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  sorts: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
 };
 
 export default Box;
