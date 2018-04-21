@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
-import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table,
   TableBody,
@@ -37,7 +36,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
         <Center>
           <RefreshIndicator
             {...properties}
-            style={{...style, cursor: 'progress'}}
+            style={{ ...style, cursor: 'progress' }}
             status="loading"
           />
         </Center>
@@ -46,13 +45,13 @@ export const RefreshButton = ({ requests, onRefresh }) => {
       return (
         <Center>
           <RefreshIndicator
-              {...properties}
-              style={style}
-              onClick={onRefresh}
-              percentage={100}
-              status="ready"
-            />
-          </Center>
+            {...properties}
+            style={style}
+            onClick={onRefresh}
+            percentage={100}
+            status="ready"
+          />
+        </Center>
       );
     }
   }
