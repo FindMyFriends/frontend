@@ -50,19 +50,27 @@ export const getPrettyDescription = (description, options) => {
       },
       eye: {
         left: {
-          color: options.definitions.eye.color[description.eye.left.color_id].name,
+          color: options.definitions.eye.color[description.eye.left.color_id]
+            ? options.definitions.eye.color[description.eye.left.color_id].name
+            : null,
         },
         right: {
-          color: options.definitions.eye.color[description.eye.right.color_id].name,
+          color: options.definitions.eye.color[description.eye.right.color_id]
+            ? options.definitions.eye.color[description.eye.right.color_id].name
+            : null,
         },
       },
       hands: {
         nails: {
-          color: options.hands.nails.color[description.hands.nails.color_id].name,
+          color: options.hands.nails.color[description.hands.nails.color_id]
+            ? options.hands.nails.color[description.hands.nails.color_id].name
+            : null,
           length: `${description.hands.nails.length.value} ${description.hands.nails.length.unit}`,
         },
         hair: {
-          color: options.hands.hair.color[description.hands.hair.color_id].name,
+          color: options.hands.hair.color[description.hands.hair.color_id]
+            ? options.hands.hair.color[description.hands.hair.color_id].name
+            : null,
         },
       },
     },
