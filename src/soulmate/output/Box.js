@@ -32,8 +32,15 @@ export const RefreshButton = ({ requests, onRefresh }) => {
     left: 0,
     top: 10,
   };
-  if (requests.length === 1) {
-    if (requests[0].is_refreshable) {
+  const request = requests[0];
+  if (request) {
+    if (request.status === 'pending') {
+      return (
+        <Center>
+          <RefreshIndicator {...properties} status="loading" />
+        </Center>
+      );
+    } else if (request.is_refreshable) {
       return (
         <Center>
           <RefreshIndicator
@@ -43,12 +50,6 @@ export const RefreshButton = ({ requests, onRefresh }) => {
               status="ready"
             />
           </Center>
-      );
-    } else {
-      return (
-        <Center>
-          <RefreshIndicator {...properties} status="loading" />
-        </Center>
       );
     }
   }

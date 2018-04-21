@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`no indicator for done task 1`] = `null`;
+
+exports[`ready refresh indicator for available refresh 1`] = `
+<div
+  className="sc-bdVaJa grbsvW"
+>
+  <div
+    onClick={[Function]}
+    size={40}
+    style={
+      Object {
+        "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+        "backgroundColor": "#ffffff",
+        "borderRadius": "50%",
+        "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+               0 1px 4px rgba(0, 0, 0, 0.12)",
+        "boxSizing": "border-box",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "cursor": "pointer",
+        "fontFamily": "Roboto, sans-serif",
+        "height": 40,
+        "left": -10000,
+        "maxWidth": "50%",
+        "muiPrepared": true,
+        "opacity": 1,
+        "padding": 4,
+        "position": "relative",
+        "top": -10000,
+        "transform": "translate(10000px, 10010px)",
+        "transition": "none",
+        "width": 40,
+        "zIndex": 2,
+      }
+    }
+  >
+    <svg
+      style={
+        Object {
+          "height": 32,
+          "width": 32,
+        }
+      }
+      viewBox="0 0 32 32"
+    >
+      <circle
+        cx={16}
+        cy={16}
+        r={11}
+        style={
+          Object {
+            "fill": "none",
+            "muiPrepared": true,
+            "opacity": 1,
+            "stroke": "#00bcd4",
+            "strokeDasharray": "55.67600313861911, 13.439035240356333",
+            "strokeDashoffset": -23.03834612632515,
+            "strokeLinecap": "round",
+            "strokeWidth": 3,
+          }
+        }
+      />
+      <polygon
+        points="21.75,16 32.25,16 27,21.25"
+        style={
+          Object {
+            "fill": "#00bcd4",
+            "muiPrepared": true,
+            "opacity": 1,
+            "transform": "rotate(410deg)",
+            "transformOrigin": "16px 16px",
+          }
+        }
+      />
+    </svg>
+  </div>
+</div>
+`;

@@ -22,7 +22,7 @@ export const all = (demand: string, pagination: Object = {
 };
 
 export const requests = (demand: string) => (dispatch: (mixed) => Object) => {
-  const fields = ['is_refreshable', 'refreshable_in'];
+  const fields = ['is_refreshable', 'refreshable_in', 'status'];
   axios.get(`/v1/demands/${demand}/soulmate_requests?page=1&per_page=1&sort=-searched_at&fields=${fields.join(',')}`)
     .then((response) => {
       dispatch(receivedRequestsByDemand(response.data, demand));
