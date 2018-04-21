@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,18 +11,46 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const RefreshButton = ({ requests, onRefresh }) => {
-  if (requests.length === 1 && requests[0].is_refreshable) {
-    return (
-      <RaisedButton
-        onClick={onRefresh}
-        label="Try it again"
-        primary
-      />
-    );
+  const properties = {
+    style: {
+      position: 'relative',
+      cursor: 'pointer',
+      maxWidth: '50%',
+    },
+    size: 40,
+    left: 0,
+    top: 10,
+  };
+  if (requests.length === 1) {
+    if (requests[0].is_refreshable) {
+      return (
+        <Center>
+          <RefreshIndicator
+              {...properties}
+              onClick={onRefresh}
+              percentage={100}
+              status="ready"
+            />
+          </Center>
+      );
+    } else {
+      return (
+        <Center>
+          <RefreshIndicator {...properties} status="loading" />
+        </Center>
+      );
+    }
   }
   return null;
 };
