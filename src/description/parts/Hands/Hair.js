@@ -5,7 +5,6 @@ import Rating from './../../input/Rating';
 
 const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
   <div>
-    <h3>Hand hair</h3>
     <Color
       name="hands.hair.color_id"
       values={values}

@@ -8,8 +8,6 @@ import { onCheck, onSelectEnumChange } from './../../../forms/events';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
-    <h2>Face</h2>
-    <h3>General</h3>
     <p>
       <span>Care</span>
     </p>

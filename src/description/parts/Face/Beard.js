@@ -5,8 +5,6 @@ import Color from './../../input/Color';
 
 const Beard = ({ selects: { beardColors, lengthUnits }, values, onChange }) => (
   <div>
-    <h2>Face</h2>
-    <h3>Beard</h3>
     <Color
       name="beard.color_id"
       values={values}

@@ -6,7 +6,6 @@ import Rating from './../../input/Rating';
 
 const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>
-    <h2>Teeth</h2>
     <p><span>Care</span></p>
     <Rating
       style={{ width: 200 }}

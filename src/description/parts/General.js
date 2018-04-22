@@ -11,7 +11,6 @@ import { onSelectChange, onSelectEnumChange, onRangeChange } from './../../forms
 
 export const General = ({ selects: { ethnicGroups, genders }, values, onChange }) => (
   <div>
-    <h2>General</h2>
     <TextField
       floatingLabelText="Firstname"
       onChange={onChange}
@@ -39,7 +38,7 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
       ))}
     </SelectField>
     <br />
-    <div style={{ width: 400 }}>
+    <React.Fragment>
       <span>Age</span>
       <Range
         dots
@@ -50,7 +49,7 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
         onChange={onRangeChange(onChange, 'general.age', ['from', 'to'])}
         value={[values['general.age.from'], values['general.age.to']]}
       />
-    </div>
+    </React.Fragment>
     <br />
     <br />
   </div>

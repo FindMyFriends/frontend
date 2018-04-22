@@ -1,37 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
 import { steps } from './../parts/steps';
 import { nextStep, previousStep, isLastStep } from './../../stepFork';
 
-const Current = ({
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 14px;
+`;
+
+const Side = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Current = ({ step, steps }) => (
+  <UnifiedCurrent>{steps[step.major].parts[step.minor].component}</UnifiedCurrent>
+);
+
+const UnifiedCurrent = styled.div`
+  width: 300px;
+`;
+
+const Navigation = ({
   step, children, onTurn, steps, ...rest
 }) => {
   const last = isLastStep(step, steps);
-  return [
-    steps[step.major].parts[step.minor].component,
-    step.major === 1 && step.minor === 1
-      ? null
-      : <RaisedButton
-        key="previous"
-        onClick={() => {
-          const { step: { major, minor } } = previousStep(step, steps);
+  const style = {
+    margin: '14px',
+  };
+  return (
+    <Side>
+      {
+        step.major === 1 && step.minor === 1
+          ? null
+          : <RaisedButton
+            style={style}
+            key="previous"
+            onClick={() => {
+              const { step: { major, minor } } = previousStep(step, steps);
+              onTurn(major, minor);
+            }}
+            label="Previous"
+            primary
+          />
+      }
+      <RaisedButton
+        style={style}
+        key="next|submit"
+        onClick={last ? rest.onSubmit : () => {
+          const { step: { major, minor } } = nextStep(step, steps);
           onTurn(major, minor);
         }}
-        label="Previous"
+        label={last ? children : 'Next'}
         primary
-      />,
-    <RaisedButton
-      key="next|submit"
-      onClick={last ? rest.onSubmit : () => {
-        const { step: { major, minor } } = nextStep(step, steps);
-        onTurn(major, minor);
-      }}
-      label={last ? children : 'Next'}
-      primary
-    />,
-  ];
+      />
+    </Side>
+  );
 };
 
 const Form = (props) => {
@@ -46,9 +75,10 @@ const Form = (props) => {
     <div>
       <MajorStepper {...props} majorTitles={majorTitles} />
       {minorTitles.length !== 1 ? <MinorStepper {...props} minorTitles={minorTitles} /> : null}
-      <div style={{ marginLeft: '14px' }}>
-        <Current {...props} steps={allSteps} />
-      </div>
+      <Center>
+        <Current step={props.step} steps={allSteps} />
+      </Center>
+      <Navigation {...props} steps={allSteps} />
     </div>
   );
 };
@@ -100,6 +130,19 @@ Form.propTypes = {
   values: PropTypes.object.isRequired,
   children: PropTypes.string.isRequired,
   step: PropTypes.object.isRequired,
+};
+
+Navigation.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  children: PropTypes.string.isRequired,
+  step: PropTypes.object.isRequired,
+  steps: PropTypes.object.isRequired,
+  onTurn: PropTypes.func.isRequired,
+};
+
+Current.propTypes = {
+  step: PropTypes.object.isRequired,
+  steps: PropTypes.object.isRequired,
 };
 
 export default Form;

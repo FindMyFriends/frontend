@@ -6,7 +6,6 @@ import ApproximateDatetime from './../input/ApproximateDatetime';
 const Location = ({ values, selects, onChange }) => {
   return (
     <div>
-      <h2>Location</h2>
       <TextField
         floatingLabelText="Latitude"
         onChange={onChange}

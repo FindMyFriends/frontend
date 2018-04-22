@@ -33,10 +33,7 @@ const Eye = ({
 
 const Eyes = props => (
   <div>
-    <h2>Eye</h2>
-    <h3>Left</h3>
     <Eye side="left" {...props} />
-    <h3>Right</h3>
     <Eye side="right" {...props} />
   </div>
 );

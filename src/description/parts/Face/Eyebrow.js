@@ -5,8 +5,6 @@ import Rating from './../../input/Rating';
 
 const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
-    <h2>Face</h2>
-    <h3>Eyebrow</h3>
     <p><span>Care</span></p>
     <Rating
       style={{ width: 200 }}

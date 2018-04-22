@@ -33,7 +33,6 @@ const NotNatureHair = ({ values, onChange }) => {
 
 const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChange }) => (
   <div>
-    <h2>Hair</h2>
     <br />
     <SelectField
       floatingLabelText="Styles"

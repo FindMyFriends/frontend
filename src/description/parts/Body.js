@@ -14,7 +14,7 @@ const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
   const numericSizes = combined([0, 1, 2, 3], breastSizes);
   const letterSizes = combined(breastSizes, [0, 1, 2, 3]);
   return (
-    <div style={{ width: 400 }}>
+    <div>
       <span>Breast size</span>
       <Slider
         step={1}
@@ -32,7 +32,6 @@ const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
 
 const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
   <div>
-    <h2>Body</h2>
     <SelectField
       floatingLabelText="Build"
       onChange={onSelectEnumChange(onChange, 'body.build_id', bodyBuilds)}

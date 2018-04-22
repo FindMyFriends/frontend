@@ -68,19 +68,16 @@ class Add extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1 style={{ marginLeft: '14px' }}>Add demand</h1>
-        <Form
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-          onTurn={this.handleTurn}
-          selects={{ ...this.props }}
-          values={flat(this.state.demand)}
-          step={this.state.step}
-        >
-        Add
-        </Form>
-      </div>
+      <Form
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+        onTurn={this.handleTurn}
+        selects={{ ...this.props }}
+        values={flat(this.state.demand)}
+        step={this.state.step}
+      >
+      Add
+      </Form>
     );
   }
 }

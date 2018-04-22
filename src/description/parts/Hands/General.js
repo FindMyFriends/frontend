@@ -4,8 +4,6 @@ import Rating from './../../input/Rating';
 
 const General = ({ selects: { ratings }, values, onChange }) => (
   <div>
-    <h2>Hands</h2>
-    <h3>General</h3>
     <p><span>Care</span></p>
     <Rating
       name="hands.care"
