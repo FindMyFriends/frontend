@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import LinearProgress from 'material-ui/LinearProgress';
+import range from 'lodash/range';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 export const Cards = styled.div`
@@ -28,6 +28,15 @@ const ProgressTd = styled.td`
   min-width: 40px;
 `;
 
+const Dot = styled.div`
+  height: 8px;
+  margin-right: 1px;
+  width: 8px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+`;
+
 type TextRowProps = {
   title: string,
   text: string,
@@ -51,7 +60,9 @@ type ProgressRowProps = {
 export const ProgressRow = ({ title, value }: ProgressRowProps) => (
   <Row>
     <Header>{title}</Header>
-    <ProgressTd><LinearProgress mode="determinate" value={value * 10} /></ProgressTd>
+    <ProgressTd title={value}>
+      {range(value).map(current => <Dot key={current} />)}
+    </ProgressTd>
   </Row>
 );
 
