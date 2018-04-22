@@ -6,7 +6,7 @@ import { steps } from './../parts/steps';
 import { nextStep, previousStep, isLastStep } from './../../stepFork';
 
 const Current = ({
-  step, label, onTurn, steps, ...rest
+  step, children, onTurn, steps, ...rest
 }) => {
   const last = isLastStep(step, steps);
   return [
@@ -28,7 +28,7 @@ const Current = ({
         const { step: { major, minor } } = nextStep(step, steps);
         onTurn(major, minor);
       }}
-      label={last ? label : 'Next'}
+      label={last ? children : 'Next'}
       primary
     />,
   ];
@@ -46,7 +46,9 @@ const Form = (props) => {
     <div>
       <MajorStepper {...props} majorTitles={majorTitles} />
       {minorTitles.length !== 1 ? <MinorStepper {...props} minorTitles={minorTitles} /> : null}
-      <Current {...props} steps={allSteps} />
+      <div style={{ marginLeft: '14px' }}>
+        <Current {...props} steps={allSteps} />
+      </div>
     </div>
   );
 };
@@ -96,7 +98,7 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
   step: PropTypes.object.isRequired,
 };
 
