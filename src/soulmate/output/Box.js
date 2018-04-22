@@ -20,6 +20,8 @@ const Center = styled.div`
   justify-content: center;
 `;
 
+const isSeeking = request => request && (request.status === 'pending' || request.status === 'processing');
+
 export const RefreshButton = ({ requests, onRefresh }) => {
   const style = {
     position: 'relative',
@@ -31,7 +33,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
   };
   const request = requests[0];
   if (request) {
-    if (request.status === 'pending' || request.status === 'processing') {
+    if (isSeeking(request)) {
       return (
         <Center>
           <RefreshIndicator
@@ -46,7 +48,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
         <Center>
           <RefreshIndicator
             {...properties}
-            style={style}
+            style={{ ...style, cursor: 'pointer' }}
             onClick={onRefresh}
             percentage={100}
             status="ready"
@@ -54,6 +56,17 @@ export const RefreshButton = ({ requests, onRefresh }) => {
         </Center>
       );
     }
+  }
+  return null;
+};
+
+const NoMatchText = ({ requests }) => {
+  if (requests) {
+    const request = requests[0];
+    if (isSeeking(request)) {
+      return <h3>No matches, still searching..</h3>;
+    }
+    return <h3>No matches, hit button to refresh.</h3>;
   }
   return null;
 };
@@ -85,10 +98,12 @@ export const Box = ({
 }) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
-      <div>
-        <p>No matches</p>
+      <React.Fragment>
         <RefreshButton requests={requests} onRefresh={onRefresh} />
-      </div>
+        <Center>
+          <NoMatchText requests={requests} />
+        </Center>
+      </React.Fragment>
     );
   }
   return (
@@ -174,6 +189,10 @@ Box.propTypes = {
   onClarify: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   sorts: PropTypes.object.isRequired,
+};
+
+NoMatchText.propTypes = {
+  requests: PropTypes.array.isRequired,
 };
 
 RefreshButton.propTypes = {
