@@ -18,7 +18,6 @@ const Location = ({ values, selects, onChange }) => {
         value={values['location.coordinates.longitude']}
         name="location.coordinates.longitude"
       />
-      <br />
       <ApproximateDatetime
         values={values}
         selects={selects}

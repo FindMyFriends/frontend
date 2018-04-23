@@ -6,7 +6,6 @@ const Rating = ({
   ratings, name, values, onChange,
 }) => (
   <Slider
-    style={{ width: 200 }}
     min={ratings.minimum}
     max={ratings.maximum}
     marks={{ 0: 'N/A', 1: 1, 10: 10 }}

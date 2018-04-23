@@ -50,7 +50,6 @@ const Approximation = ({ values, selects: { timelineSides }, onChange }) => {
   return (
     <div>
       {side}
-      <br />
       <SelectField
         floatingLabelText="Approximation"
         onChange={onNumberChange(onChange, duration)}
@@ -58,7 +57,6 @@ const Approximation = ({ values, selects: { timelineSides }, onChange }) => {
       >
         {time(duration).map(time => <MenuItem key={time} value={time} primaryText={time} />)}
       </SelectField>
-      <br />
       <SelectField
         floatingLabelText="Units"
         onChange={onUnitChange(onChange, duration)}
@@ -82,7 +80,6 @@ const ApproximateDatetime = ({ values, selects, onChange }) => {
         value={values['location.met_at.moment']}
         name="location.met_at.moment"
       />
-      <br />
       <Approximation
         values={values}
         selects={selects}

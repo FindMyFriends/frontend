@@ -7,7 +7,6 @@ const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
     <p><span>Care</span></p>
     <Rating
-      style={{ width: 200 }}
       ratings={ratings}
       name="eyebrow.care"
       values={values}
@@ -19,7 +18,6 @@ const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
       onChange={onChange}
       colors={eyebrowColors}
     />
-    <br />
   </div>
 );
 

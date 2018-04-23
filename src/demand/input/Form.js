@@ -23,7 +23,7 @@ const Current = ({ step, steps }) => (
 );
 
 const UnifiedCurrent = styled.div`
-  width: 300px;
+  width: 256px;
 `;
 
 const Navigation = ({

@@ -12,14 +12,12 @@ const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange
       onChange={onChange}
       colors={nailColors}
     />
-    <br />
     <LengthWithUnit
       name="hands.nails.length"
       values={values}
       onChange={onChange}
       units={lengthUnits}
     />
-    <br />
     <p><span>Care</span></p>
     <Rating
       name="hands.nails.care"

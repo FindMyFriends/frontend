@@ -17,7 +17,6 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
       value={values['general.firstname']}
       name="general.firstname"
     />
-    <br />
     <SelectField
       floatingLabelText="Gender"
       onChange={onSelectChange(onChange, 'general.gender')}
@@ -26,7 +25,6 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
     >
       {genders.map(gender => <MenuItem key={gender} value={gender} primaryText={gender} />)}
     </SelectField>
-    <br />
     <SelectField
       floatingLabelText="Ethnic group"
       onChange={onSelectEnumChange(onChange, 'general.ethnic_group_id', ethnicGroups)}
@@ -37,7 +35,6 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
         <MenuItem key={ethnicity} value={ethnicity} primaryText={ethnicity} />
       ))}
     </SelectField>
-    <br />
     <React.Fragment>
       <span>Age</span>
       <Range
@@ -50,8 +47,6 @@ export const General = ({ selects: { ethnicGroups, genders }, values, onChange }
         value={[values['general.age.from'], values['general.age.to']]}
       />
     </React.Fragment>
-    <br />
-    <br />
   </div>
 );
 

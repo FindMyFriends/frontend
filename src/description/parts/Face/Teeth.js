@@ -8,20 +8,17 @@ const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>
     <p><span>Care</span></p>
     <Rating
-      style={{ width: 200 }}
       ratings={ratings}
       name="teeth.care"
       values={values}
       onChange={onChange}
     />
-    <br />
     <Checkbox
       label="Braces"
       name="teeth.braces"
       onCheck={onCheck(onChange, 'teeth.braces')}
       checked={values['teeth.braces']}
     />
-    <br />
   </div>
 );
 

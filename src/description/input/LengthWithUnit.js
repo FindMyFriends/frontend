@@ -16,7 +16,6 @@ const LengthWithUnit = ({
       name={`${name}.value`}
       value={values[`${name}.value`]}
     />
-    <br />
     <SelectField
       disabled={!values[`${name}.value`]}
       title={values[`${name}.value`] ? null : 'To change unit, type value'}

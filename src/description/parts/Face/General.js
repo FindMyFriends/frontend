@@ -8,17 +8,13 @@ import { onCheck, onSelectEnumChange } from './../../../forms/events';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
-    <p>
-      <span>Care</span>
-    </p>
+    <span>Care</span>
     <Rating
-      style={{ width: 200 }}
       ratings={ratings}
       name="face.care"
       values={values}
       onChange={onChange}
     />
-    <br />
     <Checkbox
       label="Freckles"
       name="face.freckles"
@@ -35,7 +31,6 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
         <MenuItem key={shape} value={shape} primaryText={shape} />
       ))}
     </SelectField>
-    <br />
   </div>
 );
 

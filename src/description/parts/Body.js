@@ -24,8 +24,6 @@ const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
         onChange={numericSize => onChange({ target: { name: 'body.breast_size', value: numericSizes[numericSize] } })}
         value={letterSizes[values['body.breast_size']]}
       />
-      <br />
-      <br />
     </div>
   );
 };
@@ -42,7 +40,6 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
         <MenuItem key={build} value={build} primaryText={build} />
       ))}
     </SelectField>
-    <br />
     <TextField
       type="number"
       floatingLabelText="Weight"
@@ -50,7 +47,6 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
       value={values['body.weight.value']}
       name="body.weight.value"
     />
-    <br />
     <TextField
       type="number"
       floatingLabelText="Height"

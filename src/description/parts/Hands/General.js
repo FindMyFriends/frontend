@@ -25,7 +25,6 @@ const General = ({ selects: { ratings }, values, onChange }) => (
       values={values}
       ratings={ratings}
     />
-    <br />
   </div>
 );
 

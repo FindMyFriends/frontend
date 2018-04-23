@@ -19,21 +19,18 @@ const NotNatureHair = ({ values, onChange }) => {
         onCheck={onCheck(onChange, 'hair.highlights')}
         checked={values['hair.highlights']}
       />
-      <br />
       <Checkbox
         label="Roots"
         name="hair.roots"
         onCheck={onCheck(onChange, 'hair.roots')}
         checked={values['hair.roots']}
       />
-      <br />
     </span>
   );
 };
 
 const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChange }) => (
   <div>
-    <br />
     <SelectField
       floatingLabelText="Styles"
       onChange={onSelectEnumChange(onChange, 'hair.style_id', hairStyles)}
@@ -44,28 +41,24 @@ const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChan
         <MenuItem key={style} value={style} primaryText={style} />
       ))}
     </SelectField>
-    <br />
     <Color
       name="hair.color_id"
       colors={hairColors}
       onChange={onChange}
       values={values}
     />
-    <br />
     <LengthWithUnit
       name="hair.length"
       values={values}
       onChange={onChange}
       units={lengthUnits}
     />
-    <br />
     <Checkbox
       label="Nature"
       name="hair.nature"
       onCheck={onCheck(onChange, 'hair.nature')}
       checked={values['hair.nature']}
     />
-    <br />
     <NotNatureHair values={values} onChange={onChange} />
   </div>
 );

@@ -19,14 +19,12 @@ const Eye = ({
         onChange={onChange}
         colors={eyeColors}
       />
-      <br />
       <Checkbox
         label="Lenses"
         name={identifier.lenses}
         onCheck={onCheck(onChange, identifier.lenses)}
         checked={values[identifier.lenses]}
       />
-      <br />
     </div>
   );
 };
