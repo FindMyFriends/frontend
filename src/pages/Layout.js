@@ -32,26 +32,30 @@ class Layout extends React.Component {
     return (
       <Route
         {...rest}
-        render={matchProps => (
-          <MuiThemeProvider>
-            <span>
-              <Notification />
-              <AppBar
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
-                title="FMF"
-                onLeftIconButtonClick={this.handleDrawerOpening}
-              />
-              <Drawer
-                open={this.state.opened}
-                docked={false}
-                onRequestChange={this.handleDrawerOpening}
-              >
-                {this.menuItems(matchProps.history, matchProps.match, this.props.dispatch)}
-              </Drawer>
-              <Component {...matchProps} />
-            </span>
-          </MuiThemeProvider>
-      )}
+        render={(matchProps) => {
+          const items = this.menuItems(matchProps.history, matchProps.match, this.props.dispatch);
+          return (
+            <MuiThemeProvider>
+              <span>
+                <Notification />
+                <AppBar
+                  iconClassNameRight="muidocs-icon-navigation-expand-more"
+                  title="FMF"
+                  onLeftIconButtonClick={this.handleDrawerOpening}
+                  showMenuIconButton={!!items}
+                />
+                <Drawer
+                  open={this.state.opened}
+                  docked={false}
+                  onRequestChange={this.handleDrawerOpening}
+                >
+                  {items}
+                </Drawer>
+                <Component {...matchProps} />
+              </span>
+            </MuiThemeProvider>
+          );
+      }}
       />
     );
   }
