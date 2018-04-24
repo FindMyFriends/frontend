@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as R from 'ramda';
+import Tabs from './menu/Tabs';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
@@ -22,7 +23,7 @@ class Single extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <React.Fragment>
+      <Tabs {...this.props}>
         <Cards>
           <SolidCard
             title="General"
@@ -111,7 +112,7 @@ class Single extends React.Component {
             ]}
           />
         </Cards>
-      </React.Fragment>
+      </Tabs>
     );
   }
 }

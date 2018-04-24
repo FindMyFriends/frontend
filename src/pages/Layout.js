@@ -4,9 +4,35 @@ import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
 import { items as demandMenuItems } from './../demand/output/menu';
+
+const DropDownMenu = ({ children, items }) => {
+  const style = {
+    cursor: 'pointer',
+  };
+  return (
+    <React.Fragment>
+      {children}
+      <IconMenu
+            iconButtonElement={
+              <i className="material-icons" style={style}>
+                keyboard_arrow_down
+              </i>
+            }
+            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          >
+          {items}
+        </IconMenu>
+    </React.Fragment>
+  );
+};
 
 class Layout extends React.Component {
   state = {
@@ -39,8 +65,9 @@ class Layout extends React.Component {
               <span>
                 <Notification />
                 <AppBar
-                  iconClassNameRight="muidocs-icon-navigation-expand-more"
-                  title="FMF"
+                  title={
+                    <DropDownMenu items={items}>Demands</DropDownMenu>
+                  }
                   onLeftIconButtonClick={this.handleDrawerOpening}
                   showMenuIconButton={!!items}
                 />

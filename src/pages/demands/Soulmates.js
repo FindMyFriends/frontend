@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tabs from './menu/Tabs';
 import * as R from 'ramda';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
@@ -51,14 +52,16 @@ class Soulmates extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <SoulmateBox
-        soulmates={soulmates}
-        requests={requests}
-        onRefresh={() => this.handleRefresh()}
-        onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
-        onSort={sort => this.handleSort(sort)}
-        sorts={this.state.sorts}
-      />
+      <Tabs {...this.props}>
+        <SoulmateBox
+          soulmates={soulmates}
+          requests={requests}
+          onRefresh={() => this.handleRefresh()}
+          onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
+          onSort={sort => this.handleSort(sort)}
+          sorts={this.state.sorts}
+        />
+      </Tabs>
     );
   }
 }
