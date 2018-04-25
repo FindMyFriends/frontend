@@ -1,5 +1,6 @@
 import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
+import styled from 'styled-components';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import { requestedConfirm } from './../../ui/actions';
 import { retract } from './../../demand/endpoints';
@@ -11,29 +12,23 @@ const handleRetract = (history, id) => (dispatch) => {
   ));
 };
 
-const handleClick = actions => actions.forEach(action => action());
+const StyledIcon = styled.i`
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+`;
 
-const overview = (id, history, onClick) => dispatch => ([
-  <MenuItem key={1} onClick={() => handleClick([() => history.push(`/demands/${id}`), onClick])}>Overview</MenuItem>,
-  <MenuItem key={2} onClick={() => handleClick([() => history.push(`/demands/${id}/soulmates`), onClick])}>Soulmates</MenuItem>,
-  <MenuItem
-    rightIcon={<ArrowDropRight />}
-    key={3}
-    menuItems={[
-      <MenuItem key={4} onClick={() => handleClick([() => history.push(`/demands/${id}/edit`), onClick])}>Edit</MenuItem>,
-      <MenuItem key={5} style={{ color: 'red' }} onClick={() => dispatch(handleRetract(history, id))}>
-        Retract
-      </MenuItem>,
-  ]}
-  >
-    Settings
-  </MenuItem>,
-]);
+const overview = (id, history) => dispatch => (
+  <React.Fragment>
+    <StyledIcon key={1} className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
+    <StyledIcon key={2} className="material-icons" style={{ color: 'red' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
+  </React.Fragment>
+);
 
 export const items = (history, match) => (dispatch) => {
   const { params: { id } } = match;
   return {
-    '/demands/:id': onClick => dispatch(overview(id, history, onClick)),
-    '/demands/:id/soulmates': onClick => dispatch(overview(id, history, onClick)),
+    '/demands/:id': () => dispatch(overview(id, history)),
+    '/demands/:id/soulmates': () => { },
   };
 };

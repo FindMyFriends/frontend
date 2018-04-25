@@ -12,43 +12,11 @@ import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
 import { items as demandMenuItems } from './../demand/output/menu';
 
-const DropDownMenu = ({ children, items }) => {
-  const style = {
-    cursor: 'pointer',
-  };
-  return (
-    <React.Fragment>
-      {children}
-      <IconMenu
-            iconButtonElement={
-              <i className="material-icons" style={style}>
-                keyboard_arrow_down
-              </i>
-            }
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-          {items}
-        </IconMenu>
-    </React.Fragment>
-  );
-};
-
 class Layout extends React.Component {
-  state = {
-    opened: false,
-  };
-
-  handleDrawerOpening = this.handleDrawerOpening.bind(this);
-
-  handleDrawerOpening() {
-    this.setState(...this.state, { opened: !this.state.opened });
-  }
-
   menuItems(history, match, dispatch) {
     const menuItems = dispatch(demandMenuItems(history, match));
     if (Object.prototype.hasOwnProperty.call(menuItems, match.path)) {
-      return menuItems[match.path](this.handleDrawerOpening);
+      return menuItems[match.path]();
     }
     return null;
   }
@@ -65,16 +33,15 @@ class Layout extends React.Component {
               <span>
                 <Notification />
                 <AppBar
-                  title={
-                    <DropDownMenu items={items}>Demands</DropDownMenu>
-                  }
+                  title="Demand"
                   onLeftIconButtonClick={this.handleDrawerOpening}
+                  iconElementRight={items}
                   showMenuIconButton={!!items}
                 />
                 <Drawer
-                  open={this.state.opened}
+                  open={false}
                   docked={false}
-                  onRequestChange={this.handleDrawerOpening}
+                  onRequestChange={() => {}}
                 >
                   {items}
                 </Drawer>

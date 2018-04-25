@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as R from 'ramda';
 import Tabs from './menu/Tabs';
+import { DEMAND_MENU } from './../../ui/reducers';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
