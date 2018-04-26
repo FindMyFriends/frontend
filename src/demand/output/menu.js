@@ -18,17 +18,9 @@ const StyledIcon = styled.i`
   padding: 10px;
 `;
 
-const overview = (id, history) => dispatch => (
+export const items = (history, id) => (dispatch) => (
   <React.Fragment>
     <StyledIcon key={1} className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
     <StyledIcon key={2} className="material-icons" style={{ color: 'red' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
   </React.Fragment>
 );
-
-export const items = (history, match) => (dispatch) => {
-  const { params: { id } } = match;
-  return {
-    '/demands/:id': () => dispatch(overview(id, history)),
-    '/demands/:id/soulmates': () => { },
-  };
-};

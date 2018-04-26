@@ -8,14 +8,23 @@ import { DEMAND_MENU } from './../../ui/reducers';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
+import { items as demandMenuItems } from './../../demand/output/menu';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 class Single extends React.Component {
   componentDidMount() {
-    const { dispatch, match: { params: { id } } } = this.props;
+    const { dispatch, handleMenu, history, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(single(id));
+    handleMenu({
+      filter: {
+        title: 'Demand',
+      },
+      action: {
+        ...dispatch(demandMenuItems(history, id)),
+      },
+    });
   }
 
   render() {
