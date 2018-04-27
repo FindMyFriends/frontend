@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import Tabs from './menu/Tabs';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
 import { twoSideSort } from './../../dataset/selection';
@@ -14,9 +15,14 @@ class Soulmates extends React.Component {
   };
 
   componentDidMount() {
-    const { dispatch, match: { params: { id } } } = this.props;
+    const { dispatch, handleMenu, match: { params: { id } } } = this.props;
     dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)));
     dispatch(soulmateRequests(id));
+    handleMenu({
+      filter: {
+        title: 'Soulmates',
+      },
+    });
   }
 
   handleRefresh = this.handleRefresh.bind(this);
@@ -51,14 +57,16 @@ class Soulmates extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <SoulmateBox
-        soulmates={soulmates}
-        requests={requests}
-        onRefresh={() => this.handleRefresh()}
-        onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
-        onSort={sort => this.handleSort(sort)}
-        sorts={this.state.sorts}
-      />
+      <Tabs {...this.props}>
+        <SoulmateBox
+          soulmates={soulmates}
+          requests={requests}
+          onRefresh={() => this.handleRefresh()}
+          onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
+          onSort={sort => this.handleSort(sort)}
+          sorts={this.state.sorts}
+        />
+      </Tabs>
     );
   }
 }
@@ -68,6 +76,7 @@ Soulmates.propTypes = {
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   soulmates: PropTypes.array.isRequired,
   requests: PropTypes.array.isRequired,
+  handleMenu: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({

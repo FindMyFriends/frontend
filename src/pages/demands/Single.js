@@ -3,17 +3,29 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as R from 'ramda';
+import Tabs from './menu/Tabs';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
+import { items as demandMenuItems } from './../../demand/output/menu';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 class Single extends React.Component {
   componentDidMount() {
-    const { dispatch, match: { params: { id } } } = this.props;
+    const {
+      dispatch, handleMenu, history, match: { params: { id } },
+    } = this.props;
     dispatch(options());
     dispatch(single(id));
+    handleMenu({
+      filter: {
+        title: 'Demand',
+      },
+      action: {
+        ...dispatch(demandMenuItems(history, id)),
+      },
+    });
   }
 
   render() {
@@ -22,7 +34,7 @@ class Single extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <React.Fragment>
+      <Tabs {...this.props}>
         <Cards>
           <SolidCard
             title="General"
@@ -111,7 +123,7 @@ class Single extends React.Component {
             ]}
           />
         </Cards>
-      </React.Fragment>
+      </Tabs>
     );
   }
 }
@@ -120,6 +132,8 @@ Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
+  handleMenu: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({

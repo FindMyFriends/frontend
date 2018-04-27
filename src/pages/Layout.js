@@ -4,54 +4,67 @@ import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
-import { items as demandMenuItems } from './../demand/output/menu';
 
 class Layout extends React.Component {
+  static handleClick(actions) {
+    actions.forEach(action => action());
+  }
+
   state = {
     opened: false,
+    menu: {
+      filter: {
+        title: null,
+      },
+      action: null,
+    },
   };
 
   handleDrawerOpening = this.handleDrawerOpening.bind(this);
+  handleMenu = this.handleMenu.bind(this);
 
   handleDrawerOpening() {
     this.setState(...this.state, { opened: !this.state.opened });
   }
 
-  menuItems(history, match, dispatch) {
-    const menuItems = dispatch(demandMenuItems(history, match));
-    if (Object.prototype.hasOwnProperty.call(menuItems, match.path)) {
-      return menuItems[match.path](this.handleDrawerOpening);
-    }
-    return null;
+  handleMenu(menu) {
+    this.setState({
+      ...this.state,
+      menu,
+    });
   }
 
   render() {
     const { component: Component, ...rest } = this.props;
+    const { menu } = this.state;
     return (
       <Route
         {...rest}
         render={(matchProps) => {
-          const items = this.menuItems(matchProps.history, matchProps.match, this.props.dispatch);
+          const { history } = matchProps;
           return (
             <MuiThemeProvider>
               <span>
                 <Notification />
                 <AppBar
-                  iconClassNameRight="muidocs-icon-navigation-expand-more"
-                  title="FMF"
+                  title={menu.filter.title}
                   onLeftIconButtonClick={this.handleDrawerOpening}
-                  showMenuIconButton={!!items}
+                  iconElementRight={menu.action}
+                  showMenuIconButton
                 />
                 <Drawer
                   open={this.state.opened}
                   docked={false}
                   onRequestChange={this.handleDrawerOpening}
                 >
-                  {items}
+                  <React.Fragment>
+                    <MenuItem onClick={() => Layout.handleClick([() => history.push('/demands'), this.handleDrawerOpening])}>Demands</MenuItem>
+                  </React.Fragment>
                 </Drawer>
-                <Component {...matchProps} />
+                <Component {...matchProps} handleMenu={this.handleMenu} />
               </span>
             </MuiThemeProvider>
           );
