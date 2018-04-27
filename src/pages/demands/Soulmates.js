@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Tabs from './menu/Tabs';
 import * as R from 'ramda';
+import Tabs from './menu/Tabs';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
 import { twoSideSort } from './../../dataset/selection';
@@ -76,6 +76,7 @@ Soulmates.propTypes = {
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   soulmates: PropTypes.array.isRequired,
   requests: PropTypes.array.isRequired,
+  handleMenu: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({

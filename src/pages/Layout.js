@@ -5,13 +5,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
 
 class Layout extends React.Component {
+  static handleClick(actions) {
+    actions.forEach(action => action());
+  }
+
   state = {
     opened: false,
     menu: {
@@ -23,15 +24,10 @@ class Layout extends React.Component {
   };
 
   handleDrawerOpening = this.handleDrawerOpening.bind(this);
-  handleClick = this.handleClick.bind(this);
   handleMenu = this.handleMenu.bind(this);
 
   handleDrawerOpening() {
     this.setState(...this.state, { opened: !this.state.opened });
-  }
-
-  handleClick(actions) {
-    actions.forEach(action => action());
   }
 
   handleMenu(menu) {
@@ -48,7 +44,7 @@ class Layout extends React.Component {
       <Route
         {...rest}
         render={(matchProps) => {
-          const { history, match } = matchProps;
+          const { history } = matchProps;
           return (
             <MuiThemeProvider>
               <span>
@@ -65,7 +61,7 @@ class Layout extends React.Component {
                   onRequestChange={this.handleDrawerOpening}
                 >
                   <React.Fragment>
-                    <MenuItem onClick={() => this.handleClick([() => history.push('/demands'), this.handleDrawerOpening])}>Demands</MenuItem>
+                    <MenuItem onClick={() => Layout.handleClick([() => history.push('/demands'), this.handleDrawerOpening])}>Demands</MenuItem>
                   </React.Fragment>
                 </Drawer>
                 <Component {...matchProps} handleMenu={this.handleMenu} />

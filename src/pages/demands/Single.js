@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as R from 'ramda';
 import Tabs from './menu/Tabs';
-import { DEMAND_MENU } from './../../ui/reducers';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
@@ -14,7 +13,9 @@ const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
 class Single extends React.Component {
   componentDidMount() {
-    const { dispatch, handleMenu, history, match: { params: { id } } } = this.props;
+    const {
+      dispatch, handleMenu, history, match: { params: { id } },
+    } = this.props;
     dispatch(options());
     dispatch(single(id));
     handleMenu({
@@ -131,6 +132,8 @@ Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
   demand: PropTypes.object.isRequired,
+  handleMenu: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({

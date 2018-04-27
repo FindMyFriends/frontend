@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tabs as MUITabs, Tab } from 'material-ui/Tabs';
 
 const Tabs = ({ children, history, match: { params: { id }, path } }) => (
@@ -18,5 +19,11 @@ const Tabs = ({ children, history, match: { params: { id }, path } }) => (
     {children}
   </React.Fragment>
 );
+
+Tabs.propTypes = {
+  children: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+};
 
 export default Tabs;

@@ -1,7 +1,5 @@
 import React from 'react';
-import MenuItem from 'material-ui/MenuItem';
 import styled from 'styled-components';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import { requestedConfirm } from './../../ui/actions';
 import { retract } from './../../demand/endpoints';
 
@@ -18,7 +16,7 @@ const StyledIcon = styled.i`
   padding: 10px;
 `;
 
-export const items = (history, id) => (dispatch) => (
+export const items = (history, id) => dispatch => (
   <React.Fragment>
     <StyledIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
     <StyledIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
