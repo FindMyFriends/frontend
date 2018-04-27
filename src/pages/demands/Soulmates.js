@@ -15,9 +15,14 @@ class Soulmates extends React.Component {
   };
 
   componentDidMount() {
-    const { dispatch, match: { params: { id } } } = this.props;
+    const { dispatch, handleMenu, match: { params: { id } } } = this.props;
     dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)));
     dispatch(soulmateRequests(id));
+    handleMenu({
+      filter: {
+        title: 'Soulmates',
+      },
+    });
   }
 
   handleRefresh = this.handleRefresh.bind(this);

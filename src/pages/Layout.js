@@ -57,7 +57,7 @@ class Layout extends React.Component {
                   title={menu.filter.title}
                   onLeftIconButtonClick={this.handleDrawerOpening}
                   iconElementRight={menu.action}
-                  showMenuIconButton={!!menu.action}
+                  showMenuIconButton
                 />
                 <Drawer
                   open={this.state.opened}
@@ -65,7 +65,7 @@ class Layout extends React.Component {
                   onRequestChange={this.handleDrawerOpening}
                 >
                   <React.Fragment>
-                    <MenuItem key={1} onClick={() => this.handleClick([() => history.push(`/demands/${match.params.id}`), this.handleDrawerOpening])}>Demands</MenuItem>
+                    <MenuItem onClick={() => this.handleClick([() => history.push('/demands'), this.handleDrawerOpening])}>Demands</MenuItem>
                   </React.Fragment>
                 </Drawer>
                 <Component {...matchProps} handleMenu={this.handleMenu} />

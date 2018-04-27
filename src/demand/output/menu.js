@@ -20,7 +20,7 @@ const StyledIcon = styled.i`
 
 export const items = (history, id) => (dispatch) => (
   <React.Fragment>
-    <StyledIcon key={1} className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
-    <StyledIcon key={2} className="material-icons" style={{ color: 'red' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
+    <StyledIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
+    <StyledIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
   </React.Fragment>
 );
