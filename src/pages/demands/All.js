@@ -1,9 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import styled from 'styled-components';
 import Box from './../../demand/output/Box';
 import { all } from './../../demand/endpoints';
 import Pagination from './../../components/Pagination';
+
+const BottomRightNavigation = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+`;
 
 class All extends React.Component {
   state = {
@@ -15,7 +25,13 @@ class All extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(all({ ...this.state.pagination }));
+    const { dispatch, handleMenu } = this.props;
+    dispatch(all({ ...this.state.pagination }));
+    handleMenu({
+      filter: {
+        title: 'Demands',
+      },
+    });
   }
 
   handlePaginationChange = this.handlePaginationChange.bind(this);
@@ -44,10 +60,9 @@ class All extends React.Component {
 
   render() {
     const { pagination: { page }, boxes } = this.state;
-    const { pages, demands } = this.props;
+    const { pages, demands, history } = this.props;
     return (
-      <div>
-        <h1>All demands</h1>
+      <React.Fragment>
         {
           pages &&
             <Pagination
@@ -70,7 +85,12 @@ class All extends React.Component {
                   demand={demand}
                 />))
         }
-      </div>
+        <BottomRightNavigation>
+          <FloatingActionButton onClick={() => history.push('/demands/add')}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </BottomRightNavigation>
+      </React.Fragment>
     );
   }
 }
@@ -79,6 +99,8 @@ All.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pages: PropTypes.object,
   demands: PropTypes.array,
+  handleMenu: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({

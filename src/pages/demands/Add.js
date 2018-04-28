@@ -33,9 +33,14 @@ class Add extends React.Component {
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, handleMenu } = this.props;
     dispatch(options());
     dispatch(schema());
+    handleMenu({
+      filter: {
+        title: 'Add',
+      },
+    });
   }
 
   handleChange = this.handleChange.bind(this);
@@ -84,6 +89,7 @@ class Add extends React.Component {
 
 Add.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  handleMenu: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
