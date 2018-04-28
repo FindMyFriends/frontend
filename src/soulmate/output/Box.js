@@ -55,7 +55,7 @@ const SortColumn = ({
 );
 
 export const Box = ({
-  soulmates, requests, onRefresh, onClarify, onSort, sorts,
+  soulmates, requests, onClarify, onSort, sorts,
 }) => {
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
@@ -144,7 +144,6 @@ export const Box = ({
 Box.propTypes = {
   soulmates: PropTypes.array.isRequired,
   requests: PropTypes.array.isRequired,
-  onRefresh: PropTypes.func.isRequired,
   onClarify: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   sorts: PropTypes.object.isRequired,

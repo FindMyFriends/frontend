@@ -24,7 +24,7 @@ class Soulmates extends React.Component {
           filter: {
             title: 'Soulmates',
           },
-          action: <ActionItems requests={this.props.requests} onRefresh={this.handleRefresh} />
+          action: <ActionItems requests={this.props.requests} onRefresh={this.handleRefresh} />,
         });
       });
   }

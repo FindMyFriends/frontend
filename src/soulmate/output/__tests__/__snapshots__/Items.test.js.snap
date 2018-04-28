@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`blocked indicator for pending task 1`] = `
+<i
+  className="material-icons sc-bwzfXH hxuwRR"
+  title="In progress"
+>
+  refresh
+</i>
+`;
+
+exports[`first block for seeking 1`] = `
+<i
+  className="material-icons sc-bwzfXH hxuwRR"
+  title="In progress"
+>
+  refresh
+</i>
+`;
+
+exports[`not available indicator for done task 1`] = `
+<i
+  className="material-icons sc-bwzfXH hxuwRR"
+  title="Not available"
+>
+  refresh
+</i>
+`;
+
+exports[`nothing for empty request 1`] = `null`;
+
+exports[`ready refresh indicator for available refresh 1`] = `
+<i
+  className="material-icons sc-bdVaJa fcJCzI"
+  onClick={[Function]}
+>
+  refresh
+</i>
+`;
+
+exports[`ready refresh indicator for available refresh 2`] = `
+<i
+  className="material-icons sc-bdVaJa fcJCzI"
+  onClick={[Function]}
+>
+  refresh
+</i>
+`;

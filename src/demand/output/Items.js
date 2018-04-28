@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { requestedConfirm } from './../../ui/actions';
 import PropTypes from 'prop-types';
+import { requestedConfirm } from './../../ui/actions';
 import { retract } from './../../demand/endpoints';
 
 const handleRetract = (history, id) => (dispatch) => {
@@ -27,4 +27,5 @@ export const ActionItems = ({ history, id, dispatch }) => (
 ActionItems.propTypes = {
   history: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
