@@ -10,7 +10,6 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
@@ -21,44 +20,6 @@ const Center = styled.div`
 `;
 
 const isSeeking = request => request && (request.status === 'pending' || request.status === 'processing');
-
-export const RefreshButton = ({ requests, onRefresh }) => {
-  const style = {
-    position: 'relative',
-  };
-  const properties = {
-    size: 40,
-    left: 0,
-    top: 10,
-  };
-  const request = requests[0];
-  if (request) {
-    if (isSeeking(request)) {
-      return (
-        <Center>
-          <RefreshIndicator
-            {...properties}
-            style={{ ...style, cursor: 'progress' }}
-            status="loading"
-          />
-        </Center>
-      );
-    } else if (request.is_refreshable) {
-      return (
-        <Center>
-          <RefreshIndicator
-            {...properties}
-            style={{ ...style, cursor: 'pointer' }}
-            onClick={onRefresh}
-            percentage={100}
-            status="ready"
-          />
-        </Center>
-      );
-    }
-  }
-  return null;
-};
 
 const NoMatchText = ({ requests }) => {
   if (requests) {
@@ -99,7 +60,6 @@ export const Box = ({
   if (soulmates.length === 1 && soulmates[0].id === null) {
     return (
       <React.Fragment>
-        <RefreshButton requests={requests} onRefresh={onRefresh} />
         <Center>
           <NoMatchText requests={requests} />
         </Center>
@@ -108,7 +68,6 @@ export const Box = ({
   }
   return (
     <React.Fragment>
-      <RefreshButton requests={requests} onRefresh={onRefresh} />
       <Table selectable={false}>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
@@ -193,11 +152,6 @@ Box.propTypes = {
 
 NoMatchText.propTypes = {
   requests: PropTypes.array.isRequired,
-};
-
-RefreshButton.propTypes = {
-  requests: PropTypes.array.isRequired,
-  onRefresh: PropTypes.func.isRequired,
 };
 
 SortColumn.propTypes = {

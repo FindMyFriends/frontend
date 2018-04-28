@@ -7,7 +7,7 @@ import Tabs from './menu/Tabs';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
-import { items as demandMenuItems } from './../../demand/output/menu';
+import { ActionItems } from './../../demand/output/Items';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
@@ -22,9 +22,7 @@ class Single extends React.Component {
       filter: {
         title: 'Demand',
       },
-      action: {
-        ...dispatch(demandMenuItems(history, id)),
-      },
+      action: <ActionItems history={history} id={id} dispatch={dispatch} />,
     });
   }
 

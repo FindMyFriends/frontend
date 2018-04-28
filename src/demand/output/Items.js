@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { requestedConfirm } from './../../ui/actions';
+import PropTypes from 'prop-types';
 import { retract } from './../../demand/endpoints';
 
 const handleRetract = (history, id) => (dispatch) => {
@@ -16,9 +17,14 @@ const StyledIcon = styled.i`
   padding: 10px;
 `;
 
-export const items = (history, id) => dispatch => (
+export const ActionItems = ({ history, id, dispatch }) => (
   <React.Fragment>
     <StyledIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
     <StyledIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
   </React.Fragment>
 );
+
+ActionItems.propTypes = {
+  history: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+};

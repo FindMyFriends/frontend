@@ -5,6 +5,7 @@ import * as R from 'ramda';
 import Tabs from './menu/Tabs';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
+import { ActionItems } from './../../soulmate/output/Items';
 import { twoSideSort } from './../../dataset/selection';
 
 class Soulmates extends React.Component {
@@ -17,12 +18,15 @@ class Soulmates extends React.Component {
   componentDidMount() {
     const { dispatch, handleMenu, match: { params: { id } } } = this.props;
     dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts)));
-    dispatch(soulmateRequests(id));
-    handleMenu({
-      filter: {
-        title: 'Soulmates',
-      },
-    });
+    dispatch(soulmateRequests(id))
+      .then(() => {
+        handleMenu({
+          filter: {
+            title: 'Soulmates',
+          },
+          action: <ActionItems requests={this.props.requests} onRefresh={this.handleRefresh} />
+        });
+      });
   }
 
   handleRefresh = this.handleRefresh.bind(this);
