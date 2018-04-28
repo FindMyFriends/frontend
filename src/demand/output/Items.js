@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { requestedConfirm } from './../../ui/actions';
 import { retract } from './../../demand/endpoints';
+import { ActionIcon } from './../../components/menu/Icon';
 
 const handleRetract = (history, id) => (dispatch) => {
   dispatch(requestedConfirm(
@@ -11,16 +11,10 @@ const handleRetract = (history, id) => (dispatch) => {
   ));
 };
 
-const StyledIcon = styled.i`
-  cursor: pointer;
-  color: white;
-  padding: 10px;
-`;
-
 export const ActionItems = ({ history, id, dispatch }) => (
   <React.Fragment>
-    <StyledIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</StyledIcon>
-    <StyledIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</StyledIcon>
+    <ActionIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</ActionIcon>
+    <ActionIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</ActionIcon>
   </React.Fragment>
 );
 

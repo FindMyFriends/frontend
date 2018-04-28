@@ -1,19 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import styled from 'styled-components';
-
-const StyledIcon = styled.i`
-  cursor: pointer;
-  color: white;
-  padding: 10px;
-`;
-
-const InActionIcon = styled.i`
-  cursor: not-allowed;
-  color: #757575;
-  padding: 10px;
-`;
+import { ActionIcon, InActionIcon } from './../../components/menu/Icon';
 
 const isSeeking = request => request.status === 'pending' || request.status === 'processing';
 
@@ -28,7 +16,7 @@ export const RefreshButton = ({ requests, onRefresh }) => {
     );
   } else if (request.is_refreshable) {
     return (
-      <StyledIcon className="material-icons" onClick={onRefresh}>refresh</StyledIcon>
+      <ActionIcon className="material-icons" onClick={onRefresh}>refresh</ActionIcon>
     );
   }
   return (
