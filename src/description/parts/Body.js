@@ -7,8 +7,8 @@ import Slider from 'rc-slider';
 import { combined } from './../../api/enum';
 import { onSelectEnumChange } from './../../forms/events';
 
-const BreastSizeByGender = ({ selects: { breastSizes }, values, onChange }) => {
-  if (values['general.gender'] === 'man') {
+const BreastSizeBySex = ({ selects: { breastSizes }, values, onChange }) => {
+  if (values['general.sex'] === 'man') {
     return null;
   }
   const numericSizes = combined([0, 1, 2, 3], breastSizes);
@@ -54,7 +54,7 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
       value={values['body.height.value']}
       name="body.height.value"
     />
-    <BreastSizeByGender values={values} onChange={onChange} selects={{ breastSizes }} />
+    <BreastSizeBySex values={values} onChange={onChange} selects={{ breastSizes }} />
   </div>
 );
 
@@ -64,7 +64,7 @@ Body.propTypes = {
   values: PropTypes.object.isRequired,
 };
 
-BreastSizeByGender.propTypes = {
+BreastSizeBySex.propTypes = {
   onChange: PropTypes.func.isRequired,
   selects: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,

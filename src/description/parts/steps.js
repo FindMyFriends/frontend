@@ -85,7 +85,7 @@ export const steps = (props) => {
       ],
     },
   };
-  if (props.values['general.gender'] === 'woman') {
+  if (props.values['general.sex'] === 'woman') {
     delete steps[MAIN_HEAD].parts[2];
     steps[MAIN_HEAD].parts = reindex(steps[MAIN_HEAD].parts);
   }

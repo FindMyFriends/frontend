@@ -2,7 +2,7 @@ export const test = () => ({
   general: {
     firstname: 'Dominik',
     lastname: null,
-    gender: 'woman',
+    sex: 'woman',
     ethnic_group_id: 1,
     age: {
       from: 15,
@@ -97,7 +97,7 @@ export const initial = () => ({
   general: {
     firstname: '',
     lastname: '',
-    gender: null,
+    sex: null,
     ethnic_group_id: null,
     age: {
       from: 15,

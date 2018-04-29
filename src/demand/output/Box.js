@@ -6,7 +6,7 @@ const Box = ({ demand, more, onListing }) => {
   const lessFields = (demand) => {
     return [
       <li key="general.birth_year">Birth year: {demand.general.birth_year}</li>,
-      <li key="general.gender">Gender: {demand.general.gender}</li>,
+      <li key="general.sex">Sex: {demand.general.sex}</li>,
       <li key="general.race">Race: {demand.general.race}</li>,
     ];
   };

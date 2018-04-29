@@ -6,7 +6,7 @@ import flat, * as f from 'flat';
 import * as R from 'ramda';
 import Form from './../../demand/input/Form';
 import {
-  getGenders,
+  getSex,
   getEthnicGroups,
   getBreastSizes,
   getBodyBuilds,
@@ -113,7 +113,7 @@ Reconsider.propTypes = {
 };
 
 export default connect(state => ({
-  genders: getGenders(state.demand.options),
+  sex: getSex(state.demand.options),
   ethnicGroups: getEthnicGroups(state.demand.options),
   bodyBuilds: getBodyBuilds(state.demand.options),
   hairColors: getHairColors(state.demand.options),
