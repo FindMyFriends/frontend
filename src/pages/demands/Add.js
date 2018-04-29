@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import flat, * as f from 'flat';
 import merge from 'lodash/merge';
 import {
-  getGenders,
+  getSex,
   getEthnicGroups,
   getBreastSizes,
   getBodyBuilds,
@@ -94,7 +94,7 @@ Add.propTypes = {
 };
 
 export default connect(state => ({
-  genders: getGenders(state.demand.options),
+  sex: getSex(state.demand.options),
   ethnicGroups: getEthnicGroups(state.demand.options),
   bodyBuilds: getBodyBuilds(state.demand.options),
   hairColors: getHairColors(state.demand.options),

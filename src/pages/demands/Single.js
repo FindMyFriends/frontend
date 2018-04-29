@@ -39,7 +39,7 @@ class Single extends React.Component {
             rows={[
               <TextRow key="Age" title="Age" text={`${demand.general.age.from} - ${demand.general.age.to}`} />,
               <TextRow key="Ethnic group" title="Ethnic group" text={demand.general.ethnic_group} />,
-              <TextRow key="Gender" title="Gender" text={demand.general.gender} />,
+              <TextRow key="Sex" title="Sex" text={demand.general.sex} />,
               <TextRow key="Firstname" title="Firstname" text={demand.general.firstname} />,
             ]}
           />
