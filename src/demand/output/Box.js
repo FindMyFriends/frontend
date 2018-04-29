@@ -1,12 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Toggle from 'material-ui/Toggle';
-import { requestedConfirm } from './../../ui/actions';
-import { retract } from './../../demand/endpoints';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { TableActionIcon, DangerIcon } from './../../components/menu/Icon';
 import {
   Table,
   TableBody,
@@ -15,6 +11,9 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { requestedConfirm } from './../../ui/actions';
+import { TableActionIcon, DangerIcon } from './../../components/menu/Icon';
+import { retract } from './../../demand/endpoints';
 
 const Center = styled.div`
   display: flex;
@@ -51,7 +50,9 @@ const SortColumn = ({
   </React.Fragment>
 );
 
-export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
+export const Box = ({
+  demands, dispatch, history, onSort, sorts,
+}) => {
   if (demands.length === 0) {
     return (
       <React.Fragment>
@@ -128,7 +129,7 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
           {demands.map((demand, index) => {
             return (
               <TableRow key={demand.id}>
-                <TableRowColumn>{++index}</TableRowColumn>
+                <TableRowColumn>{index + 1}</TableRowColumn>
                 <TableRowColumn>{demand.general.firstname}</TableRowColumn>
                 <TableRowColumn>{demand.general.lastname}</TableRowColumn>
                 <TableRowColumn>{demand.general.sex}</TableRowColumn>
@@ -140,14 +141,10 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
                   </Link>
                 </TableRowColumn>
                 <TableRowColumn>
-                  <span title="Visit">
-                    <Link to={`/demands/${demand.id}`}>
-                      <TableActionIcon className="material-icons">visibility</TableActionIcon>
-                    </Link>
-                  </span>
-                  <span title="Delete" onClick={() => dispatch(handleRetract(history, demand.id))}>
-                    <DangerIcon className="material-icons">delete</DangerIcon>
-                  </span>
+                  <Link to={`/demands/${demand.id}`}>
+                    <TableActionIcon title="Visit" className="material-icons">visibility</TableActionIcon>
+                  </Link>
+                  <DangerIcon title="Delete" className="material-icons" onClick={() => dispatch(handleRetract(history, demand.id))}>delete</DangerIcon>
                 </TableRowColumn>
               </TableRow>
             );
@@ -156,6 +153,21 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
       </Table>
     </React.Fragment>
   );
+};
+
+Box.propTypes = {
+  demands: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  sorts: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
+};
+
+SortColumn.propTypes = {
+  children: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  sorts: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
 };
 
 export default Box;

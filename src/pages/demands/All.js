@@ -76,8 +76,10 @@ class All extends React.Component {
   }
 
   render() {
-    const { pagination: { page }, boxes, sorts } = this.state;
-    const { pages, demands, history, dispatch } = this.props;
+    const { pagination: { page }, sorts } = this.state;
+    const {
+      pages, demands, history, dispatch,
+    } = this.props;
     return (
       <React.Fragment>
         {
@@ -88,7 +90,13 @@ class All extends React.Component {
               onChange={this.handlePaginationChange}
             />
         }
-        <Box demands={demands} dispatch={dispatch} history={history} sorts={sorts} onSort={this.handleSort} />
+        <Box
+          demands={demands}
+          dispatch={dispatch}
+          history={history}
+          sorts={sorts}
+          onSort={this.handleSort}
+        />
         <BottomRightNavigation>
           <FloatingActionButton onClick={() => history.push('/demands/add')}>
             <ContentAdd />
