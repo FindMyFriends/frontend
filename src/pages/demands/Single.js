@@ -32,7 +32,7 @@ class Single extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <Tabs {...this.props}>
+      <Tabs {...this.props} soulmateMatches={demand.soulmates.length}>
         <Cards>
           <SolidCard
             title="General"
