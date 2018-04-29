@@ -5,8 +5,9 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import styled from 'styled-components';
 import Box from './../../demand/output/Box';
-import { all } from './../../demand/endpoints';
+import { all as allDemands } from './../../demand/endpoints';
 import Pagination from './../../components/Pagination';
+import { twoSideSort } from './../../dataset/selection';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -22,16 +23,32 @@ class All extends React.Component {
       perPage: 2,
     },
     boxes: {},
+    sorts: {
+      id: '+id',
+    },
   };
 
   componentDidMount() {
     const { dispatch, handleMenu } = this.props;
-    dispatch(all({ ...this.state.pagination }));
+    const { sorts } = this.state;
+    dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(sorts)));
     handleMenu({
       filter: {
         title: 'Demands',
       },
     });
+  }
+
+  handleSort = this.handleSort.bind(this);
+
+  handleSort(sort) {
+    const { dispatch } = this.props;
+    this.setState({
+      ...this.state,
+      sorts: {
+        ...twoSideSort(this.state.sorts, { [sort]: sort }),
+      },
+    }, () => dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(this.state.sorts))));
   }
 
   handlePaginationChange = this.handlePaginationChange.bind(this);
@@ -44,7 +61,7 @@ class All extends React.Component {
         page: event,
       },
     });
-    this.props.dispatch(all({ ...this.state.pagination }));
+    this.props.dispatch(allDemands({ ...this.state.pagination }));
   }
 
   handleListing(box) {
@@ -59,8 +76,8 @@ class All extends React.Component {
   }
 
   render() {
-    const { pagination: { page }, boxes } = this.state;
-    const { pages, demands, history } = this.props;
+    const { pagination: { page }, boxes, sorts } = this.state;
+    const { pages, demands, history, dispatch } = this.props;
     return (
       <React.Fragment>
         {
@@ -71,20 +88,7 @@ class All extends React.Component {
               onChange={this.handlePaginationChange}
             />
         }
-        {
-          demands &&
-            demands.map(demand =>
-                (<Box
-                  more={
-                    Object.prototype.hasOwnProperty.call(boxes, demand.id)
-                      ? boxes[demand.id].more
-                      : false
-                  }
-                  onListing={this.handleListing}
-                  key={demand.id}
-                  demand={demand}
-                />))
-        }
+        <Box demands={demands} dispatch={dispatch} history={history} sorts={sorts} onSort={this.handleSort} />
         <BottomRightNavigation>
           <FloatingActionButton onClick={() => history.push('/demands/add')}>
             <ContentAdd />

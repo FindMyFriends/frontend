@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { requestedConfirm } from './../../ui/actions';
 import { retract } from './../../demand/endpoints';
-import { ActionIcon } from './../../components/menu/Icon';
+import { ActionIcon, DangerIcon } from './../../components/menu/Icon';
 
 const handleRetract = (history, id) => (dispatch) => {
   dispatch(requestedConfirm(
@@ -14,7 +14,7 @@ const handleRetract = (history, id) => (dispatch) => {
 export const ActionItems = ({ history, id, dispatch }) => (
   <React.Fragment>
     <ActionIcon className="material-icons" onClick={() => history.push(`/demands/${id}/edit`)}>edit</ActionIcon>
-    <ActionIcon className="material-icons" style={{ color: '#F44336' }} onClick={() => dispatch(handleRetract(history, id))}>delete</ActionIcon>
+    <DangerIcon className="material-icons" onClick={() => dispatch(handleRetract(history, id))}>delete</DangerIcon>
   </React.Fragment>
 );
 

@@ -26,8 +26,9 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (pagination: Object = {
   page: 1,
   perPage: 20,
-}) => (dispatch: (mixed) => Object) => {
-  axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}`)
+}, sorts: Array<String>) => (dispatch: (mixed) => Object) => {
+  const fields = ['general', 'soulmates', 'id', 'created_at'];
+  axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}&fields=${fields.join(',')}&sort=${sorts.join(',')}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(response.headers.link));
       dispatch(receivedAll(response.data));
