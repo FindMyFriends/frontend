@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -9,10 +9,6 @@ import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
 
 class Layout extends React.Component {
-  static handleClick(actions) {
-    actions.forEach(action => action());
-  }
-
   state = {
     opened: false,
     menu: {
@@ -44,7 +40,6 @@ class Layout extends React.Component {
       <Route
         {...rest}
         render={(matchProps) => {
-          const { history } = matchProps;
           return (
             <MuiThemeProvider>
               <span>
@@ -61,7 +56,9 @@ class Layout extends React.Component {
                   onRequestChange={this.handleDrawerOpening}
                 >
                   <React.Fragment>
-                    <MenuItem onClick={() => Layout.handleClick([() => history.push('/demands'), this.handleDrawerOpening])}>Demands</MenuItem>
+                    <Link to="/demands">
+                      <MenuItem onClick={this.handleDrawerOpening}>Demands</MenuItem>
+                    </Link>
                   </React.Fragment>
                 </Drawer>
                 <Component {...matchProps} handleMenu={this.handleMenu} />

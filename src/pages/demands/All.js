@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import styled from 'styled-components';
@@ -98,9 +99,11 @@ class All extends React.Component {
           onSort={this.handleSort}
         />
         <BottomRightNavigation>
-          <FloatingActionButton onClick={() => history.push('/demands/add')}>
-            <ContentAdd />
-          </FloatingActionButton>
+          <Link to="/demands/add">
+            <FloatingActionButton>
+              <ContentAdd />
+            </FloatingActionButton>
+          </Link>
         </BottomRightNavigation>
       </React.Fragment>
     );
