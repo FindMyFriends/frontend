@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
 import {
@@ -57,7 +58,7 @@ const SortColumn = ({
 export const Box = ({
   soulmates, requests, onClarify, onSort, sorts,
 }) => {
-  if (soulmates.length === 1 && soulmates[0].id === null) {
+  if (R.isEmpty(soulmates)) {
     return (
       <React.Fragment>
         <Center>

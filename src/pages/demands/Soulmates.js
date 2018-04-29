@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
 import Tabs from './menu/Tabs';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
@@ -57,9 +56,6 @@ class Soulmates extends React.Component {
 
   render() {
     const { soulmates, requests } = this.props;
-    if (R.isEmpty(soulmates)) {
-      return <h1>Loading...</h1>;
-    }
     return (
       <Tabs {...this.props} soulmateMatches={soulmates.length}>
         <SoulmateBox
