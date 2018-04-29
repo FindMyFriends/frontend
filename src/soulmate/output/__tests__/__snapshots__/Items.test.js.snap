@@ -2,7 +2,7 @@
 
 exports[`blocked indicator for pending task 1`] = `
 <i
-  className="material-icons sc-bwzfXH hxuwRR"
+  className="material-icons sc-bxivhb xBree"
   title="In progress"
 >
   refresh
@@ -11,7 +11,7 @@ exports[`blocked indicator for pending task 1`] = `
 
 exports[`first block for seeking 1`] = `
 <i
-  className="material-icons sc-bwzfXH hxuwRR"
+  className="material-icons sc-bxivhb xBree"
   title="In progress"
 >
   refresh
@@ -20,7 +20,7 @@ exports[`first block for seeking 1`] = `
 
 exports[`not available indicator for done task 1`] = `
 <i
-  className="material-icons sc-bwzfXH hxuwRR"
+  className="material-icons sc-bxivhb xBree"
   title="Not available"
 >
   refresh

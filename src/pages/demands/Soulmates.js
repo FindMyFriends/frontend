@@ -61,7 +61,7 @@ class Soulmates extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <Tabs {...this.props}>
+      <Tabs {...this.props} soulmateMatches={soulmates.length}>
         <SoulmateBox
           soulmates={soulmates}
           requests={requests}

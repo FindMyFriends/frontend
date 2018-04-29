@@ -77,11 +77,20 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
             </TableHeaderColumn>
             <TableHeaderColumn>
               <SortColumn
-                name="created_at"
+                name="general.firstname"
                 sorts={sorts}
                 onSort={onSort}
               >
-                Created at
+                Firstname
+              </SortColumn>
+            </TableHeaderColumn>
+            <TableHeaderColumn>
+              <SortColumn
+                name="general.lastname"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Lastname
               </SortColumn>
             </TableHeaderColumn>
             <TableHeaderColumn>
@@ -102,6 +111,16 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
                 Age
               </SortColumn>
             </TableHeaderColumn>
+            <TableHeaderColumn>
+              <SortColumn
+                name="created_at"
+                sorts={sorts}
+                onSort={onSort}
+              >
+                Created at
+              </SortColumn>
+            </TableHeaderColumn>
+            <TableHeaderColumn>Soulmates</TableHeaderColumn>
             <TableHeaderColumn>Action</TableHeaderColumn>
           </TableRow>
         </TableHeader>
@@ -110,9 +129,16 @@ export const Box = ({ demands, dispatch, history, onSort, sorts }) => {
             return (
               <TableRow key={demand.id}>
                 <TableRowColumn>{++index}</TableRowColumn>
-                <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
+                <TableRowColumn>{demand.general.firstname}</TableRowColumn>
+                <TableRowColumn>{demand.general.lastname}</TableRowColumn>
                 <TableRowColumn>{demand.general.sex}</TableRowColumn>
                 <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
+                <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
+                <TableRowColumn>
+                  <Link to={`/demands/${demand.id}/soulmates`}>
+                    {demand.soulmates.length}
+                  </Link>
+                </TableRowColumn>
                 <TableRowColumn>
                   <span title="Visit">
                     <Link to={`/demands/${demand.id}`}>

@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs as MUITabs, Tab } from 'material-ui/Tabs';
 
-const Tabs = ({
-  children, history, demand, match: { params: { id }, path },
-}) => (
+const Tabs = ({ children, history, soulmateMatches, match: { params: { id }, path } }) => (
   <React.Fragment>
     <MUITabs value={path}>
       <Tab
@@ -13,7 +11,7 @@ const Tabs = ({
         onActive={() => history.push(`/demands/${id}`)}
       />
       <Tab
-        label={`Soulmates (${demand.soulmates.length})`}
+        label={`Soulmates (${soulmateMatches})`}
         value="/demands/:id/soulmates"
         onActive={() => history.push(`/demands/${id}/soulmates`)}
       />
