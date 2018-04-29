@@ -26,7 +26,7 @@ Tabs.propTypes = {
   children: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  soulmateMatches: PropTypes.array.isRequired,
+  soulmateMatches: PropTypes.number.isRequired,
 };
 
 export default Tabs;
