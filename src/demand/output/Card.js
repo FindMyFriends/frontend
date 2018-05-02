@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import range from 'lodash/range';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { OutputRating } from './../../components/Rating';
 
 export const Cards = styled.div`
   flex-wrap: wrap;
@@ -61,7 +62,7 @@ export const ProgressRow = ({ title, value }: ProgressRowProps) => (
   <Row>
     <Header>{title}</Header>
     <ProgressTd title={value}>
-      {range(value).map(current => <Dot key={current} />)}
+      <OutputRating current={value} max={10} />
     </ProgressTd>
   </Row>
 );

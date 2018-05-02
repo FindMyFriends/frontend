@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Color from './../../input/Color';
 import LengthWithUnit from './../../input/LengthWithUnit';
-import Rating from './../../input/Rating';
+import { InputRating } from './../../../components/Rating';
 
 const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange }) => (
   <div>
@@ -18,13 +18,14 @@ const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange
       onChange={onChange}
       units={lengthUnits}
     />
-    <p><span>Care</span></p>
-    <Rating
+    <InputRating
+      max={ratings.maximum}
+      current={values['hands.nails.care']}
       name="hands.nails.care"
       onChange={onChange}
-      values={values}
-      ratings={ratings}
-    />
+    >
+      Care
+    </InputRating>
   </div>
 );
 

@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
-import Rating from './../../input/Rating';
+import { InputRating } from './../../../components/Rating';
 import { onCheck, onSelectEnumChange } from './../../../forms/events';
 
 const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
-    <span>Care</span>
-    <Rating
-      ratings={ratings}
+    <InputRating
+      max={ratings.maximum}
+      current={values['face.care']}
       name="face.care"
-      values={values}
       onChange={onChange}
-    />
+    >
+      Care
+    </InputRating>
     <Checkbox
       label="Freckles"
       name="face.freckles"

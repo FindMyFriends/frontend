@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Color from './../../input/Color';
-import Rating from './../../input/Rating';
+import { InputRating } from './../../../components/Rating';
 
 const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
-    <p><span>Care</span></p>
-    <Rating
-      ratings={ratings}
+    <InputRating
+      max={ratings.maximum}
+      current={values['eyebrow.care']}
       name="eyebrow.care"
-      values={values}
       onChange={onChange}
-    />
+    >
+      Care
+    </InputRating>
     <Color
       name="eyebrow.color_id"
       values={values}

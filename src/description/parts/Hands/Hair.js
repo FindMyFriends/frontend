@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Color from './../../input/Color';
-import Rating from './../../input/Rating';
+import { InputRating } from './../../../components/Rating';
 
 const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
   <div>
@@ -11,13 +11,14 @@ const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
       onChange={onChange}
       colors={nailColors}
     />
-    <p><span>Amount</span></p>
-    <Rating
+    <InputRating
+      max={ratings.maximum}
+      current={values['hands.hair.amount']}
       name="hands.hair.amount"
       onChange={onChange}
-      values={values}
-      ratings={ratings}
-    />
+    >
+      Amount
+    </InputRating>
   </div>
 );
 
