@@ -1,30 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rating from './../../input/Rating';
+import { InputRating } from './../../../components/Rating';
 
 const General = ({ selects: { ratings }, values, onChange }) => (
   <div>
-    <p><span>Care</span></p>
-    <Rating
+    <InputRating
+      max={ratings.maximum}
+      current={values['hands.care']}
       name="hands.care"
       onChange={onChange}
-      values={values}
-      ratings={ratings}
-    />
-    <p><span>Vein visibility</span></p>
-    <Rating
+    >
+      Care
+    </InputRating>
+    <br />
+    <InputRating
+      max={ratings.maximum}
+      current={values['hands.vein_visibility']}
       name="hands.vein_visibility"
       onChange={onChange}
-      values={values}
-      ratings={ratings}
-    />
-    <p><span>Joint visibility</span></p>
-    <Rating
+    >
+      Vein visibility
+    </InputRating>
+    <br />
+    <InputRating
+      max={ratings.maximum}
+      current={values['hands.joint_visibility']}
       name="hands.joint_visibility"
       onChange={onChange}
-      values={values}
-      ratings={ratings}
-    />
+    >
+      Joint visibility
+    </InputRating>
   </div>
 );
 

@@ -38,3 +38,14 @@ export const onCheck = (
 ) => (self: any, checked: bool) => {
   return classic({ target: { name, value: checked } });
 };
+
+export const onRating = (
+  classic: (x: Object) => any,
+  name: string,
+  event: Object,
+) => {
+  if (event.type === 'click') {
+    return classic({ target: { name, value: event.rating } });
+  }
+  return null;
+};
