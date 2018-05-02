@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import range from 'lodash/range';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OutputRating } from './../../components/Rating';
 
@@ -27,15 +26,6 @@ const Header = styled.th`
 
 const ProgressTd = styled.td`
   min-width: 40px;
-`;
-
-const Dot = styled.div`
-  height: 8px;
-  margin-right: 1px;
-  width: 8px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
 `;
 
 type TextRowProps = {

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Rater from 'react-rater'
-import { onCheck, onRating, onSelectEnumChange } from './../forms/events';
-import 'react-rater/lib/react-rater.css'
+import Rater from 'react-rater';
+import PropTypes from 'prop-types';
+import 'react-rater/lib/react-rater.css';
+import { onRating } from './../forms/events';
 
 const Label = styled.label`
   line-height: 22px;
@@ -18,7 +19,9 @@ const Label = styled.label`
   font-size: 12px;
 `;
 
-export const InputRating = ({ max, current, name, onChange, children }) => (
+export const InputRating = ({
+  max, current, name, onChange, children,
+}) => (
   <React.Fragment>
     <Label>{children}</Label>
     <br />
@@ -37,3 +40,16 @@ export const OutputRating = ({ max, current }) => (
     interactive={false}
   />
 );
+
+InputRating.propTypes = {
+  max: PropTypes.number.isRequired,
+  current: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  children: PropTypes.string.isRequired,
+};
+
+OutputRating.propTypes = {
+  max: PropTypes.number.isRequired,
+  current: PropTypes.number.isRequired,
+};

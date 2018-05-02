@@ -45,6 +45,7 @@ export const onRating = (
   event: Object,
 ) => {
   if (event.type === 'click') {
-    return classic({ target: { name, value: event.rating } });  
+    return classic({ target: { name, value: event.rating } });
   }
+  return null;
 };
