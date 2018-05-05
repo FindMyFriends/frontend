@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { ActionIcon, InActionIcon } from './../../components/menu/Icon';
+import { ActionIcon, InActionIcon } from '../../../../components/menu/Icon';
 
 const isSeeking = request => request.status === 'pending' || request.status === 'processing';
 

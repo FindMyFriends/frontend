@@ -14,6 +14,7 @@ import {
 import { requestedConfirm } from './../../ui/actions';
 import { TableActionIcon, DangerIcon } from './../../components/menu/Icon';
 import { retract } from './../../demand/endpoints';
+import { SortColumn } from '../../dataset/selection';
 
 const Center = styled.div`
   display: flex;
@@ -28,28 +29,6 @@ const handleRetract = (history, id) => (dispatch) => {
   ));
 };
 
-export const orderArrow = (sort, sorts) => {
-  if (Object.prototype.hasOwnProperty.call(sorts, sort)) {
-    return (
-      sorts[sort][0] === '+'
-        ? <i className="material-icons">arrow_drop_up</i>
-        : <i className="material-icons">arrow_drop_down</i>
-    );
-  }
-  return null;
-};
-
-const SortColumn = ({
-  children, name, sorts, onSort,
-}) => (
-  <React.Fragment>
-    <a href="#" onClick={() => onSort(name)}>
-      <i className="material-icons">sort</i>
-    </a>
-    {children} {orderArrow(name, sorts)}
-  </React.Fragment>
-);
-
 export const Box = ({
   demands, dispatch, history, onSort, sorts,
 }) => {
@@ -57,7 +36,7 @@ export const Box = ({
     return (
       <React.Fragment>
         <Center>
-          <h3>No demands</h3>
+          <h3>No demands, hit the button to add.</h3>
         </Center>
       </React.Fragment>
     );
@@ -130,8 +109,8 @@ export const Box = ({
             return (
               <TableRow key={demand.id}>
                 <TableRowColumn>{index + 1}</TableRowColumn>
-                <TableRowColumn>{demand.general.firstname}</TableRowColumn>
-                <TableRowColumn>{demand.general.lastname}</TableRowColumn>
+                <TableRowColumn>{demand.general.firstname || '-'}</TableRowColumn>
+                <TableRowColumn>{demand.general.lastname || '-'}</TableRowColumn>
                 <TableRowColumn>{demand.general.sex}</TableRowColumn>
                 <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
                 <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
@@ -159,13 +138,6 @@ Box.propTypes = {
   demands: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  sorts: PropTypes.object.isRequired,
-  onSort: PropTypes.func.isRequired,
-};
-
-SortColumn.propTypes = {
-  children: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
   sorts: PropTypes.object.isRequired,
   onSort: PropTypes.func.isRequired,
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Tabs from './menu/Tabs';
 import { all as allSoulmates, requests as soulmateRequests, refresh, clarify } from './../../soulmate/endpoints';
 import { Box as SoulmateBox } from './../../soulmate/output/Box';
-import { ActionItems } from './../../soulmate/output/Items';
+import { ActionItems } from './menu/Soulmates/Items';
 import { twoSideSort } from './../../dataset/selection';
 
 class Soulmates extends React.Component {

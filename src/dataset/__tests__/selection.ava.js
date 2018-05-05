@@ -1,5 +1,6 @@
+import React from 'react';
 import test from 'ava';
-import { twoSideSort } from './../selection';
+import { twoSideSort, orderArrow } from './../selection';
 
 test('adding first with +', (t) => {
   t.deepEqual(
@@ -42,6 +43,36 @@ test('changing side from - to +', (t) => {
     twoSideSort(
       { position: '+position' },
       { position: 'position' },
+    ),
+  );
+});
+
+test('no arrow for not matching sort criteria', (t) => {
+  t.deepEqual(
+    null,
+    orderArrow(
+      'position',
+      { ownership: '+ownership' },
+    ),
+  );
+});
+
+test('up arrow for +', (t) => {
+  t.deepEqual(
+    <i className="material-icons">arrow_drop_up</i>,
+    orderArrow(
+      'ownership',
+      { ownership: '+ownership' },
+    ),
+  );
+});
+
+test('down arrow for -', (t) => {
+  t.deepEqual(
+    <i className="material-icons">arrow_drop_down</i>,
+    orderArrow(
+      'ownership',
+      { ownership: '-ownership' },
     ),
   );
 });

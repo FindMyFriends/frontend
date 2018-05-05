@@ -11,6 +11,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { SortColumn } from '../../dataset/selection';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
@@ -28,32 +29,10 @@ const NoMatchText = ({ requests }) => {
     if (isSeeking(request)) {
       return <h3>No matches, still searching..</h3>;
     }
-    return <h3>No matches, hit button to refresh.</h3>;
+    return <h3>No matches, hit the button to refresh.</h3>;
   }
   return null;
 };
-
-export const orderArrow = (sort, sorts) => {
-  if (Object.prototype.hasOwnProperty.call(sorts, sort)) {
-    return (
-      sorts[sort][0] === '+'
-        ? <i className="material-icons">arrow_drop_up</i>
-        : <i className="material-icons">arrow_drop_down</i>
-    );
-  }
-  return null;
-};
-
-const SortColumn = ({
-  children, name, sorts, onSort,
-}) => (
-  <React.Fragment>
-    <a href="#" onClick={() => onSort(name)}>
-      <i className="material-icons">sort</i>
-    </a>
-    {children} {orderArrow(name, sorts)}
-  </React.Fragment>
-);
 
 export const Box = ({
   soulmates, requests, onClarify, onSort, sorts,
@@ -153,12 +132,3 @@ Box.propTypes = {
 NoMatchText.propTypes = {
   requests: PropTypes.array.isRequired,
 };
-
-SortColumn.propTypes = {
-  children: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  sorts: PropTypes.object.isRequired,
-  onSort: PropTypes.func.isRequired,
-};
-
-export default Box;

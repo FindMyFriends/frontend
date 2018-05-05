@@ -88,18 +88,16 @@ class Reconsider extends React.Component {
       return <h1>Loading...</h1>;
     }
     return (
-      <div>
-        <h1>Reconsider demand</h1>
-        <Form
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-          onTurn={this.handleTurn}
-          selects={{ ...this.props }}
-          values={flat(this.state.demand)}
-          step={this.state.step}
-          label="Reconsider"
-        />
-      </div>
+      <Form
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+        onTurn={this.handleTurn}
+        selects={{ ...this.props }}
+        values={flat(this.state.demand)}
+        step={this.state.step}
+      >
+        Reconsider
+      </Form>
     );
   }
 }

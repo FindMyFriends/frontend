@@ -39,33 +39,31 @@ class Layout extends React.Component {
     return (
       <Route
         {...rest}
-        render={(matchProps) => {
-          return (
-            <MuiThemeProvider>
-              <span>
-                <Notification />
-                <AppBar
-                  title={menu.filter.title}
-                  onLeftIconButtonClick={this.handleDrawerOpening}
-                  iconElementRight={menu.action}
-                  showMenuIconButton
-                />
-                <Drawer
-                  open={this.state.opened}
-                  docked={false}
-                  onRequestChange={this.handleDrawerOpening}
-                >
-                  <React.Fragment>
-                    <Link to="/demands">
-                      <MenuItem onClick={this.handleDrawerOpening}>Demands</MenuItem>
-                    </Link>
-                  </React.Fragment>
-                </Drawer>
-                <Component {...matchProps} handleMenu={this.handleMenu} />
-              </span>
-            </MuiThemeProvider>
-          );
-      }}
+        render={matchProps => (
+          <MuiThemeProvider>
+            <React.Fragment>
+              <Notification />
+              <AppBar
+                title={menu.filter.title}
+                onLeftIconButtonClick={this.handleDrawerOpening}
+                iconElementRight={menu.action}
+                showMenuIconButton
+              />
+              <Drawer
+                open={this.state.opened}
+                docked={false}
+                onRequestChange={this.handleDrawerOpening}
+              >
+                <React.Fragment>
+                  <Link to="/demands">
+                    <MenuItem onClick={this.handleDrawerOpening}>Demands</MenuItem>
+                  </Link>
+                </React.Fragment>
+              </Drawer>
+              <Component {...matchProps} handleMenu={this.handleMenu} />
+            </React.Fragment>
+          </MuiThemeProvider>
+        )}
       />
     );
   }

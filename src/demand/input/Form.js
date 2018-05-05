@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
 import { steps } from './../parts/steps';
-import { nextStep, previousStep, isLastStep } from './../../stepFork';
+import { nextStep, previousStep, isLastStep } from './stepFork';
 
 const Center = styled.div`
   display: flex;
@@ -18,13 +18,13 @@ const Side = styled.div`
   justify-content: space-between;
 `;
 
-const Current = ({ step, steps }) => (
-  <UnifiedCurrent>{steps[step.major].parts[step.minor].component}</UnifiedCurrent>
-);
-
 const UnifiedCurrent = styled.div`
   width: 256px;
 `;
+
+const Current = ({ step, steps }) => (
+  <UnifiedCurrent>{steps[step.major].parts[step.minor].component}</UnifiedCurrent>
+);
 
 const Navigation = ({
   step, children, onTurn, steps, ...rest
@@ -78,7 +78,7 @@ const Form = (props) => {
       <Center>
         <Current step={props.step} steps={allSteps} />
       </Center>
-      <Navigation {...props} steps={allSteps} />
+      <Navigation {...props} steps={allSteps}>{props.children}</Navigation>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import Tabs from './menu/Tabs';
 import { getPrettyDemand } from './../../demand/reducers';
 import { single, options } from './../../demand/endpoints';
 import { SolidCard, Cards, TextRow, ProgressRow } from './../../demand/output/Card';
-import { ActionItems } from './../../demand/output/Items';
+import { ActionItems } from './menu/Single/Items';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
 
