@@ -23,7 +23,7 @@ it('not available indicator for done task', () => {
   const component = (
     <MuiThemeProvider>
       <RefreshButton
-        requests={[{ is_refreshable: false, status: 'success' }]}
+        requests={[{ is_refreshable: false, is_seeking: false }]}
         onRefresh={() => {}}
       />
     </MuiThemeProvider>
@@ -38,7 +38,7 @@ it('blocked indicator for pending task', () => {
   const component = (
     <MuiThemeProvider>
       <RefreshButton
-        requests={[{ is_refreshable: false, status: 'pending' }]}
+        requests={[{ is_refreshable: false, is_seeking: true }]}
         onRefresh={() => {}}
       />
     </MuiThemeProvider>
@@ -53,7 +53,7 @@ it('ready refresh indicator for available refresh', () => {
   const component = (
     <MuiThemeProvider>
       <RefreshButton
-        requests={[{ is_refreshable: true, status: 'success' }]}
+        requests={[{ is_refreshable: true, is_seeking: false }]}
         onRefresh={() => {}}
       />
     </MuiThemeProvider>
@@ -83,7 +83,7 @@ it('first block for seeking', () => {
   const component = (
     <MuiThemeProvider>
       <RefreshButton
-        requests={[{ is_refreshable: true, status: 'pending' }]}
+        requests={[{ is_refreshable: true, is_seeking: true }]}
         onRefresh={() => {}}
       />
     </MuiThemeProvider>

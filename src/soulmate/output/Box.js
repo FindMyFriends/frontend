@@ -22,12 +22,10 @@ const Center = styled.div`
   justify-content: center;
 `;
 
-const isSeeking = request => request && (request.status === 'pending' || request.status === 'processing');
-
 const NoMatchText = ({ requests }) => {
   if (requests) {
     const request = requests[0];
-    if (isSeeking(request)) {
+    if (request && request.is_seeking) {
       return <h3>No matches, still searching..</h3>;
     }
     return <h3>No matches, hit the button to refresh.</h3>;
