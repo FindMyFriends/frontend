@@ -11,8 +11,15 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import VisibilityIcon from 'material-ui/svg-icons/action/visibility';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import EditIcon from 'material-ui/svg-icons/image/edit';
+import { red500 } from 'material-ui/styles/colors';
 import { requestedConfirm } from './../../ui/actions';
-import { TableActionIcon, DangerIcon } from './../../components/menu/Icon';
 import { retract } from './../../demand/endpoints';
 import { SortColumn } from '../../dataset/selection';
 
@@ -34,11 +41,9 @@ export const Box = ({
 }) => {
   if (demands.length === 0) {
     return (
-      <React.Fragment>
-        <Center>
-          <h3>No demands, hit the button to add.</h3>
-        </Center>
-      </React.Fragment>
+      <Center>
+        <h3>No demands, hit the button to add.</h3>
+      </Center>
     );
   }
   return (
@@ -120,10 +125,27 @@ export const Box = ({
                   </Link>
                 </TableRowColumn>
                 <TableRowColumn>
-                  <Link to={`/demands/${demand.id}`}>
-                    <TableActionIcon title="Visit" className="material-icons">visibility</TableActionIcon>
-                  </Link>
-                  <DangerIcon title="Delete" className="material-icons" onClick={() => dispatch(handleRetract(history, demand.id))}>delete</DangerIcon>
+                  <IconMenu
+                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                    anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+                    targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                  >
+                    <MenuItem
+                      primaryText="View"
+                      leftIcon={<VisibilityIcon />}
+                      containerElement={<Link to={`/demands/${demand.id}`} />}
+                    />
+                    <MenuItem
+                      primaryText="Reconsider"
+                      leftIcon={<EditIcon />}
+                      containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
+                    />
+                    <MenuItem
+                      primaryText="Retract"
+                      leftIcon={<DeleteIcon color={red500} />}
+                      onClick={() => dispatch(handleRetract(history, demand.id))}
+                    />
+                  </IconMenu>
                 </TableRowColumn>
               </TableRow>
             );
