@@ -1,4 +1,5 @@
 export const test = () => ({
+  note: null,
   general: {
     firstname: 'Dominik',
     lastname: null,

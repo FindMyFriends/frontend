@@ -26,8 +26,8 @@ import Form from './../../demand/input/Form';
 class Add extends React.Component {
   state = {
     step: {
-      major: 3,
-      minor: 1,
+      major: 2,
+      minor: 0,
     },
     demand: test(),
   };

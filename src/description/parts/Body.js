@@ -3,27 +3,26 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
-import Slider from 'rc-slider';
-import { combined } from './../../api/enum';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { onSelectEnumChange } from './../../forms/events';
+import { MaterialLabel } from '../../components/Label';
 
 const BreastSizeBySex = ({ selects: { breastSizes }, values, onChange }) => {
   if (values['general.sex'] === 'man') {
     return null;
   }
-  const numericSizes = combined([0, 1, 2, 3], breastSizes);
-  const letterSizes = combined(breastSizes, [0, 1, 2, 3]);
   return (
     <div>
-      <span>Breast size</span>
-      <Slider
-        step={1}
-        min={0}
-        max={3}
-        marks={numericSizes}
-        onChange={numericSize => onChange({ target: { name: 'body.breast_size', value: numericSizes[numericSize] } })}
-        value={letterSizes[values['body.breast_size']]}
-      />
+      <MaterialLabel>Breast size</MaterialLabel>
+      <RadioButtonGroup
+        valueSelected={values['body.breast_size']}
+        name="body.breast_size"
+        onChange={(event, value) => onChange({ target: { name: 'body.breast_size', value } })}
+      >
+        {Object.values(breastSizes).map(size => (
+          <RadioButton key={size} value={size} label={size} />
+        ))}
+      </RadioButtonGroup>
     </div>
   );
 };

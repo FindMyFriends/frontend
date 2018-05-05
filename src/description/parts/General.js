@@ -8,6 +8,7 @@ import 'rc-slider/assets/index.css';
 import range from 'lodash/range';
 import { combined } from './../../api/enum';
 import { onSelectChange, onSelectEnumChange, onRangeChange } from './../../forms/events';
+import { MaterialLabel } from './../../components/Label';
 
 export const General = ({ selects: { ethnicGroups, sex }, values, onChange }) => (
   <div>
@@ -35,18 +36,17 @@ export const General = ({ selects: { ethnicGroups, sex }, values, onChange }) =>
         <MenuItem key={ethnicity} value={ethnicity} primaryText={ethnicity} />
       ))}
     </SelectField>
-    <React.Fragment>
-      <span>Age</span>
-      <Range
-        dots
-        step={5}
-        min={15}
-        max={100}
-        marks={combined(range(15, 105, 5), range(15, 105, 5))}
-        onChange={onRangeChange(onChange, 'general.age', ['from', 'to'])}
-        value={[values['general.age.from'], values['general.age.to']]}
-      />
-    </React.Fragment>
+    <MaterialLabel>Age</MaterialLabel>
+    <Range
+      style={{ marginLeft: 5 }}
+      dots
+      step={5}
+      min={15}
+      max={100}
+      marks={combined(range(15, 105, 5), range(15, 105, 5))}
+      onChange={onRangeChange(onChange, 'general.age', ['from', 'to'])}
+      value={[values['general.age.from'], values['general.age.to']]}
+    />
   </div>
 );
 
