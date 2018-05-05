@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios';
 import omit from 'lodash/omit';
+import * as R from 'ramda';
 import {
   addedDemand,
   receivedAll,
@@ -59,7 +60,16 @@ export const reconsider = (
   etag: string,
   history: Object,
 ) => (dispatch: (mixed) => Object) => {
-  const reconsidered = omit(omit(omit(demand, 'created_at'), 'id'), 'seeker_id');
+  const curry = (name: string) => (demand: Object): Object => {
+    return omit(demand, name);
+  };
+  const reconsidered = R.compose(
+    curry('soulmates'),
+    curry('seeker_id'),
+    curry('created_at'),
+    curry('id'),
+    () => demand,
+  )();
   axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
     .then(() => dispatch(receivedReconsideration(id)))
     .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))

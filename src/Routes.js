@@ -13,7 +13,7 @@ const Routes = () => (
     <Switch>
       <Layout exact path="/" component={Default} />
       <Layout path="/demands/add" component={Add} />
-      <Layout path="/demands/reconsider/:id" component={Reconsider} />
+      <Layout path="/demands/:id/reconsider" component={Reconsider} />
       <Layout path="/demands/:id/soulmates" component={Soulmates} />
       <Layout path="/demands/:id" component={Single} />
       <Layout path="/demands" component={All} />

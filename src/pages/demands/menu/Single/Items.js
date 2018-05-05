@@ -14,7 +14,7 @@ const handleRetract = (history, id) => (dispatch) => {
 
 export const ActionItems = ({ history, id, dispatch }) => (
   <React.Fragment>
-    <Link to={`/demands/${id}/edit`}>
+    <Link to={`/demands/${id}/reconsider`}>
       <ActionIcon className="material-icons">edit</ActionIcon>
     </Link>
     <DangerIcon className="material-icons" onClick={() => dispatch(handleRetract(history, id))}>delete</DangerIcon>
