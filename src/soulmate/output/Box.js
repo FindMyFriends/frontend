@@ -11,6 +11,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import VisibilityIcon from 'material-ui/svg-icons/action/visibility';
 import { SortColumn } from '../../dataset/selection';
 
 const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
@@ -108,7 +109,7 @@ export const Box = ({
                 <TableRowColumn>
                   <span title="Visit">
                     <a href={`${soulmate.evolution_id}`}>
-                      <i className="material-icons">visibility</i>
+                      <VisibilityIcon />
                     </a>
                   </span>
                 </TableRowColumn>

@@ -2,6 +2,9 @@
 import * as React from 'react';
 import isEqual from 'lodash/isEqual';
 import mapValues from 'lodash/mapValues';
+import ArrowDropUpIcon from 'material-ui/svg-icons/navigation/arrow-drop-up';
+import ArrowDropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import SortIcon from 'material-ui/svg-icons/content/sort';
 
 export const twoSideSort = (current: Object, added: Object): Object => {
   if (isEqual(Object.keys(current), Object.keys(added))) {
@@ -16,8 +19,8 @@ export const orderArrow = (sort: mixed, sorts: Object) => {
   if (Object.prototype.hasOwnProperty.call(sorts, sort)) {
     return (
       sorts[sort][0] === '+'
-        ? <i className="material-icons">arrow_drop_up</i>
-        : <i className="material-icons">arrow_drop_down</i>
+        ? <ArrowDropUpIcon />
+        : <ArrowDropDownIcon />
     );
   }
   return null;
@@ -36,9 +39,7 @@ export const SortColumn = ({
   onSort,
 }: SortColumnProps) => (
   <React.Fragment>
-    <a href="#" onClick={() => onSort(name)}>
-      <i className="material-icons">sort</i>
-    </a>
+    <SortIcon style={{ cursor: 'pointer' }} onClick={() => onSort(name)} />
     {children} {orderArrow(name, sorts)}
   </React.Fragment>
 );

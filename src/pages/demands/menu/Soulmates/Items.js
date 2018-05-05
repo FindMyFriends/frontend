@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { ActionIcon, InActionIcon } from '../../../../components/menu/Icon';
+import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
+import { white, grey600 } from 'material-ui/styles/colors';
 
 const isSeeking = request => request.status === 'pending' || request.status === 'processing';
 
@@ -11,23 +12,15 @@ export const RefreshButton = ({ requests, onRefresh }) => {
     return null;
   }
   if (isSeeking(request)) {
-    return (
-      <InActionIcon title="In progress" className="material-icons">refresh</InActionIcon>
-    );
+    return <RefreshIcon style={{ padding: 10 }} title="In progress" color={grey600} />;
   } else if (request.is_refreshable) {
-    return (
-      <ActionIcon className="material-icons" onClick={onRefresh}>refresh</ActionIcon>
-    );
+    return <RefreshIcon style={{ padding: 10 }} color={white} onClick={onRefresh} />;
   }
-  return (
-    <InActionIcon title="Not available" className="material-icons">refresh</InActionIcon>
-  );
+  return <RefreshIcon style={{ padding: 10 }} title="Not available" color={grey600} />;
 };
 
 export const ActionItems = ({ requests, onRefresh }) => (
-  <React.Fragment>
-    <RefreshButton requests={requests} onRefresh={onRefresh} />
-  </React.Fragment>
+  <RefreshButton requests={requests} onRefresh={onRefresh} />
 );
 
 

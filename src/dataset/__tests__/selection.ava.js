@@ -1,5 +1,7 @@
 import React from 'react';
 import test from 'ava';
+import ArrowDropUpIcon from 'material-ui/svg-icons/navigation/arrow-drop-up';
+import ArrowDropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import { twoSideSort, orderArrow } from './../selection';
 
 test('adding first with +', (t) => {
@@ -59,7 +61,7 @@ test('no arrow for not matching sort criteria', (t) => {
 
 test('up arrow for +', (t) => {
   t.deepEqual(
-    <i className="material-icons">arrow_drop_up</i>,
+    <ArrowDropUpIcon />,
     orderArrow(
       'ownership',
       { ownership: '+ownership' },
@@ -69,7 +71,7 @@ test('up arrow for +', (t) => {
 
 test('down arrow for -', (t) => {
   t.deepEqual(
-    <i className="material-icons">arrow_drop_down</i>,
+    <ArrowDropDownIcon />,
     orderArrow(
       'ownership',
       { ownership: '-ownership' },

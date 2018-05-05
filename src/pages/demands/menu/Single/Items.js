@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import EditIcon from 'material-ui/svg-icons/image/edit';
+import { red500, white } from 'material-ui/styles/colors';
 import { requestedConfirm } from '../../../../ui/actions';
 import { retract } from '../../../../demand/endpoints';
-import { ActionIcon, DangerIcon } from '../../../../components/menu/Icon';
 
 const handleRetract = (history, id) => (dispatch) => {
   dispatch(requestedConfirm(
@@ -15,9 +17,13 @@ const handleRetract = (history, id) => (dispatch) => {
 export const ActionItems = ({ history, id, dispatch }) => (
   <React.Fragment>
     <Link to={`/demands/${id}/reconsider`}>
-      <ActionIcon className="material-icons">edit</ActionIcon>
+      <EditIcon style={{ padding: 10 }} color={white} />
     </Link>
-    <DangerIcon className="material-icons" onClick={() => dispatch(handleRetract(history, id))}>delete</DangerIcon>
+    <DeleteIcon
+      color={red500}
+      style={{ padding: 10, cursor: 'pointer' }}
+      onClick={() => dispatch(handleRetract(history, id))}
+    />
   </React.Fragment>
 );
 
