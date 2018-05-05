@@ -21,6 +21,7 @@ import {
   getRatings,
 } from './../../description/selects';
 import { getTimelineSides } from './../../demand/reducers';
+import { ActionItems } from './menu/Reconsider/Items';
 import { reconsider, single, options, schema } from './../../demand/endpoints';
 
 class Reconsider extends React.Component {
@@ -33,7 +34,7 @@ class Reconsider extends React.Component {
   };
 
   componentDidMount() {
-    const { dispatch, match: { params: { id } } } = this.props;
+    const { dispatch, handleMenu, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(schema());
     dispatch(single(id))
@@ -43,6 +44,12 @@ class Reconsider extends React.Component {
           ...demand,
         },
       }));
+    handleMenu({
+      filter: {
+        title: 'Reconsider',
+      },
+      action: <ActionItems id={id} />,
+    });
   }
 
   handleChange = this.handleChange.bind(this);
@@ -108,6 +115,7 @@ Reconsider.propTypes = {
   etag: PropTypes.string.isRequired,
   demand: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  handleMenu: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({
