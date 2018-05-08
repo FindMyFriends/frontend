@@ -40,9 +40,13 @@ class All extends React.Component {
     });
   }
 
-  handleSort = this.handleSort.bind(this);
+  handleReload = () => {
+    const { dispatch } = this.props;
+    const { sorts } = this.state;
+    dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(sorts)));
+  };
 
-  handleSort(sort) {
+  handleSort = (sort) => {
     const { dispatch } = this.props;
     this.setState({
       ...this.state,
@@ -50,12 +54,9 @@ class All extends React.Component {
         ...twoSideSort(this.state.sorts, { [sort]: sort }),
       },
     }, () => dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(this.state.sorts))));
-  }
+  };
 
-  handlePaginationChange = this.handlePaginationChange.bind(this);
-  handleListing = this.handleListing.bind(this);
-
-  handlePaginationChange(event) {
+  handlePaginationChange = (event) => {
     this.setState({
       pagination: {
         ...this.state.pagination,
@@ -63,9 +64,9 @@ class All extends React.Component {
       },
     });
     this.props.dispatch(allDemands({ ...this.state.pagination }));
-  }
+  };
 
-  handleListing(box) {
+  handleListing = (box) => {
     const { boxes } = this.state;
     this.setState({
       boxes: {
@@ -74,13 +75,11 @@ class All extends React.Component {
         },
       },
     });
-  }
+  };
 
   render() {
     const { pagination: { page }, sorts } = this.state;
-    const {
-      pages, demands, history, dispatch,
-    } = this.props;
+    const { pages } = this.props;
     return (
       <React.Fragment>
         {
@@ -92,11 +91,10 @@ class All extends React.Component {
             />
         }
         <Box
-          demands={demands}
-          dispatch={dispatch}
-          history={history}
+          {...this.props}
           sorts={sorts}
           onSort={this.handleSort}
+          onReload={this.handleReload}
         />
         <BottomRightNavigation>
           <Link to="/demands/add">

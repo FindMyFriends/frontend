@@ -18,10 +18,12 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import VisibilityIcon from 'material-ui/svg-icons/action/visibility';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import EditIcon from 'material-ui/svg-icons/image/edit';
-import { red500 } from 'material-ui/styles/colors';
+import NoteIcon from 'material-ui/svg-icons/av/note';
+import { red500, grey500, black } from 'material-ui/styles/colors';
 import { requestedConfirm } from './../../ui/actions';
-import { retract } from './../../demand/endpoints';
+import { retract } from './../endpoints';
 import { SortColumn } from '../../dataset/selection';
+import NoteDialog from './NoteDialog';
 
 const Center = styled.div`
   display: flex;
@@ -36,125 +38,180 @@ const handleRetract = (history, id) => (dispatch) => {
   ));
 };
 
-export const Box = ({
-  demands, dispatch, history, onSort, sorts,
-}) => {
-  if (demands.length === 0) {
+class Box extends React.Component {
+  state = {
+    note: {
+      dialog: {
+        opened: false,
+      },
+    },
+  };
+
+  handleOpenNoteDialog = () => {
+    this.setState({
+      ...this.state,
+      note: {
+        dialog: {
+          opened: true,
+        },
+      },
+    });
+  };
+
+  handleCloseNoteDialog = () => {
+    this.setState({
+      ...this.state,
+      note: {
+        dialog: {
+          opened: false,
+        },
+      },
+    });
+  };
+
+  render() {
+    const {
+      demands,
+      dispatch,
+      history,
+      sorts,
+      onSort,
+      onReload,
+    } = this.props;
+
+    if (demands.length === 0) {
+      return (
+        <Center>
+          <h3>No demands, hit the button to add.</h3>
+        </Center>
+      );
+    }
     return (
-      <Center>
-        <h3>No demands, hit the button to add.</h3>
-      </Center>
+      <React.Fragment>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="id"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Position
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="general.firstname"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Firstname
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="general.lastname"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Lastname
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="general.sex"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Sex
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="general.age"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Age
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>
+                <SortColumn
+                  name="created_at"
+                  sorts={sorts}
+                  onSort={onSort}
+                >
+                  Created at
+                </SortColumn>
+              </TableHeaderColumn>
+              <TableHeaderColumn>Note</TableHeaderColumn>
+              <TableHeaderColumn>Soulmates</TableHeaderColumn>
+              <TableHeaderColumn>Action</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {demands.map((demand, index) => {
+              return (
+                <TableRow key={demand.id}>
+                  <TableRowColumn>{index + 1}</TableRowColumn>
+                  <TableRowColumn>{demand.general.firstname || '-'}</TableRowColumn>
+                  <TableRowColumn>{demand.general.lastname || '-'}</TableRowColumn>
+                  <TableRowColumn>{demand.general.sex}</TableRowColumn>
+                  <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
+                  <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
+                  <TableRowColumn title={demand.note ? null : 'No available note'}>
+                    <NoteDialog
+                      id={demand.id}
+                      onClose={this.handleCloseNoteDialog}
+                      opened={this.state.note.dialog.opened}
+                      onReload={onReload}
+                    >
+                      {demand.note}
+                    </NoteDialog>
+                    <NoteIcon
+                      onClick={this.handleOpenNoteDialog}
+                      color={demand.note ? black : grey500}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <Link to={`/demands/${demand.id}/soulmates`}>
+                      {demand.soulmates.length}
+                    </Link>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <IconMenu
+                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                      anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+                      targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                    >
+                      <MenuItem
+                        primaryText="View"
+                        leftIcon={<VisibilityIcon />}
+                        containerElement={<Link to={`/demands/${demand.id}`} />}
+                      />
+                      <MenuItem
+                        primaryText="Reconsider"
+                        leftIcon={<EditIcon />}
+                        containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
+                      />
+                      <MenuItem
+                        primaryText="Retract"
+                        leftIcon={<DeleteIcon color={red500} />}
+                        onClick={() => dispatch(handleRetract(history, demand.id))}
+                      />
+                    </IconMenu>
+                  </TableRowColumn>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </React.Fragment>
     );
   }
-  return (
-    <React.Fragment>
-      <Table selectable={false}>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn>
-              <SortColumn
-                name="id"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Position
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              <SortColumn
-                name="general.firstname"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Firstname
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              <SortColumn
-                name="general.lastname"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Lastname
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              <SortColumn
-                name="general.sex"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Sex
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              <SortColumn
-                name="general.age"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Age
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>
-              <SortColumn
-                name="created_at"
-                sorts={sorts}
-                onSort={onSort}
-              >
-                Created at
-              </SortColumn>
-            </TableHeaderColumn>
-            <TableHeaderColumn>Soulmates</TableHeaderColumn>
-            <TableHeaderColumn>Action</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {demands.map((demand, index) => {
-            return (
-              <TableRow key={demand.id}>
-                <TableRowColumn>{index + 1}</TableRowColumn>
-                <TableRowColumn>{demand.general.firstname || '-'}</TableRowColumn>
-                <TableRowColumn>{demand.general.lastname || '-'}</TableRowColumn>
-                <TableRowColumn>{demand.general.sex}</TableRowColumn>
-                <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
-                <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
-                <TableRowColumn>
-                  <Link to={`/demands/${demand.id}/soulmates`}>
-                    {demand.soulmates.length}
-                  </Link>
-                </TableRowColumn>
-                <TableRowColumn>
-                  <IconMenu
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                    anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-                    targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                  >
-                    <MenuItem
-                      primaryText="View"
-                      leftIcon={<VisibilityIcon />}
-                      containerElement={<Link to={`/demands/${demand.id}`} />}
-                    />
-                    <MenuItem
-                      primaryText="Reconsider"
-                      leftIcon={<EditIcon />}
-                      containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
-                    />
-                    <MenuItem
-                      primaryText="Retract"
-                      leftIcon={<DeleteIcon color={red500} />}
-                      onClick={() => dispatch(handleRetract(history, demand.id))}
-                    />
-                  </IconMenu>
-                </TableRowColumn>
-              </TableRow>
-            );
-        })}
-        </TableBody>
-      </Table>
-    </React.Fragment>
-  );
-};
+}
 
 Box.propTypes = {
   demands: PropTypes.array.isRequired,
@@ -162,6 +219,7 @@ Box.propTypes = {
   history: PropTypes.object.isRequired,
   sorts: PropTypes.object.isRequired,
   onSort: PropTypes.func.isRequired,
+  onReload: PropTypes.func.isRequired,
 };
 
 export default Box;

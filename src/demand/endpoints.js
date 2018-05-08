@@ -28,7 +28,7 @@ export const all = (pagination: Object = {
   page: 1,
   perPage: 20,
 }, sorts: Array<String>) => (dispatch: (mixed) => Object) => {
-  const fields = ['general', 'soulmates', 'id', 'created_at'];
+  const fields = ['general', 'soulmates', 'id', 'created_at', 'note'];
   axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}&fields=${fields.join(',')}&sort=${sorts.join(',')}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(response.headers.link));
@@ -36,8 +36,8 @@ export const all = (pagination: Object = {
     });
 };
 
-export const single = (id: string) => (dispatch: (mixed) => Object) => {
-  return axios.get(`/v1/demands/${id}`)
+export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
+  return axios.get(`/v1/demands/${id}?fields=${fields.join(',')}`)
     .then((response) => {
       dispatch(receivedSingle(id, response.data, response.headers.etag));
       return response.data;
@@ -84,5 +84,16 @@ export const retract = (id: string, history: Object) => (dispatch: (mixed) => Ob
       dispatch(receivedSuccessMessage('Demand has been retracted'));
       history.push('/demands');
     })
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+
+export const changeNote = (
+  id: string,
+  note: string,
+  next: (mixed) => mixed,
+) => (dispatch: (mixed) => Object) => {
+  return axios.patch(`/v1/demands/${id}`, { note })
+    .then(() => next())
     .catch(error => dispatch(receivedApiError(error)));
 };
