@@ -21,7 +21,7 @@ import EditIcon from 'material-ui/svg-icons/image/edit';
 import NoteIcon from 'material-ui/svg-icons/av/note';
 import { red500, grey500, black } from 'material-ui/styles/colors';
 import { requestedConfirm } from './../../ui/actions';
-import { retract } from './../endpoints';
+import { retract, changeNote } from './../endpoints';
 import { SortColumn } from '../../dataset/selection';
 import NoteDialog from './NoteDialog';
 
@@ -47,11 +47,30 @@ class Box extends React.Component {
     },
   };
 
-  handleOpenNoteDialog = () => {
+  handleNoteTextChange = (text) => {
     this.setState({
-      ...this.state,
       note: {
         dialog: {
+          ...this.state.note.dialog,
+          text,
+        },
+      },
+    });
+  };
+
+  handleNoteTextSave = () => {
+    const { dispatch, onReload } = this.props;
+    const { note: { dialog: { id, text } } } = this.state;
+    dispatch(changeNote(id, text, onReload));
+  };
+
+  handleOpenNoteDialog = (id) => {
+    this.setState({
+      note: {
+        dialog: {
+          ...this.state.note.dialog,
+          id,
+          text: this.props.demandNotes[id] || '',
           opened: true,
         },
       },
@@ -60,9 +79,9 @@ class Box extends React.Component {
 
   handleCloseNoteDialog = () => {
     this.setState({
-      ...this.state,
       note: {
         dialog: {
+          ...this.state.note.dialog,
           opened: false,
         },
       },
@@ -76,9 +95,7 @@ class Box extends React.Component {
       history,
       sorts,
       onSort,
-      onReload,
     } = this.props;
-
     if (demands.length === 0) {
       return (
         <Center>
@@ -88,6 +105,14 @@ class Box extends React.Component {
     }
     return (
       <React.Fragment>
+        <NoteDialog
+          onSave={this.handleNoteTextSave}
+          onTextChange={this.handleNoteTextChange}
+          onClose={this.handleCloseNoteDialog}
+          opened={this.state.note.dialog.opened}
+        >
+          {this.state.note.dialog.text}
+        </NoteDialog>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
@@ -161,16 +186,8 @@ class Box extends React.Component {
                   <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
                   <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
                   <TableRowColumn title={demand.note ? null : 'No available note'}>
-                    <NoteDialog
-                      id={demand.id}
-                      onClose={this.handleCloseNoteDialog}
-                      opened={this.state.note.dialog.opened}
-                      onReload={onReload}
-                    >
-                      {demand.note}
-                    </NoteDialog>
                     <NoteIcon
-                      onClick={this.handleOpenNoteDialog}
+                      onClick={() => this.handleOpenNoteDialog(demand.id)}
                       color={demand.note ? black : grey500}
                       style={{ cursor: 'pointer' }}
                     />
@@ -215,6 +232,7 @@ class Box extends React.Component {
 
 Box.propTypes = {
   demands: PropTypes.array.isRequired,
+  demandNotes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   sorts: PropTypes.object.isRequired,

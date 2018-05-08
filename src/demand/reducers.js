@@ -33,3 +33,13 @@ export const getPrettyDemand = (demand, options) => {
   }
   return getPrettyDescription(demand, options);
 };
+
+export const getDemandNotes = (state) => {
+  if (state.demand.all) {
+    return state.demand.all.reduce((demandNotes, demand) => ({
+      ...demandNotes,
+      [demand.id]: demand.note,
+    }), { });
+  }
+  return { };
+};

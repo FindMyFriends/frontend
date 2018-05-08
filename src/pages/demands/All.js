@@ -9,6 +9,7 @@ import Box from './../../demand/output/Box';
 import { all as allDemands } from './../../demand/endpoints';
 import Pagination from './../../components/Pagination';
 import { twoSideSort } from './../../dataset/selection';
+import { getDemandNotes } from '../../demand/reducers';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -111,7 +112,8 @@ class All extends React.Component {
 All.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pages: PropTypes.object,
-  demands: PropTypes.array,
+  demands: PropTypes.array.isRequired,
+  demandNotes: PropTypes.object.isRequired,
   handleMenu: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
@@ -119,4 +121,5 @@ All.propTypes = {
 export default connect(state => ({
   demands: state.demand.all || [],
   pages: state.demand.pages,
+  demandNotes: getDemandNotes(state),
 }))(All);
