@@ -20,7 +20,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import NoteIcon from 'material-ui/svg-icons/av/note';
 import { red500, grey500, black } from 'material-ui/styles/colors';
-import { requestedConfirm } from './../../ui/actions';
+import { requestedConfirm, receivedSuccess } from './../../ui/actions';
 import { retract, changeNote } from './../endpoints';
 import { SortColumn } from '../../dataset/selection';
 import NoteDialog from './NoteDialog';
@@ -31,13 +31,6 @@ const Center = styled.div`
   justify-content: center;
 `;
 
-const handleRetract = (history, id) => (dispatch) => {
-  dispatch(requestedConfirm(
-    'Are you sure, you want to retract demand?',
-    () => dispatch(retract(id, history)),
-  ));
-};
-
 class Box extends React.Component {
   state = {
     note: {
@@ -45,6 +38,14 @@ class Box extends React.Component {
         opened: false,
       },
     },
+  };
+
+  handleRetract = (id) => {
+    const { history, dispatch } = this.props;
+    dispatch(requestedConfirm(
+      'Are you sure, you want to retract demand?',
+      () => dispatch(retract(id, history)),
+    ));
   };
 
   handleNoteTextChange = (text) => {
@@ -61,7 +62,10 @@ class Box extends React.Component {
   handleNoteTextSave = () => {
     const { dispatch, onReload } = this.props;
     const { note: { dialog: { id, text } } } = this.state;
-    dispatch(changeNote(id, text, onReload));
+    dispatch(changeNote(id, text, () => {
+      onReload();
+      dispatch(receivedSuccess('Note has been saved.'));
+    }));
   };
 
   handleOpenNoteDialog = (id) => {
@@ -89,13 +93,7 @@ class Box extends React.Component {
   };
 
   render() {
-    const {
-      demands,
-      dispatch,
-      history,
-      sorts,
-      onSort,
-    } = this.props;
+    const { demands, sorts, onSort } = this.props;
     if (demands.length === 0) {
       return (
         <Center>
@@ -216,7 +214,7 @@ class Box extends React.Component {
                       <MenuItem
                         primaryText="Retract"
                         leftIcon={<DeleteIcon color={red500} />}
-                        onClick={() => dispatch(handleRetract(history, demand.id))}
+                        onClick={() => this.handleRetract(demand.id)}
                       />
                     </IconMenu>
                   </TableRowColumn>
