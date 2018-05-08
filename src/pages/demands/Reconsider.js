@@ -52,11 +52,7 @@ class Reconsider extends React.Component {
     });
   }
 
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
-  handleTurn = this.handleTurn.bind(this);
-
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       demand: {
         ...merge(
@@ -65,9 +61,9 @@ class Reconsider extends React.Component {
         ),
       },
     });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const {
       dispatch, etag, demand, match: { params: { id } }, history,
@@ -81,14 +77,14 @@ class Reconsider extends React.Component {
       etag,
       history,
     ));
-  }
+  };
 
-  handleTurn(major, minor) {
+  handleTurn = (major, minor) => {
     this.setState({
       ...this.state,
       step: { major, minor },
     });
-  }
+  };
 
   render() {
     if (R.isEmpty(this.state.demand)) {

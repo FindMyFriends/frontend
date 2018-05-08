@@ -19,19 +19,16 @@ class Layout extends React.Component {
     },
   };
 
-  handleDrawerOpening = this.handleDrawerOpening.bind(this);
-  handleMenu = this.handleMenu.bind(this);
-
-  handleDrawerOpening() {
+  handleDrawerOpening = () => {
     this.setState(...this.state, { opened: !this.state.opened });
-  }
+  };
 
-  handleMenu(menu) {
+  handleMenu = (menu) => {
     this.setState({
       ...this.state,
       menu,
     });
-  }
+  };
 
   render() {
     const { component: Component, ...rest } = this.props;

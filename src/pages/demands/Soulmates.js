@@ -28,23 +28,21 @@ class Soulmates extends React.Component {
       });
   }
 
-  handleRefresh = this.handleRefresh.bind(this);
-
-  handleRefresh() {
+  handleRefresh = () => {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(refresh(id));
-  }
+  };
 
-  handleClarify(soulmate, clarification) {
+  handleClarify = (soulmate, clarification) => {
     const { dispatch, match: { params: { id } } } = this.props;
     dispatch(clarify(
       soulmate,
       clarification,
       () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts))),
     ));
-  }
+  };
 
-  handleSort(sort) {
+  handleSort = (sort) => {
     const { dispatch, match: { params: { id } } } = this.props;
     this.setState({
       ...this.state,
@@ -52,7 +50,7 @@ class Soulmates extends React.Component {
         ...twoSideSort(this.state.sorts, { [sort]: sort }),
       },
     }, () => dispatch(allSoulmates(id, { page: 1, perPage: 10 }, Object.values(this.state.sorts))));
-  }
+  };
 
   render() {
     const { soulmates, requests } = this.props;

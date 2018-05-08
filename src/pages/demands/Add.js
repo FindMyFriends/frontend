@@ -43,11 +43,7 @@ class Add extends React.Component {
     });
   }
 
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
-  handleTurn = this.handleTurn.bind(this);
-
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       demand: {
         ...merge(
@@ -56,20 +52,20 @@ class Add extends React.Component {
         ),
       },
     });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     const { dispatch, history } = this.props;
     dispatch(add(this.state.demand, history));
     event.preventDefault();
-  }
+  };
 
-  handleTurn(major, minor) {
+  handleTurn = (major, minor) => {
     this.setState({
       ...this.state,
       step: { major, minor },
     });
-  }
+  };
 
   render() {
     return (
