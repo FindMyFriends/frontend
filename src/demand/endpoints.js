@@ -94,6 +94,6 @@ export const changeNote = (
   next: (mixed) => mixed,
 ) => (dispatch: (mixed) => Object) => {
   return axios.patch(`/v1/demands/${id}`, { note })
-    .then(() => next())
+    .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
