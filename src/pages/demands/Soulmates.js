@@ -55,9 +55,9 @@ class Soulmates extends React.Component {
   render() {
     const { soulmates, requests } = this.props;
     return (
-      <Tabs {...this.props} soulmateMatches={soulmates.length}>
+      <Tabs {...this.props} soulmateMatches={soulmates.info ? soulmates.info.total : 0}>
         <SoulmateBox
-          soulmates={soulmates}
+          soulmates={soulmates.all || []}
           requests={requests}
           onRefresh={() => this.handleRefresh()}
           onClarify={(soulmate, clarification) => this.handleClarify(soulmate, clarification)}
@@ -72,12 +72,12 @@ class Soulmates extends React.Component {
 Soulmates.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
-  soulmates: PropTypes.array.isRequired,
+  soulmates: PropTypes.object.isRequired,
   requests: PropTypes.array.isRequired,
   handleMenu: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({
-  soulmates: state.soulmate.all || [],
+  soulmates: state.soulmate,
   requests: state.soulmate.requests || [],
 }))(Soulmates);

@@ -6,6 +6,7 @@ import {
   receivedRequestsByDemand,
   receivedRefresh,
   receivedClarify,
+  receivedInfo,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 
@@ -17,8 +18,14 @@ export const all = (demand: string, pagination: Object = {
   axios.get(`/v1/demands/${demand}/soulmates?page=${pagination.page}&per_page=${pagination.perPage}&fields=${fields.join(',')}&sort=${sorts.join(',')}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(demand, response.headers.link));
-      dispatch(receivedAllByDemand(response.data, demand));
+      dispatch(receivedAllByDemand(response.data, demand, response.headers));
     });
+};
+
+export const info = (demand: string) => (dispatch: (mixed) => Object) => {
+  axios.head(`/v1/demands/${demand}/soulmates`)
+    .then(response => dispatch(receivedInfo(response.headers)))
+    .catch(error => dispatch(receivedApiError(error)));
 };
 
 export const requests = (demand: string) => (dispatch: (mixed) => Object) => {
