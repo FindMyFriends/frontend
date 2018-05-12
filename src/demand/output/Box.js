@@ -169,7 +169,6 @@ class Box extends React.Component {
                 </SortColumn>
               </TableHeaderColumn>
               <TableHeaderColumn>Note</TableHeaderColumn>
-              <TableHeaderColumn>Soulmates</TableHeaderColumn>
               <TableHeaderColumn>Action</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -189,11 +188,6 @@ class Box extends React.Component {
                       color={demand.note ? black : grey500}
                       style={{ cursor: 'pointer' }}
                     />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <Link to={`/demands/${demand.id}/soulmates`}>
-                      {demand.soulmates.length}
-                    </Link>
                   </TableRowColumn>
                   <TableRowColumn>
                     <IconMenu
