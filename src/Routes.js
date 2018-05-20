@@ -7,6 +7,8 @@ import Add from './pages/demands/Add';
 import Single from './pages/demands/Single';
 import Default from './pages/Default';
 import Soulmates from './pages/demands/Soulmates';
+import In from './pages/sign/In';
+import Out from './pages/sign/Out';
 
 const Routes = () => (
   <BrowserRouter>
@@ -17,6 +19,8 @@ const Routes = () => (
       <Layout path="/demands/:id/soulmates" component={Soulmates} />
       <Layout path="/demands/:id" component={Single} />
       <Layout path="/demands" component={All} />
+      <Layout path="/sign/in" component={In} />
+      <Layout path="/sign/out" component={Out} />
     </Switch>
   </BrowserRouter>
 );

@@ -7,6 +7,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import Notification from './../ui/Notification';
+import { loggedIn } from '../access/cookie';
 
 class Layout extends React.Component {
   state = {
@@ -55,6 +56,17 @@ class Layout extends React.Component {
                   <Link to="/demands">
                     <MenuItem onClick={this.handleDrawerOpening}>Demands</MenuItem>
                   </Link>
+                  {
+                    loggedIn() ? (
+                      <Link to="/sign/out">
+                        <MenuItem onClick={this.handleDrawerOpening}>Sign out</MenuItem>
+                      </Link>
+                    ) : (
+                      <Link to="/sign/in">
+                        <MenuItem onClick={this.handleDrawerOpening}>Sign in</MenuItem>
+                      </Link>
+                    )
+                  }
                 </React.Fragment>
               </Drawer>
               <Component {...matchProps} handleMenu={this.handleMenu} />
