@@ -14,11 +14,12 @@ import HandsHair from './Hands/Hair';
 
 const reindex = parts => parts.filter(part => part);
 
-export const steps = (props) => {
-  const MAIN_GENERAL = 1;
-  const MAIN_BODY = 2;
-  const MAIN_HEAD = 3;
-  const MAIN_HANDS = 4;
+export const MAIN_GENERAL = 1;
+export const MAIN_BODY = 2;
+export const MAIN_HEAD = 3;
+export const MAIN_HANDS = 4;
+
+export const steps = (props, parts = {}) => {
   const steps = {
     [MAIN_GENERAL]: {
       title: 'General',
@@ -84,6 +85,7 @@ export const steps = (props) => {
         },
       ],
     },
+    ...parts,
   };
   if (props.values['general.sex'] === 'woman') {
     delete steps[MAIN_HEAD].parts[2];

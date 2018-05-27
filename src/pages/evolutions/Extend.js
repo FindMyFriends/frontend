@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
-import Form from '../../components/Form';
+import Form from './../../evolution/input/Form';
 import {
   getSex,
   getEthnicGroups,
@@ -20,17 +20,17 @@ import {
   getNailColors,
   getRatings,
 } from './../../description/selects';
-import { getTimelineSides } from './../../demand/reducers';
-import { ActionItems } from './menu/Reconsider/Items';
-import { reconsider, single, options, schema } from './../../demand/endpoints';
+import { ActionItems } from './menu/Extend/Items';
+import { extend, single, options, schema } from './../../evolution/endpoints';
+import { test } from '../../evolution/sample';
 
-class Reconsider extends React.Component {
+class Extend extends React.Component {
   state = {
     step: {
       major: 1,
       minor: 0,
     },
-    demand: {},
+    progress: {},
   };
 
   componentDidMount() {
@@ -38,15 +38,18 @@ class Reconsider extends React.Component {
     dispatch(options());
     dispatch(schema());
     dispatch(single(id))
-      .then(demand => this.setState({
-        demand: {
-          ...this.state.demand,
-          ...demand,
-        },
+      .then(change => this.setState({
+        progress: merge(
+          test(),
+          {
+            ...this.state.progress,
+            ...change,
+          },
+        ),
       }));
     handleMenu({
       filter: {
-        title: 'Reconsider',
+        title: 'Extend',
       },
       action: <ActionItems id={id} />,
     });
@@ -54,9 +57,9 @@ class Reconsider extends React.Component {
 
   handleChange = (event) => {
     this.setState({
-      demand: {
+      progress: {
         ...merge(
-          this.state.demand,
+          this.state.progress,
           f.unflatten({ [event.target.name]: event.target.value }),
         ),
       },
@@ -65,16 +68,12 @@ class Reconsider extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const {
-      dispatch, etag, demand, match: { params: { id } }, history,
-    } = this.props;
-    dispatch(reconsider(
-      id,
+    const { dispatch, progress, history } = this.props;
+    dispatch(extend(
       merge(
-        demand,
-        f.unflatten(this.state.demand),
+        progress,
+        f.unflatten(this.state.progress),
       ),
-      etag,
       history,
     ));
   };
@@ -87,7 +86,7 @@ class Reconsider extends React.Component {
   };
 
   render() {
-    if (R.isEmpty(this.state.demand)) {
+    if (R.isEmpty(this.state.progress)) {
       return <h1>Loading...</h1>;
     }
     return (
@@ -96,39 +95,36 @@ class Reconsider extends React.Component {
         onSubmit={this.handleSubmit}
         onTurn={this.handleTurn}
         selects={{ ...this.props }}
-        values={flat(this.state.demand)}
+        values={flat(this.state.progress)}
         step={this.state.step}
       >
-        Reconsider
+        Extend
       </Form>
     );
   }
 }
 
-Reconsider.propTypes = {
+Extend.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
-  etag: PropTypes.string.isRequired,
-  demand: PropTypes.object.isRequired,
+  progress: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   handleMenu: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({
-  sex: getSex(state.demand.options),
-  ethnicGroups: getEthnicGroups(state.demand.options),
-  bodyBuilds: getBodyBuilds(state.demand.options),
-  hairColors: getHairColors(state.demand.options),
-  beardColors: getBeardColors(state.demand.options),
-  eyebrowColors: getEyebrowColors(state.demand.options),
-  eyeColors: getEyeColors(state.demand.options),
-  nailColors: getNailColors(state.demand.options),
-  ratings: getRatings(state.demand.schema),
-  lengthUnits: getLengthUnits(state.demand.options),
-  shapes: getShapes(state.demand.options),
-  breastSizes: getBreastSizes(state.demand.options),
-  hairStyles: getHairStyles(state.demand.options),
-  timelineSides: getTimelineSides(state.demand.options),
-  demand: state.demand.single || {},
-  etag: state.demand.etag || '',
-}))(Reconsider);
+  sex: getSex(state.evolution.options),
+  ethnicGroups: getEthnicGroups(state.evolution.options),
+  bodyBuilds: getBodyBuilds(state.evolution.options),
+  hairColors: getHairColors(state.evolution.options),
+  beardColors: getBeardColors(state.evolution.options),
+  eyebrowColors: getEyebrowColors(state.evolution.options),
+  eyeColors: getEyeColors(state.evolution.options),
+  nailColors: getNailColors(state.evolution.options),
+  ratings: getRatings(state.evolution.schema),
+  lengthUnits: getLengthUnits(state.evolution.options),
+  shapes: getShapes(state.evolution.options),
+  breastSizes: getBreastSizes(state.evolution.options),
+  hairStyles: getHairStyles(state.evolution.options),
+  progress: state.evolution.single || {},
+}))(Extend);

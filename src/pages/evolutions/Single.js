@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as R from 'ramda';
 import Tabs from './menu/Tabs';
-import { getPrettyDemand } from './../../demand/reducers';
-import { single, options } from './../../demand/endpoints';
-import { info as soulmateInfo } from './../../soulmate/endpoints';
+import { getPrettyEvolution } from './../../evolution/reducers';
+import { single, options } from './../../evolution/endpoints';
 import Overview from './../../description/output/Overview';
 import SolidCard from './../../description/output/SolidCard';
 import { TextRow } from './../../description/output/Table';
@@ -19,24 +18,23 @@ class Single extends React.Component {
     } = this.props;
     dispatch(options());
     dispatch(single(id));
-    dispatch(soulmateInfo(id));
     handleMenu({
       filter: {
-        title: 'Demand',
+        title: 'Evolution',
       },
       action: <ActionItems history={history} id={id} dispatch={dispatch} />,
     });
   }
 
   render() {
-    const { demand, soulmate } = this.props;
-    if (R.isEmpty(demand)) {
+    const { evolution } = this.props;
+    if (R.isEmpty(evolution)) {
       return <h1>Loading...</h1>;
     }
     return (
-      <Tabs {...this.props} soulmateMatches={soulmate.info ? soulmate.info.total : 0}>
+      <Tabs {...this.props}>
         <Overview
-          description={demand}
+          description={evolution}
           cards={
             <SolidCard
               title="Location"
@@ -44,12 +42,12 @@ class Single extends React.Component {
                 <TextRow
                   key="Coordinates"
                   title="Coordinates"
-                  text={`${demand.location.coordinates.latitude}, ${demand.location.coordinates.longitude}`}
+                  text={`${evolution.location.coordinates.latitude}, ${evolution.location.coordinates.longitude}`}
                 />,
                 <TextRow
                   key="Met at"
                   title="Met at"
-                  text={moment(demand.location.met_at.moment).format('YYYY-MM-DD HH:mm')}
+                  text={moment(evolution.location.met_at.moment).format('YYYY-MM-DD HH:mm')}
                 />,
               ]}
             />
@@ -63,13 +61,12 @@ class Single extends React.Component {
 Single.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ }) }).isRequired,
-  demand: PropTypes.object.isRequired,
-  soulmate: PropTypes.object.isRequired,
+  evolution: PropTypes.object.isRequired,
   handleMenu: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
 export default connect(state => ({
-  demand: getPrettyDemand(state.demand.single || { }, state.demand.options || { }),
+  evolution: getPrettyEvolution(state.evolution.single || { }, state.evolution.options || { }),
   soulmate: state.soulmate,
 }))(Single);
