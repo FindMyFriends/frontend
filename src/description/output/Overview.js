@@ -14,7 +14,7 @@ export const Cards = styled.div`
 
 type OverviewType = {|
   description: Object,
-  cards: ?Object,
+  cards: any,
 |};
 const Overview = ({ description, cards = null }: OverviewType) => {
   return (

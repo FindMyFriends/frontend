@@ -5,6 +5,7 @@
     "airbnb",
   ],
   "rules": {
+    "import/no-named-default": 0,
     "import/no-named-as-default": 0, // Multiple exports because of Redux state and tests
     "import/prefer-default-export": 0, // Multiple exports because of Redux state and tests
     "arrow-body-style": 0,

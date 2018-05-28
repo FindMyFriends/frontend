@@ -1,5 +1,5 @@
 import test from 'ava';
-import { nextStep, previousStep, isLastStep } from '../../../components/stepFork';
+import { nextStep, previousStep, isLastStep } from '../stepFork';
 
 test('going to minor', (t) => {
   const allParts = { 1: { parts: { 1: [], 2: [], 3: [] } } };

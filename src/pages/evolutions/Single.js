@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import * as R from 'ramda';
 import Tabs from './menu/Tabs';
 import { getPrettyEvolution } from './../../evolution/reducers';
 import { single, options } from './../../evolution/endpoints';
 import Overview from './../../description/output/Overview';
-import SolidCard from './../../description/output/SolidCard';
-import { TextRow } from './../../description/output/Table';
 import { ActionItems } from './menu/Single/Items';
 
 class Single extends React.Component {
