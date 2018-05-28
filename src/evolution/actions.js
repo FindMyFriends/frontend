@@ -39,7 +39,7 @@ export const receivedSingle = (id, evolution, etag) => {
   };
 };
 
-export const extendedEvolution = (location) => ({
+export const extendedEvolution = location => ({
   type: EXTENDED_EVOLUTION,
   id: location.substring(location.lastIndexOf('/') + 1),
 });
