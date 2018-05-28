@@ -44,7 +44,6 @@ export const all = (pagination: Object = {
 };
 
 export const extend = (progress: Object, history: Object) => (dispatch: (mixed) => Object) => {
-  console.log(moment().toISOString(true));
   return axios.post(
     '/v1/evolutions',
     {

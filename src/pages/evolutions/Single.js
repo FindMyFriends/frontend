@@ -33,26 +33,7 @@ class Single extends React.Component {
     }
     return (
       <Tabs {...this.props}>
-        <Overview
-          description={evolution}
-          cards={
-            <SolidCard
-              title="Location"
-              rows={[
-                <TextRow
-                  key="Coordinates"
-                  title="Coordinates"
-                  text={`${evolution.location.coordinates.latitude}, ${evolution.location.coordinates.longitude}`}
-                />,
-                <TextRow
-                  key="Met at"
-                  title="Met at"
-                  text={moment(evolution.location.met_at.moment).format('YYYY-MM-DD HH:mm')}
-                />,
-              ]}
-            />
-          }
-        />
+        <Overview description={evolution} />
       </Tabs>
     );
   }
@@ -68,5 +49,4 @@ Single.propTypes = {
 
 export default connect(state => ({
   evolution: getPrettyEvolution(state.evolution.single || { }, state.evolution.options || { }),
-  soulmate: state.soulmate,
 }))(Single);

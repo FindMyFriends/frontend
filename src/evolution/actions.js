@@ -35,7 +35,7 @@ export const receivedSingle = (id, evolution, etag) => {
   return {
     type: RECEIVED_SINGLE_EVOLUTION,
     id,
-    progress,
+    evolution: progress,
     etag,
   };
 };

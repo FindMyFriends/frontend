@@ -39,14 +39,18 @@ export const getPrettyDescription = (description, options) => {
       },
       hair: {
         style: options.hair.style[description.hair.style_id],
-        color: options.hair.color[description.hair.color_id].name,
+        color: options.hair.color[description.hair.color_id]
+          ? options.hair.color[description.hair.color_id].name
+          : null,
         length: `${description.hair.length.value} ${description.hair.length.unit}`,
       },
       face: {
         shape: options.face.shape[description.face.shape_id],
       },
       eyebrow: {
-        color: options.eyebrow.color[description.eyebrow.color_id].name,
+        color: options.eyebrow.color[description.eyebrow.color_id]
+          ? options.eyebrow.color[description.eyebrow.color_id].name
+          : null,
       },
       eye: {
         left: {

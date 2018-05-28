@@ -55,9 +55,9 @@ class Add extends React.Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
     const { dispatch, history } = this.props;
     dispatch(add(this.state.demand, history));
-    event.preventDefault();
   };
 
   handleTurn = (major, minor) => {
