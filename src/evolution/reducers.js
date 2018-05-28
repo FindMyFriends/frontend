@@ -6,6 +6,7 @@ import {
   RECEIVED_SINGLE_EVOLUTION,
   RECEIVED_EVOLUTION_OPTIONS,
   RECEIVED_EVOLUTION_SCHEMA,
+  EXTENDED_EVOLUTION,
 } from './actions';
 
 export const evolution = (state = {}, action) => {
@@ -20,6 +21,8 @@ export const evolution = (state = {}, action) => {
       return { ...state, options: action.options };
     case RECEIVED_EVOLUTION_SCHEMA:
       return { ...state, schema: action.schema };
+    case EXTENDED_EVOLUTION:
+      return { ...state, single: null };
     default:
       return state;
   }

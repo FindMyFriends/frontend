@@ -29,7 +29,6 @@ export const receivedPaginationForAll = pages => ({
 
 export const receivedSingle = (id, evolution, etag) => {
   const progress = evolution;
-  delete progress.general.age;
   delete progress.id;
   delete progress.seeker_id;
   return {
@@ -40,8 +39,7 @@ export const receivedSingle = (id, evolution, etag) => {
   };
 };
 
-export const extendedEvolution = (progress, location) => ({
+export const extendedEvolution = (location) => ({
   type: EXTENDED_EVOLUTION,
-  evolution: progress,
   id: location.substring(location.lastIndexOf('/') + 1),
 });

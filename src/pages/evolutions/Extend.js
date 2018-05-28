@@ -69,13 +69,12 @@ class Extend extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { dispatch, progress, history } = this.props;
-    dispatch(extend(
-      merge(
-        progress,
-        f.unflatten(this.state.progress),
-      ),
-      history,
-    ));
+    const evolution = merge(
+      progress,
+      f.unflatten(this.state.progress),
+    );
+    delete evolution.general.age;
+    dispatch(extend(evolution, history));
   };
 
   handleTurn = (major, minor) => {

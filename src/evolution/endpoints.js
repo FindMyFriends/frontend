@@ -52,7 +52,7 @@ export const extend = (progress: Object, history: Object) => (dispatch: (mixed) 
     },
   )
     .then((response) => {
-      const extension = dispatch(extendedEvolution(progress, response.headers.location));
+      const extension = dispatch(extendedEvolution(response.headers.location));
       dispatch(receivedSuccessMessage('Evolution has been extended'));
       history.push(`/evolutions/${extension.id}`);
     })
