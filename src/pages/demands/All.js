@@ -5,9 +5,8 @@ import { Link } from 'react-router-dom';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import styled from 'styled-components';
-import Box from './../../demand/output/Box';
+import Table from './../../demand/output/Table';
 import { all as allDemands } from './../../demand/endpoints';
-import Pagination from './../../components/Pagination';
 import { twoSideSort } from './../../dataset/selection';
 import { getDemandNotes } from '../../demand/reducers';
 
@@ -20,10 +19,6 @@ const BottomRightNavigation = styled.div`
 
 class All extends React.Component {
   state = {
-    pagination: {
-      page: 1,
-      perPage: 2,
-    },
     boxes: {},
     sorts: {
       id: '+id',
@@ -57,41 +52,11 @@ class All extends React.Component {
     }, () => dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(this.state.sorts))));
   };
 
-  handlePaginationChange = (event) => {
-    this.setState({
-      pagination: {
-        ...this.state.pagination,
-        page: event,
-      },
-    });
-    this.props.dispatch(allDemands({ ...this.state.pagination }));
-  };
-
-  handleListing = (box) => {
-    const { boxes } = this.state;
-    this.setState({
-      boxes: {
-        [box]: {
-          more: Object.prototype.hasOwnProperty.call(boxes, box) ? !boxes[box].more : true,
-        },
-      },
-    });
-  };
-
   render() {
-    const { pagination: { page }, sorts } = this.state;
-    const { pages } = this.props;
+    const { sorts } = this.state;
     return (
       <React.Fragment>
-        {
-          pages &&
-            <Pagination
-              pages={pages}
-              page={page}
-              onChange={this.handlePaginationChange}
-            />
-        }
-        <Box
+        <Table
           {...this.props}
           sorts={sorts}
           onSort={this.handleSort}

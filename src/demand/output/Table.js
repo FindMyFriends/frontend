@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import {
-  Table,
+  Table as MUITable,
   TableBody,
   TableHeader,
   TableHeaderColumn,
@@ -31,7 +31,7 @@ const Center = styled.div`
   justify-content: center;
 `;
 
-class Box extends React.Component {
+class Table extends React.Component {
   state = {
     note: {
       dialog: {
@@ -111,7 +111,7 @@ class Box extends React.Component {
         >
           {this.state.note.dialog.text}
         </NoteDialog>
-        <Table selectable={false}>
+        <MUITable selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn>
@@ -195,20 +195,9 @@ class Box extends React.Component {
                       anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
                       targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                     >
-                      <MenuItem
-                        primaryText="View"
-                        leftIcon={<VisibilityIcon />}
-                        containerElement={<Link to={`/demands/${demand.id}`} />}
-                      />
-                      <MenuItem
-                        primaryText="Reconsider"
-                        leftIcon={<EditIcon />}
-                        containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
-                      />
-                      <MenuItem
-                        primaryText="Retract"
-                        leftIcon={<DeleteIcon color={red500} />}
-                        onClick={() => this.handleRetract(demand.id)}
+                      <IconMenuItems
+                        demand={demand}
+                        onRetract={id => this.handleRetract(id)}
                       />
                     </IconMenu>
                   </TableRowColumn>
@@ -216,13 +205,34 @@ class Box extends React.Component {
               );
             })}
           </TableBody>
-        </Table>
+        </MUITable>
       </React.Fragment>
     );
   }
 }
 
-Box.propTypes = {
+const IconMenuItems = ({ demand, onRetract }) => ([
+  <MenuItem
+    key={0}
+    primaryText="View"
+    leftIcon={<VisibilityIcon />}
+    containerElement={<Link to={`/demands/${demand.id}`} />}
+  />,
+  <MenuItem
+    key={1}
+    primaryText="Reconsider"
+    leftIcon={<EditIcon />}
+    containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
+  />,
+  <MenuItem
+    key={2}
+    primaryText="Retract"
+    leftIcon={<DeleteIcon color={red500} />}
+    onClick={() => onRetract(demand.id)}
+  />,
+]);
+
+Table.propTypes = {
   demands: PropTypes.array.isRequired,
   demandNotes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -232,4 +242,4 @@ Box.propTypes = {
   onReload: PropTypes.func.isRequired,
 };
 
-export default Box;
+export default Table;

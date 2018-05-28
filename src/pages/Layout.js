@@ -53,6 +53,9 @@ class Layout extends React.Component {
                 onRequestChange={this.handleDrawerOpening}
               >
                 <React.Fragment>
+                  <Link to="/evolutions">
+                    <MenuItem onClick={this.handleDrawerOpening}>Evolutions</MenuItem>
+                  </Link>
                   <Link to="/demands">
                     <MenuItem onClick={this.handleDrawerOpening}>Demands</MenuItem>
                   </Link>

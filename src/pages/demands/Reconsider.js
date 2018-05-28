@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import flat, * as f from 'flat';
 import * as R from 'ramda';
-import Form from './../../demand/input/Form';
+import Form from '../../components/Form';
 import {
   getSex,
   getEthnicGroups,

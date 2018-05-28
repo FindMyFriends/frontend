@@ -33,20 +33,24 @@ export const getPrettyDescription = (description, options) => {
         ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id],
       },
       body: {
-        build: options.body.build[description.body.build_id],
-        weight: `${description.body.weight.value} ${description.body.weight.unit}`,
-        height: `${description.body.height.value} ${description.body.height.unit}`,
+        build: options.body.build[description.body.build_id] || '',
+        weight: `${description.body.weight.value || ''} ${description.body.weight.unit || ''}`,
+        height: `${description.body.height.value || ''} ${description.body.height.unit || ''}`,
       },
       hair: {
-        style: options.hair.style[description.hair.style_id],
-        color: options.hair.color[description.hair.color_id].name,
-        length: `${description.hair.length.value} ${description.hair.length.unit}`,
+        style: options.hair.style[description.hair.style_id] || '',
+        color: options.hair.color[description.hair.color_id]
+          ? options.hair.color[description.hair.color_id].name
+          : null,
+        length: `${description.hair.length.value || ''} ${description.hair.length.unit || ''}`,
       },
       face: {
-        shape: options.face.shape[description.face.shape_id],
+        shape: options.face.shape[description.face.shape_id] || '',
       },
       eyebrow: {
-        color: options.eyebrow.color[description.eyebrow.color_id].name,
+        color: options.eyebrow.color[description.eyebrow.color_id]
+          ? options.eyebrow.color[description.eyebrow.color_id].name
+          : null,
       },
       eye: {
         left: {
@@ -65,7 +69,7 @@ export const getPrettyDescription = (description, options) => {
           color: options.hands.nails.color[description.hands.nails.color_id]
             ? options.hands.nails.color[description.hands.nails.color_id].name
             : null,
-          length: `${description.hands.nails.length.value} ${description.hands.nails.length.unit}`,
+          length: `${description.hands.nails.length.value || ''} ${description.hands.nails.length.unit || ''}`,
         },
         hair: {
           color: options.hands.hair.color[description.hands.hair.color_id]
