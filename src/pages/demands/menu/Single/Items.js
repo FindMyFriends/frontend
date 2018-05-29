@@ -10,7 +10,7 @@ import { retract } from '../../../../demand/endpoints';
 const handleRetract = (history, id) => (dispatch) => {
   dispatch(requestedConfirm(
     'Are you sure, you want to retract demand?',
-    () => dispatch(retract(id, history)),
+    () => dispatch(retract(id, () => history.push('/demands'))),
   ));
 };
 

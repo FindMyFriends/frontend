@@ -75,7 +75,7 @@ class Reconsider extends React.Component {
         f.unflatten(this.state.demand),
       ),
       etag,
-      history,
+      id => history.push(`/demands/${id}`),
     ));
   };
 

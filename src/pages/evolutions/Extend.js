@@ -37,8 +37,8 @@ class Extend extends React.Component {
     const { dispatch, handleMenu, match: { params: { id } } } = this.props;
     dispatch(options());
     dispatch(schema());
-    dispatch(single(id))
-      .then(change => this.setState({
+    dispatch(single(id, [], (change) => {
+      this.setState({
         progress: merge(
           test(),
           {
@@ -46,7 +46,8 @@ class Extend extends React.Component {
             ...change,
           },
         ),
-      }));
+      });
+    }));
     handleMenu({
       filter: {
         title: 'Extend',
@@ -74,7 +75,7 @@ class Extend extends React.Component {
       f.unflatten(this.state.progress),
     );
     delete evolution.general.age;
-    dispatch(extend(evolution, history));
+    dispatch(extend(evolution, id => history.push(`/evolutions/${id}`)));
   };
 
   handleTurn = (major, minor) => {

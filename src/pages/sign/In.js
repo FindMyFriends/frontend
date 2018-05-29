@@ -25,7 +25,7 @@ class In extends React.Component {
   handleSubmit = () => {
     const { dispatch, history } = this.props;
     const { credentials: { email, password } } = this.state;
-    dispatch(enter(email, password, history));
+    dispatch(enter(email, password, () => history.push('/demands')));
   };
 
   render() {

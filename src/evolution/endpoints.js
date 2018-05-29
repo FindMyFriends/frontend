@@ -23,12 +23,17 @@ export const schema = () => (dispatch: (mixed) => Object) => {
     .then(schema => dispatch(receivedSchema(schema)));
 };
 
-export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
+export const single = (
+  id: string,
+  fields: Array<string> = [],
+  next: (Object) => void = () => {},
+) => (dispatch: (mixed) => Object) => {
   return axios.get(`/v1/evolutions/${id}?fields=${fields.join(',')}`)
     .then((response) => {
       dispatch(receivedSingle(id, response.data, response.headers.etag));
       return response.data;
-    });
+    })
+    .then(evolution => next(evolution));
 };
 
 export const all = (pagination: Object = {
@@ -43,7 +48,11 @@ export const all = (pagination: Object = {
     });
 };
 
-export const extend = (progress: Object, history: Object) => (dispatch: (mixed) => Object) => {
+
+export const extend = (
+  progress: Object,
+  next: (string) => void,
+) => (dispatch: (mixed) => Object) => {
   return axios.post(
     '/v1/evolutions',
     {
@@ -54,7 +63,8 @@ export const extend = (progress: Object, history: Object) => (dispatch: (mixed) 
     .then((response) => {
       const extension = dispatch(extendedEvolution(response.headers.location));
       dispatch(receivedSuccessMessage('Evolution has been extended'));
-      history.push(`/evolutions/${extension.id}`);
+      return extension;
     })
+    .then(change => next(change.id))
     .catch(error => dispatch(receivedApiError(error)));
 };

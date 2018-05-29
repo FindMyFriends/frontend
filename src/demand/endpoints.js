@@ -44,13 +44,14 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
     });
 };
 
-export const add = (demand: Object, history: Object) => (dispatch: (mixed) => Object) => {
+export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
   return axios.post('/v1/demands', demand)
     .then((response) => {
       const newDemand = dispatch(addedDemand(demand, response.headers.location));
       dispatch(receivedSuccessMessage('Demand has been added'));
-      history.push(`/demands/${newDemand.id}`);
+      return newDemand;
     })
+    .then(demand => next(demand.id))
     .catch(error => dispatch(receivedApiError(error)));
 };
 
@@ -58,7 +59,7 @@ export const reconsider = (
   id: string,
   demand: Object,
   etag: string,
-  history: Object,
+  next: (string) => void,
 ) => (dispatch: (mixed) => Object) => {
   const curry = (name: string) => (demand: Object): Object => {
     return omit(demand, name);
@@ -73,17 +74,15 @@ export const reconsider = (
   axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
     .then(() => dispatch(receivedReconsideration(id)))
     .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))
-    .then(() => history.push(`/demands/${id}`))
+    .then(() => next(id))
     .catch(error => dispatch(receivedApiError(error)));
 };
 
 
-export const retract = (id: string, history: Object) => (dispatch: (mixed) => Object) => {
+export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {
   return axios.delete(`/v1/demands/${id}`)
-    .then(() => {
-      dispatch(receivedSuccessMessage('Demand has been retracted'));
-      history.push('/demands');
-    })
+    .then(() => dispatch(receivedSuccessMessage('Demand has been retracted')))
+    .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
 
@@ -91,7 +90,7 @@ export const retract = (id: string, history: Object) => (dispatch: (mixed) => Ob
 export const changeNote = (
   id: string,
   note: string,
-  next: (mixed) => mixed,
+  next: (void) => void,
 ) => (dispatch: (mixed) => Object) => {
   return axios.patch(`/v1/demands/${id}`, { note })
     .then(next)

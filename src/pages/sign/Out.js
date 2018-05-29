@@ -6,7 +6,7 @@ import { exit } from '../../sign/endpoints';
 class Out extends React.Component {
   componentWillMount() {
     const { dispatch, history } = this.props;
-    dispatch(exit(history));
+    dispatch(exit(() => history.push('/sign/in')));
   }
 
   render() {

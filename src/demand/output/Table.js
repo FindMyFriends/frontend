@@ -44,7 +44,7 @@ class Table extends React.Component {
     const { history, dispatch } = this.props;
     dispatch(requestedConfirm(
       'Are you sure, you want to retract demand?',
-      () => dispatch(retract(id, history)),
+      () => dispatch(retract(id, () => history.push('/demands'))),
     ));
   };
 

@@ -31,9 +31,7 @@ export const info = (demand: string) => (dispatch: (mixed) => Object) => {
 export const requests = (demand: string) => (dispatch: (mixed) => Object) => {
   const fields = ['is_refreshable', 'refreshable_in', 'status'];
   return axios.get(`/v1/demands/${demand}/soulmate_requests?page=1&per_page=1&sort=-searched_at&fields=${fields.join(',')}`)
-    .then((response) => {
-      dispatch(receivedRequestsByDemand(response.data, demand));
-    });
+    .then(response => dispatch(receivedRequestsByDemand(response.data, demand)));
 };
 
 export const refresh = (demand: string) => (dispatch: (mixed) => Object) => {
@@ -48,13 +46,13 @@ export const refresh = (demand: string) => (dispatch: (mixed) => Object) => {
 export const clarify = (
   soulmate: string,
   clarification: Object,
-  next: () => void,
+  next: (void) => void,
 ) => (dispatch: (mixed) => Object) => {
   axios.patch(`/v1/soulmates/${soulmate}`, clarification)
     .then(() => {
       dispatch(receivedClarify(soulmate));
       dispatch(receivedSuccessMessage('Soulmate was changed'));
     })
-    .then(() => next())
+    .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
