@@ -1,20 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OutputRating } from './../../components/Rating';
-
-export const Cards = styled.div`
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-around;
-`;
-
-const ResizedCard = styled(Card)`
-  width: 300px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-`;
 
 const Row = styled.tr`
   text-align: left;
@@ -56,22 +43,3 @@ export const ProgressRow = ({ title, value }: ProgressRowProps) => (
     </ProgressTd>
   </Row>
 );
-
-type SolidCardProps = {
-  title: string,
-  rows: Array<Object>,
-};
-export const SolidCard = ({ title, rows }: SolidCardProps) => {
-  return (
-    <ResizedCard>
-      <CardHeader title={title} titleStyle={{ fontSize: '20px' }} />
-      <CardText>
-        <table>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
-      </CardText>
-    </ResizedCard>
-  );
-};

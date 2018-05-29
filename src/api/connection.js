@@ -2,7 +2,7 @@
 import merge from 'lodash/merge';
 import { getCookie } from '../access/cookie';
 
-const dynamicHeaders = () => {
+const dynamicHeaders = (): Object => {
   const { token } = getCookie();
   if (token) {
     return {

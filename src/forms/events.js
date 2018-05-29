@@ -18,13 +18,6 @@ export const onSelectEnumChange = (
   });
 };
 
-export const onSlideChange = (
-  classic: (x: Object) => any,
-  name: string,
-) => (self: any, value: any) => {
-  return classic({ target: { name, value } });
-};
-
 export const onRangeChange = (
   classic: (x: Object) => any,
   name: string, ranges: [number, number],
