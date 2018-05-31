@@ -16,7 +16,7 @@ export const defaults = (inherited: Object): Object => (
   merge(
     inherited,
     {
-      baseURL: 'https://localhost',
+      baseURL: 'https://fmf.localhost',
       data: null,
       headers: {
         common: {
