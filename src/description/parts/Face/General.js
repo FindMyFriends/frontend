@@ -10,7 +10,7 @@ const General = ({ selects: { ratings, shapes }, values, onChange }) => (
   <div>
     <InputRating
       max={ratings.maximum}
-      current={values['face.care']}
+      current={values['face.care'] || 0}
       name="face.care"
       onChange={onChange}
     >

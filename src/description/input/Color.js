@@ -12,9 +12,10 @@ const Color = ({
       <SelectField
         floatingLabelText="Color"
         onChange={onSelectChange(onChange, name)}
-        value={values[name]}
+        value={values[name] || 0}
         name={name}
       >
+        <MenuItem key={0} value={0} primaryText="unknown" />
         {
           Object.entries(colors).map((entry) => {
             const id = parseInt(entry[0], 10);

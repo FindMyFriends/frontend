@@ -34,9 +34,10 @@ const Hair = ({ selects: { hairColors, lengthUnits, hairStyles }, values, onChan
     <SelectField
       floatingLabelText="Styles"
       onChange={onSelectEnumChange(onChange, 'hair.style_id', hairStyles)}
-      value={hairStyles[values['hair.style_id']]}
-      name="body.build_id"
+      value={hairStyles[values['hair.style_id']] || 0}
+      name="hair.style_id"
     >
+      <MenuItem key={0} value={0} primaryText="unknown" />
       {Object.values(hairStyles).map(style => (
         <MenuItem key={style} value={style} primaryText={style} />
       ))}

@@ -13,7 +13,7 @@ const Hair = ({ selects: { nailColors, ratings }, values, onChange }) => (
     />
     <InputRating
       max={ratings.maximum}
-      current={values['hands.hair.amount']}
+      current={values['hands.hair.amount'] || 0}
       name="hands.hair.amount"
       onChange={onChange}
     >

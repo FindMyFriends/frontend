@@ -32,9 +32,10 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
     <SelectField
       floatingLabelText="Build"
       onChange={onSelectEnumChange(onChange, 'body.build_id', bodyBuilds)}
-      value={bodyBuilds[values['body.build_id']]}
+      value={bodyBuilds[values['body.build_id']] || 0}
       name="body.build_id"
     >
+      <MenuItem key={0} value={0} primaryText="unknown" />
       {Object.values(bodyBuilds).map(build => (
         <MenuItem key={build} value={build} primaryText={build} />
       ))}
@@ -43,14 +44,14 @@ const Body = ({ selects: { bodyBuilds, breastSizes }, values, onChange }) => (
       type="number"
       floatingLabelText="Weight"
       onChange={onChange}
-      value={values['body.weight.value']}
+      value={values['body.weight.value'] || ''}
       name="body.weight.value"
     />
     <TextField
       type="number"
       floatingLabelText="Height"
       onChange={onChange}
-      value={values['body.height.value']}
+      value={values['body.height.value'] || ''}
       name="body.height.value"
     />
     <BreastSizeBySex values={values} onChange={onChange} selects={{ breastSizes }} />
