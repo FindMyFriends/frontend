@@ -7,7 +7,7 @@ const Eyebrow = ({ selects: { ratings, eyebrowColors }, values, onChange }) => (
   <div>
     <InputRating
       max={ratings.maximum}
-      current={values['eyebrow.care']}
+      current={values['eyebrow.care'] || 0}
       name="eyebrow.care"
       onChange={onChange}
     >

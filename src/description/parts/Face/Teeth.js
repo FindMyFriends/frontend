@@ -8,7 +8,7 @@ const Teeth = ({ selects: { ratings }, values, onChange }) => (
   <div>
     <InputRating
       max={ratings.maximum}
-      current={values['teeth.care']}
+      current={values['teeth.care'] || 0}
       name="teeth.care"
       onChange={onChange}
     >

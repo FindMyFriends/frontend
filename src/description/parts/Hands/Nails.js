@@ -20,7 +20,7 @@ const Nails = ({ selects: { nailColors, lengthUnits, ratings }, values, onChange
     />
     <InputRating
       max={ratings.maximum}
-      current={values['hands.nails.care']}
+      current={values['hands.nails.care'] || 0}
       name="hands.nails.care"
       onChange={onChange}
     >

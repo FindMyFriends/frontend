@@ -14,14 +14,14 @@ const LengthWithUnit = ({
       floatingLabelText="Length"
       onChange={onChange}
       name={`${name}.value`}
-      value={values[`${name}.value`]}
+      value={values[`${name}.value`] || ''}
     />
     <SelectField
       disabled={!values[`${name}.value`]}
       title={values[`${name}.value`] ? null : 'To change unit, type value'}
       floatingLabelText="Unit"
       onChange={onSelectChange(onChange, `${name}.unit`)}
-      value={values[`${name}.unit`]}
+      value={values[`${name}.unit`] || ''}
       name={`${name}.unit`}
     >
       {units.map(unit => <MenuItem key={unit} value={unit} primaryText={unit} />)}
