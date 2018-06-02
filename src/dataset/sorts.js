@@ -1,13 +1,14 @@
 // @flow
-import * as React from 'react';
-import isEqual from 'lodash/isEqual';
-import mapValues from 'lodash/mapValues';
+import { SortType } from './SortType';
 
-export const twoSideSort = (current: Object, added: Object): Object => {
-  if (isEqual(Object.keys(current), Object.keys(added))) {
-    const criteria = Object.keys(added)[0];
-    const operator = current[criteria][0] === '+' ? '-' : '+';
-    return { [criteria]: operator + criteria };
+export const toggleSort = (sort: SortType): SortType => ({
+  order: sort.order === 'asc' ? 'desc' : 'asc',
+  orderBy: sort.orderBy,
+});
+
+export const toApiOrdering = (sort: SortType): string => {
+  if (sort.order === 'asc') {
+    return `+${sort.orderBy}`;
   }
-  return mapValues(added, criteria => `+${criteria}`);
+  return `-${sort.orderBy}`;
 };

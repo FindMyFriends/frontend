@@ -9,6 +9,8 @@
     "cookie": "^0.3.1",
     "http-build-query": "^0.6.1",
     "lodash": "^4.17.10",
+    "lscache": "^1.1.0",
+    "moment": "^2.22.2",
     "parse-link-header": "^1.0.1",
     "ramda": "^0.25.0",
     "react": "^16.4.0",
@@ -18,7 +20,8 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^2.4.1"
+    "styled-components": "^2.4.1",
+    "trim-character": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

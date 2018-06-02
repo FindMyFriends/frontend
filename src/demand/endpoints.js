@@ -14,11 +14,8 @@ import {
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions, loadSchema } from './../api/schema';
+import { PaginationType } from './../dataset/PaginationType';
 
-type PaginationType = {|
-  +page: number,
-  +perPage: number,
-|};
 const initPagination = {
   page: 1,
   perPage: 10,

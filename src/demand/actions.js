@@ -1,4 +1,5 @@
-import parse from 'parse-link-header';
+// TODO: Flow
+import { fromHeader } from '../dataset/pagination';
 
 export const RECEIVED_ALL_DEMANDS = 'RECEIVED_ALL_DEMANDS';
 export const RECEIVED_PAGINATION_FOR_ALL_DEMANDS = 'RECEIVED_PAGINATION_FOR_ALL_DEMANDS';
@@ -25,9 +26,9 @@ export const receivedAll = demands => ({
   demands,
 });
 
-export const receivedPaginationForAll = pages => ({
+export const receivedPaginationForAll = (link: string) => ({
   type: RECEIVED_PAGINATION_FOR_ALL_DEMANDS,
-  pages: parse(pages),
+  pagination: fromHeader(link),
 });
 
 export const receivedSingle = (id, demand, etag) => ({
