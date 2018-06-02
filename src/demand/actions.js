@@ -8,11 +8,13 @@ export const RECEIVED_DEMAND_RECONSIDER = 'RECEIVED_DEMAND_RECONSIDER';
 export const RECEIVED_DEMAND_OPTIONS = 'RECEIVED_DEMAND_OPTIONS';
 export const RECEIVED_DEMAND_SCHEMA = 'RECEIVED_DEMAND_SCHEMA';
 
+// TODO: Move to schema reducer
 export const receivedSchema = schema => ({
   type: RECEIVED_DEMAND_SCHEMA,
   schema,
 });
 
+// TODO: Move to schema reducer
 export const receivedOptions = options => ({
   type: RECEIVED_DEMAND_OPTIONS,
   options,

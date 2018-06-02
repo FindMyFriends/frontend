@@ -1,12 +1,13 @@
+// @flow
 import { serialize, parse } from 'cookie';
 
 const name = 'sessid';
 
 export type Cookie = {|
-  +token: string,
+  +token: ?string,
 |};
 
-export const setCookie = (cookie: Cookie) => {
+export const setCookie = (cookie: Cookie): void => {
   const options = {
     maxAge: 30 * 24 * 60 * 60,
     path: '/',
@@ -14,7 +15,7 @@ export const setCookie = (cookie: Cookie) => {
   window.document.cookie = serialize(name, cookie.token, options);
 };
 
-export const deleteCookie = () => {
+export const deleteCookie = (): void => {
   const options = {
     maxAge: -1,
     path: '/',
@@ -29,4 +30,4 @@ export const getCookie = (): Cookie => {
   };
 };
 
-export const loggedIn = () => getCookie().token !== null;
+export const loggedIn = (): boolean => getCookie().token !== null;

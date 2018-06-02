@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
 import { all as allDemands } from './../../demand/endpoints';
@@ -19,27 +19,21 @@ const BottomRightNavigation = styled.div`
 
 class All extends React.Component {
   state = {
-    boxes: {},
     sorts: {
       id: '+id',
     },
   };
 
   componentDidMount() {
-    const { dispatch, handleMenu } = this.props;
+    const { dispatch } = this.props;
     const { sorts } = this.state;
-    dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(sorts)));
-    handleMenu({
-      filter: {
-        title: 'Demands',
-      },
-    });
+    dispatch(allDemands(Object.values(sorts)));
   }
 
   handleReload = () => {
     const { dispatch } = this.props;
     const { sorts } = this.state;
-    dispatch(allDemands({ page: 1, perPage: 10 }, Object.values(sorts)));
+    dispatch(allDemands(Object.values(sorts)));
   };
 
   handleSort = (sort) => {
@@ -64,9 +58,9 @@ class All extends React.Component {
         />
         <BottomRightNavigation>
           <Link to="/demands/add">
-            <FloatingActionButton>
-              <ContentAdd />
-            </FloatingActionButton>
+            <Button variant="fab" color="primary" aria-label="add">
+              <AddIcon />
+            </Button>
           </Link>
         </BottomRightNavigation>
       </React.Fragment>
@@ -88,3 +82,5 @@ export default connect(state => ({
   pages: state.demand.pages,
   demandNotes: getDemandNotes(state),
 }))(All);
+
+// TODO: actions to props

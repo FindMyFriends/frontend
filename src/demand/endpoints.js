@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios';
 import omit from 'lodash/omit';
+import httpBuildQuery from 'http-build-query';
 import * as R from 'ramda';
 import {
   addedDemand,
@@ -14,22 +15,36 @@ import {
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions, loadSchema } from './../api/schema';
 
+type PaginationType = {|
+  +page: number,
+  +perPage: number,
+|};
+const initPagination = {
+  page: 1,
+  perPage: 10,
+};
+
 export const options = () => (dispatch: (mixed) => Object) => {
-  return loadOptions('/v1/demands')
+  loadOptions('/v1/demands')
     .then(options => dispatch(receivedOptions(options)));
 };
 
 export const schema = () => (dispatch: (mixed) => Object) => {
-  return loadSchema('/schema/v1/demand/get.json')
+  loadSchema('/schema/v1/demand/get.json')
     .then(schema => dispatch(receivedSchema(schema)));
 };
 
-export const all = (pagination: Object = {
-  page: 1,
-  perPage: 20,
-}, sorts: Array<String>) => (dispatch: (mixed) => Object) => {
-  const fields = ['general', 'soulmates', 'id', 'created_at', 'note'];
-  axios.get(`/v1/demands?page=${pagination.page}&per_page=${pagination.perPage}&fields=${fields.join(',')}&sort=${sorts.join(',')}`)
+export const all = (
+  sorts: Array<string>,
+  pagination: PaginationType = initPagination
+) => (dispatch: (mixed) => Object) => {
+  const query = httpBuildQuery({
+    page: pagination.page,
+    per_page: pagination.perPage,
+    fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
+    sorts: sorts.join(','),
+  });
+  axios.get(`/v1/demands?${query}`)
     .then((response) => {
       dispatch(receivedPaginationForAll(response.headers.link));
       dispatch(receivedAll(response.data));
@@ -37,15 +52,15 @@ export const all = (pagination: Object = {
 };
 
 export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
-  return axios.get(`/v1/demands/${id}?fields=${fields.join(',')}`)
-    .then((response) => {
-      dispatch(receivedSingle(id, response.data, response.headers.etag));
-      return response.data;
-    });
+  const query = httpBuildQuery({
+    fields: fields.join(','),
+  });
+  axios.get(`/v1/demands/${id}?${query}`)
+    .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)));
 };
 
 export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
-  return axios.post('/v1/demands', demand)
+  axios.post('/v1/demands', demand)
     .then((response) => {
       const newDemand = dispatch(addedDemand(demand, response.headers.location));
       dispatch(receivedSuccessMessage('Demand has been added'));
@@ -78,21 +93,19 @@ export const reconsider = (
     .catch(error => dispatch(receivedApiError(error)));
 };
 
-
 export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {
-  return axios.delete(`/v1/demands/${id}`)
+  axios.delete(`/v1/demands/${id}`)
     .then(() => dispatch(receivedSuccessMessage('Demand has been retracted')))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
-
 
 export const changeNote = (
   id: string,
   note: string,
   next: (void) => void,
 ) => (dispatch: (mixed) => Object) => {
-  return axios.patch(`/v1/demands/${id}`, { note })
+  axios.patch(`/v1/demands/${id}`, { note })
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
