@@ -7,19 +7,15 @@ import {
   addedDemand,
   receivedAll,
   receivedSingle,
-  receivedPaginationForAll,
+  receivedPagination,
+  receivedTotal,
   receivedReconsideration,
   receivedOptions,
   receivedSchema,
 } from './actions';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
 import { loadOptions, loadSchema } from './../api/schema';
-import { PaginationType } from './../dataset/PaginationType';
-
-const initPagination = {
-  page: 1,
-  perPage: 10,
-};
+import type { PaginationType } from './../dataset/PaginationType';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   loadOptions('/v1/demands')
@@ -33,7 +29,7 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 
 export const all = (
   sorts: Array<string>,
-  pagination: PaginationType = initPagination
+  pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
   const query = httpBuildQuery({
     page: pagination.page,
@@ -43,7 +39,8 @@ export const all = (
   });
   axios.get(`/v1/demands?${query}`)
     .then((response) => {
-      dispatch(receivedPaginationForAll(response.headers.link));
+      dispatch(receivedPagination(response.headers.link));
+      dispatch(receivedTotal(response.headers['x-total-count']));
       dispatch(receivedAll(response.data));
     });
 };

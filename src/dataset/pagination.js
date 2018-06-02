@@ -1,6 +1,6 @@
 // @flow
 import parse from 'parse-link-header';
-import { PaginationType } from './PaginationType';
+import type { PaginationType } from './PaginationType';
 
 export const fromHeader = (link: string): PaginationType => {
   const links = parse(link);

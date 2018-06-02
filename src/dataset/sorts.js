@@ -1,5 +1,5 @@
 // @flow
-import { SortType } from './SortType';
+import type { SortType } from './SortType';
 
 export const toggleSort = (sort: SortType): SortType => ({
   order: sort.order === 'asc' ? 'desc' : 'asc',

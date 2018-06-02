@@ -2,7 +2,8 @@ import * as R from 'ramda';
 import { getPrettyDescription } from './../description/selects';
 import {
   RECEIVED_ALL_DEMANDS,
-  RECEIVED_PAGINATION_FOR_ALL_DEMANDS,
+  RECEIVED_PAGINATION_DEMANDS,
+  RECEIVED_TOTAL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
   RECEIVED_DEMAND_OPTIONS,
   RECEIVED_DEMAND_SCHEMA,
@@ -16,8 +17,10 @@ export const demand = (state = {}, action) => {
       return { ...state, single: action.demand, etag: action.etag };
     case RECEIVED_ALL_DEMANDS:
       return { ...state, all: action.demands };
-    case RECEIVED_PAGINATION_FOR_ALL_DEMANDS:
+    case RECEIVED_PAGINATION_DEMANDS:
       return { ...state, pagination: action.pagination };
+    case RECEIVED_TOTAL_DEMANDS:
+      return { ...state, total: action.total };
     case RECEIVED_DEMAND_OPTIONS:
       return { ...state, options: action.options };
     case RECEIVED_DEMAND_SCHEMA:

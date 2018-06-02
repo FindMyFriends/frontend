@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
-import { PaginationType } from '../../dataset/PaginationType';
+import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
 type EnhancedTableHeadProps = {|
@@ -64,28 +64,25 @@ const EnhancedTableToolbar = () => (
 );
 
 type TableProps = {|
-  +pagination: PaginationType,
   +rows: Array<Object>,
   +sort: SortType,
+  +pagination: PaginationType,
   +onSort: string => (void),
+  +onPageChange: number => (void),
+  +onPerPageChange: number => (void),
+  +total: number,
 |};
-type TableState = {|
-  page: number,
-  perPage: number,
-|};
-class Table extends React.Component<TableProps, TableState> {
-  state = {
-    page: 0,
-    perPage: 5,
-  };
-
-  handleChangePage = (event, page) => this.setState({ page });
-
-  handleChangePerPage = event => this.setState({ perPage: event.target.value });
-
+class Table extends React.Component<TableProps> {
   render() {
-    const { rows, sort: { order, orderBy }, onSort } = this.props;
-    const { perPage, page } = this.state;
+    const {
+      rows,
+      sort: { order, orderBy },
+      pagination: { page, perPage },
+      onSort,
+      onPageChange,
+      onPerPageChange,
+      total,
+    } = this.props;
 
     return (
       <Paper>
@@ -112,13 +109,13 @@ class Table extends React.Component<TableProps, TableState> {
         </MaterialTable>
         <TablePagination
           component="div"
-          count={rows.length}
+          count={total}
           rowsPerPage={perPage}
-          page={page}
+          page={page - 1}
           backIconButtonProps={{ 'aria-label': 'Previous Page' }}
           nextIconButtonProps={{ 'aria-label': 'Next Page' }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangePerPage}
+          onChangePage={(event, page) => onPageChange(page + 1)}
+          onChangeRowsPerPage={event => onPerPageChange(event.target.value)}
         />
       </Paper>
     );
