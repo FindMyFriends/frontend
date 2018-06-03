@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import ListItemLink from './ListItemLink';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PermIdentity from '@material-ui/icons/PermIdentity';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
+import ListItemLink from './ListItemLink';
 
 const drawerWidth = 240;
 
@@ -91,9 +91,9 @@ type Props = {|
   +theme: Object,
   +component: Object,
 |};
-type State = {
+type State = {|
   open: boolean,
-};
+|};
 class MainAppBar extends React.Component<Props, State> {
   state = {
     open: false,
@@ -124,8 +124,10 @@ class MainAppBar extends React.Component<Props, State> {
         </AppBar>
         <Drawer
           variant="permanent"
-          classes={{ paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose) }}
           open={this.state.open}
+          classes={
+            { paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose) }
+          }
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerClose}>

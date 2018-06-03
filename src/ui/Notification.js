@@ -9,7 +9,6 @@ import Confirmation from './Confirmation';
 type Props = {|
   +content: string,
   +type: string,
-  +dispatch: () => mixed,
   +action: () => mixed,
   +discardedMessage: () => (void),
 |};

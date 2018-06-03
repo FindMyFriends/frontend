@@ -6,11 +6,11 @@ import {
   REQUESTED_CONFIRM,
 } from './actions';
 
-type stateType = {
+type stateType = {|
   +content: ?string,
   +type: ?string,
   +action: () => mixed,
-};
+|};
 const initState = {
   content: null,
   type: null,

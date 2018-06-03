@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import Table from './../../demand/output/Table';
 import { all as allDemands, saveNote, retract } from './../../demand/endpoints';
 import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
-import { getDemandNotes } from '../../demand/reducers';
 import type { PaginationType } from './../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { paginateWithReset } from '../../dataset/pagination';
@@ -23,9 +22,7 @@ const BottomRightNavigation = styled.div`
 `;
 
 type Props = {|
-  +pagination: PaginationType,
   +demands: Array<Object>,
-  +demandNotes: Object,
   +allDemands: (SortType, PaginationType) => (void),
   +total: number,
   +fetching: boolean,
@@ -49,14 +46,14 @@ class All extends React.Component<Props, State> {
     },
   };
 
+  componentDidMount() {
+    this.reload();
+  }
+
   reload = () => {
     const { sort, pagination } = this.state;
     this.props.allDemands(sort, pagination);
   };
-
-  componentDidMount() {
-    this.reload();
-  }
 
   handleSort = (column: string) => {
     const { sort, pagination } = this.state;
@@ -135,12 +132,17 @@ const mapStateToProps = state => ({
   total: state.demand.total || 0,
   pagination: state.demand.pagination,
   fetching: state.demand.fetching,
-  demandNotes: getDemandNotes(state),
 });
 const mapDispatchToProps = dispatch => ({
-  allDemands: (sort: SortType, pagination: PaginationType) => dispatch(allDemands([toApiOrdering(sort)], pagination)),
+  allDemands: (
+    sort: SortType,
+    pagination: PaginationType,
+  ) => dispatch(allDemands([toApiOrdering(sort)], pagination)),
   saveNote: (id: string, text: string, next: Promise<any>) => dispatch(saveNote(id, text, next)),
   retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
-  requestedConfirm: (content: string, action: () => (void)) => dispatch(requestedConfirm(content, action)),
+  requestedConfirm: (
+    content: string,
+    action: () => (void),
+  ) => dispatch(requestedConfirm(content, action)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(All);

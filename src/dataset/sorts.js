@@ -22,11 +22,15 @@ export const toApiOrdering = (sort: SortType): string => {
   return `-${sort.orderBy}`;
 };
 
-type sortWithResetType = {
+type sortWithResetType = {|
   +sort: SortType,
   +pagination: PaginationType,
-};
-export const sortWithReset = (sort: SortType, column: string, pagination: PaginationType): sortWithResetType => {
+|};
+export const sortWithReset = (
+  sort: SortType,
+  column: string,
+  pagination: PaginationType,
+): sortWithResetType => {
   return {
     sort: toggleSort(sort, column),
     pagination: {

@@ -14,12 +14,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
-import NoteDialog from './NoteDialog';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
+import NoteDialog from './NoteDialog';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
@@ -127,7 +127,7 @@ const Table = ({
         {rows.map((demand, index) => {
           return (
             <TableRow hover key={demand.id}>
-              <TableCell>{++index}</TableCell>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{demand.general.firstname || '-'}</TableCell>
               <TableCell>{demand.general.lastame || '-'}</TableCell>
               <TableCell>{demand.general.sex}</TableCell>
@@ -135,7 +135,9 @@ const Table = ({
               <TableCell>
                 <NoteDialog
                   note={demand.note}
-                  onSave={(text: string, next: () => (Promise<any>)) => onNoteSave(demand.id, text, next)}
+                  onSave={
+                    (text: string, next: () => (Promise<any>)) => onNoteSave(demand.id, text, next)
+                  }
                 />
               </TableCell>
               <TableCell numeric>

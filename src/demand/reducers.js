@@ -52,7 +52,9 @@ export const demand = (state: stateType = initState, action: Object) => {
   }
 };
 
-export const getTimelineSides = (options: any) => (options ? options.location.met_at.timeline_side : []);
+export const getTimelineSides = (options: any) => (
+  options ? options.location.met_at.timeline_side : []
+);
 
 export const getPrettyDemand = (demand: Object, options: any) => {
   if (R.isEmpty(demand) || R.isEmpty(options)) {

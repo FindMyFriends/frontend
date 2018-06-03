@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import Notification from './../ui/Notification';
 import { Route } from 'react-router-dom';
+import Notification from './../ui/Notification';
 import MainAppBar from './../menu/MainAppBar';
 
 type Props = {
