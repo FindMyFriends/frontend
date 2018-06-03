@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +14,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
+import NoteDialog from './NoteDialog';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
@@ -27,6 +35,8 @@ const EnhancedTableHead = ({ order, orderBy, onSort }: EnhancedTableHeadProps) =
     { id: 'general.lastname', sortable: true, label: 'Lastname' },
     { id: 'general.sex', sortable: true, label: 'Sex' },
     { id: 'created_at', sortable: true, label: 'Created at' },
+    { id: 'note', sortable: false, label: 'Note' },
+    { id: 'action', sortable: false, label: '' },
   ];
 
   return (
@@ -69,233 +79,104 @@ const EnhancedTableToolbar = () => (
   </Toolbar>
 );
 
+const styles = () => ({
+  deleteIconHover: {
+    '&:hover': {
+      color: red[800],
+    },
+  },
+  iconHover: {
+    '&:hover': {
+      color: grey[700],
+    },
+  },
+});
 type TableProps = {|
   +rows: Array<Object>,
   +sort: SortType,
   +pagination: PaginationType,
   +onSort: string => (void),
+  +onRetract: string => (void),
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
+  +onNoteSave: (id: string, text: string, next: () => (void)) => (void),
   +total: number,
+  +classes: Object,
 |};
-class Table extends React.Component<TableProps> {
-  render() {
-    const {
-      rows,
-      sort: { order, orderBy },
-      pagination: { page, perPage },
-      onSort,
-      onPageChange,
-      onPerPageChange,
-      total,
-    } = this.props;
-
-    return (
-      <Paper>
-        <EnhancedTableToolbar />
-        <MaterialTable style={{ overflowX: 'auto' }} aria-labelledby="tableTitle">
-          <EnhancedTableHead
-            order={order}
-            orderBy={orderBy}
-            onSort={onSort}
-          />
-          <TableBody>
-            {rows.map((n, index) => {
-              return (
-                <TableRow hover key={n.id}>
-                  <TableCell>{++index}</TableCell>
-                  <TableCell>{n.general.firstname || '-'}</TableCell>
-                  <TableCell>{n.general.lastame || '-'}</TableCell>
-                  <TableCell>{n.general.sex}</TableCell>
-                  <TableCell>{moment(n.created_at).format('YYYY-MM-DD')}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </MaterialTable>
-        <TablePagination
-          component="div"
-          count={total}
-          rowsPerPage={perPage}
-          page={page - 1}
-          backIconButtonProps={{ 'aria-label': 'Previous Page' }}
-          nextIconButtonProps={{ 'aria-label': 'Next Page' }}
-          onChangePage={(event, page) => onPageChange(page + 1)}
-          onChangeRowsPerPage={event => onPerPageChange(event.target.value)}
-        />
-      </Paper>
-    );
-  }
-}
-
-export default Table;
-
-
-
-
-
-/*
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-class MaterialTable extends React.Component {
-  handleRetract = (id: number) => {
-    const { history, dispatch } = this.props;
-    dispatch(requestedConfirm(
-      'Are you sure, you want to retract demand?',
-      () => dispatch(retract(id, () => history.push('/demands'))),
-    ));
-  };
-
-  render() {
-    const { demands, sorts, onSort } = this.props;
-    if (demands.length === 0) {
-      return (
-        <Center>
-          <h3>No demands, hit the button to add.</h3>
-        </Center>
-      );
-    }
-    return (
-      <React.Fragment>
-        <NoteDialog
-          onSave={this.handleNoteTextSave}
-          onTextChange={this.handleNoteTextChange}
-          onClose={this.handleCloseNoteDialog}
-          opened={this.state.note.dialog.opened}
-        >
-          {this.state.note.dialog.text}
-        </NoteDialog>
-        <MUITable selectable={false}>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="id"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Position
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="general.firstname"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Firstname
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="general.lastname"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Lastname
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="general.sex"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Sex
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="general.age"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Age
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>
-                <SortColumn
-                  name="created_at"
-                  sorts={sorts}
-                  onSort={onSort}
-                >
-                  Created at
-                </SortColumn>
-              </TableHeaderColumn>
-              <TableHeaderColumn>Note</TableHeaderColumn>
-              <TableHeaderColumn>Action</TableHeaderColumn>
+const Table = ({
+  onSort,
+  onPageChange,
+  onPerPageChange,
+  onRetract,
+  onNoteSave,
+  rows,
+  sort: { order, orderBy },
+  pagination: { page, perPage },
+  total,
+  classes,
+}: TableProps) => (
+  <Paper>
+    <EnhancedTableToolbar />
+    <MaterialTable style={{ overflowX: 'auto' }} aria-labelledby="tableTitle">
+      <EnhancedTableHead
+        order={order}
+        orderBy={orderBy}
+        onSort={onSort}
+      />
+      <TableBody>
+        {rows.map((demand, index) => {
+          return (
+            <TableRow hover key={demand.id}>
+              <TableCell>{++index}</TableCell>
+              <TableCell>{demand.general.firstname || '-'}</TableCell>
+              <TableCell>{demand.general.lastame || '-'}</TableCell>
+              <TableCell>{demand.general.sex}</TableCell>
+              <TableCell>{moment(demand.created_at).format('YYYY-MM-DD')}</TableCell>
+              <TableCell>
+                <NoteDialog
+                  note={demand.note}
+                  onSave={(text: string, next: () => (void)) => onNoteSave(demand.id, text, next)}
+                />
+              </TableCell>
+              <TableCell numeric>
+                <Link to={`/demands/${demand.id}`}>
+                  <VisibilityIcon
+                    color="action"
+                    className={classes.iconHover}
+                    style={{ margin: 5, cursor: 'pointer' }}
+                    component={<Link to={`/demands/${demand.id}`} />}
+                  />
+                </Link>
+                <Link to={`/demands/${demand.id}/reconsider`}>
+                  <EditIcon
+                    color="action"
+                    className={classes.iconHover}
+                    style={{ margin: 5, cursor: 'pointer' }}
+                  />
+                </Link>
+                <DeleteIcon
+                  className={classes.deleteIconHover}
+                  style={{ margin: 5, cursor: 'pointer' }}
+                  color="error"
+                  onClick={() => onRetract(demand.id)}
+                />
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {demands.map((demand, index) => {
-              return (
-                <TableRow key={demand.id}>
-                  <TableRowColumn>{index + 1}</TableRowColumn>
-                  <TableRowColumn>{demand.general.firstname || '-'}</TableRowColumn>
-                  <TableRowColumn>{demand.general.lastname || '-'}</TableRowColumn>
-                  <TableRowColumn>{demand.general.sex}</TableRowColumn>
-                  <TableRowColumn>{`${demand.general.age.from} - ${demand.general.age.to}`}</TableRowColumn>
-                  <TableRowColumn>{moment(demand.created_at).format('MM/DD/YYYY HH:mm')}</TableRowColumn>
-                  <TableRowColumn title={demand.note ? null : 'No available note'}>
-                    <NoteIcon
-                      onClick={() => this.handleOpenNoteDialog(demand.id)}
-                      color={demand.note ? black : grey500}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <IconMenu
-                      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                      anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-                      targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                    >
-                      <IconMenuItems
-                        demand={demand}
-                        onRetract={id => this.handleRetract(id)}
-                      />
-                    </IconMenu>
-                  </TableRowColumn>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </MUITable>
-      </React.Fragment>
-    );
-  }
-}
+          );
+        })}
+      </TableBody>
+    </MaterialTable>
+    <TablePagination
+      component="div"
+      count={total}
+      rowsPerPage={perPage}
+      page={page - 1}
+      backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+      nextIconButtonProps={{ 'aria-label': 'Next Page' }}
+      onChangePage={(event, page) => onPageChange(page + 1)}
+      onChangeRowsPerPage={event => onPerPageChange(event.target.value)}
+    />
+  </Paper>
+);
 
-const IconMenuItems = ({ demand, onRetract }) => ([
-  <MenuItem
-    key={0}
-    primaryText="View"
-    leftIcon={<VisibilityIcon />}
-    containerElement={<Link to={`/demands/${demand.id}`} />}
-  />,
-  <MenuItem
-    key={1}
-    primaryText="Reconsider"
-    leftIcon={<EditIcon />}
-    containerElement={<Link to={`/demands/${demand.id}/reconsider`} />}
-  />,
-  <MenuItem
-    key={2}
-    primaryText="Retract"
-    leftIcon={<DeleteIcon color={red500} />}
-    onClick={() => onRetract(demand.id)}
-  />,
-]);
-
-MaterialTable.propTypes = {
-  demands: PropTypes.array.isRequired,
-  demandNotes: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  sorts: PropTypes.object.isRequired,
-  onSort: PropTypes.func.isRequired,
-  onReload: PropTypes.func.isRequired,
-};*/
+export default withStyles(styles)(Table);

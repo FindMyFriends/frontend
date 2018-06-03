@@ -1,6 +1,6 @@
 // @flow
 import type { SortType } from './SortType';
-import type {PaginationType} from "./PaginationType";
+import type { PaginationType } from "./PaginationType";
 
 export const toggleSort = (sort: SortType, orderBy: string): SortType => {
   if (sort.orderBy === orderBy) {
@@ -11,7 +11,7 @@ export const toggleSort = (sort: SortType, orderBy: string): SortType => {
   }
   return {
     order: 'asc',
-    orderBy: orderBy,
+    orderBy,
   };
 };
 

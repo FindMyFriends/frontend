@@ -94,10 +94,10 @@ export const retract = (id: string, next: () => void) => (dispatch: (mixed) => O
     .catch(error => dispatch(receivedApiError(error)));
 };
 
-export const changeNote = (
+export const saveNote = (
   id: string,
   note: string,
-  next: (void) => void,
+  next: () => void,
 ) => (dispatch: (mixed) => Object) => {
   axios.patch(`/v1/demands/${id}`, { note })
     .then(next)

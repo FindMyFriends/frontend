@@ -1,6 +1,7 @@
 // @flow
-type OrderBy = 'asc' | 'desc';
+export type OrderType = 'asc' | 'desc';
+
 export type SortType = {|
-  +order: string,
-  +orderBy: OrderBy,
+  +order: OrderType,
+  +orderBy: string,
 |};

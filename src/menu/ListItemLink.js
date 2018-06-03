@@ -6,12 +6,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-type ListItemLinkProps = {|
+type Props = {|
   +children: string,
   +href: string,
   +icon: Object,
 |};
-const ListItemLink = ({ children, href, icon }: ListItemLinkProps) => (
+const ListItemLink = ({ children, href, icon }: Props) => (
   <ListItem button>
     <Link to={href}>
       <ListItemIcon>{icon}</ListItemIcon>

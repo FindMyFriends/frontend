@@ -6,13 +6,14 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
-import { all as allDemands } from './../../demand/endpoints';
+import { all as allDemands, saveNote, retract } from './../../demand/endpoints';
 import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
 import { getDemandNotes } from '../../demand/reducers';
 import type { PaginationType } from './../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { paginateWithReset } from '../../dataset/pagination';
 import Loader from './../../ui/Loader';
+import {requestedConfirm} from "../../ui/actions";
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -21,18 +22,21 @@ const BottomRightNavigation = styled.div`
   padding: 20px;
 `;
 
-type AllProps = {|
+type Props = {|
   +pagination: PaginationType,
   +demands: Array<Object>,
   +demandNotes: Object,
   +allDemands: (SortType, PaginationType) => (void),
   +total: number,
+  +saveNote: (id: string, text: string, next: () => (void)) => (void),
+  +retract: (id: string, next: () => (void)) => (void),
+  +requestedConfirm: (content: string, action: () => (void)) => (void),
 |};
-type AllState = {|
+type State = {|
   sort: SortType,
   pagination: PaginationType,
 |};
-class All extends React.Component<AllProps, AllState> {
+class All extends React.Component<Props, State> {
   state = {
     sort: {
       order: 'desc',
@@ -44,9 +48,13 @@ class All extends React.Component<AllProps, AllState> {
     }
   };
 
-  componentDidMount() {
+  reload = () => {
     const { sort, pagination } = this.state;
     this.props.allDemands(sort, pagination);
+  };
+
+  componentDidMount() {
+    this.reload();
   }
 
   handleSort = (column: string) => {
@@ -54,25 +62,40 @@ class All extends React.Component<AllProps, AllState> {
     this.setState({
       ...this.state,
       ...sortWithReset(sort, column, pagination),
-    }, () => this.props.allDemands(this.state.sort, this.state.pagination));
+    }, this.reload);
   };
 
   handleChangePerPage = (perPage: number) => {
     this.setState({
       ...this.state,
       pagination: paginateWithReset(perPage),
-    }, () => this.props.allDemands(this.state.sort, this.state.pagination));
+    }, this.reload);
   };
 
   handleChangePage = (page: number) => {
-    const { pagination, sort } = this.state;
+    const { pagination } = this.state;
     this.setState({
       ...this.state,
       pagination: {
         ...pagination,
         page,
       },
-    }, () => this.props.allDemands(sort, this.state.pagination));
+    }, this.reload);
+  };
+
+  handleNoteSave = (id: string, note: string, next: () => (void)) => {
+    this.props.saveNote(id, note, () => {
+      next();
+      // TODO: Do not reload all demands
+      this.reload();
+    })
+  };
+
+  handleRetract = (id: string) => {
+    this.props.requestedConfirm(
+      'Are you sure, you want to retract demand?',
+      () => this.props.retract(id, this.reload),
+    );
   };
 
   render() {
@@ -88,9 +111,11 @@ class All extends React.Component<AllProps, AllState> {
           sort={sort}
           pagination={pagination}
           total={total}
+          onNoteSave={this.handleNoteSave}
           onSort={column => this.handleSort(column)}
           onPageChange={page => this.handleChangePage(page)}
           onPerPageChange={perPage => this.handleChangePerPage(perPage)}
+          onRetract={this.handleRetract}
         />
         <BottomRightNavigation>
           <Link to="/demands/add">
@@ -112,5 +137,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   allDemands: (sort: SortType, pagination: PaginationType) => dispatch(allDemands([toApiOrdering(sort)], pagination)),
+  saveNote: (id: string, text: string, next: () => (void)) => dispatch(saveNote(id, text, next)),
+  retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
+  requestedConfirm: (content: string, action: () => (void)) => dispatch(requestedConfirm(content, action)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(All);

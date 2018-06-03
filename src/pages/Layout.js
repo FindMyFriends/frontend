@@ -3,11 +3,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import MainAppBar from './../menu/MainAppBar';
 
-type LayoutType = {
+type Props = {
   +component: any,
 };
-
-const Layout = ({ component: Component, ...rest }: LayoutType): Route => (
+const Layout = ({ component: Component, ...rest }: Props): Route => (
   <Route
     {...rest}
     render={(props) => (
