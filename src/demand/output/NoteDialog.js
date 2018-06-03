@@ -23,13 +23,14 @@ export default class NoteDialog extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    this.clearNote();
+    this.resetNote();
   }
 
-  clearNote = () => this.setState({ note: this.props.note || '' });
-  handleClickOpen = () => this.setState({ open: true });
-  handleClose = () => this.setState({ open: false }, this.clearNote);
-  handleNoteChange = (event: Object) => this.setState({ ...this.state, note: event.target.value });
+  resetNote = () => this.setState({ ...this.state, note: this.props.note || '' });
+  handleClose = () => this.setState({ ...this.state, open: false });
+  handleClickOpen = () => this.setState({ ...this.state, open: true });
+  handleCloseReset = () => this.setState({ ...this.state, open: false }, this.resetNote);
+  handleChange = (event: Object) => this.setState({ ...this.state, note: event.target.value });
   handleSave = () => this.props.onSave(this.state.note, this.handleClose);
 
   render() {
@@ -38,7 +39,7 @@ export default class NoteDialog extends React.Component<Props, State> {
         <Note onClick={this.handleClickOpen}>{this.props.note}</Note>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleCloseReset}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Note</DialogTitle>
@@ -49,12 +50,12 @@ export default class NoteDialog extends React.Component<Props, State> {
               id="note"
               type="text"
               value={this.state.note}
-              onChange={this.handleNoteChange}
+              onChange={this.handleChange}
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">Cancel</Button>
+            <Button onClick={this.handleCloseReset} color="primary">Cancel</Button>
             <Button onClick={this.handleSave} color="primary">Save</Button>
           </DialogActions>
         </Dialog>
