@@ -7,10 +7,12 @@ import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
 import { all as allDemands } from './../../demand/endpoints';
-import { toApiOrdering, toggleSort } from './../../dataset/sorts';
+import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
 import { getDemandNotes } from '../../demand/reducers';
 import type { PaginationType } from './../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
+import { paginateWithReset } from '../../dataset/pagination';
+import Loader from './../../ui/Loader';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -33,8 +35,8 @@ type AllState = {|
 class All extends React.Component<AllProps, AllState> {
   state = {
     sort: {
-      order: 'asc',
-      orderBy: 'id',
+      order: 'desc',
+      orderBy: 'created_at',
     },
     pagination: {
       page: 1,
@@ -51,19 +53,15 @@ class All extends React.Component<AllProps, AllState> {
     const { sort, pagination } = this.state;
     this.setState({
       ...this.state,
-      sort: toggleSort(sort),
-    }, () => this.props.allDemands(this.state.sort, pagination));
+      ...sortWithReset(sort, column, pagination),
+    }, () => this.props.allDemands(this.state.sort, this.state.pagination));
   };
 
   handleChangePerPage = (perPage: number) => {
-    const { pagination, sort } = this.state;
     this.setState({
       ...this.state,
-      pagination: {
-        ...pagination,
-        perPage,
-      },
-    }, () => this.props.allDemands(sort, this.state.pagination));
+      pagination: paginateWithReset(perPage),
+    }, () => this.props.allDemands(this.state.sort, this.state.pagination));
   };
 
   handleChangePage = (page: number) => {
@@ -80,19 +78,19 @@ class All extends React.Component<AllProps, AllState> {
   render() {
     const { sort, pagination } = this.state;
     const { demands, total } = this.props;
-    if (total === 0) {
-      return <h2>Loading...</h2>;
+    if (total === 0) { // TODO: 0 does not mean not loaded
+      return <Loader />;
     }
     return (
       <React.Fragment>
         <Table
           rows={demands}
           sort={sort}
+          pagination={pagination}
           total={total}
           onSort={column => this.handleSort(column)}
           onPageChange={page => this.handleChangePage(page)}
           onPerPageChange={perPage => this.handleChangePerPage(perPage)}
-          pagination={pagination}
         />
         <BottomRightNavigation>
           <Link to="/demands/add">

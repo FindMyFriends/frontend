@@ -1,5 +1,6 @@
-// TODO: Flow
+// @flow
 import { fromHeader } from '../dataset/pagination';
+import extractedLocationId from '../api/extractedLocationId';
 
 export const RECEIVED_ALL_DEMANDS = 'RECEIVED_ALL_DEMANDS';
 export const RECEIVED_PAGINATION_DEMANDS = 'RECEIVED_PAGINATION_DEMANDS';
@@ -11,18 +12,18 @@ export const RECEIVED_DEMAND_OPTIONS = 'RECEIVED_DEMAND_OPTIONS';
 export const RECEIVED_DEMAND_SCHEMA = 'RECEIVED_DEMAND_SCHEMA';
 
 // TODO: Move to schema reducer
-export const receivedSchema = schema => ({
+export const receivedSchema = (schema: Object) => ({
   type: RECEIVED_DEMAND_SCHEMA,
   schema,
 });
 
 // TODO: Move to schema reducer
-export const receivedOptions = options => ({
+export const receivedOptions = (options: Object) => ({
   type: RECEIVED_DEMAND_OPTIONS,
   options,
 });
 
-export const receivedAll = demands => ({
+export const receivedAll = (demands: Array<Object>) => ({
   type: RECEIVED_ALL_DEMANDS,
   demands,
 });
@@ -37,20 +38,20 @@ export const receivedTotal = (total: string) => ({
   total: parseInt(total, 10)
 });
 
-export const receivedSingle = (id, demand, etag) => ({
+export const receivedSingle = (id: string, demand: Object, etag: string) => ({
   type: RECEIVED_SINGLE_DEMAND,
   id,
   demand,
   etag,
 });
 
-export const addedDemand = (demand, location) => ({
+export const addedDemand = (demand: Object, location: string) => ({
   type: ADDED_DEMAND,
   demand,
-  id: location.substring(location.lastIndexOf('/') + 1),
+  id: extractedLocationId(location),
 });
 
-export const receivedReconsideration = id => ({
+export const receivedReconsideration = (id: string) => ({
   type: RECEIVED_DEMAND_RECONSIDER,
   id,
 });

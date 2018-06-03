@@ -9,3 +9,8 @@ export const fromHeader = (link: string): PaginationType => {
     perPage: parseInt(links.first.per_page, 10),
   };
 };
+
+export const paginateWithReset = (perPage: number): PaginationType => ({
+  page: 1,
+  perPage,
+});

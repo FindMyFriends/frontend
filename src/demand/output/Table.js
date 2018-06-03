@@ -22,11 +22,11 @@ type EnhancedTableHeadProps = {|
 |};
 const EnhancedTableHead = ({ order, orderBy, onSort }: EnhancedTableHeadProps) => {
   const columns = [
-    { id: 'id', label: '#' },
-    { id: 'firstname', label: 'Firstname' },
-    { id: 'lastname', label: 'Lastname' },
-    { id: 'sex', label: 'Sex' },
-    { id: 'created_at', label: 'Created at' },
+    { id: 'id', sortable: false, label: '#' },
+    { id: 'general.firstname', sortable: true, label: 'Firstname' },
+    { id: 'general.lastname', sortable: true, label: 'Lastname' },
+    { id: 'general.sex', sortable: true, label: 'Sex' },
+    { id: 'created_at', sortable: true, label: 'Created at' },
   ];
 
   return (
@@ -38,15 +38,21 @@ const EnhancedTableHead = ({ order, orderBy, onSort }: EnhancedTableHeadProps) =
               key={column.id}
               sortDirection={orderBy === column.id ? order : false}
             >
-              <Tooltip title="Sort" enterDelay={300}>
-                <TableSortLabel
-                  active={orderBy === column.id}
-                  direction={order}
-                  onClick={() => onSort(column.id)}
-                >
-                  {column.label}
-                </TableSortLabel>
-              </Tooltip>
+              {
+                column.sortable
+                  ? (
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === column.id}
+                        direction={order}
+                        onClick={() => onSort(column.id)}
+                      >
+                        {column.label}
+                      </TableSortLabel>
+                    </Tooltip>
+                  )
+                  : column.label
+              }
             </TableCell>
           );
         })}

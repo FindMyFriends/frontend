@@ -35,7 +35,7 @@ export const all = (
     page: pagination.page,
     per_page: pagination.perPage,
     fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
-    sorts: sorts.join(','),
+    sort: sorts.join(','),
   });
   axios.get(`/v1/demands?${query}`)
     .then((response) => {
