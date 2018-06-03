@@ -28,6 +28,7 @@ type Props = {|
   +demandNotes: Object,
   +allDemands: (SortType, PaginationType) => (void),
   +total: number,
+  +fetching: boolean,
   +saveNote: (id: string, text: string, next: () => (any)) => (void),
   +retract: (id: string, next: () => (void)) => (void),
   +requestedConfirm: (content: string, action: () => (void)) => (void),
@@ -100,8 +101,8 @@ class All extends React.Component<Props, State> {
 
   render() {
     const { sort, pagination } = this.state;
-    const { demands, total } = this.props;
-    if (total === 0) { // TODO: 0 does not mean not loaded
+    const { demands, total, fetching } = this.props;
+    if (fetching) {
       return <Loader />;
     }
     return (
@@ -133,6 +134,7 @@ const mapStateToProps = state => ({
   demands: state.demand.all || [],
   total: state.demand.total || 0,
   pagination: state.demand.pagination,
+  fetching: state.demand.fetching,
   demandNotes: getDemandNotes(state),
 });
 const mapDispatchToProps = dispatch => ({

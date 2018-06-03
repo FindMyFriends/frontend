@@ -7,8 +7,6 @@ import {
   addedDemand,
   receivedAll,
   receivedSingle,
-  receivedPagination,
-  receivedTotal,
   receivedReconsideration,
   receivedOptions,
   receivedSchema,
@@ -38,13 +36,7 @@ export const all = (
     sort: sorts.join(','),
   });
   axios.get(`/v1/demands?${query}`)
-    .then((response) => {
-      dispatch(receivedAll(response.data));
-      return response.headers;
-    }).then((headers) => {
-      dispatch(receivedPagination(headers.link));
-      dispatch(receivedTotal(headers['x-total-count']));
-  });
+    .then(response => dispatch(receivedAll(response.data, response.headers)));
 };
 
 export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
