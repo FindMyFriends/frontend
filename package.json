@@ -30,7 +30,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc src/ --ignore-path .eslintignore",
-    "check": "yarn lint && yarn run flow"
+    "check": "yarn lint && yarn run flow",
+    "flow-compile": "yarn run babel src/ -- -d lib/"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
