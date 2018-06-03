@@ -1,6 +1,6 @@
 // @flow
 import type { SortType } from './SortType';
-import type { PaginationType } from "./PaginationType";
+import type { PaginationType } from './PaginationType';
 
 export const toggleSort = (sort: SortType, orderBy: string): SortType => {
   if (sort.orderBy === orderBy) {
@@ -32,6 +32,6 @@ export const sortWithReset = (sort: SortType, column: string, pagination: Pagina
     pagination: {
       page: 1,
       perPage: pagination.perPage,
-    }
-  }
+    },
+  };
 };

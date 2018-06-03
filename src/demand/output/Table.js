@@ -42,7 +42,7 @@ const EnhancedTableHead = ({ order, orderBy, onSort }: EnhancedTableHeadProps) =
   return (
     <TableHead>
       <TableRow>
-        {columns.map(column => {
+        {columns.map((column) => {
           return (
             <TableCell
               key={column.id}

@@ -12,7 +12,7 @@ const dynamicHeaders = (): Object => {
   return {};
 };
 
-export default function withSettings (inherited: Object): Object {
+export default function withSettings(inherited: Object): Object {
   return merge(
     inherited,
     {
@@ -27,4 +27,4 @@ export default function withSettings (inherited: Object): Object {
       },
     },
   );
-};
+}

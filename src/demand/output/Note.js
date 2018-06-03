@@ -2,7 +2,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { default as Icon } from '@material-ui/icons/Note';
-import grey from "@material-ui/core/colors/grey";
+import grey from '@material-ui/core/colors/grey';
 
 const styles = () => ({
   iconHover: {

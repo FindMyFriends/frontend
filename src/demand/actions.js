@@ -25,7 +25,7 @@ export const receivedAll = (demands: Array<Object>, headers: Object) => ({
   type: RECEIVED_ALL_DEMANDS,
   demands,
   total: parseInt(headers['x-total-count'], 10),
-  pagination: fromHeader(headers.link)
+  pagination: fromHeader(headers.link),
 });
 
 export const receivedSingle = (id: string, demand: Object, etag: string) => ({

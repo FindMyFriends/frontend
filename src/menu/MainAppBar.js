@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import ListItemLink from './ListItemLink'
+import ListItemLink from './ListItemLink';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -124,7 +124,7 @@ class MainAppBar extends React.Component<Props, State> {
         </AppBar>
         <Drawer
           variant="permanent"
-          classes={{paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)}}
+          classes={{ paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose) }}
           open={this.state.open}
         >
           <div className={classes.toolbar}>

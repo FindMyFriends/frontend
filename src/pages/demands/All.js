@@ -13,7 +13,7 @@ import type { PaginationType } from './../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { paginateWithReset } from '../../dataset/pagination';
 import Loader from './../../ui/Loader';
-import {requestedConfirm} from "../../ui/actions";
+import { requestedConfirm } from '../../ui/actions';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -46,7 +46,7 @@ class All extends React.Component<Props, State> {
     pagination: {
       page: 1,
       perPage: 5,
-    }
+    },
   };
 
   reload = () => {
@@ -88,7 +88,7 @@ class All extends React.Component<Props, State> {
     this.props.saveNote(
       id,
       note,
-      () => Promise.resolve().then(next).then(this.reload)
+      () => Promise.resolve().then(next).then(this.reload),
     );
   };
 

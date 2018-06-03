@@ -14,7 +14,9 @@ type Props = {|
   +fullScreen: boolean,
   +onConfirm: () => (void),
 |};
-const Confirmation = ({ children, onClose, onConfirm, fullScreen }: Props) => (
+const Confirmation = ({
+  children, onClose, onConfirm, fullScreen,
+}: Props) => (
   <Dialog
     fullScreen={fullScreen}
     open

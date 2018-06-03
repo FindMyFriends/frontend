@@ -13,7 +13,9 @@ type Props = {|
   +action: () => mixed,
   +discardedMessage: () => (void),
 |};
-const Notification = ({ content, type, action, ...props }: Props) => {
+const Notification = ({
+  content, type, action, ...props
+}: Props) => {
   if (!content) {
     return null;
   }

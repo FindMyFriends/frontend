@@ -10,7 +10,7 @@ type Props = {
 const Layout = ({ component: Component, ...rest }: Props): Route => (
   <Route
     {...rest}
-    render={(props) => (
+    render={props => (
       <React.Fragment>
         <Notification />
         <MainAppBar component={<Component {...props} />} />
