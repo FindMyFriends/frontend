@@ -86,21 +86,21 @@ const styles = theme => ({
   },
 });
 
-type MainAppBarProps = {|
+type Props = {|
   +classes: Object,
   +theme: Object,
   +component: Object,
 |};
-type MainAppBarState = {
+type State = {
   open: boolean,
 };
-class MainAppBar extends React.Component<MainAppBarProps, MainAppBarState> {
+class MainAppBar extends React.Component<Props, State> {
   state = {
     open: false,
   };
 
-  handleDrawerOpen = () => this.setState({ open: true });
-  handleDrawerClose = () => this.setState({ open: false });
+  handleDrawerOpen = () => this.setState({ ...this.state, open: true });
+  handleDrawerClose = () => this.setState({ ...this.state, open: false });
 
   render() {
     const { classes, theme, component } = this.props;

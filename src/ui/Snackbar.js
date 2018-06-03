@@ -7,16 +7,14 @@ type Props = {|
   +onClose: () => mixed,
 |};
 const Snackbar = ({ children, onClose }: Props) => (
-  <div>
-    <MaterialSnackbar
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      open
-      autoHideDuration={3000}
-      onClose={onClose}
-      ContentProps={{ 'aria-describedby': 'message-id' }}
-      message={<span id="message-id">{children}</span>}
-    />
-  </div>
+  <MaterialSnackbar
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    open
+    autoHideDuration={3000}
+    onClose={onClose}
+    ContentProps={{ 'aria-describedby': 'message-id' }}
+    message={<span id="message-id">{children}</span>}
+  />
 );
 
 export default Snackbar;

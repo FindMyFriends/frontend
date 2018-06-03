@@ -39,10 +39,12 @@ export const all = (
   });
   axios.get(`/v1/demands?${query}`)
     .then((response) => {
-      dispatch(receivedPagination(response.headers.link));
-      dispatch(receivedTotal(response.headers['x-total-count']));
       dispatch(receivedAll(response.data));
-    });
+      return response.headers;
+    }).then((headers) => {
+      dispatch(receivedPagination(headers.link));
+      dispatch(receivedTotal(headers['x-total-count']));
+  });
 };
 
 export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
@@ -97,7 +99,7 @@ export const retract = (id: string, next: () => void) => (dispatch: (mixed) => O
 export const saveNote = (
   id: string,
   note: string,
-  next: () => void,
+  next: Promise<any>,
 ) => (dispatch: (mixed) => Object) => {
   axios.patch(`/v1/demands/${id}`, { note })
     .then(next)

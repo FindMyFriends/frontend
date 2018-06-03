@@ -28,7 +28,7 @@ type Props = {|
   +demandNotes: Object,
   +allDemands: (SortType, PaginationType) => (void),
   +total: number,
-  +saveNote: (id: string, text: string, next: () => (void)) => (void),
+  +saveNote: (id: string, text: string, next: () => (any)) => (void),
   +retract: (id: string, next: () => (void)) => (void),
   +requestedConfirm: (content: string, action: () => (void)) => (void),
 |};
@@ -83,12 +83,12 @@ class All extends React.Component<Props, State> {
     }, this.reload);
   };
 
-  handleNoteSave = (id: string, note: string, next: () => (void)) => {
-    this.props.saveNote(id, note, () => {
-      next();
-      // TODO: Do not reload all demands
-      this.reload();
-    })
+  handleNoteSave = (id: string, note: string, next: () => (any)) => {
+    this.props.saveNote(
+      id,
+      note,
+      () => Promise.resolve().then(next).then(this.reload)
+    );
   };
 
   handleRetract = (id: string) => {
@@ -137,7 +137,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   allDemands: (sort: SortType, pagination: PaginationType) => dispatch(allDemands([toApiOrdering(sort)], pagination)),
-  saveNote: (id: string, text: string, next: () => (void)) => dispatch(saveNote(id, text, next)),
+  saveNote: (id: string, text: string, next: Promise<any>) => dispatch(saveNote(id, text, next)),
   retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
   requestedConfirm: (content: string, action: () => (void)) => dispatch(requestedConfirm(content, action)),
 });

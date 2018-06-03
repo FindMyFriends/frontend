@@ -27,14 +27,14 @@ const Confirmation = ({ children, onClose, onConfirm, fullScreen }: Props) => (
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="primary">No</Button>
-      <Button onClick={() => confirmClose(onClose, onConfirm)} color="secondary">Yes</Button>
+      <Button
+        onClick={() => Promise.resolve().then(onClose).then(onConfirm)}
+        color="secondary"
+      >
+        Yes
+      </Button>
     </DialogActions>
   </Dialog>
 );
-
-const confirmClose = (onClose: () => (mixed), onConfirm: () => (void)) => {
-  onConfirm();
-  onClose();
-};
 
 export default withMobileDialog()(Confirmation);

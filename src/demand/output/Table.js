@@ -99,7 +99,7 @@ type TableProps = {|
   +onRetract: string => (void),
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
-  +onNoteSave: (id: string, text: string, next: () => (void)) => (void),
+  +onNoteSave: (id: string, text: string, next: () => (Promise<any>)) => (void),
   +total: number,
   +classes: Object,
 |};
@@ -135,7 +135,7 @@ const Table = ({
               <TableCell>
                 <NoteDialog
                   note={demand.note}
-                  onSave={(text: string, next: () => (void)) => onNoteSave(demand.id, text, next)}
+                  onSave={(text: string, next: () => (Promise<any>)) => onNoteSave(demand.id, text, next)}
                 />
               </TableCell>
               <TableCell numeric>

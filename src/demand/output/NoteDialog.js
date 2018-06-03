@@ -14,7 +14,7 @@ type State = {|
 |};
 type Props = {|
   +note: ?string,
-  +onSave: (text: string, next: (void) => (void)) => (void),
+  +onSave: (text: string, next: () => Promise<any>) => (void),
 |};
 export default class NoteDialog extends React.Component<Props, State> {
   state = {
@@ -27,9 +27,9 @@ export default class NoteDialog extends React.Component<Props, State> {
   }
 
   resetNote = () => this.setState({ ...this.state, note: this.props.note || '' });
-  handleClose = () => this.setState({ ...this.state, open: false });
+  handleClose = () => Promise.resolve().then(() => this.setState({ ...this.state, open: false }));
   handleClickOpen = () => this.setState({ ...this.state, open: true });
-  handleCloseReset = () => this.setState({ ...this.state, open: false }, this.resetNote);
+  handleCloseReset = () => this.handleClose().then(this.resetNote);
   handleChange = (event: Object) => this.setState({ ...this.state, note: event.target.value });
   handleSave = () => this.props.onSave(this.state.note, this.handleClose);
 
