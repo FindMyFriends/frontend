@@ -1,5 +1,4 @@
 {
-  "plugins": ["jest"],
   "parser"  : "babel-eslint",
   "extends" : [
     "airbnb",
@@ -22,6 +21,5 @@
   },
   env: {
     browser: true, // because of document in tests,
-    "jest/globals": true
   }
 }
