@@ -2,10 +2,9 @@
 import * as R from 'ramda';
 import { getPrettyDescription } from './../description/selects';
 import {
+  REQUESTED_DEMAND,
   RECEIVED_ALL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
-  RECEIVED_DEMAND_OPTIONS,
-  RECEIVED_DEMAND_SCHEMA,
 } from './actions';
 
 type stateType = {|
@@ -13,8 +12,6 @@ type stateType = {|
   +etag: ?string,
   +all: ?Array<Object>,
   +total: ?number,
-  +options: ?any, // TODO: Move
-  +schema: ?any, // TODO: Move
   +fetching: boolean,
 |};
 const initState = {
@@ -22,8 +19,6 @@ const initState = {
   etag: null,
   all: null,
   total: null,
-  options: null,
-  schema: null,
   fetching: true,
 };
 export const demand = (state: stateType = initState, action: Object) => {
@@ -33,7 +28,7 @@ export const demand = (state: stateType = initState, action: Object) => {
         ...state,
         single: action.demand,
         etag: action.etag,
-        fetching: false,
+        fetching: action.fetching,
       };
     case RECEIVED_ALL_DEMANDS:
       return {
@@ -41,12 +36,13 @@ export const demand = (state: stateType = initState, action: Object) => {
         all: action.demands,
         pagination: action.pagination,
         total: action.total,
-        fetching: false,
+        fetching: action.fetching,
       };
-    case RECEIVED_DEMAND_OPTIONS:
-      return { ...state, options: action.options };
-    case RECEIVED_DEMAND_SCHEMA:
-      return { ...state, schema: action.schema };
+    case REQUESTED_DEMAND:
+      return {
+        ...state,
+        fetching: action.fetching,
+      };
     default:
       return state;
   }
@@ -61,14 +57,4 @@ export const getPrettyDemand = (demand: Object, options: any) => {
     return { };
   }
   return getPrettyDescription(demand, options);
-};
-
-export const getDemandNotes = (state: Object) => {
-  if (state.demand.all) {
-    return state.demand.all.reduce((demandNotes, demand) => ({
-      ...demandNotes,
-      [demand.id]: demand.note,
-    }), { });
-  }
-  return { };
 };

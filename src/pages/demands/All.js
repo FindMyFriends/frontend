@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
-import { all as allDemands, saveNote, retract } from './../../demand/endpoints';
+import { all, saveNote, retract } from './../../demand/endpoints';
 import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
 import type { PaginationType } from './../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
@@ -23,10 +23,10 @@ const BottomRightNavigation = styled.div`
 
 type Props = {|
   +demands: Array<Object>,
-  +allDemands: (SortType, PaginationType) => (void),
+  +all: (SortType, PaginationType) => (void),
   +total: number,
   +fetching: boolean,
-  +saveNote: (id: string, text: string, next: () => (any)) => (void),
+  +saveNote: (id: string, text: string, next: () => (mixed)) => (void),
   +retract: (id: string, next: () => (void)) => (void),
   +requestedConfirm: (content: string, action: () => (void)) => (void),
 |};
@@ -52,7 +52,7 @@ class All extends React.Component<Props, State> {
 
   reload = () => {
     const { sort, pagination } = this.state;
-    this.props.allDemands(sort, pagination);
+    this.props.all(sort, pagination);
   };
 
   handleSort = (column: string) => {
@@ -134,10 +134,10 @@ const mapStateToProps = state => ({
   fetching: state.demand.fetching,
 });
 const mapDispatchToProps = dispatch => ({
-  allDemands: (
+  all: (
     sort: SortType,
     pagination: PaginationType,
-  ) => dispatch(allDemands([toApiOrdering(sort)], pagination)),
+  ) => dispatch(all([toApiOrdering(sort)], pagination)),
   saveNote: (id: string, text: string, next: Promise<any>) => dispatch(saveNote(id, text, next)),
   retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
   requestedConfirm: (

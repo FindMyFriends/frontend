@@ -4,31 +4,21 @@ import omit from 'lodash/omit';
 import httpBuildQuery from 'http-build-query';
 import * as R from 'ramda';
 import {
+  requestedDemand,
   addedDemand,
   receivedAll,
   receivedSingle,
   receivedReconsideration,
-  receivedOptions,
-  receivedSchema,
 } from './actions';
+import { options } from './../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
-import { loadOptions, loadSchema } from './../api/schema';
 import type { PaginationType } from './../dataset/PaginationType';
-
-export const options = () => (dispatch: (mixed) => Object) => {
-  loadOptions('/v1/demands')
-    .then(options => dispatch(receivedOptions(options)));
-};
-
-export const schema = () => (dispatch: (mixed) => Object) => {
-  loadSchema('/schema/v1/demand/get.json')
-    .then(schema => dispatch(receivedSchema(schema)));
-};
 
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
+  dispatch(requestedDemand());
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -40,11 +30,15 @@ export const all = (
 };
 
 export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
+  dispatch(requestedDemand());
   const query = httpBuildQuery({
     fields: fields.join(','),
   });
-  axios.get(`/v1/demands/${id}?${query}`)
-    .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)));
+  Promise.all([
+    axios.get(`/v1/demands/${id}?${query}`)
+      .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
+    dispatch(options('/v1/demands')),
+  ]);
 };
 
 export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
