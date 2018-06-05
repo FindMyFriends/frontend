@@ -1,5 +1,4 @@
 // @flow
-import * as R from 'ramda';
 import { getPrettyDescription } from './../description/selects';
 import {
   REQUESTED_DEMAND,
@@ -52,9 +51,9 @@ export const getTimelineSides = (options: any) => (
   options ? options.location.met_at.timeline_side : []
 );
 
-export const getPrettyDemand = (demand: Object, options: any) => {
-  if (R.isEmpty(demand) || R.isEmpty(options)) {
-    return { };
+export const getPrettyDemand = (demand: ?Object, options: ?mixed): Object => {
+  if (demand && options) {
+    return getPrettyDescription(demand, options);
   }
-  return getPrettyDescription(demand, options);
+  return { };
 };

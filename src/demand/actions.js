@@ -2,6 +2,7 @@
 import { fromHeader } from '../dataset/pagination';
 import extractedLocationId from '../api/extractedLocationId';
 
+export const DEMAND = 'DEMAND';
 export const REQUESTED_DEMAND = 'REQUESTED_DEMAND';
 export const RECEIVED_ALL_DEMANDS = 'RECEIVED_ALL_DEMANDS';
 export const RECEIVED_SINGLE_DEMAND = 'RECEIVED_SINGLE_DEMAND';

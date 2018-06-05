@@ -7,14 +7,20 @@ import {
 } from './actions';
 import { loadOptions, loadSchema } from './../api/schema';
 
-export const options = (uri: string) => (dispatch: (mixed) => Object): Promise<any> => {
-  dispatch(requestedOptions());
+export const options = (
+  uri: string,
+  scope: string,
+) => (dispatch: (mixed) => Object): Promise<any> => {
+  dispatch(requestedOptions(scope));
   return loadOptions(uri)
-    .then(options => dispatch(receivedOptions(options)));
+    .then(options => dispatch(receivedOptions(options, scope)));
 };
 
-export const schema = (uri: string) => (dispatch: (mixed) => Object): Promise<any> => {
-  dispatch(requestedSchema());
+export const schema = (
+  uri: string,
+  scope: string,
+) => (dispatch: (mixed) => Object): Promise<any> => {
+  dispatch(requestedSchema(scope));
   return loadSchema(uri)
-    .then(schema => dispatch(receivedSchema(schema)));
+    .then(schema => dispatch(receivedSchema(schema, scope)));
 };

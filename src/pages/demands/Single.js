@@ -1,18 +1,12 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import styled from 'styled-components';
-import Table from './../../demand/output/Table';
 import { single } from './../../demand/endpoints';
-import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
-import type { PaginationType } from './../../dataset/PaginationType';
-import type { SortType } from '../../dataset/SortType';
-import { paginateWithReset } from '../../dataset/pagination';
 import Loader from './../../ui/Loader';
-import { requestedConfirm } from '../../ui/actions';
+import Overview from './../../demand/output/Overview';
+import { getPrettyDemand } from '../../demand/reducers';
+import { DEMAND } from '../../demand/actions';
+import { getScopeOptions, isFetching } from '../../schema/reducers';
 
 type Props = {|
   +demand: Object,
@@ -31,14 +25,14 @@ class Single extends React.Component<Props, any> {
       return <Loader />;
     }
     return (
-      ''
+      <Overview demand={demand} />
     );
   }
 }
 
 const mapStateToProps = state => ({
-  demand: state.demand.single || {},
-  fetching: state.demand.fetching || state.schema.fetching,
+  demand: getPrettyDemand(state.demand.single, getScopeOptions(state, DEMAND)),
+  fetching: state.demand.fetching || isFetching(state, DEMAND),
 });
 const mapDispatchToProps = dispatch => ({
   single: (id: string) => dispatch(single(id)),

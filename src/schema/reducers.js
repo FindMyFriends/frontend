@@ -9,34 +9,54 @@ import {
 type stateType = {|
   +options: ?Object,
   +schema: ?Object,
-  +fetching: boolean,
+  +scope: ?string,
 |};
 const initState = {
   options: null,
   schema: null,
-  fetching: true,
+  scope: null,
 };
 export const schema = (state: stateType = initState, action: Object) => {
   switch (action.type) {
     case RECEIVED_SCHEMA_OPTIONS:
       return {
         ...state,
-        options: action.options,
-        fetching: action.fetching,
+        [action.scope]: {
+          options: action.options,
+          fetching: action.fetching,
+        },
       };
     case RECEIVED_SCHEMA:
       return {
         ...state,
-        schema: action.schema,
-        fetching: action.fetching,
+        [action.scope]: {
+          schema: action.schema,
+          fetching: action.fetching,
+        },
       };
     case REQUESTED_SCHEMA:
     case REQUESTED_SCHEMA_OPTIONS:
       return {
         ...state,
-        fetching: action.fetching,
+        [action.scope]: {
+          fetching: action.fetching,
+        },
       };
     default:
       return state;
   }
 };
+
+export const getScopeOptions = (
+  state: Object,
+  scope: string,
+): ?Object => (
+  state.schema[scope] ? state.schema[scope].options : null
+);
+
+export const isFetching = (
+  state: Object,
+  scope: string,
+): boolean => (
+  state.schema[scope] ? state.schema[scope].fetching : true
+);

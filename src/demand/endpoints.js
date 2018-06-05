@@ -9,6 +9,7 @@ import {
   receivedAll,
   receivedSingle,
   receivedReconsideration,
+  DEMAND,
 } from './actions';
 import { options } from './../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
@@ -37,7 +38,7 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
   Promise.all([
     axios.get(`/v1/demands/${id}?${query}`)
       .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
-    dispatch(options('/v1/demands')),
+    dispatch(options('/v1/demands', DEMAND)),
   ]);
 };
 
