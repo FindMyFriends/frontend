@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import Layout from './../pages/Layout';
-import Default from './../pages/Default';
-import { default as AllDemands } from './../pages/demands/All';
-import { default as SingleDemand } from './../pages/demands/Single';
+import Layout from '../pages/Layout';
+import Default from '../pages/Default';
+import { default as AllDemands } from '../pages/Demands';
+import { default as SingleDemand } from '../pages/Demand';
 
 const Routes = (): BrowserRouter => (
   <BrowserRouter>

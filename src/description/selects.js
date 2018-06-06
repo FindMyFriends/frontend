@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import * as R from 'ramda';
-import * as enumSet from './../api/enum';
+import * as enumSet from '../api/enum';
 
 export const getSex = options => (options ? options.general.sex : []);
 export const getEthnicGroups = (options) => {

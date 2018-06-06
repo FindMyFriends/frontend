@@ -5,7 +5,7 @@ import {
   receivedSchema,
   requestedSchema,
 } from './actions';
-import { loadOptions, loadSchema } from './../api/schema';
+import { loadOptions, loadSchema } from '../api/schema';
 
 export const options = (
   uri: string,

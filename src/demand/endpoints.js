@@ -11,9 +11,9 @@ import {
   receivedReconsideration,
   DEMAND,
 } from './actions';
-import { options } from './../schema/endpoints';
-import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
-import type { PaginationType } from './../dataset/PaginationType';
+import { options } from '../schema/endpoints';
+import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
+import type { PaginationType } from '../dataset/PaginationType';
 
 export const all = (
   sorts: Array<string>,

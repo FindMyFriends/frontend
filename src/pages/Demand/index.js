@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { single } from './../../demand/endpoints';
-import Loader from './../../ui/Loader';
-import Overview from './../../demand/output/Overview';
+import { single } from '../../demand/endpoints';
+import Loader from '../../ui/Loader';
+import Overview from '../../demand/output/Overview';
 import { getPrettyDemand } from '../../demand/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';

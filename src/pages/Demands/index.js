@@ -6,12 +6,12 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
-import { all, saveNote, retract } from './../../demand/endpoints';
+import { all, saveNote, retract } from '../../demand/endpoints';
 import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
-import type { PaginationType } from './../../dataset/PaginationType';
+import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { paginateWithReset } from '../../dataset/pagination';
-import Loader from './../../ui/Loader';
+import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 
 const BottomRightNavigation = styled.div`

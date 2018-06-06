@@ -1,5 +1,5 @@
 // @flow
-import { getPrettyDescription } from './../description/selects';
+import { getPrettyDescription } from '../description/selects';
 import {
   REQUESTED_DEMAND,
   RECEIVED_ALL_DEMANDS,
