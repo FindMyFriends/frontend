@@ -82,7 +82,6 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
   },
 });
 
@@ -99,8 +98,8 @@ class MainAppBar extends React.Component<Props, State> {
     open: false,
   };
 
-  handleDrawerOpen = () => this.setState({ ...this.state, open: true });
-  handleDrawerClose = () => this.setState({ ...this.state, open: false });
+  handleDrawerOpen = () => this.setState({ open: true });
+  handleDrawerClose = () => this.setState({ open: false });
 
   render() {
     const { classes, theme, component } = this.props;

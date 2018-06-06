@@ -7,6 +7,7 @@ import Overview from '../../demand/output/Overview';
 import { getPrettyDemand } from '../../demand/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
+import Tabs from './menu/Tabs';
 
 type Props = {|
   +demand: Object,
@@ -25,7 +26,10 @@ class Single extends React.Component<Props, any> {
       return <Loader />;
     }
     return (
-      <Overview demand={demand} />
+      <React.Fragment>
+        <Tabs />
+        <Overview demand={demand} />
+      </React.Fragment>
     );
   }
 }
