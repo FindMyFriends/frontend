@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import OutputRating from '../../rating/OutputRating';
 
 const Row = styled.tr`
   text-align: left;
@@ -22,7 +23,7 @@ export const ProgressRow = ({ title, value }: Props) => (
   <Row>
     <Header>{title}</Header>
     <ProgressTd title={value}>
-      {value}
+      <OutputRating current={value} max={10} />
     </ProgressTd>
   </Row>
 );
