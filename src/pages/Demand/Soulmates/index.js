@@ -2,43 +2,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { single } from '../../demand/endpoints';
-import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
 import { getPrettyDemand } from '../../demand/reducers';
-import { getSoulmateTotal } from '../../soulmate/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
-import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
+import { Tabs, DEMAND_TYPE } from './menu/Tabs';
 
 type Props = {|
   +demand: Object,
   +fetching: boolean,
   +single: (id: string) => (void),
-  +soulmateInfo: (id: string) => (void),
   +match: Object,
-  +soulmateTotal: number,
 |};
-class Demand extends React.Component<Props, any> {
+class Soulmates extends React.Component<Props, any> {
   componentDidMount() {
-    const { match: { params: { id } } } = this.props;
-    this.props.single(id);
-    this.props.soulmateInfo(id);
+    this.props.single(this.props.match.params.id);
   }
 
   render() {
-    const {
-      demand,
-      fetching,
-      match: { params: { id } },
-      soulmateTotal,
-    } = this.props;
+    const { demand, fetching, match: { params: { id } } } = this.props;
     if (fetching) {
       return <Loader />;
     }
     return (
       <React.Fragment>
-        <Tabs type={DEMAND_TYPE} id={id} soulmateTotal={soulmateTotal} />
+        <Tabs type={DEMAND_TYPE} id={id} />
         <Overview demand={demand} />
       </React.Fragment>
     );
@@ -47,11 +36,9 @@ class Demand extends React.Component<Props, any> {
 
 const mapStateToProps = state => ({
   demand: getPrettyDemand(state.demand.single, getScopeOptions(state, DEMAND)),
-  soulmateTotal: getSoulmateTotal(state),
-  fetching: state.demand.fetching || isFetching(state, DEMAND) || state.soulmate.fetching,
+  fetching: state.demand.fetching || isFetching(state, DEMAND),
 });
 const mapDispatchToProps = dispatch => ({
   single: (id: string) => dispatch(single(id)),
-  soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Demand);
+export default connect(mapStateToProps, mapDispatchToProps)(Soulmates);

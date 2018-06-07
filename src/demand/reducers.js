@@ -20,7 +20,7 @@ const initState = {
   total: null,
   fetching: true,
 };
-export const demand = (state: stateType = initState, action: Object) => {
+export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case RECEIVED_SINGLE_DEMAND:
       return {
