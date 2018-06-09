@@ -6,14 +6,14 @@ const dynamicHeaders = (): Object => {
   const { token } = getCookie();
   if (token) {
     return {
-      Authorization: `Bearer ${getCookie().token}`,
+      Authorization: `Bearer ${token}`,
     };
   }
   return {};
 };
 
-export const defaults = (inherited: Object): Object => (
-  merge(
+export default function withSettings(inherited: Object): Object {
+  return merge(
     inherited,
     {
       baseURL: 'https://fmf.localhost',
@@ -26,5 +26,5 @@ export const defaults = (inherited: Object): Object => (
         },
       },
     },
-  )
-);
+  );
+}

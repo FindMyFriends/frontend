@@ -1,22 +1,37 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { TextRow, ProgressRow } from './Table';
+import YesIcon from '@material-ui/icons/Check';
+import NoIcon from '@material-ui/icons/Close';
+import TextRow from './TextRow';
+import ProgressRow from './ProgressRow';
 import SolidCard from './SolidCard';
 
-const yesNo = (value: mixed) => (value ? 'Yes' : 'No');
+const yesNoMaybe = (value: ?boolean) => {
+  const props = {
+    style: {
+      fontSize: 15,
+    },
+  };
+  if (value === true) {
+    return <YesIcon {...props} />;
+  } else if (value === false) {
+    return <NoIcon {...props} />;
+  }
+  return <i>-</i>;
+};
 
-export const Cards = styled.div`
+const Cards = styled.div`
   flex-wrap: wrap;
   display: flex;
   justify-content: space-around;
 `;
 
-type OverviewType = {|
-  description: Object,
-  cards: any,
+type Props = {|
+  +description: Object,
+  +cards: Object,
 |};
-const Overview = ({ description, cards = null }: OverviewType) => {
+const Overview = ({ description, cards = {} }: Props) => {
   return (
     <Cards>
       <SolidCard
@@ -43,14 +58,14 @@ const Overview = ({ description, cards = null }: OverviewType) => {
           <TextRow key="Style" title="Style" text={description.hair.style} />,
           <TextRow key="Color" title="Color" text={description.hair.color} />,
           <TextRow key="Length" title="Length" text={description.hair.length} />,
-          <TextRow key="Nature" title="Nature" text={yesNo(description.hair.nature)} />,
+          <TextRow key="Nature" title="Nature" text={yesNoMaybe(description.hair.nature)} />,
         ]}
       />
       <SolidCard
         title="Face"
         rows={[
           <ProgressRow key="Care" title="Care" value={description.face.care} />,
-          <TextRow key="Freckles" title="Freckles" text={yesNo(description.face.freckles)} />,
+          <TextRow key="Freckles" title="Freckles" text={yesNoMaybe(description.face.freckles)} />,
           <TextRow key="Shape" title="Shape" text={description.face.shape} />,
         ]}
       />
@@ -65,14 +80,14 @@ const Overview = ({ description, cards = null }: OverviewType) => {
         title="Eyes"
         rows={[
           <TextRow key="Color" title="Color" text={description.eye.left.color} />,
-          <TextRow key="Lenses" title="Lenses" text={yesNo(description.eye.left.lenses)} />,
+          <TextRow key="Lenses" title="Lenses" text={yesNoMaybe(description.eye.left.lenses)} />,
         ]}
       />
       <SolidCard
         title="Teeth"
         rows={[
           <ProgressRow key="Care" title="Care" value={description.teeth.care} />,
-          <TextRow key="Braces" title="Braces" text={yesNo(description.teeth.braces)} />,
+          <TextRow key="Braces" title="Braces" text={yesNoMaybe(description.teeth.braces)} />,
         ]}
       />
       <SolidCard

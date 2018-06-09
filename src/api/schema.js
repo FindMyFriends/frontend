@@ -2,6 +2,8 @@ import axios from 'axios';
 import lscache from 'lscache';
 import trim from 'trim-character';
 
+// TODO: Must be stored inside redux
+
 const setExpiration = (uri: string) => lscache.set(`${uri}-ttl`, true, 10);
 
 const download = (uri: string) => {

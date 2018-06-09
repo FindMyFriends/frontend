@@ -1,19 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import Routes from './Routes';
-import createReducers from './createReducers';
+import Routes from './routes';
+import combineReducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-import { defaults } from './api/connection';
+import withSettings from './api/connection';
 
-axios.defaults = defaults(axios.defaults);
+axios.defaults = withSettings(axios.defaults);
 
 ReactDOM.render(
-  <Provider store={createStore(createReducers, applyMiddleware(thunk, logger))}>
+  <Provider store={createStore(combineReducers, applyMiddleware(thunk))}>
     <Routes />
   </Provider>,
   document.getElementById('root'),

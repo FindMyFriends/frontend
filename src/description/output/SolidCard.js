@@ -1,29 +1,30 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const ResizedCard = styled(Card)`
   width: 300px;
-  margin-bottom: 10px;
   margin-top: 10px;
 `;
 
-type SolidCardProps = {|
-  title: string,
-  rows: Array<Object>,
+type Props = {|
+  +title: string,
+  +rows: Array<Object>,
 |};
-const SolidCard = ({ title, rows }: SolidCardProps) => {
+const SolidCard = ({ title, rows }: Props) => {
   return (
     <ResizedCard>
-      <CardHeader title={title} titleStyle={{ fontSize: '20px' }} />
-      <CardText>
+      <CardHeader title={title} />
+      <CardContent>
         <table>
           <tbody>
             {rows}
           </tbody>
         </table>
-      </CardText>
+      </CardContent>
     </ResizedCard>
   );
 };

@@ -1,37 +1,42 @@
 // @flow
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
-type Props = {
-  content: string,
-  onClose: () => mixed,
-  onConfirm: () => mixed,
-};
-
-const Confirmation = ({ content, onClose, onConfirm }: Props) => (
+type Props = {|
+  +children: string,
+  +onClose: () => mixed,
+  +fullScreen: boolean,
+  +onConfirm: () => (void),
+|};
+const Confirmation = ({
+  children, onClose, onConfirm, fullScreen,
+}: Props) => (
   <Dialog
-    title="Are you sure?"
-    actions={
-      [
-        <FlatButton
-          label="Yes"
-          primary
-          onClick={onConfirm}
-        />,
-        <FlatButton
-          label="No"
-          primary
-          onClick={onClose}
-        />,
-      ]
-    }
-    modal={false}
+    fullScreen={fullScreen}
     open
-    onRequestClose={onClose}
+    onClose={onClose}
+    aria-labelledby="responsive-dialog-title"
   >
-    {content}
+    <DialogTitle id="responsive-dialog-title">Confirmation</DialogTitle>
+    <DialogContent>
+      <DialogContentText>{children}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onClose} color="primary">No</Button>
+      <Button
+        onClick={() => Promise.resolve().then(onClose).then(onConfirm)}
+        color="secondary"
+      >
+        Yes
+      </Button>
+    </DialogActions>
   </Dialog>
 );
 
-export default Confirmation;
+export default withMobileDialog()(Confirmation);

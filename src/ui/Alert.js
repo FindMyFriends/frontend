@@ -1,29 +1,31 @@
 // @flow
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
-type Props = {
-  content: string,
-  onClose: () => mixed,
-};
-
-const Alert = ({ content, onClose }: Props) => (
+type Props = {|
+  +children: string,
+  +onClose: () => mixed,
+  +fullScreen: boolean,
+|};
+const Alert = ({ children, onClose, fullScreen }: Props) => (
   <Dialog
-    title="Error"
-    actions={
-      <FlatButton
-        label="Ok"
-        primary
-        onClick={onClose}
-      />
-    }
-    modal={false}
+    fullScreen={fullScreen}
     open
-    onRequestClose={onClose}
+    onClose={onClose}
+    aria-labelledby="responsive-dialog-title"
   >
-    {content}
+    <DialogContent>
+      <DialogContentText>{children}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onClose} color="primary">Ok</Button>
+    </DialogActions>
   </Dialog>
 );
 
-export default Alert;
+export default withMobileDialog()(Alert);

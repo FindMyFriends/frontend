@@ -1,34 +1,54 @@
 // @flow
 import {
-  RECEIVED_ALL_DEMAND_SOULMATES,
-  RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES,
-  RECEIVED_SOULMATE_REQUESTS,
-  RECEIVED_SOULMATE_REFRESH,
-  RECEIVED_SOULMATE_CLARIFY,
+  RECEIVED_ALL_SOULMATES_BY_DEMAND,
+  REQUESTED_ALL_SOULMATES_BY_DEMAND,
+  REQUESTED_SOULMATE_INFO,
   RECEIVED_SOULMATE_INFO,
 } from './actions';
 
-export const soulmate = (state: Object = {}, action: Object): Object => {
+type stateType = {|
+  +all: ?Array<Object>,
+  +info: ?Object,
+  +total: ?number,
+  +fetching: boolean,
+|};
+const initState = {
+  all: null,
+  info: null,
+  total: null,
+  fetching: true,
+};
+export const soulmate = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_ALL_DEMAND_SOULMATES:
-      return { ...state, all: action.soulmates, info: action.info };
-    case RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES:
-      return { ...state, pages: action.pages };
-    case RECEIVED_SOULMATE_REQUESTS:
+    case RECEIVED_ALL_SOULMATES_BY_DEMAND:
       return {
         ...state,
-        requests: action.requests.map(request => ({
-          ...request,
-          is_seeking: request.status === 'pending' || request.status === 'processing',
-        })),
+        all: action.soulmates,
+        total: action.total,
+        fetching: action.fetching,
       };
-    case RECEIVED_SOULMATE_REFRESH:
-      return { ...state, refreshAt: action.refreshAt, demand: action.demand };
-    case RECEIVED_SOULMATE_CLARIFY:
-      return { ...state, soulmate: action.soulmate };
+    case REQUESTED_ALL_SOULMATES_BY_DEMAND:
+    case REQUESTED_SOULMATE_INFO:
+      return {
+        ...state,
+        fetching: action.fetching,
+      };
     case RECEIVED_SOULMATE_INFO:
-      return { ...state, info: action.info };
+      return {
+        ...state,
+        info: {
+          total: action.total,
+        },
+        fetching: action.fetching,
+      };
     default:
       return state;
   }
+};
+
+export const getSoulmateTotal = (state: Object): number => {
+  if (state.soulmate.info === null) {
+    return 0;
+  }
+  return state.soulmate.info.total;
 };

@@ -6,7 +6,17 @@ import {
   REQUESTED_CONFIRM,
 } from './actions';
 
-export const message = (state: Object = {}, action: Object): Object => {
+type stateType = {|
+  +content: ?string,
+  +type: ?string,
+  +action: () => mixed,
+|};
+const initState = {
+  content: null,
+  type: null,
+  action: () => null,
+};
+export const message = (state: stateType = initState, action: Object): Object => {
   switch (action.type) {
     case RECEIVED_API_ERROR:
     case RECEIVED_SUCCESS:

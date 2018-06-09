@@ -1,45 +1,58 @@
-import * as R from 'ramda';
-import { getPrettyDescription } from './../description/selects';
+// @flow
+import { getPrettyDescription } from '../description/selects';
 import {
+  REQUESTED_DEMAND,
   RECEIVED_ALL_DEMANDS,
-  RECEIVED_PAGINATION_FOR_ALL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
-  RECEIVED_DEMAND_OPTIONS,
-  RECEIVED_DEMAND_SCHEMA,
 } from './actions';
+import type { PaginationType } from '../dataset/PaginationType';
 
-export const demand = (state = {}, action) => {
+type stateType = {|
+  +single: ?Object,
+  +etag: ?string,
+  +all: ?Array<Object>,
+  +pagination: ?PaginationType,
+  +total: ?number,
+  +fetching: boolean,
+|};
+const initState = {
+  single: null,
+  etag: null,
+  all: null,
+  pagination: null,
+  total: null,
+  fetching: true,
+};
+export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case RECEIVED_SINGLE_DEMAND:
-      return { ...state, single: action.demand, etag: action.etag };
+      return {
+        ...state,
+        single: action.demand,
+        etag: action.etag,
+        fetching: action.fetching,
+      };
     case RECEIVED_ALL_DEMANDS:
-      return { ...state, all: action.demands };
-    case RECEIVED_PAGINATION_FOR_ALL_DEMANDS:
-      return { ...state, pages: action.pages };
-    case RECEIVED_DEMAND_OPTIONS:
-      return { ...state, options: action.options };
-    case RECEIVED_DEMAND_SCHEMA:
-      return { ...state, schema: action.schema };
+      return {
+        ...state,
+        all: action.demands,
+        pagination: action.pagination,
+        total: action.total,
+        fetching: action.fetching,
+      };
+    case REQUESTED_DEMAND:
+      return {
+        ...state,
+        fetching: action.fetching,
+      };
     default:
       return state;
   }
 };
 
-export const getTimelineSides = options => (options ? options.location.met_at.timeline_side : []);
-
-export const getPrettyDemand = (demand, options) => {
-  if (R.isEmpty(demand) || R.isEmpty(options)) {
-    return { };
-  }
-  return getPrettyDescription(demand, options);
-};
-
-export const getDemandNotes = (state) => {
-  if (state.demand.all) {
-    return state.demand.all.reduce((demandNotes, demand) => ({
-      ...demandNotes,
-      [demand.id]: demand.note,
-    }), { });
+export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
+  if (demand && options) {
+    return getPrettyDescription(demand, options);
   }
   return { };
 };

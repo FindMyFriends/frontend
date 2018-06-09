@@ -1,47 +1,31 @@
-import parse from 'parse-link-header';
-import moment from 'moment';
+// @flow
+import { fromHeader } from '../dataset/pagination';
 
-export const RECEIVED_ALL_DEMAND_SOULMATES = 'RECEIVED_ALL_DEMAND_SOULMATES';
-export const RECEIVED_SOULMATE_REQUESTS = 'RECEIVED_SOULMATE_REQUESTS';
-export const RECEIVED_SOULMATE_REFRESH = 'RECEIVED_SOULMATE_REFRESH';
-export const RECEIVED_SOULMATE_CLARIFY = 'RECEIVED_SOULMATE_CLARIFY';
-export const RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES = 'RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES';
+export const RECEIVED_ALL_SOULMATES_BY_DEMAND = 'RECEIVED_ALL_SOULMATES_BY_DEMAND';
+export const REQUESTED_ALL_SOULMATES_BY_DEMAND = 'REQUESTED_ALL_SOULMATES_BY_DEMAND';
+export const REQUESTED_SOULMATE_INFO = 'REQUESTED_SOULMATE_INFO';
 export const RECEIVED_SOULMATE_INFO = 'RECEIVED_SOULMATE_INFO';
 
-export const receivedAllByDemand = (soulmates, demand, headers) => ({
-  type: RECEIVED_ALL_DEMAND_SOULMATES,
+export const receivedAllByDemand = (soulmates: Array<Object>, headers: Object) => ({
+  type: RECEIVED_ALL_SOULMATES_BY_DEMAND,
   soulmates,
-  demand,
-  info: {
-    total: parseInt(headers['x-total-count'], 10),
-  },
+  total: parseInt(headers['x-total-count'], 10),
+  pagination: fromHeader(headers.link),
+  fetching: false,
 });
 
-export const receivedInfo = headers => ({
+export const requestedAllByDemand = () => ({
+  type: REQUESTED_ALL_SOULMATES_BY_DEMAND,
+  fetching: true,
+});
+
+export const requestedInfo = () => ({
+  type: REQUESTED_SOULMATE_INFO,
+  fetching: true,
+});
+
+export const receivedInfo = (headers: Object) => ({
   type: RECEIVED_SOULMATE_INFO,
-  info: {
-    total: parseInt(headers['x-total-count'], 10),
-  },
-});
-
-export const receivedPaginationForAll = pages => ({
-  type: RECEIVED_PAGINATION_FOR_ALL_DEMAND_SOULMATES,
-  pages: parse(pages),
-});
-
-export const receivedRequestsByDemand = (requests, demand) => ({
-  type: RECEIVED_SOULMATE_REQUESTS,
-  requests,
-  demand,
-});
-
-export const receivedRefresh = demand => ({
-  type: RECEIVED_SOULMATE_REFRESH,
-  demand,
-  refreshAt: moment(),
-});
-
-export const receivedClarify = soulmate => ({
-  type: RECEIVED_SOULMATE_CLARIFY,
-  soulmate,
+  total: parseInt(headers['x-total-count'], 10),
+  fetching: false,
 });
