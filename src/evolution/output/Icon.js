@@ -2,6 +2,9 @@
 import React from 'react';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 
-const Icon = ({ ...props }) => <SupervisorAccount {...props} />;
+type Props = {
+  +props?: mixed,
+};
+const Icon = ({ ...props }: Props) => <SupervisorAccount {...props} />;
 
 export default Icon;

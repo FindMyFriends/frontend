@@ -13,9 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import { default as DemandIcon } from '../../../demand/output/Icon';
 import { default as EvolutionIcon } from '../../../evolution/output/Icon';
-import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import ListItemLink from './ListItemLink';
 
 const drawerWidth = 240;

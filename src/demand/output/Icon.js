@@ -2,6 +2,9 @@
 import React from 'react';
 import PermIdentity from '@material-ui/icons/PermIdentity';
 
-const Icon = ({ ...props }) => <PermIdentity {...props} />;
+type Props = {
+  +props?: mixed,
+};
+const Icon = ({ ...props }: Props) => <PermIdentity {...props} />;
 
 export default Icon;
