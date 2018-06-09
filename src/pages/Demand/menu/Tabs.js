@@ -56,10 +56,19 @@ class Tabs extends React.Component<Props, State> {
           />
           <Tab
             value={SOULMATES_TYPE}
+            disabled={soulmateTotal === 0}
             label={
-              <Badge color="primary" className={classes.padding} badgeContent={soulmateTotal}>
-                Soulmates
-              </Badge>
+              soulmateTotal === 0
+                ? 'Soulmates'
+                : (
+                  <Badge
+                    color="primary"
+                    className={classes.padding}
+                    badgeContent={soulmateTotal}
+                  >
+                    Soulmates
+                  </Badge>
+                )
             }
             component={Link}
             to={`/demands/${id}/soulmates`}

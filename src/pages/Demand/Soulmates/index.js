@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { all } from '../../../soulmate/endpoints';
+import { all, markAs } from '../../../soulmate/endpoints';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
 import type { PaginationType } from '../../../dataset/PaginationType';
@@ -15,6 +15,7 @@ type Props = {|
   +total: number,
   +fetching: boolean,
   +all: (id: string, sort: SortType, pagination: PaginationType) => (void),
+  +markAs: (id: string, as: boolean) => (void),
   +match: Object,
 |};
 type State = {|
@@ -25,7 +26,7 @@ class Soulmates extends React.Component<Props, State> {
   state = {
     sort: {
       order: 'desc',
-      orderBy: 'searched_at',
+      orderBy: 'related_at',
     },
     pagination: {
       page: 1,
@@ -48,8 +49,15 @@ class Soulmates extends React.Component<Props, State> {
     withPerPage(perPage, this.state),
     this.reload,
   );
+
   handleChangePage = (page: number) => this.setState(
     withPage(page, this.state),
+    this.reload,
+  );
+
+  handleMarkAs = (id: string, as: boolean) => this.props.markAs(
+    id,
+    as,
     this.reload,
   );
 
@@ -72,6 +80,7 @@ class Soulmates extends React.Component<Props, State> {
           sort={sort}
           pagination={pagination}
           total={total}
+          onMarkAs={(id, as) => this.handleMarkAs(id, as)}
           onSort={column => this.handleSort(column)}
           onPageChange={page => this.handleChangePage(page)}
           onPerPageChange={perPage => this.handleChangePerPage(perPage)}
@@ -82,8 +91,8 @@ class Soulmates extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  soulmates: state.soulmate.all,
-  total: state.soulmate.total,
+  soulmates: state.soulmate.all || [],
+  total: state.soulmate.total || 0,
   fetching: state.soulmate.fetching,
 });
 const mapDispatchToProps = dispatch => ({
@@ -92,5 +101,10 @@ const mapDispatchToProps = dispatch => ({
     sort: SortType,
     pagination: PaginationType,
   ) => dispatch(all(id, [toApiOrdering(sort)], pagination)),
+  markAs: (
+    soulmate: string,
+    as: boolean,
+    next: () => (void),
+  ) => dispatch(markAs(soulmate, as, next)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Soulmates);

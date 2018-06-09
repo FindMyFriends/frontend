@@ -61,6 +61,7 @@ class All extends React.Component<Props, State> {
     withPerPage(perPage, this.state),
     this.reload,
   );
+
   handleChangePage = (page: number) => this.setState(
     withPage(page, this.state),
     this.reload,
@@ -113,8 +114,8 @@ class All extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  demands: state.demand.all,
-  total: state.demand.total,
+  demands: state.demand.all || [],
+  total: state.demand.total || 0,
   pagination: state.demand.pagination,
   fetching: state.demand.fetching,
 });

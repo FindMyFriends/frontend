@@ -7,6 +7,7 @@ import {
   receivedInfo,
   requestedInfo,
 } from './actions';
+import { receivedSuccess, receivedApiError } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
 export const all = (
@@ -18,7 +19,7 @@ export const all = (
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
-    fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position'].join(','),
+    fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'related_at'].join(','),
     sort: sorts.join(','),
   });
   axios.get(`/v1/demands/${demand}/soulmates?${query}`)
@@ -29,4 +30,28 @@ export const info = (demand: string) => (dispatch: (mixed) => Object) => {
   dispatch(requestedInfo());
   axios.head(`/v1/demands/${demand}/soulmates`)
     .then(response => dispatch(receivedInfo(response.headers)));
+};
+
+export const clarify = (
+  soulmate: string,
+  clarification: Object,
+  next: Promise<any>,
+) => (dispatch: (mixed) => Object) => {
+  axios.patch(`/v1/soulmates/${soulmate}`, clarification)
+    .then(next)
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+export const markAs = (
+  soulmate: string,
+  as: boolean,
+  next: () => void,
+) => (dispatch: (mixed) => Object) => {
+  dispatch(clarify(
+    soulmate,
+    { is_correct: as },
+    Promise.resolve()
+      .then(() => dispatch(receivedSuccess(`Soulmate was marked as ${as ? 'correct' : 'incorrect'}`)))
+      .then(next),
+  ));
 };

@@ -22,7 +22,6 @@ import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
 const columns = [
-  { id: 'id', sortable: false, label: '#' },
   { id: 'general.firstname', sortable: true, label: 'Firstname' },
   { id: 'general.lastname', sortable: true, label: 'Lastname' },
   { id: 'general.sex', sortable: true, label: 'Sex' },
@@ -85,9 +84,8 @@ const Table = ({
         columns={columns}
       />
       <TableBody>
-        {rows.map((demand, index) => (
+        {rows.map(demand => (
           <TableRow hover key={demand.id}>
-            <TableCell>{index + 1}</TableCell>
             <TableCell>{demand.general.firstname || '-'}</TableCell>
             <TableCell>{demand.general.lastame || '-'}</TableCell>
             <TableCell>{demand.general.sex}</TableCell>
@@ -106,7 +104,6 @@ const Table = ({
                   color="action"
                   className={classes.iconHover}
                   style={{ margin: 5, cursor: 'pointer' }}
-                  component={<Link to={`/demands/${demand.id}`} />}
                 />
               </Link>
               <Link to={`/demands/${demand.id}/reconsider`}>

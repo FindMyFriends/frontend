@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from '@material-ui/core/Table';
@@ -10,17 +11,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import grey from '@material-ui/core/colors/grey';
+import { default as EvolutionIcon } from '../../evolution/output/Icon';
 import SortTableHead from '../../dataset/SortTableHead';
+import YesNo from './YesNo';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
 const columns = [
-  { id: 'id', sortable: false, label: '#' },
-  { id: 'is_correct', sortable: true, label: 'Correct' },
-  { id: 'is_new', sortable: true, label: 'New' },
-  { id: 'position', sortable: true, label: 'Position' },
+  { id: 'position', sortable: true, label: '#' },
+  { id: 'related_at', sortable: true, label: 'Related at' },
   { id: 'action', sortable: false, label: '' },
 ];
 
@@ -46,6 +46,7 @@ type TableProps = {|
   +onSort: string => (void),
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
+  +onMarkAs: (id: string, as: boolean) => (void),
   +total: number,
   +classes: Object,
 |};
@@ -53,6 +54,7 @@ const Table = ({
   onSort,
   onPageChange,
   onPerPageChange,
+  onMarkAs,
   rows,
   sort: { order, orderBy },
   pagination: { page, perPage },
@@ -69,21 +71,26 @@ const Table = ({
         columns={columns}
       />
       <TableBody>
-        {rows.map((soulmate, index) => (
-          <TableRow hover key={soulmate.id}>
-            <TableCell>{index + 1}</TableCell>
-            <TableCell>{soulmate.is_correct ? 'Y' : 'N'}</TableCell>
-            <TableCell>{soulmate.is_new ? 'Y' : 'N'}</TableCell>
+        {rows.map(soulmate => (
+          <TableRow selected={soulmate.is_new} hover key={soulmate.id}>
             <TableCell>{soulmate.position}</TableCell>
+            <TableCell>{moment(soulmate.related_at).format('YYYY-MM-DD')}</TableCell>
             <TableCell numeric>
               <Link to={`/demands/${soulmate.id}`}>
-                <VisibilityIcon
+                <EvolutionIcon
                   color="action"
                   className={classes.iconHover}
                   style={{ margin: 5, cursor: 'pointer' }}
-                  component={<Link to={`/demands/${soulmate.id}`} />}
                 />
               </Link>
+              <YesNo
+                color="action"
+                className={classes.iconHover}
+                style={{ margin: 5, cursor: 'pointer' }}
+                onClick={() => onMarkAs(soulmate.id, !soulmate.is_correct)}
+              >
+                {soulmate.is_correct}
+              </YesNo>
             </TableCell>
           </TableRow>
         ))}

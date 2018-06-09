@@ -13,8 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import PermIdentity from '@material-ui/icons/PermIdentity';
-import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
+import { default as DemandIcon } from '../../../demand/output/Icon';
+import { default as EvolutionIcon } from '../../../evolution/output/Icon';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import ListItemLink from './ListItemLink';
 
@@ -136,8 +136,8 @@ class MainAppBar extends React.Component<Props, State> {
           <Divider />
           <List>
             <React.Fragment>
-              <ListItemLink href="/demands" icon={<PermIdentity />}>Demands</ListItemLink>
-              <ListItemLink href="/evolutions" icon={<SupervisorAccount />}>Evolutions</ListItemLink>
+              <ListItemLink href="/demands" icon={<DemandIcon />}>Demands</ListItemLink>
+              <ListItemLink href="/evolutions" icon={<EvolutionIcon />}>Evolutions</ListItemLink>
             </React.Fragment>
           </List>
           <Divider />
