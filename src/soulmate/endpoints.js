@@ -11,7 +11,7 @@ import type { PaginationType } from '../dataset/PaginationType';
 
 export const all = (
   demand: string,
-  sorts: Array<String>,
+  sorts: Array<string>,
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedAllByDemand());

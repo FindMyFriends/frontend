@@ -7,14 +7,14 @@ import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
 import type { PaginationType } from '../../../dataset/PaginationType';
 import type { SortType } from '../../../dataset/SortType';
 import Table from '../../../soulmate/output/Table';
-import { toApiOrdering } from '../../../dataset/sorts';
+import { toApiOrdering, withSort } from '../../../dataset/sorts';
 import { withPage, withPerPage } from '../../../dataset/pagination';
 
 type Props = {|
   +soulmates: Array<Object>,
   +total: number,
   +fetching: boolean,
-  +all: (id: string) => (void),
+  +all: (id: string, sort: SortType, pagination: PaginationType) => (void),
   +match: Object,
 |};
 type State = {|
@@ -41,6 +41,8 @@ class Soulmates extends React.Component<Props, State> {
     const { sort, pagination } = this.state;
     this.props.all(this.props.match.params.id, sort, pagination);
   };
+
+  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
 
   handleChangePerPage = (perPage: number) => this.setState(
     withPerPage(perPage, this.state),

@@ -5,11 +5,13 @@ import {
   RECEIVED_ALL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
 } from './actions';
+import type { PaginationType } from '../dataset/PaginationType';
 
 type stateType = {|
   +single: ?Object,
   +etag: ?string,
   +all: ?Array<Object>,
+  +pagination: ?PaginationType,
   +total: ?number,
   +fetching: boolean,
 |};
@@ -17,6 +19,7 @@ const initState = {
   single: null,
   etag: null,
   all: null,
+  pagination: null,
   total: null,
   fetching: true,
 };

@@ -24,7 +24,7 @@ export const requestedInfo = () => ({
   fetching: true,
 });
 
-export const receivedInfo = headers => ({
+export const receivedInfo = (headers: Object) => ({
   type: RECEIVED_SOULMATE_INFO,
   total: parseInt(headers['x-total-count'], 10),
   fetching: false,
