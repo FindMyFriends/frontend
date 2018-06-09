@@ -3,8 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
+import Center from '../../components/Center';
 import Table from './../../demand/output/Table';
 import { all, saveNote, retract } from '../../demand/endpoints';
 import { toApiOrdering, withSort } from './../../dataset/sorts';
@@ -90,17 +92,27 @@ class All extends React.Component<Props, State> {
     }
     return (
       <React.Fragment>
-        <Table
-          rows={demands}
-          sort={sort}
-          pagination={pagination}
-          total={total}
-          onNoteSave={this.handleNoteSave}
-          onSort={column => this.handleSort(column)}
-          onPageChange={page => this.handleChangePage(page)}
-          onPerPageChange={perPage => this.handleChangePerPage(perPage)}
-          onRetract={this.handleRetract}
-        />
+        {
+          total === 0
+            ? (
+              <Center>
+                <Typography variant="display1">No demands.</Typography>
+              </Center>
+            )
+            : (
+              <Table
+                rows={demands}
+                sort={sort}
+                pagination={pagination}
+                total={total}
+                onNoteSave={this.handleNoteSave}
+                onSort={column => this.handleSort(column)}
+                onPageChange={page => this.handleChangePage(page)}
+                onPerPageChange={perPage => this.handleChangePerPage(perPage)}
+                onRetract={this.handleRetract}
+              />
+            )
+        }
         <BottomRightNavigation>
           <Link to="/demands/add">
             <Button variant="fab" color="primary" aria-label="add">

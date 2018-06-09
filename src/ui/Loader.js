@@ -1,16 +1,8 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content:flex-start; 
-  flex-direction: column;
-  margin-left: 14px;
-`;
+import Center from '../components/Center';
 
 const Loader = () => {
   return (
