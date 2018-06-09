@@ -50,11 +50,7 @@ export const demand = (state: stateType = initState, action: Object): stateType 
   }
 };
 
-export const getTimelineSides = (options: any) => (
-  options ? options.location.met_at.timeline_side : []
-);
-
-export const getPrettyDemand = (demand: ?Object, options: ?mixed): Object => {
+export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
   if (demand && options) {
     return getPrettyDescription(demand, options);
   }

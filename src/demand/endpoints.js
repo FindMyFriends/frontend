@@ -1,14 +1,10 @@
 // @flow
 import axios from 'axios';
-import omit from 'lodash/omit';
 import httpBuildQuery from 'http-build-query';
-import * as R from 'ramda';
 import {
   requestedDemand,
-  addedDemand,
   receivedAll,
   receivedSingle,
-  receivedReconsideration,
   DEMAND,
 } from './actions';
 import { options } from '../schema/endpoints';
@@ -40,40 +36,6 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
       .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
     dispatch(options('/v1/demands', DEMAND)),
   ]);
-};
-
-export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
-  axios.post('/v1/demands', demand)
-    .then((response) => {
-      const newDemand = dispatch(addedDemand(demand, response.headers.location));
-      dispatch(receivedSuccessMessage('Demand has been added'));
-      return newDemand;
-    })
-    .then(demand => next(demand.id))
-    .catch(error => dispatch(receivedApiError(error)));
-};
-
-export const reconsider = (
-  id: string,
-  demand: Object,
-  etag: string,
-  next: (string) => void,
-) => (dispatch: (mixed) => Object) => {
-  const curry = (name: string) => (demand: Object): Object => {
-    return omit(demand, name);
-  };
-  const reconsidered = R.compose(
-    curry('soulmates'),
-    curry('seeker_id'),
-    curry('created_at'),
-    curry('id'),
-    () => demand,
-  )();
-  axios.put(`/v1/demands/${id}`, reconsidered, { headers: { 'if-match': etag } })
-    .then(() => dispatch(receivedReconsideration(id)))
-    .then(() => dispatch(receivedSuccessMessage('Demand has been reconsidered')))
-    .then(() => next(id))
-    .catch(error => dispatch(receivedApiError(error)));
 };
 
 export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {

@@ -1,28 +1,8 @@
+// @flow
 import merge from 'lodash/merge';
 import * as R from 'ramda';
-import * as enumSet from '../api/enum';
 
-export const getSex = options => (options ? options.general.sex : []);
-export const getEthnicGroups = (options) => {
-  return options ? options.general.ethnic_group : enumSet.empty();
-};
-export const getBreastSizes = options => (options ? options.body.breast_size : []);
-export const getBodyBuilds = options => (options ? options.body.build : enumSet.empty());
-export const getHairStyles = options => (options ? options.hair.style : enumSet.empty());
-export const getLengthUnits = options => (options ? options.definitions.length_unit : []);
-export const getShapes = options => (options ? options.face.shape : enumSet.empty());
-export const getHairColors = options => (options ? options.hair.color : enumSet.emptyColor());
-export const getBeardColors = options => (options ? options.beard.color : enumSet.emptyColor());
-export const getEyebrowColors = options => (options ? options.eyebrow.color : enumSet.emptyColor());
-export const getEyeColors = (options) => {
-  return options ? options.definitions.eye.color : enumSet.emptyColor();
-};
-export const getNailColors = (options) => {
-  return options ? options.hands.nails.color : enumSet.emptyColor();
-};
-export const getRatings = schema => (schema ? schema.definitions.rating : enumSet.emptyRange());
-
-export const getPrettyDescription = (description, options) => {
+export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (R.isEmpty(description) || R.isEmpty(options)) {
     return { };
   }
