@@ -1,44 +1,94 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { single } from '../../demand/endpoints';
-import Loader from '../../ui/Loader';
-import Overview from '../../demand/output/Overview';
-import { getPrettyDemand } from '../../demand/reducers';
-import { DEMAND } from '../../demand/actions';
-import { getScopeOptions, isFetching } from '../../schema/reducers';
-import { Tabs, DEMAND_TYPE } from './menu/Tabs';
+import { all } from '../../../soulmate/endpoints';
+import Loader from '../../../ui/Loader';
+import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
+import type { PaginationType } from '../../../dataset/PaginationType';
+import type { SortType } from '../../../dataset/SortType';
+import Table from '../../../soulmate/output/Table';
+import { toApiOrdering } from '../../../dataset/sorts';
+import { withPage, withPerPage } from '../../../dataset/pagination';
 
 type Props = {|
-  +demand: Object,
+  +soulmates: Array<Object>,
+  +total: number,
   +fetching: boolean,
-  +single: (id: string) => (void),
+  +all: (id: string) => (void),
   +match: Object,
 |};
-class Soulmates extends React.Component<Props, any> {
+type State = {|
+  pagination: PaginationType,
+  sort: SortType,
+|};
+class Soulmates extends React.Component<Props, State> {
+  state = {
+    sort: {
+      order: 'desc',
+      orderBy: 'searched_at',
+    },
+    pagination: {
+      page: 1,
+      perPage: 5,
+    },
+  };
+
   componentDidMount() {
-    this.props.single(this.props.match.params.id);
+    this.reload();
   }
 
+  reload = () => {
+    const { sort, pagination } = this.state;
+    this.props.all(this.props.match.params.id, sort, pagination);
+  };
+
+  handleChangePerPage = (perPage: number) => this.setState(
+    withPerPage(perPage, this.state),
+    this.reload,
+  );
+  handleChangePage = (page: number) => this.setState(
+    withPage(page, this.state),
+    this.reload,
+  );
+
   render() {
-    const { demand, fetching, match: { params: { id } } } = this.props;
+    const { sort, pagination } = this.state;
+    const {
+      soulmates,
+      total,
+      fetching,
+      match: { params: { id } },
+    } = this.props;
     if (fetching) {
       return <Loader />;
     }
     return (
       <React.Fragment>
-        <Tabs type={DEMAND_TYPE} id={id} />
-        <Overview demand={demand} />
+        <Tabs type={SOULMATES_TYPE} id={id} soulmateTotal={total} />
+        <Table
+          rows={soulmates}
+          sort={sort}
+          pagination={pagination}
+          total={total}
+          onSort={column => this.handleSort(column)}
+          onPageChange={page => this.handleChangePage(page)}
+          onPerPageChange={perPage => this.handleChangePerPage(perPage)}
+        />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  demand: getPrettyDemand(state.demand.single, getScopeOptions(state, DEMAND)),
-  fetching: state.demand.fetching || isFetching(state, DEMAND),
+  soulmates: state.soulmate.all,
+  total: state.soulmate.total,
+  fetching: state.soulmate.fetching,
 });
 const mapDispatchToProps = dispatch => ({
-  single: (id: string) => dispatch(single(id)),
+  all: (
+    id: string,
+    sort: SortType,
+    pagination: PaginationType,
+  ) => dispatch(all(id, [toApiOrdering(sort)], pagination)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Soulmates);

@@ -10,7 +10,20 @@ export const fromHeader = (link: string): PaginationType => {
   };
 };
 
-export const paginateWithReset = (perPage: number): PaginationType => ({
+const paginateWithReset = (perPage: number): PaginationType => ({
   page: 1,
   perPage,
+});
+
+export const withPerPage = (perPage: number, state: Object): Object => ({
+  ...state,
+  pagination: paginateWithReset(perPage),
+});
+
+export const withPage = (page: number, state: Object): Object => ({
+  ...state,
+  pagination: {
+    ...state.pagination,
+    page,
+  },
 });

@@ -38,6 +38,7 @@ class Tabs extends React.Component<Props, State> {
   handleChange = (event: any, type: string) => this.setState({ type });
 
   render() {
+    const { id, soulmateTotal, classes } = this.props;
     return (
       <Paper>
         <MaterialTabs
@@ -51,17 +52,17 @@ class Tabs extends React.Component<Props, State> {
             value={DEMAND_TYPE}
             label="Demand"
             component={Link}
-            to={`/demands/${this.props.id}`}
+            to={`/demands/${id}`}
           />
           <Tab
             value={SOULMATES_TYPE}
             label={
-              <Badge color="primary" className={this.props.classes.padding} badgeContent={this.props.soulmateTotal}>
+              <Badge color="primary" className={classes.padding} badgeContent={soulmateTotal}>
                 Soulmates
               </Badge>
             }
             component={Link}
-            to={`/demands/${this.props.id}/soulmates`}
+            to={`/demands/${id}/soulmates`}
           />
         </MaterialTabs>
       </Paper>

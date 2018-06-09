@@ -7,10 +7,10 @@ import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Table from './../../demand/output/Table';
 import { all, saveNote, retract } from '../../demand/endpoints';
-import { toApiOrdering, sortWithReset } from './../../dataset/sorts';
+import { toApiOrdering, withSort } from './../../dataset/sorts';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
-import { paginateWithReset } from '../../dataset/pagination';
+import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 
@@ -55,31 +55,16 @@ class All extends React.Component<Props, State> {
     this.props.all(sort, pagination);
   };
 
-  handleSort = (column: string) => {
-    const { sort, pagination } = this.state;
-    this.setState({
-      ...this.state,
-      ...sortWithReset(sort, column, pagination),
-    }, this.reload);
-  };
+  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
 
-  handleChangePerPage = (perPage: number) => {
-    this.setState({
-      ...this.state,
-      pagination: paginateWithReset(perPage),
-    }, this.reload);
-  };
-
-  handleChangePage = (page: number) => {
-    const { pagination } = this.state;
-    this.setState({
-      ...this.state,
-      pagination: {
-        ...pagination,
-        page,
-      },
-    }, this.reload);
-  };
+  handleChangePerPage = (perPage: number) => this.setState(
+    withPerPage(perPage, this.state),
+    this.reload,
+  );
+  handleChangePage = (page: number) => this.setState(
+    withPage(page, this.state),
+    this.reload,
+  );
 
   handleNoteSave = (id: string, note: string, next: () => (any)) => {
     this.props.saveNote(
@@ -128,8 +113,8 @@ class All extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  demands: state.demand.all || [],
-  total: state.demand.total || 0,
+  demands: state.demand.all,
+  total: state.demand.total,
   pagination: state.demand.pagination,
   fetching: state.demand.fetching,
 });

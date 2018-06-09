@@ -26,7 +26,7 @@ type sortWithResetType = {|
   +sort: SortType,
   +pagination: PaginationType,
 |};
-export const sortWithReset = (
+const sortWithReset = (
   sort: SortType,
   column: string,
   pagination: PaginationType,
@@ -39,3 +39,12 @@ export const sortWithReset = (
     },
   };
 };
+
+type withSortStateType = {
+  +sort: SortType,
+  +pagination: PaginationType,
+};
+export const withSort = (column: string, state: withSortStateType): Object => ({
+  ...state,
+  ...sortWithReset(state.sort, column, state.pagination),
+});

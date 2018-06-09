@@ -18,7 +18,7 @@ export const all = (
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
-    fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'ownership'].join(','),
+    fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position'].join(','),
     sort: sorts.join(','),
   });
   axios.get(`/v1/demands/${demand}/soulmates?${query}`)
