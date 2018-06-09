@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import OutputRating from '../../components/rating/OutputRating';
+import OutputRating from '../../components/Rating/OutputRating';
 
 const Row = styled.tr`
   text-align: left;
