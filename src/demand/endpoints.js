@@ -22,7 +22,7 @@ export const all = (
     fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
     sort: sorts.join(','),
   });
-  axios.get(`/v1/demands?${query}`)
+  axios.get(`/demands?${query}`)
     .then(response => dispatch(receivedAll(response.data, response.headers)));
 };
 
@@ -32,14 +32,14 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
     fields: fields.join(','),
   });
   Promise.all([
-    axios.get(`/v1/demands/${id}?${query}`)
+    axios.get(`/demands/${id}?${query}`)
       .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
-    dispatch(options('/v1/demands', DEMAND)),
+    dispatch(options('/demands', DEMAND)),
   ]);
 };
 
 export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {
-  axios.delete(`/v1/demands/${id}`)
+  axios.delete(`/demands/${id}`)
     .then(() => dispatch(receivedSuccessMessage('Demand has been retracted')))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
@@ -50,7 +50,7 @@ export const saveNote = (
   note: string,
   next: Promise<any>,
 ) => (dispatch: (mixed) => Object) => {
-  axios.patch(`/v1/demands/${id}`, { note })
+  axios.patch(`/demands/${id}`, { note })
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };

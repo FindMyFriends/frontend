@@ -22,13 +22,13 @@ export const all = (
     fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'related_at'].join(','),
     sort: sorts.join(','),
   });
-  axios.get(`/v1/demands/${demand}/soulmates?${query}`)
+  axios.get(`/demands/${demand}/soulmates?${query}`)
     .then(response => dispatch(receivedAllByDemand(response.data, response.headers)));
 };
 
 export const info = (demand: string) => (dispatch: (mixed) => Object) => {
   dispatch(requestedInfo());
-  axios.head(`/v1/demands/${demand}/soulmates`)
+  axios.head(`/demands/${demand}/soulmates`)
     .then(response => dispatch(receivedInfo(response.headers)));
 };
 
@@ -37,7 +37,7 @@ export const clarify = (
   clarification: Object,
   next: Promise<any>,
 ) => (dispatch: (mixed) => Object) => {
-  axios.patch(`/v1/soulmates/${soulmate}`, clarification)
+  axios.patch(`/soulmates/${soulmate}`, clarification)
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };

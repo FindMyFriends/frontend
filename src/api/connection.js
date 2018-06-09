@@ -16,7 +16,7 @@ export default function withSettings(inherited: Object): Object {
   return merge(
     inherited,
     {
-      baseURL: 'https://fmf.localhost',
+      baseURL: 'https://api.fmf.localhost',
       data: null,
       headers: {
         common: {
