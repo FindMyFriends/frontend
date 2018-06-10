@@ -7,9 +7,13 @@ import {
   receivedSingle,
   DEMAND,
 } from './actions';
-import { options } from '../schema/endpoints';
+import { options as schemaOptions } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
+
+export const options = () => (dispatch: (mixed) => Object) => {
+  dispatch(schemaOptions('/demands', DEMAND));
+};
 
 export const all = (
   sorts: Array<string>,
@@ -34,7 +38,7 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
   Promise.all([
     axios.get(`/demands/${id}?${query}`)
       .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
-    dispatch(options('/demands', DEMAND)),
+    dispatch(options()),
   ]);
 };
 

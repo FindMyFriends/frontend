@@ -1,6 +1,12 @@
 // @flow
 import merge from 'lodash/merge';
 import * as R from 'ramda';
+import * as enumSet from '../api/enum';
+
+export const getSex = options => (options ? options.general.sex : []);
+export const getEthnicGroups = options => (
+  options ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
+);
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (R.isEmpty(description) || R.isEmpty(options)) {
