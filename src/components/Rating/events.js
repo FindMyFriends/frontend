@@ -1,6 +1,6 @@
 // @flow
 export const onRating = (
-  classic: (x: Object) => mixed,
+  classic: (Object) => mixed,
   name: string,
   event: Object,
 ) => {

@@ -28,9 +28,9 @@ type Props = {|
   +all: (SortType, PaginationType) => (void),
   +total: number,
   +fetching: boolean,
-  +saveNote: (id: string, text: string, next: () => (mixed)) => (void),
-  +retract: (id: string, next: () => (void)) => (void),
-  +requestedConfirm: (content: string, action: () => (void)) => (void),
+  +saveNote: (string, string, () => (mixed)) => (void),
+  +retract: (string, () => (void)) => (void),
+  +requestedConfirm: (string, () => (void)) => (void),
 |};
 type State = {|
   sort: SortType,
