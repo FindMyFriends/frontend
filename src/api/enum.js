@@ -1,6 +1,7 @@
 // @flow
 import mapValues from 'lodash/mapValues';
 import values from 'lodash/values';
+import range from 'lodash/range';
 
 export type ApiEnum = {|
   +id: ?number,
@@ -25,13 +26,12 @@ export const emptyColor = (): Array<Object> => {
   ];
 };
 
-export const emptyRange = (): Object => {
-  return {
-    minimum: 0,
-    maximum: 10,
-  };
-};
+export const emptyRange = (): Object => range(0, 11);
 
 export const toEnum = (options: Object): Array<ApiEnum> => (
   values(mapValues(options, (name, id) => ({ id: parseInt(id, 10), name })))
+);
+
+export const toColorEnum = (options: Object): Array<ApiEnum> => (
+  values(mapValues(options, (color, id) => ({ id: parseInt(id, 10), name: color.name })))
 );

@@ -5,17 +5,24 @@ import { flatten, unflatten } from 'flat';
 import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { getScopeOptions, isFetching } from '../../../schema/reducers';
+import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
-import { options } from '../../../demand/endpoints';
+import { options, schema } from '../../../demand/endpoints';
 import {
+  getBodyBuilds,
+  getBreastSizes,
+  getHairStyles,
   getEthnicGroups,
   getSex,
+  getHairColors,
+  getRatings,
+  getFaceShapes,
 } from '../../../description/selects';
 
 type Props = {|
   +selects: Object,
   +options: () => (void),
+  +schema: () => (void),
   +fetching: boolean,
 |};
 type State = {|
@@ -25,16 +32,42 @@ class Add extends React.Component<Props, State> {
   state = {
     demand: {
       general: {
-        firstname: '',
-        sex: '',
-        ethnic_group_id: '',
-        age: '',
+        firstname: null,
+        sex: null,
+        ethnic_group_id: null,
+        age: null,
+      },
+      body: {
+        build_id: null,
+        height: {
+          value: null,
+          unit: 'cm',
+        },
+        weight: {
+          value: null,
+          unit: 'kg',
+        },
+      },
+      hair: {
+        style: null,
+        length: {
+          value: null,
+          unit: 'cm',
+        },
+        nature: null,
+        highlights: null,
+        roots: null,
+      },
+      face: {
+        freckles: null,
+        care: null,
       },
     },
   };
 
   componentDidMount() {
     this.props.options();
+    this.props.schema();
   }
 
   handleChange = name => event => (
@@ -42,7 +75,7 @@ class Add extends React.Component<Props, State> {
       demand: {
         ...merge(
           this.state.demand,
-          unflatten({ [name]: event.target.value }),
+          unflatten({ [name]: event.target.checked || event.target.value }),
         ),
       },
     })
@@ -52,6 +85,7 @@ class Add extends React.Component<Props, State> {
     if (this.props.fetching) {
       return <Loader />;
     }
+    console.log(this.props.selects);
     return (
       <NestedStepper
         onChange={this.handleChange}
@@ -66,10 +100,17 @@ const mapStateToProps = state => ({
   selects: {
     sex: getSex(getScopeOptions(state, DEMAND)),
     ethnicGroups: getEthnicGroups(getScopeOptions(state, DEMAND)),
+    bodyBuilds: getBodyBuilds(getScopeOptions(state, DEMAND)),
+    breastSizes: getBreastSizes(getScopeOptions(state, DEMAND)),
+    hairStyles: getHairStyles(getScopeOptions(state, DEMAND)),
+    hairColors: getHairColors(getScopeOptions(state, DEMAND)),
+    ratings: getRatings(getScopeSchema(state, DEMAND)),
+    faceShapes: getFaceShapes(getScopeOptions(state, DEMAND)),
   },
   fetching: isFetching(state, DEMAND),
 });
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
+  schema: () => dispatch(schema()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

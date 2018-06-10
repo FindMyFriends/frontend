@@ -7,12 +7,16 @@ import {
   receivedSingle,
   DEMAND,
 } from './actions';
-import { options as schemaOptions } from '../schema/endpoints';
+import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/demands', DEMAND));
+};
+
+export const schema = () => (dispatch: (mixed) => Object) => {
+  dispatch(schemaStructure('/schema/demand/get.json', DEMAND));
 };
 
 export const all = (

@@ -54,6 +54,13 @@ export const getScopeOptions = (
   state.schema[scope] ? state.schema[scope].options : null
 );
 
+export const getScopeSchema = (
+  state: Object,
+  scope: string,
+): ?Object => (
+  state.schema[scope] ? state.schema[scope].schema : null
+);
+
 export const isFetching = (
   state: Object,
   scope: string,

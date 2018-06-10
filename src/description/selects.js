@@ -1,5 +1,6 @@
 // @flow
 import merge from 'lodash/merge';
+import range from 'lodash/range';
 import * as R from 'ramda';
 import * as enumSet from '../api/enum';
 import type { ApiEnum } from '../api/enum';
@@ -7,6 +8,26 @@ import type { ApiEnum } from '../api/enum';
 export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
 export const getEthnicGroups = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
+);
+export const getBodyBuilds = (options: ?Object): Array<ApiEnum> => (
+  options ? enumSet.toEnum(options.body.build) : enumSet.empty()
+);
+export const getBreastSizes = (options: ?Object): Array<string> => (
+  options ? options.body.breast_size : []
+);
+export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
+  options ? enumSet.toEnum(options.hair.style) : enumSet.empty()
+);
+export const getHairColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
+);
+export const getRatings = (schema: Object): Array<number> => (
+  schema
+    ? range(schema.definitions.rating.minimum, schema.definitions.rating.maximum + 1)
+    : enumSet.emptyRange()
+);
+export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
+  options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
