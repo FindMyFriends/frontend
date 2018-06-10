@@ -17,6 +17,9 @@ import {
   getHairColors,
   getRatings,
   getFaceShapes,
+  getBeardColors,
+  getEyebrowColors,
+  getEyeColors,
 } from '../../../description/selects';
 
 type Props = {|
@@ -62,6 +65,31 @@ class Add extends React.Component<Props, State> {
         freckles: null,
         care: null,
       },
+      beard: {
+        color_id: null,
+        length: {
+          value: null,
+          unit: 'cm',
+        },
+      },
+      eyebrow: {
+        color_id: null,
+        care: null,
+      },
+      eye: {
+        left: {
+          color_id: null,
+          lenses: null,
+        },
+        right: {
+          color_id: null,
+          lenses: null,
+        },
+      },
+      teeth: {
+        care: null,
+        braces: null,
+      },
     },
   };
 
@@ -105,6 +133,9 @@ const mapStateToProps = state => ({
     hairColors: getHairColors(getScopeOptions(state, DEMAND)),
     ratings: getRatings(getScopeSchema(state, DEMAND)),
     faceShapes: getFaceShapes(getScopeOptions(state, DEMAND)),
+    beardColors: getBeardColors(getScopeOptions(state, DEMAND)),
+    eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),
+    eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
   },
   fetching: isFetching(state, DEMAND),
 });

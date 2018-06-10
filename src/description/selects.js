@@ -21,6 +21,15 @@ export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
 export const getHairColors = (options: ?Object) => (
   options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
 );
+export const getBeardColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.beard.color) : enumSet.emptyColor()
+);
+export const getEyebrowColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.eyebrow.color) : enumSet.emptyColor()
+);
+export const getEyeColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
+);
 export const getRatings = (schema: ?Object): Array<number> => (
   schema
     ? range(schema.definitions.rating.minimum, schema.definitions.rating.maximum + 1)
