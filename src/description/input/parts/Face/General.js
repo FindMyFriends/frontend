@@ -9,7 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from '../withFormStyles';
 
 type Props = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,

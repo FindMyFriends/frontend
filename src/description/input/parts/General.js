@@ -21,7 +21,7 @@ function TextMaskCustom(props: Object) {
 }
 
 type Props = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,

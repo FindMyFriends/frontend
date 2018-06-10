@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select';
 import { withFormStyles } from './withFormStyles';
 
 type Props = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,

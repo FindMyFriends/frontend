@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { withFormStyles } from './withFormStyles';
 
 type Props = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,

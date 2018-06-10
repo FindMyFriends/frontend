@@ -11,7 +11,7 @@ import { withFormStyles } from './withFormStyles';
 import Center from '../../../components/Center';
 
 type EyeProps = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,
@@ -80,7 +80,7 @@ const CenterAsEachOther = Center.extend`
 `;
 
 type EyesProps = {|
-  +onChange: (property: string) => (void),
+  +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,
