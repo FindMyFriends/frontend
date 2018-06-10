@@ -18,7 +18,10 @@ type Props = {|
   +options: () => (void),
   +fetching: boolean,
 |};
-class Add extends React.Component<Props> {
+type State = {|
+  demand: Object,
+|};
+class Add extends React.Component<Props, State> {
   state = {
     demand: {
       general: {

@@ -2,9 +2,10 @@
 import merge from 'lodash/merge';
 import * as R from 'ramda';
 import * as enumSet from '../api/enum';
+import type { ApiEnum } from '../api/enum';
 
-export const getSex = options => (options ? options.general.sex : []);
-export const getEthnicGroups = options => (
+export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
+export const getEthnicGroups = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
 );
 

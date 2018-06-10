@@ -6,7 +6,11 @@ import MinorStepper from './MinorStepper';
 import { majorIdentifiers, minorIdentifiers } from './identifiers';
 import Center from '../Center';
 
-export default class NestedStepper extends React.Component {
+type State = {|
+  major: number,
+  minor: number,
+|};
+export default class NestedStepper extends React.Component<any, State> {
   state = {
     major: 0,
     minor: 0,

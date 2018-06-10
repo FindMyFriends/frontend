@@ -3,11 +3,8 @@ import React from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
+import type { Entry } from './identifiers';
 
-type Entry = {|
-  +title: string,
-  +position: number,
-|};
 type Props = {|
   +step: number,
   +identifiers: Array<Entry>,

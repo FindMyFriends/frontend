@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MaskedInput from 'react-text-mask';
 
-function TextMaskCustom(props) {
+function TextMaskCustom(props: Object) {
   const { inputRef, ...rest } = props;
   return (
     <MaskedInput

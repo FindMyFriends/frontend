@@ -2,14 +2,19 @@
 import values from 'lodash/values';
 import mapValues from 'lodash/mapValues';
 
-export const majorIdentifiers = (steps: Array<Object>): Array<Object> => (
+export type Entry = {|
+  +title: string,
+  +position: number,
+|};
+
+export const majorIdentifiers = (steps: Object): Array<Entry> => (
   values(mapValues(steps, (part, position) => ({
     title: part.title,
     position: parseInt(position, 10),
   })))
 );
 
-export const minorIdentifiers = (steps: Array<Object>, major: number): Array<Object> => (
+export const minorIdentifiers = (steps: Object, major: number): Array<Entry> => (
   steps[major].parts.map((part, position) => ({
     title: part.title,
     position: parseInt(position, 10),

@@ -2,7 +2,7 @@
 import mapValues from 'lodash/mapValues';
 import values from 'lodash/values';
 
-type ApiEnum = {|
+export type ApiEnum = {|
   +id: ?number,
   +name: ?mixed,
 |};
