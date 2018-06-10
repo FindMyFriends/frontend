@@ -1,8 +1,7 @@
 // @flow
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = (additionalStyles: (Object) => (Object) = () => {}) => (theme: Object) => ({
-  ...additionalStyles(theme),
+const styles = () => (theme: Object) => ({
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 230,
@@ -10,6 +9,4 @@ const styles = (additionalStyles: (Object) => (Object) = () => {}) => (theme: Ob
   },
 });
 
-export const withFormStyles = (additionalStyles: Object) => (component: Object) => (
-  withStyles(styles(additionalStyles))(component)
-);
+export const withFormStyles = () => (component: Object) => withStyles(styles())(component);

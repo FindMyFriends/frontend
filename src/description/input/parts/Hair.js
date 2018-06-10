@@ -10,14 +10,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from './withFormStyles';
 
-type Props = {|
+type PartialProps = {|
   +onChange: (property: string) => (void),
   +values: Object,
-  +selects?: Object,
-  +classes?: Object,
 |};
-
-const HighlightsForDyed = ({ onChange, values }: Props) => {
+const HighlightsForDyed = ({ onChange, values }: PartialProps) => {
   if (values['hair.nature'] === true || values['hair.nature'] === null) {
     return null;
   }
@@ -35,7 +32,7 @@ const HighlightsForDyed = ({ onChange, values }: Props) => {
   );
 };
 
-const RootsForDyed = ({ onChange, values }: Props) => {
+const RootsForDyed = ({ onChange, values }: PartialProps) => {
   if (values['hair.nature'] === true || values['hair.nature'] === null) {
     return null;
   }
@@ -53,6 +50,12 @@ const RootsForDyed = ({ onChange, values }: Props) => {
   );
 };
 
+type Props = {|
+  +onChange: (property: string) => (void),
+  +values: Object,
+  +selects: Object,
+  +classes: Object,
+|};
 const Hair = ({
   onChange,
   values,

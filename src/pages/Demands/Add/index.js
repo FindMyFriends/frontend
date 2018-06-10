@@ -85,7 +85,6 @@ class Add extends React.Component<Props, State> {
     if (this.props.fetching) {
       return <Loader />;
     }
-    console.log(this.props.selects);
     return (
       <NestedStepper
         onChange={this.handleChange}

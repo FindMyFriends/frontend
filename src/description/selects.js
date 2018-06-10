@@ -21,7 +21,7 @@ export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
 export const getHairColors = (options: ?Object) => (
   options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
 );
-export const getRatings = (schema: Object): Array<number> => (
+export const getRatings = (schema: ?Object): Array<number> => (
   schema
     ? range(schema.definitions.rating.minimum, schema.definitions.rating.maximum + 1)
     : enumSet.emptyRange()

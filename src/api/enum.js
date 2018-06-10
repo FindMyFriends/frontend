@@ -26,7 +26,7 @@ export const emptyColor = (): Array<Object> => {
   ];
 };
 
-export const emptyRange = (): Object => range(0, 11);
+export const emptyRange = (): Array<number> => range(0, 11);
 
 export const toEnum = (options: Object): Array<ApiEnum> => (
   values(mapValues(options, (name, id) => ({ id: parseInt(id, 10), name })))
