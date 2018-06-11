@@ -31,13 +31,9 @@ const BreastSizeBySex = ({
   return (
     <FormControl className={classes.formControl}>
       <FormLabel>Breast size</FormLabel>
-      <RadioGroup
-        aria-label="gender"
-        value={values['body.breast_size']}
-        onChange={onChange('body.breast_size')}
-      >
+      <RadioGroup value={values['body.breast_size']} onChange={onChange('body.breast_size')}>
         {selects.breastSizes.map(size => (
-          <FormControlLabel key={size} value={size} control={<Radio />} label={size} />
+          <FormControlLabel key={size} value={size} control={<Radio color="primary" />} label={size} />
         ))}
       </RadioGroup>
     </FormControl>

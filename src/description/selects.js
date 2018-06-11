@@ -30,6 +30,12 @@ export const getEyebrowColors = (options: ?Object) => (
 export const getEyeColors = (options: ?Object) => (
   options ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
 );
+export const getNailsColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.hands.nails.color) : enumSet.emptyColor()
+);
+export const getHandHairColors = (options: ?Object) => (
+  options ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
+);
 export const getRatings = (schema: ?Object): Array<number> => (
   schema
     ? range(schema.definitions.rating.minimum, schema.definitions.rating.maximum + 1)

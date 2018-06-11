@@ -4,16 +4,20 @@ import General from './General';
 import Body from './Body';
 import Hair from './Hair';
 import { default as GeneralFace } from './Face/General';
+import { default as GeneralHands } from './Hands/General';
+import { default as HandsHair } from './Hands/Hair';
 import Beard from './Beard';
 import Eyebrow from './Eyebrow';
 import Eyes from './Eyes';
 import Teeth from './Teeth';
+import Nails from './Nails';
 
 const reindex = (values: Array<mixed>) => values.filter(value => value);
 
 export const MAIN_GENERAL = 0;
 export const MAIN_BODY = 1;
 export const MAIN_HEAD = 2;
+export const MAIN_HANDS = 3;
 
 export const steps = (props: Object, parts?: Object = {}): Object => {
   const all = {
@@ -61,6 +65,23 @@ export const steps = (props: Object, parts?: Object = {}): Object => {
         {
           component: <Teeth {...props} />,
           title: 'Teeth',
+        },
+      ],
+    },
+    [MAIN_HANDS]: {
+      title: 'Hands',
+      parts: [
+        {
+          component: <GeneralHands {...props} />,
+          title: 'General',
+        },
+        {
+          component: <Nails {...props} />,
+          title: 'Nails',
+        },
+        {
+          component: <HandsHair {...props} />,
+          title: 'Hair',
         },
       ],
     },

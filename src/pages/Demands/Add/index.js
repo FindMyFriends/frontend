@@ -20,6 +20,8 @@ import {
   getBeardColors,
   getEyebrowColors,
   getEyeColors,
+  getNailsColors,
+  getHandHairColors,
 } from '../../../description/selects';
 
 type Props = {|
@@ -41,6 +43,7 @@ class Add extends React.Component<Props, State> {
         age: null,
       },
       body: {
+        breast_size: null,
         build_id: null,
         height: {
           value: null,
@@ -90,6 +93,23 @@ class Add extends React.Component<Props, State> {
         care: null,
         braces: null,
       },
+      hands: {
+        care: null,
+        vein_visibility: null,
+        joint_visibility: null,
+        nails: {
+          care: null,
+          length: {
+            value: null,
+            unit: 'cm',
+          },
+          color_id: null,
+        },
+        hair: {
+          color_id: null,
+          amount: null,
+        },
+      },
     },
   };
 
@@ -103,7 +123,11 @@ class Add extends React.Component<Props, State> {
       demand: {
         ...merge(
           this.state.demand,
-          unflatten({ [name]: event.target.checked || event.target.value }),
+          unflatten({
+            [name]: event.target.type === 'checkbox'
+              ? event.target.checked
+              : event.target.value,
+          }),
         ),
       },
     })
@@ -136,6 +160,8 @@ const mapStateToProps = state => ({
     beardColors: getBeardColors(getScopeOptions(state, DEMAND)),
     eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),
     eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
+    nailsColors: getNailsColors(getScopeOptions(state, DEMAND)),
+    handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
   },
   fetching: isFetching(state, DEMAND),
 });
