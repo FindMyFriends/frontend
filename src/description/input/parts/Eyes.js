@@ -95,7 +95,10 @@ class Eyes extends React.Component<EyesProps, EyesState> {
 
   handleSameChange = () => {
     this.setState({ same: !this.state.same });
-    // TODO: sync right to left
+    const { values, onChange } = this.props;
+    const distributeOnChange = (from, to) => onChange(from)({ target: { value: values[to], type: 'any' } });
+    distributeOnChange('eye.left.lenses', 'eye.right.lenses');
+    distributeOnChange('eye.left.color_id', 'eye.right.color_id');
   };
 
   render() {
