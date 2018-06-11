@@ -5,20 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import MaskedInput from 'react-text-mask';
+import AgeRange from './AgeRange';
 import { withFormStyles } from './withFormStyles';
-
-function TextMaskCustom(props: Object) {
-  const { inputRef, ...rest } = props;
-  return (
-    <MaskedInput
-      {...rest}
-      ref={inputRef}
-      mask={[/\d/, /\d/, /\d/, ' - ', /\d/, /\d/, /\d/]}
-      showMask
-    />
-  );
-}
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -58,13 +46,11 @@ const General = ({
         ))}
       </Select>
     </FormControl>
-    <FormControl className={classes.formControl}>
-      <Input
-        value={values['general.age'] || ''}
-        onChange={onChange('general.age')}
-        inputComponent={TextMaskCustom}
-      />
-    </FormControl>
+    <AgeRange
+      classes={classes}
+      values={values}
+      onChange={onChange}
+    />
   </React.Fragment>
 );
 

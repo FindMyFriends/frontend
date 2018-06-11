@@ -20,6 +20,7 @@ export const empty = (): Array<ApiEnum> => {
 export const emptyColor = (): Array<Object> => {
   return [
     {
+      id: null,
       hex: null,
       name: null,
     },

@@ -12,8 +12,8 @@ type State = {|
 |};
 export default class NestedStepper extends React.Component<any, State> {
   state = {
-    major: 2,
-    minor: 4,
+    major: 0,
+    minor: 0,
   };
 
   handleMajorTurn = (major: number, minor: number) => this.setState({

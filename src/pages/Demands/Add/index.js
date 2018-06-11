@@ -40,7 +40,10 @@ class Add extends React.Component<Props, State> {
         firstname: null,
         sex: null,
         ethnic_group_id: null,
-        age: null,
+        age: {
+          from: null,
+          to: null,
+        },
       },
       body: {
         breast_size: null,
