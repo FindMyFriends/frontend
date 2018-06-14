@@ -4,9 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from '../withFormStyles';
+import IndeterminateCheckbox from '../IndeterminateCheckbox';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -35,14 +34,9 @@ const General = ({
         ))}
       </Select>
     </FormControl>
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={values['face.freckles']}
-          onChange={onChange('face.freckles')}
-          color="primary"
-        />
-      }
+    <IndeterminateCheckbox
+      checked={values['face.freckles']}
+      onChange={onChange('face.freckles')}
       label="Freckles"
     />
   </React.Fragment>

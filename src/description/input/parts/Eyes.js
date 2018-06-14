@@ -9,6 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from './withFormStyles';
 import Center from '../../../components/Center';
+import IndeterminateCheckbox from './IndeterminateCheckbox';
 
 type EyeProps = {|
   +onChange: (string) => ((Object) => (void)),
@@ -48,22 +49,17 @@ const Eye = ({
           ))}
         </Select>
       </FormControl>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={values[`eye.${side}.lenses`]}
-            onChange={
-              (event) => {
-                if (same) {
-                  onChange('eye.left.lenses')(event);
-                  onChange('eye.right.lenses')(event);
-                } else {
-                  onChange(`eye.${side}.lenses`)(event);
-                }
-              }
+      <IndeterminateCheckbox
+        checked={values[`eye.${side}.lenses`]}
+        onChange={
+          (event) => {
+            if (same) {
+              onChange('eye.left.lenses')(event);
+              onChange('eye.right.lenses')(event);
+            } else {
+              onChange(`eye.${side}.lenses`)(event);
             }
-            color="primary"
-          />
+          }
         }
         label="Lenses"
       />

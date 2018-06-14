@@ -6,8 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import IndeterminateCheckbox from './IndeterminateCheckbox';
 import { withFormStyles } from './withFormStyles';
 
 type PartialProps = {|
@@ -19,14 +18,9 @@ const HighlightsForDyed = ({ onChange, values }: PartialProps) => {
     return null;
   }
   return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={values['hair.highlights']}
-          onChange={onChange('hair.highlights')}
-          color="primary"
-        />
-      }
+    <IndeterminateCheckbox
+      checked={values['hair.highlights']}
+      onChange={onChange('hair.highlights')}
       label="Highlights"
     />
   );
@@ -37,14 +31,9 @@ const RootsForDyed = ({ onChange, values }: PartialProps) => {
     return null;
   }
   return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={values['hair.roots']}
-          onChange={onChange('hair.roots')}
-          color="primary"
-        />
-      }
+    <IndeterminateCheckbox
+      checked={values['hair.roots']}
+      onChange={onChange('hair.roots')}
       label="Roots"
     />
   );
@@ -88,14 +77,9 @@ const Hair = ({
         startAdornment={<InputAdornment position="start">Cm</InputAdornment>}
       />
     </FormControl>
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={values['hair.nature']}
-          onChange={onChange('hair.nature')}
-          color="primary"
-        />
-      }
+    <IndeterminateCheckbox
+      checked={values['hair.nature']}
+      onChange={onChange('hair.nature')}
       label="Nature"
     />
     <HighlightsForDyed onChange={onChange} values={values} />
