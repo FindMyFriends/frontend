@@ -5,9 +5,11 @@ import { flatten, unflatten } from 'flat';
 import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
+import MoveButton from '../../../components/NestedStepper/MoveButton';
 import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
-import { options, schema } from '../../../demand/endpoints';
+import { options, schema, add } from '../../../demand/endpoints';
+import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
   getBreastSizes,
@@ -28,7 +30,9 @@ type Props = {|
   +selects: Object,
   +options: () => (void),
   +schema: () => (void),
+  +add: (Object, (string) => (void)) => (void),
   +fetching: boolean,
+  +history: Object,
 |};
 type State = {|
   demand: Object,
@@ -36,13 +40,26 @@ type State = {|
 class Add extends React.Component<Props, State> {
   state = {
     demand: {
+      note: null,
+      location: { // TODO: not complete
+        coordinates: {
+          latitude: 50.1,
+          longitude: 50.2,
+        },
+        met_at: {
+          moment: '2017-01-01T13:58:10+00:00',
+          timeline_side: 'sooner',
+          approximation: 'PT3H',
+        },
+      },
       general: {
         firstname: null,
-        sex: null,
-        ethnic_group_id: null,
+        lastname: null,
+        sex: 'man',
+        ethnic_group_id: 1,
         age: {
-          from: null,
-          to: null,
+          from: 15,
+          to: 20,
         },
       },
       body: {
@@ -58,7 +75,8 @@ class Add extends React.Component<Props, State> {
         },
       },
       hair: {
-        style: null,
+        color_id: null,
+        style_id: null,
         length: {
           value: null,
           unit: 'cm',
@@ -70,9 +88,11 @@ class Add extends React.Component<Props, State> {
       face: {
         freckles: null,
         care: null,
+        shape_id: null,
       },
       beard: {
         color_id: null,
+        style: null,
         length: {
           value: null,
           unit: 'cm',
@@ -136,16 +156,28 @@ class Add extends React.Component<Props, State> {
     })
   );
 
+  handleClick = () => {
+    this.props.add(
+      normalize(this.state.demand),
+      (id: string) => this.props.history.push(`/demads/${id}`),
+    );
+  };
+
   render() {
     if (this.props.fetching) {
       return <Loader />;
     }
     return (
-      <NestedStepper
-        onChange={this.handleChange}
-        values={flatten(this.state.demand)}
-        selects={this.props.selects}
-      />
+      <React.Fragment>
+        <NestedStepper
+          onChange={this.handleChange}
+          values={flatten(this.state.demand)}
+          selects={this.props.selects}
+        />
+        <MoveButton onClick={this.handleClick}>
+          Add
+        </MoveButton>
+      </React.Fragment>
     );
   }
 }
@@ -171,5 +203,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   schema: () => dispatch(schema()),
+  add: (demand: Object, next: (string) => (void)) => dispatch(add(demand, next)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

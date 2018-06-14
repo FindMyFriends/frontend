@@ -28,7 +28,7 @@ const General = ({
     </FormControl>
     <FormControl className={classes.formControl}>
       <InputLabel>Shape</InputLabel>
-      <Select value={values['face.shape'] || ''} onChange={onChange('face.shape')}>
+      <Select value={values['face.shape_id'] || ''} onChange={onChange('face.shape_id')}>
         {selects.faceShapes.map(shape => (
           <MenuItem key={shape.id} value={shape.id}>{shape.name}</MenuItem>
         ))}

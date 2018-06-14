@@ -29,6 +29,13 @@ const General = ({
       />
     </FormControl>
     <FormControl className={classes.formControl}>
+      <InputLabel>Lastname</InputLabel>
+      <Input
+        onChange={onChange('general.lastname')}
+        value={values['general.lastname'] || ''}
+      />
+    </FormControl>
+    <FormControl className={classes.formControl}>
       <InputLabel>Sex</InputLabel>
       <Select value={values['general.sex'] || ''} onChange={onChange('general.sex')}>
         {selects.sex.map(sex => (
