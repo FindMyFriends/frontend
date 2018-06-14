@@ -55,11 +55,11 @@ class Add extends React.Component<Props, State> {
       general: {
         firstname: null,
         lastname: null,
-        sex: 'man',
-        ethnic_group_id: 1,
+        sex: null,
+        ethnic_group_id: null,
         age: {
-          from: 15,
-          to: 20,
+          from: null,
+          to: null,
         },
       },
       body: {
