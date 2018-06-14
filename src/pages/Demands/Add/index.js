@@ -159,7 +159,7 @@ class Add extends React.Component<Props, State> {
   handleClick = () => {
     this.props.add(
       normalize(this.state.demand),
-      (id: string) => this.props.history.push(`/demads/${id}`),
+      (id: string) => this.props.history.push(`/demands/${id}`),
     );
   };
 
