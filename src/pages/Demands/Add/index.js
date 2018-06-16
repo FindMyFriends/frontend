@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
 import merge from 'lodash/merge';
+import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import MoveButton from '../../../components/NestedStepper/MoveButton';
@@ -25,9 +26,10 @@ import {
   getNailsColors,
   getHandHairColors,
 } from '../../../description/selects';
+import { getTimelineSides } from '../../../demand/selects';
+import steps from '../../../demand/input/parts/steps';
 
 type Props = {|
-  +selects: Object,
   +options: () => (void),
   +schema: () => (void),
   +add: (Object, (string) => (void)) => (void),
@@ -47,9 +49,9 @@ class Add extends React.Component<Props, State> {
           longitude: 50.2,
         },
         met_at: {
-          moment: '2017-01-01T13:58:10+00:00',
-          timeline_side: 'sooner',
-          approximation: 'PT3H',
+          moment: moment().format(),
+          timeline_side: 'exactly',
+          approximation: null,
         },
       },
       general: {
@@ -170,9 +172,13 @@ class Add extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <NestedStepper
-          onChange={this.handleChange}
-          values={flatten(this.state.demand)}
-          selects={this.props.selects}
+          steps={
+            steps({
+              ...this.props,
+              onChange: this.handleChange,
+              values: flatten(this.state.demand),
+            })
+          }
         />
         <MoveButton onClick={this.handleClick}>
           Add
@@ -197,6 +203,7 @@ const mapStateToProps = state => ({
     eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
     nailsColors: getNailsColors(getScopeOptions(state, DEMAND)),
     handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
+    timelineSides: getTimelineSides(getScopeOptions(state, DEMAND)),
   },
   fetching: isFetching(state, DEMAND),
 });

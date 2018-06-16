@@ -1,18 +1,20 @@
 // @flow
 import React from 'react';
-import steps from '../../description/input/parts/steps';
 import MajorStepper from './MajorStepper';
 import MinorStepper from './MinorStepper';
 import { majorIdentifiers, minorIdentifiers } from './identifiers';
 import Center from '../Center';
 
+type Props = {|
+  +steps: Object,
+|};
 type State = {|
   major: number,
   minor: number,
 |};
-export default class NestedStepper extends React.Component<any, State> {
+export default class NestedStepper extends React.Component<Props, State> {
   state = {
-    major: 0,
+    major: 4,
     minor: 0,
   };
 
@@ -25,21 +27,21 @@ export default class NestedStepper extends React.Component<any, State> {
 
   render() {
     const { major, minor } = this.state;
-    const allSteps = steps(this.props);
+    const { steps } = this.props;
     return (
       <React.Fragment>
         <MajorStepper
           step={major}
-          identifiers={majorIdentifiers(allSteps)}
+          identifiers={majorIdentifiers(steps)}
           onTurn={this.handleMajorTurn}
         />
         <MinorStepper
           step={minor}
-          identifiers={minorIdentifiers(allSteps, major)}
+          identifiers={minorIdentifiers(steps, major)}
           onTurn={this.handleMinorTurn}
         />
         <Center>
-          {allSteps[major].parts[minor].component}
+          {steps[major].parts[minor].component}
         </Center>
       </React.Fragment>
     );
