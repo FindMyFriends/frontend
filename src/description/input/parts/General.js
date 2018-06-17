@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import AgeRange from './AgeRange';
+import AgeRangeInput from './AgeRangeInput';
 import { withFormStyles } from './withFormStyles';
 
 type Props = {|
@@ -53,7 +53,7 @@ const General = ({
         ))}
       </Select>
     </FormControl>
-    <AgeRange
+    <AgeRangeInput
       classes={classes}
       values={values}
       onChange={onChange}

@@ -17,7 +17,7 @@ type Props = {|
   +values: Object,
   +classes: Object,
 |};
-const AgeRange = ({ classes, values, onChange }: Props) => {
+const AgeRangeInput = ({ classes, values, onChange }: Props) => {
   const max = 85;
   const min = 15;
   const step = 5;
@@ -51,4 +51,4 @@ const AgeRange = ({ classes, values, onChange }: Props) => {
   );
 };
 
-export default withFormStyles()(AgeRange);
+export default withFormStyles()(AgeRangeInput);
