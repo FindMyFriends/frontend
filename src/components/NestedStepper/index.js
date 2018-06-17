@@ -3,30 +3,40 @@ import React from 'react';
 import MajorStepper from './MajorStepper';
 import MinorStepper from './MinorStepper';
 import { majorIdentifiers, minorIdentifiers } from './identifiers';
+import type { Step } from './moves';
 import Center from '../Center';
 
 type Props = {|
   +steps: Object,
 |};
 type State = {|
-  major: number,
-  minor: number,
+  step: Step,
 |};
 export default class NestedStepper extends React.Component<Props, State> {
   state = {
-    major: 2,
-    minor: 1,
+    step: {
+      major: 2,
+      minor: 1,
+    },
   };
 
   handleMajorTurn = (major: number, minor: number) => this.setState({
-    ...this.state,
-    major,
-    minor,
+    step: {
+      major,
+      minor,
+    },
   });
-  handleMinorTurn = (minor: number) => this.setState({ ...this.state, minor });
+  handleMinorTurn = (minor: number) => (
+    this.setState({
+      step: {
+        ...this.state.step,
+        minor,
+      },
+    })
+  );
 
   render() {
-    const { major, minor } = this.state;
+    const { step: { major, minor } } = this.state;
     const { steps } = this.props;
     return (
       <React.Fragment>

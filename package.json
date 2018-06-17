@@ -33,10 +33,18 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint -c .eslintrc src/ --ignore-path .eslintignore",
-    "check": "yarn lint && yarn run flow",
+    "tests": "ava **/__tests__/**/*.ava.js",
+    "check": "yarn lint && yarn run flow && yarn run tests",
     "flow-compile": "yarn run babel src/ -- -d lib/"
   },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
   "devDependencies": {
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-preset-es2015": "^6.24.1",
