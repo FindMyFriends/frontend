@@ -12,6 +12,12 @@ import { withFormStyles } from './withFormStyles';
 import MassInput from './MassInput';
 import LengthInput from './LengthInput';
 
+const styles = {
+  radioGroup: {
+    flexDirection: 'row',
+  },
+};
+
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
@@ -31,7 +37,7 @@ const BreastSizeBySex = ({
   return (
     <FormControl className={classes.formControl}>
       <FormLabel>Breast size</FormLabel>
-      <RadioGroup value={values['body.breast_size']} onChange={onChange('body.breast_size')}>
+      <RadioGroup className={classes.radioGroup} value={values['body.breast_size']} onChange={onChange('body.breast_size')}>
         {selects.breastSizes.map(size => (
           <FormControlLabel key={size} value={size} control={<Radio color="primary" />} label={size} />
         ))}
@@ -70,4 +76,4 @@ const Body = ({
   </React.Fragment>
 );
 
-export default withFormStyles()(Body);
+export default withFormStyles(styles)(Body);
