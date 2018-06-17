@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import IndeterminateCheckbox from './IndeterminateCheckbox';
+import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
 import { withFormStyles } from './withFormStyles';
 
 type PartialProps = {|

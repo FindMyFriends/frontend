@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from './withFormStyles';
 import Center from '../../../components/Center';
-import IndeterminateCheckbox from './IndeterminateCheckbox';
+import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
 
 type EyeProps = {|
   +onChange: (string) => ((Object) => (void)),

@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import { withFormStyles } from '../withFormStyles';
-import IndeterminateCheckbox from '../IndeterminateCheckbox';
+import IndeterminateCheckbox from '../../../../components/MUI/IndeterminateCheckbox';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
