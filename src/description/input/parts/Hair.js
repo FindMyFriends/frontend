@@ -5,9 +5,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
+import LengthInput from './LengthInput';
 import { withFormStyles } from './withFormStyles';
 
 type PartialProps = {|
@@ -77,15 +76,9 @@ const Hair = ({
         ))}
       </Select>
     </FormControl>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Length</InputLabel>
-      <Input
-        type="number"
-        onChange={onChange('hair.length.value')}
-        value={values['hair.length.value'] || ''}
-        startAdornment={<InputAdornment position="start">Cm</InputAdornment>}
-      />
-    </FormControl>
+    <LengthInput value={values['hair.length.value']} onChange={onChange('hair.length.value')}>
+      Length
+    </LengthInput>
     <FormControlLabel
       label="Nature"
       control={

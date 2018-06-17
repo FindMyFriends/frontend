@@ -12,12 +12,12 @@ const NextToEachOther = styled.div`
   flex-wrap: wrap;
 `;
 
-type AgeRangeProps = {|
+type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +classes: Object,
 |};
-const AgeRange = ({ classes, values, onChange }: AgeRangeProps) => {
+const AgeRange = ({ classes, values, onChange }: Props) => {
   const max = 85;
   const min = 15;
   const step = 5;

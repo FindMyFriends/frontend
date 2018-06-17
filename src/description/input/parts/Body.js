@@ -1,7 +1,5 @@
 // @flow
 import React from 'react';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,6 +9,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import { withFormStyles } from './withFormStyles';
+import MassInput from './MassInput';
+import LengthInput from './LengthInput';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -55,24 +55,12 @@ const Body = ({
         ))}
       </Select>
     </FormControl>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Weight</InputLabel>
-      <Input
-        type="number"
-        onChange={onChange('body.weight.value')}
-        value={values['body.weight.value'] || ''}
-        startAdornment={<InputAdornment position="start">Kg</InputAdornment>}
-      />
-    </FormControl>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Height</InputLabel>
-      <Input
-        type="number"
-        onChange={onChange('body.height.value')}
-        value={values['body.height.value'] || ''}
-        startAdornment={<InputAdornment position="start">Cm</InputAdornment>}
-      />
-    </FormControl>
+    <MassInput onChange={onChange('body.weight.value')} value={values['body.weight.value']}>
+      Weight
+    </MassInput>
+    <LengthInput onChange={onChange('body.height.value')} value={values['body.height.value']}>
+      Height
+    </LengthInput>
     <BreastSizeBySex
       onChange={onChange}
       values={values}

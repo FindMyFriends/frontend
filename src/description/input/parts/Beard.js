@@ -4,8 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import LengthInput from './LengthInput';
 import { withFormStyles } from './withFormStyles';
 
 type Props = {|
@@ -21,15 +20,9 @@ const Beard = ({
   classes,
 }: Props) => (
   <React.Fragment>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Length</InputLabel>
-      <Input
-        type="number"
-        onChange={onChange('beard.length.value')}
-        value={values['beard.length.value'] || ''}
-        startAdornment={<InputAdornment position="start">Cm</InputAdornment>}
-      />
-    </FormControl>
+    <LengthInput onChange={onChange('beard.length.value')} value={values['beard.length.value']}>
+      Length
+    </LengthInput>
     <FormControl className={classes.formControl}>
       <InputLabel>Color</InputLabel>
       <Select value={values['beard.color_id'] || ''} onChange={onChange('beard.color_id')}>
