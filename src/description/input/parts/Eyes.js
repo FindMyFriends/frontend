@@ -74,7 +74,6 @@ type EyesProps = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
-  +classes: Object,
 |};
 type EyesState = {|
   same: boolean,
