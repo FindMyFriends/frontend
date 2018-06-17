@@ -28,7 +28,7 @@ const ControlButtons = ({
   };
 
   const previousButtons = () => {
-    if (!isFirst(step, steps)) {
+    if (!isFirst(step)) {
       return <PreviousButton key={3} onClick={onPrevious}>Previous</PreviousButton>;
     }
     return null;
