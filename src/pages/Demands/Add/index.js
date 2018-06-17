@@ -6,7 +6,6 @@ import merge from 'lodash/merge';
 import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import AddButton from '../../../components/NestedStepper/AddButton';
 import { getScopeOptions, isFetching } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
@@ -157,7 +156,7 @@ class Add extends React.Component<Props, State> {
     })
   );
 
-  handleClick = () => {
+  handleAdd = () => {
     this.props.add(
       normalize(this.state.demand),
       (id: string) => this.props.history.push(`/demands/${id}`),
@@ -169,20 +168,16 @@ class Add extends React.Component<Props, State> {
       return <Loader />;
     }
     return (
-      <React.Fragment>
-        <NestedStepper
-          steps={
-            steps({
-              ...this.props,
-              onChange: this.handleChange,
-              values: flatten(this.state.demand),
-            })
-          }
-        />
-        <AddButton onClick={this.handleClick}>
-          Add
-        </AddButton>
-      </React.Fragment>
+      <NestedStepper
+        onAdd={this.handleAdd}
+        steps={
+          steps({
+            ...this.props,
+            onChange: this.handleChange,
+            values: flatten(this.state.demand),
+          })
+        }
+      />
     );
   }
 }
