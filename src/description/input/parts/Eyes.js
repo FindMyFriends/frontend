@@ -1,21 +1,17 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withFormStyles } from './withFormStyles';
 import Center from '../../../components/Center';
 import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
+import ColorInput from './ColorInput';
 
 type EyeProps = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
-  +classes: Object,
   +side: 'left' | 'right',
   +same: boolean,
 |};
@@ -23,32 +19,27 @@ const Eye = ({
   onChange,
   values,
   selects,
-  classes,
   side,
   same,
 }: EyeProps) => {
   return (
     <React.Fragment>
-      <FormControl className={classes.formControl}>
-        <InputLabel>Color</InputLabel>
-        <Select
-          value={values[`eye.${side}.color_id`] || ''}
-          onChange={
-            (event) => {
-              if (same) {
-                onChange('eye.left.color_id')(event);
-                onChange('eye.right.color_id')(event);
-              } else {
-                onChange(`eye.${side}.color_id`)(event);
-              }
+      <ColorInput
+        colors={selects.eyeColors}
+        value={values[`eye.${side}.color_id`]}
+        onChange={
+          (event) => {
+            if (same) {
+              onChange('eye.left.color_id')(event);
+              onChange('eye.right.color_id')(event);
+            } else {
+              onChange(`eye.${side}.color_id`)(event);
             }
           }
-        >
-          {selects.eyeColors.map(color => (
-            <MenuItem key={color.id} value={color.id}>{color.name}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        }
+      >
+        Color
+      </ColorInput>
       <FormControlLabel
         label="Lenses"
         control={
@@ -106,7 +97,6 @@ class Eyes extends React.Component<EyesProps, EyesState> {
       onChange,
       values,
       selects,
-      classes,
     } = this.props;
     const components = [
       <Center key="same">
@@ -127,7 +117,6 @@ class Eyes extends React.Component<EyesProps, EyesState> {
         onChange={onChange}
         values={values}
         selects={selects}
-        classes={classes}
         same={this.state.same}
         side="left"
         key="left"
@@ -136,7 +125,6 @@ class Eyes extends React.Component<EyesProps, EyesState> {
         onChange={onChange}
         values={values}
         selects={selects}
-        classes={classes}
         same={this.state.same}
         side="right"
         key="right"

@@ -1,37 +1,26 @@
 // @flow
 import React from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { withFormStyles } from '../withFormStyles';
 import InputRating from '../../../../components/Rating/InputRating';
+import ColorInput from '../ColorInput';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
-  +classes: Object,
 |};
 const General = ({
   onChange,
   values,
   selects,
-  classes,
 }: Props) => (
   <React.Fragment>
     <InputRating current={values['hands.hair.amount']} onChange={onChange('hands.hair.amount')}>
       Amount
     </InputRating>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Color</InputLabel>
-      <Select value={values['hands.hair.color_id'] || ''} onChange={onChange('hands.hair.color_id')}>
-        {selects.handHairColors.map(color => (
-          <MenuItem key={color.id} value={color.id}>{color.name}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <ColorInput colors={selects.handHairColors} value={values['hands.hair.color_id']} onChange={onChange('hands.hair.color_id')}>
+      Color
+    </ColorInput>
   </React.Fragment>
 );
 
-export default withFormStyles()(General);
+export default General;

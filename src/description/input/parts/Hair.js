@@ -8,6 +8,7 @@ import Select from '@material-ui/core/Select';
 import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
 import LengthInput from './LengthInput';
 import { withFormStyles } from './withFormStyles';
+import ColorInput from './ColorInput';
 
 type PartialProps = {|
   +onChange: (string) => ((Object) => (void)),
@@ -68,14 +69,9 @@ const Hair = ({
         ))}
       </Select>
     </FormControl>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Color</InputLabel>
-      <Select value={values['hair.color_id'] || ''} onChange={onChange('hair.color_id')}>
-        {selects.hairColors.map(color => (
-          <MenuItem key={color.id} value={color.id}>{color.name}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <ColorInput colors={selects.hairColors} value={values['hair.color_id']} onChange={onChange('hair.color_id')}>
+      Color
+    </ColorInput>
     <LengthInput value={values['hair.length.value']} onChange={onChange('hair.length.value')}>
       Length
     </LengthInput>

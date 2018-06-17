@@ -3,7 +3,7 @@ import merge from 'lodash/merge';
 import range from 'lodash/range';
 import * as R from 'ramda';
 import * as enumSet from '../api/enum';
-import type { ApiEnum } from '../api/enum';
+import type { ApiEnum, ApiColor } from '../api/enum';
 
 export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
 export const getEthnicGroups = (options: ?Object): Array<ApiEnum> => (
@@ -18,22 +18,22 @@ export const getBreastSizes = (options: ?Object): Array<string> => (
 export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.hair.style) : enumSet.empty()
 );
-export const getHairColors = (options: ?Object) => (
+export const getHairColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
 );
-export const getBeardColors = (options: ?Object) => (
+export const getBeardColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.beard.color) : enumSet.emptyColor()
 );
-export const getEyebrowColors = (options: ?Object) => (
+export const getEyebrowColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.eyebrow.color) : enumSet.emptyColor()
 );
-export const getEyeColors = (options: ?Object) => (
+export const getEyeColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
 );
-export const getNailsColors = (options: ?Object) => (
+export const getNailsColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.hands.nails.color) : enumSet.emptyColor()
 );
-export const getHandHairColors = (options: ?Object) => (
+export const getHandHairColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
 );
 export const getRatings = (schema: ?Object): Array<number> => (

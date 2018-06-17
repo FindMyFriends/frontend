@@ -8,6 +8,12 @@ export type ApiEnum = {|
   +name: ?mixed,
 |};
 
+export type ApiColor = {|
+  +id: ?number,
+  +hex: ?string,
+  +name: ?string,
+|};
+
 export const empty = (): Array<ApiEnum> => {
   return [
     {
@@ -17,7 +23,7 @@ export const empty = (): Array<ApiEnum> => {
   ];
 };
 
-export const emptyColor = (): Array<Object> => {
+export const emptyColor = (): Array<ApiColor> => {
   return [
     {
       id: null,
@@ -33,6 +39,10 @@ export const toEnum = (options: Object): Array<ApiEnum> => (
   values(mapValues(options, (name, id) => ({ id: parseInt(id, 10), name })))
 );
 
-export const toColorEnum = (options: Object): Array<ApiEnum> => (
-  values(mapValues(options, (color, id) => ({ id: parseInt(id, 10), name: color.name })))
+export const toColorEnum = (options: Object): Array<ApiColor> => (
+  values(mapValues(options, (color, id) => ({
+    id: parseInt(id, 10),
+    name: color.name,
+    hex: color.hex,
+  })))
 );
