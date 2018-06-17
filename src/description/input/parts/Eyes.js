@@ -49,19 +49,23 @@ const Eye = ({
           ))}
         </Select>
       </FormControl>
-      <IndeterminateCheckbox
-        checked={values[`eye.${side}.lenses`]}
-        onChange={
-          (event) => {
-            if (same) {
-              onChange('eye.left.lenses')(event);
-              onChange('eye.right.lenses')(event);
-            } else {
-              onChange(`eye.${side}.lenses`)(event);
-            }
-          }
-        }
+      <FormControlLabel
         label="Lenses"
+        control={
+          <IndeterminateCheckbox
+            checked={values[`eye.${side}.lenses`]}
+            onChange={
+              (event) => {
+                if (same) {
+                  onChange('eye.left.lenses')(event);
+                  onChange('eye.right.lenses')(event);
+                } else {
+                  onChange(`eye.${side}.lenses`)(event);
+                }
+              }
+            }
+          />
+        }
       />
     </React.Fragment>
   );

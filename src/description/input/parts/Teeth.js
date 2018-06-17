@@ -3,6 +3,7 @@ import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import { withFormStyles } from './withFormStyles';
 import IndeterminateCheckbox from './IndeterminateCheckbox';
@@ -26,10 +27,14 @@ const Teeth = ({
         {selects.ratings.map(rating => <MenuItem key={rating} value={rating}>{rating}</MenuItem>)}
       </Select>
     </FormControl>
-    <IndeterminateCheckbox
-      checked={values['teeth.braces']}
-      onChange={onChange('teeth.braces')}
+    <FormControlLabel
       label="Braces"
+      control={
+        <IndeterminateCheckbox
+          checked={values['teeth.braces']}
+          onChange={onChange('teeth.braces')}
+        />
+      }
     />
   </React.Fragment>
 );

@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
-import { withFormStyles } from '../../../description/input/parts/withFormStyles';
+import { withFormStyles } from '../../../../description/input/parts/withFormStyles';
 import Approximation from './Approximation';
 
 type Props = {|

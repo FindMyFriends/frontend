@@ -17,10 +17,7 @@ export default class MinorStepper extends React.PureComponent<Props> {
       <Stepper nonLinear activeStep={step}>
         {identifiers.map(entry => (
           <Step key={entry.position}>
-            <StepButton
-              onClick={() => onTurn(entry.position)}
-              completed={false}
-            >
+            <StepButton onClick={() => onTurn(entry.position)}>
               {entry.title}
             </StepButton>
           </Step>

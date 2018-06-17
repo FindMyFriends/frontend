@@ -17,10 +17,7 @@ export default class MajorStepper extends React.PureComponent<Props> {
       <Stepper nonLinear activeStep={step}>
         {identifiers.map(entry => (
           <Step key={entry.position}>
-            <StepButton
-              onClick={() => onTurn(entry.position, 0)}
-              completed={false}
-            >
+            <StepButton onClick={() => onTurn(entry.position, 0)}>
               {entry.title}
             </StepButton>
           </Step>

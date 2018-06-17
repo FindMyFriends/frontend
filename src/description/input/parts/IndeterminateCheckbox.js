@@ -1,12 +1,10 @@
 // @flow
 import React from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const INDETERMINATE = 'indeterminate';
 
 type Props = {|
-  +label: string,
   +checked: true | false | null,
   +onChange: (Object) => (void),
 |};
@@ -45,18 +43,12 @@ export default class IndeterminateCheckbox extends React.Component<Props, State>
   };
 
   render() {
-    const { label } = this.props;
     return (
-      <FormControlLabel
-        control={
-          <Checkbox
-            indeterminate={this.state.checked === INDETERMINATE}
-            checked={this.state.checked}
-            onChange={this.handleChange}
-            color="primary"
-          />
-        }
-        label={label}
+      <Checkbox
+        indeterminate={this.state.checked === INDETERMINATE}
+        checked={this.state.checked}
+        onChange={this.handleChange}
+        color="primary"
       />
     );
   }

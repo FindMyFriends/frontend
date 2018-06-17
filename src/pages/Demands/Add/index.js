@@ -6,7 +6,7 @@ import merge from 'lodash/merge';
 import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import MoveButton from '../../../components/NestedStepper/MoveButton';
+import AddButton from '../../../components/NestedStepper/AddButton';
 import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
@@ -180,9 +180,9 @@ class Add extends React.Component<Props, State> {
             })
           }
         />
-        <MoveButton onClick={this.handleClick}>
+        <AddButton onClick={this.handleClick}>
           Add
-        </MoveButton>
+        </AddButton>
       </React.Fragment>
     );
   }
