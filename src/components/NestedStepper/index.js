@@ -3,11 +3,14 @@ import React from 'react';
 import MajorStepper from './MajorStepper';
 import MinorStepper from './MinorStepper';
 import { majorIdentifiers, minorIdentifiers } from './identifiers';
+import ControlButtons from './ControlButtons';
+import { next, previous } from './moves';
 import type { Step } from './moves';
 import Center from '../Center';
 
 type Props = {|
   +steps: Object,
+  +onAdd: () => (void),
 |};
 type State = {|
   step: Step,
@@ -26,6 +29,7 @@ export default class NestedStepper extends React.Component<Props, State> {
       minor,
     },
   });
+
   handleMinorTurn = (minor: number) => (
     this.setState({
       step: {
@@ -35,9 +39,21 @@ export default class NestedStepper extends React.Component<Props, State> {
     })
   );
 
+  handleNextTurn = () => (
+    this.setState({
+      step: next(this.state.step, this.props.steps),
+    })
+  );
+
+  handlePreviousTurn = () => (
+    this.setState({
+      step: previous(this.state.step, this.props.steps),
+    })
+  );
+
   render() {
     const { step: { major, minor } } = this.state;
-    const { steps } = this.props;
+    const { steps, onAdd } = this.props;
     return (
       <React.Fragment>
         <MajorStepper
@@ -53,6 +69,13 @@ export default class NestedStepper extends React.Component<Props, State> {
         <Center>
           {steps[major].parts[minor].component}
         </Center>
+        <ControlButtons
+          step={this.state.step}
+          steps={steps}
+          onAdd={onAdd}
+          onNext={this.handleNextTurn}
+          onPrevious={this.handlePreviousTurn}
+        />
       </React.Fragment>
     );
   }

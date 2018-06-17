@@ -35,3 +35,9 @@ export const previous = (current: Step, steps: Object): Step => {
     minor: decrement(current.minor),
   };
 };
+
+export const isFirst = (current: Step): boolean => current.major === 0 && current.minor === 0;
+
+export const isLast = (current: Step, steps: Object): boolean => (
+  max(steps[current.major].parts) === current.minor && max(steps) === current.major
+);
