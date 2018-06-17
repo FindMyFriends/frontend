@@ -14,8 +14,8 @@ import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 type Props = {|
   +demand: Object,
   +fetching: boolean,
-  +single: (id: string) => (void),
-  +soulmateInfo: (id: string) => (void),
+  +single: (string) => (void),
+  +soulmateInfo: (string) => (void),
   +match: Object,
   +soulmateTotal: number,
 |};

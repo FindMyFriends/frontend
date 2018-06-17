@@ -2,30 +2,26 @@
 import React from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
+import FormLabel from '@material-ui/core/FormLabel';
 import CustomRating from './CustomRating';
 import { onRating } from './events';
 
 type Props = {|
-  +max: number,
   +current: number,
-  +name: string,
   +onChange: (Object) => (mixed),
   +children: string,
 |};
 const InputRating = ({
-  max,
   current,
-  name,
   onChange,
   children,
 }: Props) => (
   <React.Fragment>
-    {children} {/* Should be label */}
-    <br />
+    <FormLabel>{children}</FormLabel>
     <Rater
-      total={max}
+      total={10}
       rating={current}
-      onRate={event => onRating(onChange, name, event)}
+      onRate={event => onRating(onChange, event)}
     >
       <CustomRating />
     </Rater>

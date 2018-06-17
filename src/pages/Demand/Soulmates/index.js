@@ -14,8 +14,8 @@ type Props = {|
   +soulmates: Array<Object>,
   +total: number,
   +fetching: boolean,
-  +all: (id: string, sort: SortType, pagination: PaginationType) => (void),
-  +markAs: (id: string, as: boolean, next: () => (void)) => (void),
+  +all: (string, SortType, PaginationType) => (void),
+  +markAs: (string, boolean, () => (void)) => (void),
   +match: Object,
 |};
 type State = {|

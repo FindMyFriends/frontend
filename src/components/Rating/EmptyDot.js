@@ -2,8 +2,8 @@
 import Dot from './Dot';
 
 const EmptyDot = Dot.extend`
-  height: 5px;
-  width: 5px;
+  height: 14px;
+  width: 14px;
   background-color: #fff;
   border-color: #bbb;
   border-style: solid;

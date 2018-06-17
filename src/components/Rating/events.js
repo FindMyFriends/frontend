@@ -1,11 +1,10 @@
 // @flow
 export const onRating = (
-  classic: (x: Object) => mixed,
-  name: string,
+  classic: (Object) => mixed,
   event: Object,
 ) => {
   if (event.type === 'click') {
-    return classic({ target: { name, value: event.rating } });
+    return classic({ target: { ...event.target, value: event.rating } });
   }
   return null;
 };

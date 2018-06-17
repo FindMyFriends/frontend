@@ -7,9 +7,18 @@ import {
   receivedSingle,
   DEMAND,
 } from './actions';
-import { options } from '../schema/endpoints';
+import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
+import extractedLocationId from '../api/extractedLocationId';
+
+export const options = () => (dispatch: (mixed) => Object) => {
+  dispatch(schemaOptions('/demands', DEMAND));
+};
+
+export const schema = () => (dispatch: (mixed) => Object) => {
+  dispatch(schemaStructure('/schema/demand/get.json', DEMAND));
+};
 
 export const all = (
   sorts: Array<string>,
@@ -34,7 +43,7 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
   Promise.all([
     axios.get(`/demands/${id}?${query}`)
       .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
-    dispatch(options('/demands', DEMAND)),
+    dispatch(options()),
   ]);
 };
 
@@ -52,5 +61,15 @@ export const saveNote = (
 ) => (dispatch: (mixed) => Object) => {
   axios.patch(`/demands/${id}`, { note })
     .then(next)
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
+  return axios.post('/demands', demand)
+    .then((response) => {
+      dispatch(receivedSuccessMessage('Demand has been added'));
+      return extractedLocationId(response.headers.location);
+    })
+    .then(id => next(id))
     .catch(error => dispatch(receivedApiError(error)));
 };

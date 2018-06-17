@@ -14,7 +14,7 @@ type State = {|
 |};
 type Props = {|
   +note: ?string,
-  +onSave: (text: string, next: () => Promise<any>) => (void),
+  +onSave: (string, () => Promise<any>) => (void),
 |};
 export default class NoteDialog extends React.Component<Props, State> {
   state = {

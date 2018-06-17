@@ -46,7 +46,7 @@ type TableProps = {|
   +onSort: string => (void),
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
-  +onMarkAs: (id: string, as: boolean) => (void),
+  +onMarkAs: (string, boolean) => (void),
   +total: number,
   +classes: Object,
 |};
