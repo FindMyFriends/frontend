@@ -7,7 +7,7 @@ import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import AddButton from '../../../components/NestedStepper/AddButton';
-import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/reducers';
+import { getScopeOptions, isFetching } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
 import normalize from '../../../description/input/normalize';
@@ -18,7 +18,6 @@ import {
   getEthnicGroups,
   getSex,
   getHairColors,
-  getRatings,
   getFaceShapes,
   getBeardColors,
   getEyebrowColors,
@@ -196,7 +195,6 @@ const mapStateToProps = state => ({
     breastSizes: getBreastSizes(getScopeOptions(state, DEMAND)),
     hairStyles: getHairStyles(getScopeOptions(state, DEMAND)),
     hairColors: getHairColors(getScopeOptions(state, DEMAND)),
-    ratings: getRatings(getScopeSchema(state, DEMAND)),
     faceShapes: getFaceShapes(getScopeOptions(state, DEMAND)),
     beardColors: getBeardColors(getScopeOptions(state, DEMAND)),
     eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),

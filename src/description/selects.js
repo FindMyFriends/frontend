@@ -1,6 +1,5 @@
 // @flow
 import merge from 'lodash/merge';
-import range from 'lodash/range';
 import * as R from 'ramda';
 import * as enumSet from '../api/enum';
 import type { ApiEnum, ApiColor } from '../api/enum';
@@ -35,11 +34,6 @@ export const getNailsColors = (options: ?Object): Array<ApiColor> => (
 );
 export const getHandHairColors = (options: ?Object): Array<ApiColor> => (
   options ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
-);
-export const getRatings = (schema: ?Object): Array<number> => (
-  schema
-    ? range(schema.definitions.rating.minimum, schema.definitions.rating.maximum + 1)
-    : enumSet.emptyRange()
 );
 export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
