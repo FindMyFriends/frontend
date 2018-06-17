@@ -23,7 +23,11 @@ const MetAt = ({
   classes,
 }: Props) => {
   const handleTimelineChange = (event) => {
-    onChange('location.met_at.approximation')({ target: { value: 'PT1H' } });
+    if (values['location.met_at.timeline_side'] === 'exactly') {
+      onChange('location.met_at.approximation')({ target: { value: null } });
+    } else {
+      onChange('location.met_at.approximation')({ target: { value: 'PT1H' } });
+    }
     onChange('location.met_at.timeline_side')(event);
   };
 

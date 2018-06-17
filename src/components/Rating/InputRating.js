@@ -5,6 +5,7 @@ import 'react-rater/lib/react-rater.css';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomRating from './CustomRating';
 import { onRating } from './events';
+import { BIG } from './Dot';
 
 type Props = {|
   +current: number,
@@ -23,7 +24,7 @@ const InputRating = ({
       rating={current}
       onRate={event => onRating(onChange, event)}
     >
-      <CustomRating />
+      <CustomRating size={BIG} />
     </Rater>
   </React.Fragment>
 );

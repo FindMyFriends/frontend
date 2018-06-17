@@ -3,6 +3,7 @@ import React from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import CustomRating from './CustomRating';
+import { SMALL } from './Dot';
 
 type Props = {|
   +max: number,
@@ -14,7 +15,7 @@ const OutputRating = ({ max, current }: Props) => (
     rating={current}
     interactive={false}
   >
-    <CustomRating />
+    <CustomRating size={SMALL} />
   </Rater>
 );
 

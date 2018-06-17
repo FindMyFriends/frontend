@@ -1,8 +1,10 @@
 // @flow
-import Dot from './Dot';
+import { SmallDot, BigDot } from './Dot';
 
-const ClickableDot = Dot.extend`
+export const ClickableSmallDot = SmallDot.extend`
   cursor: pointer;
 `;
 
-export default ClickableDot;
+export const ClickableBigDot = BigDot.extend`
+  cursor: pointer;
+`;

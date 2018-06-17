@@ -1,12 +1,18 @@
 // @flow
-import Dot from './Dot';
+import { Dot } from './Dot';
 
-const EmptyDot = Dot.extend`
-  height: 14px;
-  width: 14px;
+export const EmptyDot = Dot.extend`
   background-color: #fff;
   border-color: #bbb;
   border-style: solid;
 `;
 
-export default EmptyDot;
+export const EmptySmallDot = EmptyDot.extend`
+  height: 4px;
+  width: 4px;
+`;
+
+export const EmptyBigDot = EmptyDot.extend`
+  height: 14px;
+  width: 14px;
+`;

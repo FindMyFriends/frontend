@@ -1,21 +1,22 @@
 // @flow
 import React from 'react';
 import 'react-rater/lib/react-rater.css';
-import Dot from './Dot';
-import EmptyDot from './EmptyDot';
-import ClickableDot from './ClickableDot';
+import { BigDot, SmallDot, BIG } from './Dot';
+import { EmptyBigDot, EmptySmallDot } from './EmptyDot';
+import { ClickableBigDot, ClickableSmallDot } from './ClickableDot';
 
 type Props = {|
   willBeActive?: boolean,
   isActive?: boolean,
+  size: 'big' | 'small',
 |};
-const CustomRating = ({ willBeActive, isActive }: Props) => {
+const CustomRating = ({ willBeActive, isActive, size }: Props) => {
   if (isActive) {
-    return <Dot />;
+    return (size === BIG ? <BigDot /> : <SmallDot />);
   } else if (willBeActive) {
-    return <ClickableDot />;
+    return (size === BIG ? <ClickableBigDot /> : <ClickableSmallDot />);
   }
-  return <EmptyDot />;
+  return (size === BIG ? <EmptyBigDot /> : <EmptySmallDot />);
 };
 
 export default CustomRating;
