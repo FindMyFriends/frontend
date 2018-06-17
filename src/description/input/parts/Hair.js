@@ -3,6 +3,7 @@ import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
@@ -75,17 +76,19 @@ const Hair = ({
     <LengthInput value={values['hair.length.value']} onChange={onChange('hair.length.value')}>
       Length
     </LengthInput>
-    <FormControlLabel
-      label="Nature"
-      control={
-        <IndeterminateCheckbox
-          checked={values['hair.nature']}
-          onChange={onChange('hair.nature')}
-        />
-      }
-    />
-    <HighlightsForDyed onChange={onChange} values={values} />
-    <RootsForDyed onChange={onChange} values={values} />
+    <FormGroup>
+      <FormControlLabel
+        label="Nature"
+        control={
+          <IndeterminateCheckbox
+            checked={values['hair.nature']}
+            onChange={onChange('hair.nature')}
+          />
+        }
+      />
+      <HighlightsForDyed onChange={onChange} values={values} />
+      <RootsForDyed onChange={onChange} values={values} />
+    </FormGroup>
   </React.Fragment>
 );
 
