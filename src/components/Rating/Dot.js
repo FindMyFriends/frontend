@@ -12,8 +12,8 @@ export const Dot = styled.span`
 `;
 
 export const BigDot = Dot.extend`
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
 `;
 
 export const SmallDot = Dot.extend`

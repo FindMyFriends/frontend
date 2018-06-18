@@ -13,6 +13,6 @@ export const EmptySmallDot = EmptyDot.extend`
 `;
 
 export const EmptyBigDot = EmptyDot.extend`
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
 `;
