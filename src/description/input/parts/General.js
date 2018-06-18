@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AgeRangeInput from './AgeRangeInput';
 import { withFormStyles } from './withFormStyles';
+import SexInput from './SexInput';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -35,14 +36,12 @@ const General = ({
         value={values['general.lastname'] || ''}
       />
     </FormControl>
-    <FormControl className={classes.formControl}>
-      <InputLabel>Sex</InputLabel>
-      <Select value={values['general.sex'] || ''} onChange={onChange('general.sex')}>
-        {selects.sex.map(sex => (
-          <MenuItem key={sex} value={sex}>{sex}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <SexInput
+      onChange={onChange}
+      values={values}
+      selects={selects}
+      classes={classes}
+    />
     <FormControl className={classes.formControl}>
       <InputLabel>Ethnic group</InputLabel>
       <Select value={values['general.ethnic_group_id'] || ''} onChange={onChange('general.ethnic_group_id')}>
