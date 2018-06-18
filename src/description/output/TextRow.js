@@ -1,13 +1,11 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import Typography from '@material-ui/core/Typography';
+import CardTitle from './CardTitle';
 
 const Row = styled.tr`
   text-align: left;
-`;
-
-const Header = styled.th`
-  min-width: 100px;
 `;
 
 type Props = {|
@@ -18,8 +16,12 @@ export const TextRow = ({ title, text }: Props) => {
   if (text) {
     return (
       <Row>
-        <Header>{title}</Header>
-        <td>{text}</td>
+        <CardTitle>{title}</CardTitle>
+        <td>
+          <Typography variant="body1">
+            {text}
+          </Typography>
+        </td>
       </Row>
     );
   }

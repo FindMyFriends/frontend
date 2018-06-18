@@ -2,13 +2,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import OutputRating from '../../components/Rating/OutputRating';
+import CardTitle from './CardTitle';
 
 const Row = styled.tr`
   text-align: left;
-`;
-
-const Header = styled.th`
-  min-width: 100px;
 `;
 
 const ProgressTd = styled.td`
@@ -21,7 +18,7 @@ type Props = {|
 |};
 export const ProgressRow = ({ title, value }: Props) => (
   <Row>
-    <Header>{title}</Header>
+    <CardTitle>{title}</CardTitle>
     <ProgressTd title={value}>
       <OutputRating current={value} max={10} />
     </ProgressTd>
