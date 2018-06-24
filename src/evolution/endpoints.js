@@ -35,7 +35,7 @@ export const all = (
 export const single = (
   id: string,
   fields: Array<string> = [],
-  next: (Object) => (void) = () => null,
+  next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedEvolution());
   const query = httpBuildQuery({

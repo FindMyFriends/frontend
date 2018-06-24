@@ -8,6 +8,7 @@ import type { PaginationType } from '../dataset/PaginationType';
 import { getPrettyDescription } from '../description/selects';
 
 type stateType = {|
+  +single: ?Object,
   +all: ?Array<Object>,
   +etag: ?string,
   +pagination: ?PaginationType,
@@ -15,6 +16,7 @@ type stateType = {|
   +fetching: boolean,
 |};
 const initState = {
+  single: null,
   all: null,
   etag: null,
   pagination: null,

@@ -11,7 +11,7 @@ import { withFormStyles } from './withFormStyles';
 import SexInput from './SexInput';
 
 const withoutIgnores = (
-  components: Array<Object>,
+  components: Object,
   ignores: Array<string>,
 ) => values(omit(components, ignores));
 
