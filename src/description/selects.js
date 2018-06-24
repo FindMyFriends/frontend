@@ -47,22 +47,30 @@ export const getPrettyDescription = (description: Object, options: Object): Obje
     description,
     {
       general: {
-        ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id],
+        ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id]
+          ? options.general.ethnic_group[description.general.ethnic_group_id].name
+          : null,
       },
       body: {
-        build: options.body.build[description.body.build_id] || '',
+        build: options.body.build[description.body.build_id]
+          ? options.body.build[description.body.build_id].name
+          : null,
         weight: `${description.body.weight.value || ''} ${description.body.weight.unit || ''}`,
         height: `${description.body.height.value || ''} ${description.body.height.unit || ''}`,
       },
       hair: {
-        style: options.hair.style[description.hair.style_id] || '',
+        style: options.hair.style[description.hair.style_id]
+          ? options.hair.style[description.hair.style_id].name
+          : null,
         color: options.hair.color[description.hair.color_id]
           ? options.hair.color[description.hair.color_id].name
           : null,
         length: `${description.hair.length.value || ''} ${description.hair.length.unit || ''}`,
       },
       face: {
-        shape: options.face.shape[description.face.shape_id] || '',
+        shape: options.face.shape[description.face.shape_id]
+          ? options.face.shape[description.face.shape_id].name
+          : null,
       },
       eyebrow: {
         color: options.eyebrow.color[description.eyebrow.color_id]

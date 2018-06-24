@@ -9,6 +9,9 @@ import { default as SingleDemand } from '../pages/Demand';
 import { default as SoulmatesByDemand } from '../pages/Demand/Soulmates';
 import { default as SignIn } from '../pages/Sign/In';
 import { default as SignOut } from '../pages/Sign/Out';
+import { default as AllEvolutions } from '../pages/Evolutions';
+import { default as SingleEvolution } from '../pages/Evolution';
+import { default as ExtendEvolution } from '../pages/Evolutions/Extend';
 
 const Routes = (): BrowserRouter => (
   <BrowserRouter>
@@ -20,6 +23,9 @@ const Routes = (): BrowserRouter => (
       <Layout path="/demands" component={AllDemands} />
       <Layout path="/sign/in" component={SignIn} />
       <Layout path="/sign/out" component={SignOut} />
+      <Layout path="/evolutions/:id/extend" component={ExtendEvolution} />
+      <Layout path="/evolutions/:id" component={SingleEvolution} />
+      <Layout path="/evolutions" component={AllEvolutions} />
     </Switch>
   </BrowserRouter>
 );

@@ -31,7 +31,7 @@ type Props = {|
   +description: Object,
   +cards: Object,
 |};
-const Overview = ({ description, cards = {} }: Props) => {
+const Overview = ({ description, cards = [] }: Props) => {
   return (
     <Cards>
       <SolidCard
