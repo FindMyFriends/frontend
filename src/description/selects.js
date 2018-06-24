@@ -6,37 +6,37 @@ import type { ApiEnum, ApiColor } from '../api/enum';
 
 export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
 export const getEthnicGroups = (options: ?Object): Array<ApiEnum> => (
-  options ? options.general.ethnic_group : enumSet.empty()
+  options ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
 );
 export const getBodyBuilds = (options: ?Object): Array<ApiEnum> => (
-  options ? options.body.build : enumSet.empty()
+  options ? enumSet.toEnum(options.body.build) : enumSet.empty()
 );
 export const getBreastSizes = (options: ?Object): Array<string> => (
   options ? options.body.breast_size : []
 );
 export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
-  options ? options.hair.style : enumSet.empty()
+  options ? enumSet.toEnum(options.hair.style) : enumSet.empty()
 );
 export const getHairColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.hair.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
 );
 export const getBeardColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.beard.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.beard.color) : enumSet.emptyColor()
 );
 export const getEyebrowColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.eyebrow.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.eyebrow.color) : enumSet.emptyColor()
 );
 export const getEyeColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.definitions.eye.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
 );
 export const getNailsColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.hands.nails.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.hands.nails.color) : enumSet.emptyColor()
 );
 export const getHandHairColors = (options: ?Object): Array<ApiColor> => (
-  options ? options.hands.hair.color : enumSet.emptyColor()
+  options ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
 );
 export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
-  options ? options.face.shape : enumSet.empty()
+  options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
@@ -47,22 +47,30 @@ export const getPrettyDescription = (description: Object, options: Object): Obje
     description,
     {
       general: {
-        ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id],
+        ethnic_group: options.general.ethnic_group[description.general.ethnic_group_id]
+          ? options.general.ethnic_group[description.general.ethnic_group_id].name
+          : null,
       },
       body: {
-        build: options.body.build[description.body.build_id] || '',
+        build: options.body.build[description.body.build_id]
+          ? options.body.build[description.body.build_id].name
+          : null,
         weight: `${description.body.weight.value || ''} ${description.body.weight.unit || ''}`,
         height: `${description.body.height.value || ''} ${description.body.height.unit || ''}`,
       },
       hair: {
-        style: options.hair.style[description.hair.style_id] || '',
+        style: options.hair.style[description.hair.style_id]
+          ? options.hair.style[description.hair.style_id].name
+          : null,
         color: options.hair.color[description.hair.color_id]
           ? options.hair.color[description.hair.color_id].name
           : null,
         length: `${description.hair.length.value || ''} ${description.hair.length.unit || ''}`,
       },
       face: {
-        shape: options.face.shape[description.face.shape_id] || '',
+        shape: options.face.shape[description.face.shape_id]
+          ? options.face.shape[description.face.shape_id].name
+          : null,
       },
       eyebrow: {
         color: options.eyebrow.color[description.eyebrow.color_id]

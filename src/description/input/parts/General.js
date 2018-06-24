@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { omit, values } from 'lodash';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,40 +10,54 @@ import AgeRangeInput from './AgeRangeInput';
 import { withFormStyles } from './withFormStyles';
 import SexInput from './SexInput';
 
+const withoutIgnores = (
+  components: Object,
+  ignores: Array<string>,
+) => values(omit(components, ignores));
+
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
   +classes: Object,
+  +ignores: Array<string>,
 |};
 const General = ({
   onChange,
   values,
   selects,
   classes,
-}: Props) => (
-  <React.Fragment>
-    <FormControl className={classes.formControl}>
+  ignores,
+}: Props) => (withoutIgnores({
+  firstname: (
+    <FormControl key="firstname" className={classes.formControl}>
       <InputLabel>Firstname</InputLabel>
       <Input
         onChange={onChange('general.firstname')}
         value={values['general.firstname'] || ''}
       />
     </FormControl>
-    <FormControl className={classes.formControl}>
+  ),
+  lastname: (
+    <FormControl key="lastname" className={classes.formControl}>
       <InputLabel>Lastname</InputLabel>
       <Input
         onChange={onChange('general.lastname')}
         value={values['general.lastname'] || ''}
       />
     </FormControl>
+  ),
+  sex: (
     <SexInput
+      key="sex"
       onChange={onChange}
       values={values}
       selects={selects}
       classes={classes}
     />
-    <FormControl className={classes.formControl}>
+  ),
+  ethnicGroup: (
+    <FormControl key="ethnicGroup" className={classes.formControl}>
       <InputLabel>Ethnic group</InputLabel>
       <Select value={values['general.ethnic_group_id'] || ''} onChange={onChange('general.ethnic_group_id')}>
         {selects.ethnicGroups.map(ethnicGroup => (
@@ -52,12 +67,15 @@ const General = ({
         ))}
       </Select>
     </FormControl>
+  ),
+  age: (
     <AgeRangeInput
+      key="age"
       classes={classes}
       values={values}
       onChange={onChange}
     />
-  </React.Fragment>
-);
+  ),
+}, ignores));
 
 export default withFormStyles()(General);

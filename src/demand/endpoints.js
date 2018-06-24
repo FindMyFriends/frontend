@@ -65,7 +65,7 @@ export const saveNote = (
 };
 
 export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
-  return axios.post('/demands', demand)
+  axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
       return extractedLocationId(response.headers.location);

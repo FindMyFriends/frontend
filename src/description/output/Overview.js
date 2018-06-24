@@ -29,9 +29,9 @@ const Cards = styled.div`
 
 type Props = {|
   +description: Object,
-  +cards: Object,
+  +cards?: mixed,
 |};
-const Overview = ({ description, cards = {} }: Props) => {
+const Overview = ({ description, cards = null }: Props) => {
   return (
     <Cards>
       <SolidCard

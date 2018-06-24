@@ -14,12 +14,12 @@ import Nails from './Nails';
 
 const reindex = (values: Array<mixed>) => values.filter(value => value);
 
-const steps = (props: Object): Object => {
-  const MAIN_GENERAL = 0;
-  const MAIN_BODY = 1;
-  const MAIN_HEAD = 2;
-  const MAIN_HANDS = 3;
+export const MAIN_GENERAL = 0;
+export const MAIN_BODY = 1;
+export const MAIN_HEAD = 2;
+export const MAIN_HANDS = 3;
 
+const steps = (props: Object): Object => {
   const all = {
     [MAIN_GENERAL]: {
       title: 'General',
