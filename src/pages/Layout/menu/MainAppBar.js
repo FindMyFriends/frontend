@@ -14,9 +14,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import { default as DemandIcon } from '../../../demand/output/Icon';
 import { default as EvolutionIcon } from '../../../evolution/output/Icon';
 import ListItemLink from './ListItemLink';
+import { loggedIn } from '../../../access/cookie';
 
 const drawerWidth = 240;
 
@@ -143,7 +145,11 @@ class MainAppBar extends React.Component<Props, State> {
           <Divider />
           <List>
             <React.Fragment>
-              <ListItemLink href="/sign/in" icon={<PowerSettingsNew />}>Sign in</ListItemLink>
+              {
+                loggedIn()
+                  ? (<ListItemLink href="/sign/out" icon={<ExitToApp />}>Sign out</ListItemLink>)
+                  : (<ListItemLink href="/sign/in" icon={<PowerSettingsNew />}>Sign in</ListItemLink>)
+              }
             </React.Fragment>
           </List>
         </Drawer>
