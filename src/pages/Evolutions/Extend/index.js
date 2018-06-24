@@ -23,7 +23,7 @@ import {
   getNailsColors,
   getHandHairColors,
 } from '../../../description/selects';
-import steps from '../../../description/input/parts/steps';
+import steps from '../../../evolution/input/parts/steps';
 
 type Props = {|
   +extend: (Object, (string) => (void)) => (void),
@@ -78,7 +78,7 @@ class Extend extends React.Component<Props, State> {
     }
     return (
       <NestedStepper
-        onExtend={this.handleExtend}
+        onAdd={this.handleExtend}
         steps={
           steps({
             ...this.props,

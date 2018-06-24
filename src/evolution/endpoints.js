@@ -1,12 +1,13 @@
 // @flow
 import axios from 'axios';
 import moment from 'moment';
+import { omit } from 'lodash';
 import httpBuildQuery from 'http-build-query';
 import { receivedAll, requestedEvolution, receivedSingle, EVOLUTION } from './actions';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
-import {receivedApiError, receivedSuccess as receivedSuccessMessage} from "../ui/actions";
-import extractedLocationId from "../api/extractedLocationId";
+import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
+import extractedLocationId from '../api/extractedLocationId';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/evolutions', EVOLUTION));
@@ -34,7 +35,7 @@ export const all = (
 export const single = (
   id: string,
   fields: Array<string> = [],
-  next: () => (void),
+  next: (Object) => (void) = () => null,
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedEvolution());
   const query = httpBuildQuery({
@@ -43,9 +44,10 @@ export const single = (
   axios.get(`/evolutions/${id}?${query}`)
     .then((response) => {
       dispatch(receivedSingle(id, response.data, response.headers.etag));
-      return response;
+      return response.data;
     })
-    .then(response => next(response));
+    .then(evolution => omit(evolution, ['id', 'seeker_id', 'general.age']))
+    .then(evolution => next(evolution));
 };
 
 export const extend = (

@@ -37,7 +37,7 @@ const General = ({
       label="Freckles"
       control={
         <IndeterminateCheckbox
-          checked={values['face.freckles']}
+          checked={values['face.freckles'] || ''}
           onChange={onChange('face.freckles')}
         />
       }
