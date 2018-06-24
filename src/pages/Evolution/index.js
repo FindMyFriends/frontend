@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { single, options } from '../../evolution/endpoints';
 import { EVOLUTION } from '../../evolution/actions';
 import Loader from '../../ui/Loader';
-import Overview from '../../description/output/Overview';
+import Overview from '../../evolution/output/Overview';
 import { getPrettyEvolution } from '../../evolution/reducers';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
 
@@ -27,7 +27,7 @@ class Evolution extends React.Component<Props, any> {
     if (fetching) {
       return <Loader />;
     }
-    return <Overview description={evolution} />;
+    return <Overview evolution={evolution} />;
   }
 }
 
