@@ -5,9 +5,9 @@ import { flatten, unflatten } from 'flat';
 import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { getScopeOptions, isFetching } from '../../../schema/reducers';
+import { isFetching } from '../../../schema/reducers';
 import { EVOLUTION } from '../../../evolution/actions';
-import { extend, single, options, schema } from '../../../evolution/endpoints';
+import { extend, single, options, schema, getScopeOptions } from '../../../evolution/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
@@ -93,18 +93,18 @@ class Extend extends React.Component<Props, State> {
 
 const mapStateToProps = state => ({
   selects: {
-    sex: getSex(getScopeOptions(state, EVOLUTION)),
-    ethnicGroups: getEthnicGroups(getScopeOptions(state, EVOLUTION)),
-    bodyBuilds: getBodyBuilds(getScopeOptions(state, EVOLUTION)),
-    breastSizes: getBreastSizes(getScopeOptions(state, EVOLUTION)),
-    hairStyles: getHairStyles(getScopeOptions(state, EVOLUTION)),
-    hairColors: getHairColors(getScopeOptions(state, EVOLUTION)),
-    faceShapes: getFaceShapes(getScopeOptions(state, EVOLUTION)),
-    beardColors: getBeardColors(getScopeOptions(state, EVOLUTION)),
-    eyebrowColors: getEyebrowColors(getScopeOptions(state, EVOLUTION)),
-    eyeColors: getEyeColors(getScopeOptions(state, EVOLUTION)),
-    nailsColors: getNailsColors(getScopeOptions(state, EVOLUTION)),
-    handHairColors: getHandHairColors(getScopeOptions(state, EVOLUTION)),
+    sex: getSex(getScopeOptions(state)),
+    ethnicGroups: getEthnicGroups(getScopeOptions(state)),
+    bodyBuilds: getBodyBuilds(getScopeOptions(state)),
+    breastSizes: getBreastSizes(getScopeOptions(state)),
+    hairStyles: getHairStyles(getScopeOptions(state)),
+    hairColors: getHairColors(getScopeOptions(state)),
+    faceShapes: getFaceShapes(getScopeOptions(state)),
+    beardColors: getBeardColors(getScopeOptions(state)),
+    eyebrowColors: getEyebrowColors(getScopeOptions(state)),
+    eyeColors: getEyeColors(getScopeOptions(state)),
+    nailsColors: getNailsColors(getScopeOptions(state)),
+    handHairColors: getHandHairColors(getScopeOptions(state)),
   },
   fetching: state.evolution.fetching || isFetching(state, EVOLUTION),
 });

@@ -1,12 +1,12 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { single, options } from '../../evolution/endpoints';
+import { single, options, getScopeOptions } from '../../evolution/endpoints';
 import { EVOLUTION } from '../../evolution/actions';
 import Loader from '../../ui/Loader';
 import Overview from '../../evolution/output/Overview';
 import { getPrettyEvolution } from '../../evolution/reducers';
-import { getScopeOptions, isFetching } from '../../schema/reducers';
+import { isFetching } from '../../schema/reducers';
 
 type Props = {|
   +evolution: Object,
@@ -32,7 +32,7 @@ class Evolution extends React.Component<Props, any> {
 }
 
 const mapStateToProps = state => ({
-  evolution: getPrettyEvolution(state.evolution.single, getScopeOptions(state, EVOLUTION)),
+  evolution: getPrettyEvolution(state.evolution.single, getScopeOptions(state)),
   fetching: state.evolution.fetching || isFetching(state, EVOLUTION),
 });
 const mapDispatchToProps = dispatch => ({
