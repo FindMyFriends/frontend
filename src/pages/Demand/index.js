@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { single } from '../../demand/endpoints';
+import { single, options } from '../../demand/endpoints';
 import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
@@ -12,6 +12,7 @@ import { getScopeOptions, isFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 
 type Props = {|
+  +options: () => (void),
   +demand: Object,
   +fetching: boolean,
   +single: (string) => (void),
@@ -22,6 +23,7 @@ type Props = {|
 class Demand extends React.Component<Props, any> {
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
+    this.props.options();
     this.props.single(id);
     this.props.soulmateInfo(id);
   }
@@ -46,11 +48,12 @@ class Demand extends React.Component<Props, any> {
 }
 
 const mapStateToProps = state => ({
-  demand: getPrettyDemand(state.demand.single, getScopeOptions(state, DEMAND)),
+  demand: getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND)),
   soulmateTotal: getSoulmateTotal(state),
-  fetching: state.demand.fetching || isFetching(state, DEMAND) || state.soulmate.fetching,
+  fetching: state.demand.single.fetching || isFetching(state, DEMAND) || state.soulmate.fetching,
 });
 const mapDispatchToProps = dispatch => ({
+  options: () => dispatch(options()),
   single: (id: string) => dispatch(single(id)),
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
 });

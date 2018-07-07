@@ -8,42 +8,57 @@ import {
 import type { PaginationType } from '../dataset/PaginationType';
 
 type stateType = {|
-  +single: ?Object,
+  +single: Object,
+  +all: Object,
   +etag: ?string,
-  +all: ?Array<Object>,
   +pagination: ?PaginationType,
   +total: ?number,
-  +fetching: boolean,
 |};
 const initState = {
-  single: null,
+  single: {
+    payload: {},
+    fetching: true,
+  },
+  all: {
+    payload: {},
+    fetching: true,
+  },
   etag: null,
-  all: null,
   pagination: null,
   total: null,
-  fetching: true,
 };
 export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case RECEIVED_SINGLE_DEMAND:
       return {
         ...state,
-        single: action.demand,
+        single: {
+          payload: action.demand,
+          fetching: action.fetching,
+        },
         etag: action.etag,
-        fetching: action.fetching,
       };
     case RECEIVED_ALL_DEMANDS:
       return {
         ...state,
-        all: action.demands,
+        all: {
+          payload: action.demands,
+          fetching: action.fetching,
+        },
         pagination: action.pagination,
         total: action.total,
-        fetching: action.fetching,
       };
     case REQUESTED_DEMAND:
       return {
         ...state,
-        fetching: action.fetching,
+        single: {
+          ...state.single,
+          fetching: action.fetching,
+        },
+        all: {
+          ...state.all,
+          fetching: action.fetching,
+        },
       };
     default:
       return state;

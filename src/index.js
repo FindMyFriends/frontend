@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import Routes from './routes';
@@ -12,7 +13,7 @@ import withSettings from './api/connection';
 axios.defaults = withSettings(axios.defaults);
 
 ReactDOM.render(
-  <Provider store={createStore(combineReducers, applyMiddleware(thunk))}>
+  <Provider store={createStore(combineReducers, applyMiddleware(thunk, logger))}>
     <Routes />
   </Provider>,
   document.getElementById('root'),

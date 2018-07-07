@@ -40,11 +40,8 @@ export const single = (id: string, fields: Array<string> = []) => (dispatch: (mi
   const query = httpBuildQuery({
     fields: fields.join(','),
   });
-  Promise.all([
-    axios.get(`/demands/${id}?${query}`)
-      .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag))),
-    dispatch(options()),
-  ]);
+  axios.get(`/demands/${id}?${query}`)
+    .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)));
 };
 
 export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {

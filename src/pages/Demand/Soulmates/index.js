@@ -91,7 +91,7 @@ class Soulmates extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  soulmates: state.soulmate.all || [],
+  soulmates: state.soulmate.all.payload || [],
   total: state.soulmate.total || 0,
   fetching: state.soulmate.fetching,
 });

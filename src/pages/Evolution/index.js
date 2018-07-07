@@ -32,8 +32,8 @@ class Evolution extends React.Component<Props, any> {
 }
 
 const mapStateToProps = state => ({
-  evolution: getPrettyEvolution(state.evolution.single, getScopeOptions(state)),
-  fetching: state.evolution.fetching || isFetching(state, EVOLUTION),
+  evolution: getPrettyEvolution(state.evolution.single.payload, getScopeOptions(state)),
+  fetching: state.evolution.single.fetching || isFetching(state, EVOLUTION),
 });
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),

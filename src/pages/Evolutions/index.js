@@ -83,10 +83,10 @@ class All extends React.Component<Props, State> {
 
 const mapStateToProps = state => ({
   columns: getScopeColumns(state),
-  evolutions: state.evolution.all || [],
+  evolutions: state.evolution.all.payload || [],
   total: state.evolution.total || 0,
   pagination: state.evolution.pagination,
-  fetching: state.evolution.fetching,
+  fetching: state.evolution.all.fetching,
 });
 const mapDispatchToProps = dispatch => ({
   all: (

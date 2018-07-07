@@ -8,42 +8,57 @@ import type { PaginationType } from '../dataset/PaginationType';
 import { getPrettyDescription } from '../description/selects';
 
 type stateType = {|
-  +single: ?Object,
-  +all: ?Array<Object>,
+  +single: Object,
+  +all: Object,
   +etag: ?string,
   +pagination: ?PaginationType,
   +total: ?number,
-  +fetching: boolean,
 |};
 const initState = {
-  single: null,
-  all: null,
+  all: {
+    payload: {},
+    fetching: true,
+  },
+  single: {
+    payload: {},
+    fetching: true,
+  },
   etag: null,
   pagination: null,
   total: null,
-  fetching: true,
 };
 export const evolution = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case RECEIVED_SINGLE_EVOLUTION:
       return {
         ...state,
-        single: action.evolution,
+        single: {
+          payload: action.evolution,
+          fetching: action.fetching,
+        },
         etag: action.etag,
-        fetching: action.fetching,
       };
     case RECEIVED_ALL_EVOLUTIONS:
       return {
         ...state,
-        all: action.evolutions,
+        all: {
+          payload: action.evolutions,
+          fetching: action.fetching,
+        },
         pagination: action.pagination,
         total: action.total,
-        fetching: action.fetching,
       };
     case REQUESTED_EVOLUTION:
       return {
         ...state,
-        fetching: action.fetching,
+        single: {
+          ...state.single,
+          fetching: action.fetching,
+        },
+        all: {
+          ...state.all,
+          fetching: action.fetching,
+        },
       };
     default:
       return state;
