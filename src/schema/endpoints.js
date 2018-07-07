@@ -10,10 +10,15 @@ import { loadOptions, loadSchema } from '../api/schema';
 export const options = (
   uri: string,
   scope: string,
+  next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object): Promise<any> => {
   dispatch(requestedOptions(scope));
   return loadOptions(uri)
-    .then(options => dispatch(receivedOptions(options, scope)));
+    .then((options) => {
+      dispatch(receivedOptions(options, scope));
+      return options;
+    })
+    .then(next);
 };
 
 export const schema = (

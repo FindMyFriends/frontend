@@ -39,6 +39,46 @@ export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
 
+type UnitValue = {|
+  +unit: ?string,
+  +value: ?number,
+|};
+function formattedUnitValue(unitValue: UnitValue): string {
+  return `${unitValue.value || ''} ${unitValue.unit || ''}`;
+}
+
+type Age = {|
+  +from: number,
+  +to: number,
+|};
+function formattedAge(age: Age): string {
+  return `${age.from} - ${age.to}`;
+}
+
+// TODO: Rename and include key
+export function guessedFormatting(value: Object | string): Object | string {
+  if (typeof value === 'object') {
+    if ('value' in value && 'unit' in value) {
+      return formattedUnitValue(value);
+    } else if ('from' in value && 'to' in value) {
+      return formattedAge(value);
+    }
+  }
+  return value;
+}
+
+export function translatedField(field: string): string {
+  const possibilities = {
+    'general.firstname': 'Firstname',
+    'general.lastname': 'Lastname',
+    'general.sex': 'Sex',
+  };
+  if (field in possibilities) {
+    return possibilities[field];
+  }
+  return field;
+}
+
 export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (R.isEmpty(description) || R.isEmpty(options)) {
     return { };
@@ -55,8 +95,8 @@ export const getPrettyDescription = (description: Object, options: Object): Obje
         build: options.body.build[description.body.build_id]
           ? options.body.build[description.body.build_id].name
           : null,
-        weight: `${description.body.weight.value || ''} ${description.body.weight.unit || ''}`,
-        height: `${description.body.height.value || ''} ${description.body.height.unit || ''}`,
+        weight: formattedUnitValue(description.body.weight),
+        height: formattedUnitValue(description.body.height),
       },
       hair: {
         style: options.hair.style[description.hair.style_id]
@@ -65,7 +105,7 @@ export const getPrettyDescription = (description: Object, options: Object): Obje
         color: options.hair.color[description.hair.color_id]
           ? options.hair.color[description.hair.color_id].name
           : null,
-        length: `${description.hair.length.value || ''} ${description.hair.length.unit || ''}`,
+        length: formattedUnitValue(description.hair.length),
       },
       face: {
         shape: options.face.shape[description.face.shape_id]
@@ -94,7 +134,7 @@ export const getPrettyDescription = (description: Object, options: Object): Obje
           color: options.hands.nails.color[description.hands.nails.color_id]
             ? options.hands.nails.color[description.hands.nails.color_id].name
             : null,
-          length: `${description.hands.nails.length.value || ''} ${description.hands.nails.length.unit || ''}`,
+          length: formattedUnitValue(description.hands.nails.length),
         },
         hair: {
           color: options.hands.hair.color[description.hands.hair.color_id]

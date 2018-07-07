@@ -9,8 +9,20 @@ import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import extractedLocationId from '../api/extractedLocationId';
 
-export const options = () => (dispatch: (mixed) => Object) => {
-  dispatch(schemaOptions('/evolutions', EVOLUTION));
+export const getScopeOptions = (state: Object): ?Object => (
+  state.schema[EVOLUTION] && state.schema[EVOLUTION].options
+    ? state.schema[EVOLUTION].options.options
+    : null
+);
+
+export const getScopeColumns = (state: Object): ?Object => (
+  state.schema[EVOLUTION] && state.schema[EVOLUTION].options
+    ? state.schema[EVOLUTION].options.columns
+    : null
+);
+
+export const options = (next: (Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
+  dispatch(schemaOptions('/evolutions', EVOLUTION, next));
 };
 
 export const schema = () => (dispatch: (mixed) => Object) => {
@@ -22,14 +34,17 @@ export const all = (
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedEvolution());
-  const query = httpBuildQuery({
-    page: pagination.page,
-    per_page: pagination.perPage,
-    fields: ['id', 'evolved_at'].join(','),
-    sort: sorts.join(','),
-  });
-  axios.get(`/evolutions?${query}`)
-    .then(response => dispatch(receivedAll(response.data, response.headers)));
+  const next = (allOptions: Object) => {
+    const query = httpBuildQuery({
+      page: pagination.page,
+      per_page: pagination.perPage,
+      fields: [...Object.keys(allOptions.columns), 'id', 'evolved_at'].join(','),
+      sort: sorts.join(','),
+    });
+    axios.get(`/evolutions?${query}`)
+      .then(response => dispatch(receivedAll(response.data, response.headers)));
+  };
+  dispatch(options(next));
 };
 
 export const single = (

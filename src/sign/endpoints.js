@@ -17,7 +17,7 @@ export const enter = (
 
 export const exit = (next: (void) => void) => (dispatch: (mixed) => Object) => {
   axios.delete('/tokens')
-    .then(() => deleteCookie())
-    .then(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
-    .then(next);
+    .finally(deleteCookie)
+    .finally(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
+    .finally(next);
 };
