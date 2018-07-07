@@ -21,7 +21,7 @@ export const getScopeColumns = (state: Object): ?Object => (
     : null
 );
 
-export const options = (next: () => (void) = () => null) => (dispatch: (mixed) => Object) => {
+export const options = (next: (Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/evolutions', EVOLUTION, next));
 };
 
@@ -34,7 +34,7 @@ export const all = (
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedEvolution());
-  const next = (allOptions) => {
+  const next = (allOptions: Object) => {
     const query = httpBuildQuery({
       page: pagination.page,
       per_page: pagination.perPage,
