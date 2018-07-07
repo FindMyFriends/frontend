@@ -21,8 +21,8 @@ export const getScopeColumns = (state: Object): ?Object => (
     : null
 );
 
-export const options = () => (dispatch: (mixed) => Object) => {
-  dispatch(schemaOptions('/evolutions', EVOLUTION));
+export const options = (next: () => (void) = () => null) => (dispatch: (mixed) => Object) => {
+  dispatch(schemaOptions('/evolutions', EVOLUTION, next));
 };
 
 export const schema = () => (dispatch: (mixed) => Object) => {
@@ -31,18 +31,20 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 
 export const all = (
   sorts: Array<string>,
-  fields: Array<string>,
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object) => {
   dispatch(requestedEvolution());
-  const query = httpBuildQuery({
-    page: pagination.page,
-    per_page: pagination.perPage,
-    fields: fields.join(','),
-    sort: sorts.join(','),
-  });
-  axios.get(`/evolutions?${query}`)
-    .then(response => dispatch(receivedAll(response.data, response.headers)));
+  const next = (allOptions) => {
+    const query = httpBuildQuery({
+      page: pagination.page,
+      per_page: pagination.perPage,
+      fields: [...Object.keys(allOptions.columns), 'id', 'evolved_at'].join(','),
+      sort: sorts.join(','),
+    });
+    axios.get(`/evolutions?${query}`)
+      .then(response => dispatch(receivedAll(response.data, response.headers)));
+  };
+  dispatch(options(next));
 };
 
 export const single = (

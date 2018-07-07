@@ -56,7 +56,7 @@ function formattedAge(age: Age): string {
 }
 
 // TODO: Rename and include key
-export function guessedFormatting(value: mixed): string {
+export function guessedFormatting(value: Object | string): Object | string {
   if (typeof value === 'object') {
     if ('value' in value && 'unit' in value) {
       return formattedUnitValue(value);
@@ -69,7 +69,9 @@ export function guessedFormatting(value: mixed): string {
 
 export function translatedField(field: string): string {
   const possibilities = {
-    'general.age': 'Age',
+    'general.firstname': 'Firstname',
+    'general.lastname': 'Lastname',
+    'general.sex': 'Sex',
   };
   if (field in possibilities) {
     return possibilities[field];

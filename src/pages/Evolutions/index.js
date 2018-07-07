@@ -2,17 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Table from './../../evolution/output/Table';
-import { all, getScopeColumns, options } from '../../evolution/endpoints';
+import { all, getScopeColumns } from '../../evolution/endpoints';
 import { toApiOrdering, withSort } from './../../dataset/sorts';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
-import { isFetching } from '../../schema/reducers';
-import { EVOLUTION } from '../../evolution/actions';
 
 type Props = {|
-  +options: () => (void),
   +evolutions: Array<Object>,
   +all: (SortType, PaginationType) => (void),
   +total: number,
@@ -41,8 +38,7 @@ class All extends React.Component<Props, State> {
 
   reload = () => {
     const { sort, pagination } = this.state;
-    this.props.all(sort, [], pagination);
-    this.props.options();
+    this.props.all(sort, pagination);
   };
 
   handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
@@ -90,14 +86,12 @@ const mapStateToProps = state => ({
   evolutions: state.evolution.all || [],
   total: state.evolution.total || 0,
   pagination: state.evolution.pagination,
-  fetching: state.evolution.fetching || isFetching(state, EVOLUTION),
+  fetching: state.evolution.fetching,
 });
 const mapDispatchToProps = dispatch => ({
   all: (
     sort: SortType,
-    fields: Array<string>,
     pagination: PaginationType,
-  ) => dispatch(all([toApiOrdering(sort)], fields, pagination)),
-  options: () => dispatch(options()),
+  ) => dispatch(all([toApiOrdering(sort)], pagination)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(All);

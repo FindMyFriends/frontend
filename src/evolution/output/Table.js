@@ -21,6 +21,10 @@ import { guessedFormatting, translatedField } from '../../description/selects';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 
+function columnIdentificators(columns: Object): Array<string> {
+  return values(mapValues(columns, (count, id) => id));
+}
+
 function columnsToHeaders(columns: Object): Array<Object> {
   const header = id => ({
     id,
@@ -28,14 +32,10 @@ function columnsToHeaders(columns: Object): Array<Object> {
     label: translatedField(id),
   });
   return [
-    ...values(mapValues(columns, (count, id) => header(id))),
+    ...columnIdentificators(columns).map(header),
     { id: 'evolved_at', sortable: true, label: 'Evolved at' },
     { id: 'action', sortable: false, label: '' },
   ];
-}
-
-function columnIdentificators(columns: Object): Array<string> {
-  return values(mapValues(columns, (count, id) => (id)));
 }
 
 const EnhancedTableToolbar = () => (
