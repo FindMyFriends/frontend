@@ -9,13 +9,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import AddIcon from '@material-ui/icons/Add';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
+import EnhancedTableToolbar from './EnhanedTableToolbar';
 import SortTableHead from '../../dataset/SortTableHead';
 import { guessedFormatting, translatedField } from '../../description/selects';
 import type { PaginationType } from '../../dataset/PaginationType';
@@ -37,14 +36,6 @@ const columnsToHeaders = (columns: Object): Array<Object> => {
     { id: 'action', sortable: false, label: '' },
   ];
 };
-
-const EnhancedTableToolbar = () => (
-  <Toolbar>
-    <Typography variant="title" id="tableTitle">
-      Evolutions
-    </Typography>
-  </Toolbar>
-);
 
 const styles = () => ({
   deleteIconHover: {
