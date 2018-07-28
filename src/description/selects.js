@@ -43,20 +43,16 @@ type UnitValue = {|
   +unit: ?string,
   +value: ?number,
 |};
-function formattedUnitValue(unitValue: UnitValue): string {
-  return `${unitValue.value || ''} ${unitValue.unit || ''}`;
-}
+const formattedUnitValue = (unitValue: UnitValue): string => `${unitValue.value || ''} ${unitValue.unit || ''}`;
 
 type Age = {|
   +from: number,
   +to: number,
 |};
-function formattedAge(age: Age): string {
-  return `${age.from} - ${age.to}`;
-}
+const formattedAge = (age: Age): string => `${age.from} - ${age.to}`;
 
 // TODO: Rename and include key
-export function guessedFormatting(value: Object | string): Object | string {
+export const guessedFormatting = (value: Object | string): Object | string => {
   if (typeof value === 'object') {
     if ('value' in value && 'unit' in value) {
       return formattedUnitValue(value);
@@ -65,9 +61,9 @@ export function guessedFormatting(value: Object | string): Object | string {
     }
   }
   return value;
-}
+};
 
-export function translatedField(field: string): string {
+export const translatedField = (field: string): string => {
   const possibilities = {
     'general.firstname': 'Firstname',
     'general.lastname': 'Lastname',
@@ -77,7 +73,7 @@ export function translatedField(field: string): string {
     return possibilities[field];
   }
   return field;
-}
+};
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (R.isEmpty(description) || R.isEmpty(options)) {
