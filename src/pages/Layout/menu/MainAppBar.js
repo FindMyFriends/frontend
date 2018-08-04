@@ -138,11 +138,11 @@ class MainAppBar extends React.Component<Props, State> {
           <Divider />
           <List>
             <React.Fragment>
-              <ListItemLink href="/demands" icon={<DemandIcon />}>Demands</ListItemLink>
-              <ListItemLink href="/evolutions" icon={<EvolutionIcon />}>Evolutions</ListItemLink>
+              {loggedIn() ? <ListItemLink href="/demands" icon={<DemandIcon />}>Demands</ListItemLink> : null}
+              {loggedIn() ? <ListItemLink href="/evolutions" icon={<EvolutionIcon />}>Evolutions</ListItemLink> : null}
             </React.Fragment>
           </List>
-          <Divider />
+          {loggedIn() ? <Divider /> : null}
           <List>
             <React.Fragment>
               {
