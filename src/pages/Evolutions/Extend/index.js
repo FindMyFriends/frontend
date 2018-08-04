@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
+import moment from 'moment';
 import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
@@ -24,6 +25,7 @@ import {
   getHandHairColors,
 } from '../../../description/selects';
 import steps from '../../../evolution/input/parts/steps';
+import { getTimelineSides } from '../../../demand/selects';
 
 type Props = {|
   +extend: (Object, (string) => (void)) => (void),
@@ -39,14 +41,25 @@ type State = {|
 |};
 class Extend extends React.Component<Props, State> {
   state = {
-    evolution: { },
+    evolution: {
+      location: {
+        met_at: {
+          moment: moment().toISOString(),
+          timeline_side: 'exactly',
+          approximation: '',
+        },
+      },
+    },
   };
 
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
     this.props.options();
     this.props.schema();
-    this.props.single(id, evolution => this.setState({ evolution }));
+    this.props.single(
+      id,
+      evolution => this.setState({ evolution: { ...evolution, ...this.state.evolution } }),
+    );
   }
 
   // TODO: Move - common with demand
@@ -105,6 +118,7 @@ const mapStateToProps = state => ({
     eyeColors: getEyeColors(getScopeOptions(state)),
     nailsColors: getNailsColors(getScopeOptions(state)),
     handHairColors: getHandHairColors(getScopeOptions(state)),
+    timelineSides: getTimelineSides(getScopeOptions(state)),
   },
   fetching: state.evolution.fetching || isFetching(state, EVOLUTION),
 });

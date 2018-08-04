@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import MetAt from './Location/MetAt';
+import MetAt from '../../../location/input/parts/MetAt';
 import { default as descriptionSteps } from '../../../description/input/parts/steps';
 
 const lastStep = (parts: Object) => (

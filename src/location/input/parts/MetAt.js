@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
-import { withFormStyles } from '../../../../description/input/parts/withFormStyles';
+import { withFormStyles } from '../../../description/input/parts/withFormStyles';
 import Approximation from './Approximation';
 
 type Props = {|
@@ -24,7 +24,7 @@ const MetAt = ({
 }: Props) => {
   const handleTimelineChange = (event) => {
     if (values['location.met_at.timeline_side'] === 'exactly') {
-      onChange('location.met_at.approximation')({ target: { value: null } });
+      onChange('location.met_at.approximation')({ target: { value: '' } });
     } else {
       onChange('location.met_at.approximation')({ target: { value: 'PT1H' } });
     }
