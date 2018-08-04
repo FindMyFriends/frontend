@@ -89,3 +89,10 @@ export const extend = (
     .then(id => next(id))
     .catch(error => dispatch(receivedApiError(error)));
 };
+
+export const revert = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {
+  axios.delete(`/evolutions/${id}`)
+    .then(() => dispatch(receivedSuccessMessage('Evolution change has been reverted')))
+    .then(next)
+    .catch(error => dispatch(receivedApiError(error)));
+};

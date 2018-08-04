@@ -11,6 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
@@ -57,6 +58,7 @@ type TableProps = {|
   +onSort: string => (void),
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
+  +onRevert: string => (void),
   +total: number,
   +classes: Object,
 |};
@@ -64,6 +66,7 @@ const Table = ({
   onSort,
   onPageChange,
   onPerPageChange,
+  onRevert,
   rows,
   sort: { order, orderBy },
   pagination: { page, perPage },
@@ -103,6 +106,12 @@ const Table = ({
                     style={{ margin: 5, cursor: 'pointer' }}
                   />
                 </Link>
+                <DeleteIcon
+                  className={classes.deleteIconHover}
+                  style={{ margin: 5, cursor: 'pointer' }}
+                  color="error"
+                  onClick={() => onRevert(evolution.id)}
+                />
               </TableCell>
             </TableRow>
           ))}
