@@ -6,7 +6,6 @@ import { enter } from '../../../sign/endpoints';
 import type { CredentialsType } from '../../../sign/in/input/CredentialsType';
 
 type Props = {|
-  +history: Object,
   +enter: (CredentialsType, () => (void)) => (void)
 |};
 type State = {|
@@ -32,7 +31,7 @@ class In extends React.Component<Props, State> {
   handleSubmit = () => (
     this.props.enter(
       this.state.credentials,
-      () => this.props.history.push('/demands'),
+      () => window.location.replace('/demands'),
     )
   );
 
