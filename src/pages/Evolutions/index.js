@@ -2,12 +2,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Table from './../../evolution/output/Table';
-import { all, getScopeColumns } from '../../evolution/endpoints';
+import { all, getScopeColumns, revert } from '../../evolution/endpoints';
 import { toApiOrdering, withSort } from './../../dataset/sorts';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
+import { requestedConfirm } from '../../ui/actions';
 
 type Props = {|
   +evolutions: Array<Object>,
@@ -15,6 +16,8 @@ type Props = {|
   +total: number,
   +fetching: boolean,
   +columns: Object,
+  +revert: (string, () => (void)) => (void),
+  +requestedConfirm: (string, () => (void)) => (void),
 |};
 type State = {|
   sort: SortType,
@@ -53,6 +56,13 @@ class All extends React.Component<Props, State> {
     this.reload,
   );
 
+  handleRevert = (id: string) => {
+    this.props.requestedConfirm(
+      'Are you sure, you want to revert evolution change?',
+      () => this.props.revert(id, this.reload),
+    );
+  };
+
   render() {
     const { sort, pagination } = this.state;
     const {
@@ -75,6 +85,7 @@ class All extends React.Component<Props, State> {
           onSort={column => this.handleSort(column)}
           onPageChange={page => this.handleChangePage(page)}
           onPerPageChange={perPage => this.handleChangePerPage(perPage)}
+          onRevert={this.handleRevert}
         />
       </React.Fragment>
     );
@@ -93,5 +104,10 @@ const mapDispatchToProps = dispatch => ({
     sort: SortType,
     pagination: PaginationType,
   ) => dispatch(all([toApiOrdering(sort)], pagination)),
+  requestedConfirm: (
+    content: string,
+    action: () => (void),
+  ) => dispatch(requestedConfirm(content, action)),
+  revert: (id: string, next: () => (void)) => dispatch(revert(id, next)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(All);
