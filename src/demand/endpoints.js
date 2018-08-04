@@ -7,6 +7,7 @@ import {
   receivedSingle,
   DEMAND,
 } from './actions';
+import { track } from './location/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
@@ -61,11 +62,16 @@ export const saveNote = (
     .catch(error => dispatch(receivedApiError(error)));
 };
 
-export const add = (demand: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
+export const add = (input: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
+  const { location, ...demand } = input;
   axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
       return extractedLocationId(response.headers.location);
+    })
+    .then((id) => {
+      track(id, location);
+      return id;
     })
     .then(id => next(id))
     .catch(error => dispatch(receivedApiError(error)));

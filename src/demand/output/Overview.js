@@ -18,12 +18,12 @@ const Overview = ({ demand }: Props) => (
           <TextRow
             key="Coordinates"
             title="Coordinates"
-            text={`${demand.location.coordinates.latitude}, ${demand.location.coordinates.longitude}`}
+            text={`${demand.locations[0].coordinates.latitude}, ${demand.locations[0].coordinates.longitude}`}
           />,
           <TextRow
             key="Met at"
             title="Met at"
-            text={moment(demand.location.met_at.moment).format('YYYY-MM-DD HH:mm')}
+            text={moment(demand.locations[0].met_at.moment).format('YYYY-MM-DD HH:mm')}
           />,
         ]}
       />
