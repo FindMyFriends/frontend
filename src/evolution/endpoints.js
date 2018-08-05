@@ -80,7 +80,7 @@ export const extend = (
   )
     .then((response) => {
       dispatch(receivedSuccessMessage('Evolution has been extended'));
-      return extractedLocationId(response.headers.spot);
+      return extractedLocationId(response.headers.location);
     })
     .then((id) => {
       track(id, spot);

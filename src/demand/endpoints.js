@@ -73,7 +73,7 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
   axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
-      return extractedLocationId(response.headers.spot);
+      return extractedLocationId(response.headers.location);
     })
     .then((id) => {
       track(id, spot);
