@@ -19,6 +19,7 @@ const initState = {
   single: {
     payload: {},
     fetching: true,
+    etag: null,
   },
   all: {
     payload: {},
@@ -28,7 +29,6 @@ const initState = {
     payload: {},
     fetching: true,
   },
-  etag: null,
   pagination: null,
   total: null,
 };
@@ -40,8 +40,8 @@ export const demand = (state: stateType = initState, action: Object): stateType 
         single: {
           payload: action.demand,
           fetching: action.fetching,
+          etag: action.etag,
         },
-        etag: action.etag,
       };
     case RECEIVED_ALL_DEMANDS:
       return {

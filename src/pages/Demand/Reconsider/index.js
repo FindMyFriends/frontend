@@ -5,9 +5,10 @@ import { flatten, unflatten } from 'flat';
 import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { isFetching } from '../../../schema/reducers';
+import { isFetching, getScopeOptions } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
-import { reconsider, single, options, schema, getScopeOptions } from '../../../demand/endpoints';
+import { reconsider, single, options, schema } from '../../../demand/endpoints';
+import { history as spotHistory } from '../../../demand/spot/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
@@ -27,13 +28,17 @@ import steps from '../../../demand/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
 
 type Props = {|
-  +reconsider: (Object, (string) => (void)) => (void),
+  +reconsider: (string, Object, (string) => (void)) => (void),
   +single: (string, (Object) => (void)) => (void),
+  +spotHistory: (string, (Object) => (void)) => (void),
   +schema: () => (void),
   +options: () => (void),
   +fetching: boolean,
   +history: Object,
   +match: Object,
+  +demand: Object,
+  +spots: Array<Object>,
+  +etags: Object,
 |};
 type State = {|
   demand: Object,
@@ -47,7 +52,15 @@ class Extend extends React.Component<Props, State> {
     const { match: { params: { id } } } = this.props;
     this.props.options();
     this.props.schema();
-    this.props.single(id, demand => this.setState({ demand }));
+    Promise.resolve()
+      .then(() => this.props.single(
+        id,
+        () => this.setState({ demand: this.props.demand }),
+      ))
+      .then(() => this.props.spotHistory(
+        id,
+        () => this.setState({ demand: { ...this.state.demand, spots: this.props.spots } }),
+      ));
   }
 
   // TODO: Move - common with demand
@@ -68,8 +81,10 @@ class Extend extends React.Component<Props, State> {
 
   handleReconsider = () => (
     this.props.reconsider(
+      this.state.demand.id,
       normalize(this.state.demand),
-      id => this.props.history.push(`/demands/${id}`),
+      this.props.etags.demand,
+      () => this.props.history.push(`/demands/${this.state.demand.id}`),
     )
   );
 
@@ -92,28 +107,41 @@ class Extend extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => ({
-  selects: {
-    sex: getSex(getScopeOptions(state)),
-    ethnicGroups: getEthnicGroups(getScopeOptions(state)),
-    bodyBuilds: getBodyBuilds(getScopeOptions(state)),
-    breastSizes: getBreastSizes(getScopeOptions(state)),
-    hairStyles: getHairStyles(getScopeOptions(state)),
-    hairColors: getHairColors(getScopeOptions(state)),
-    faceShapes: getFaceShapes(getScopeOptions(state)),
-    beardColors: getBeardColors(getScopeOptions(state)),
-    eyebrowColors: getEyebrowColors(getScopeOptions(state)),
-    eyeColors: getEyeColors(getScopeOptions(state)),
-    nailsColors: getNailsColors(getScopeOptions(state)),
-    handHairColors: getHandHairColors(getScopeOptions(state)),
-    timelineSides: getTimelineSides(getScopeOptions(state)),
-  },
-  fetching: state.demand.fetching || isFetching(state, DEMAND),
-});
+const mapStateToProps = (state) => {
+  return {
+    spots: state.demand.spots.payload,
+    demand: state.demand.single.payload,
+    etags: {
+      demand: state.demand.single.etag,
+    },
+    selects: {
+      sex: getSex(getScopeOptions(state, DEMAND)),
+      ethnicGroups: getEthnicGroups(getScopeOptions(state, DEMAND)),
+      bodyBuilds: getBodyBuilds(getScopeOptions(state, DEMAND)),
+      breastSizes: getBreastSizes(getScopeOptions(state, DEMAND)),
+      hairStyles: getHairStyles(getScopeOptions(state, DEMAND)),
+      hairColors: getHairColors(getScopeOptions(state, DEMAND)),
+      faceShapes: getFaceShapes(getScopeOptions(state, DEMAND)),
+      beardColors: getBeardColors(getScopeOptions(state, DEMAND)),
+      eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),
+      eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
+      nailsColors: getNailsColors(getScopeOptions(state, DEMAND)),
+      handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
+      timelineSides: getTimelineSides(getScopeOptions(state, DEMAND)),
+    },
+    fetching: state.demand.fetching || isFetching(state, DEMAND),
+  };
+};
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   schema: () => dispatch(schema()),
   single: (id: string, next: () => (void)) => dispatch(single(id, [], next)),
-  reconsider: (demand: Object, next: (string) => (void)) => dispatch(reconsider(demand, next)),
+  spotHistory: (id: string, next: () => (void)) => dispatch(spotHistory(id, next)),
+  reconsider: (
+    id: string,
+    demand: Object,
+    etag: string,
+    next: (string) => (void),
+  ) => dispatch(reconsider(id, demand, etag, next)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Extend);

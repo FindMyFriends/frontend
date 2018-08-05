@@ -70,7 +70,7 @@ export const extend = (
   progress: Object,
   next: (string) => void,
 ) => (dispatch: (mixed) => Object) => {
-  const { spot, ...change } = progress;
+  const { spots, ...change } = progress;
   axios.post(
     '/evolutions',
     {
@@ -83,7 +83,7 @@ export const extend = (
       return extractedLocationId(response.headers.location);
     })
     .then((id) => {
-      track(id, spot);
+      track(id, spots);
       return id;
     })
     .then(id => next(id))

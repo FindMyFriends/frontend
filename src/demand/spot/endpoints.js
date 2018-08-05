@@ -13,9 +13,13 @@ export const track = (
   );
 };
 
-export const history = (demand: string) => (dispatch: (mixed) => Object) => {
+export const history = (
+  demand: string,
+  next: (Object) => (void) = () => {},
+) => (dispatch: (mixed) => Object) => {
   dispatch(requestedsSpots());
   axios.get(`/demands/${demand}/spots`)
     .then(response => dispatch(receivedSpots(response.data)))
+    .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
