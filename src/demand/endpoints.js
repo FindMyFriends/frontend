@@ -21,6 +21,12 @@ export const schema = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaStructure('/schema/demand/get.json', DEMAND));
 };
 
+export const getScopeOptions = (state: Object): ?Object => (
+  state.schema[DEMAND] && state.schema[DEMAND].options
+    ? state.schema[DEMAND].options.options
+    : null
+);
+
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
@@ -74,5 +80,18 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
       return id;
     })
     .then(id => next(id))
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+export const reconsider = (
+  id: string,
+  input: Object,
+  next: (string) => void,
+) => (dispatch: (mixed) => Object) => {
+  const { location, ...demand } = input;
+  axios.put(`/demands/${id}`, demand)
+    .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
+    // .then(track(id, location))
+    .then(() => next(id))
     .catch(error => dispatch(receivedApiError(error)));
 };
