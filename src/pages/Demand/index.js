@@ -10,7 +10,7 @@ import { getSoulmateTotal } from '../../soulmate/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
-import { history as locationHistory } from '../../demand/location/endpoints';
+import { history as locationHistory } from '../../demand/spot/endpoints';
 
 type Props = {|
   +options: () => (void),
@@ -52,7 +52,7 @@ class Demand extends React.Component<Props, any> {
 
 const mapStateToProps = (state) => {
   const demand = getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND));
-  demand.locations = state.demand.locations.payload;
+  demand.spots = state.demand.spots.payload;
   return {
     demand,
     soulmateTotal: getSoulmateTotal(state),

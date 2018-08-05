@@ -7,7 +7,7 @@ import {
   receivedSingle,
   DEMAND,
 } from './actions';
-import { track } from './location/endpoints';
+import { track } from './spot/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
@@ -69,14 +69,14 @@ export const saveNote = (
 };
 
 export const add = (input: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
-  const { location, ...demand } = input;
+  const { spot, ...demand } = input;
   axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
-      return extractedLocationId(response.headers.location);
+      return extractedLocationId(response.headers.spot);
     })
     .then((id) => {
-      track(id, location);
+      track(id, spot);
       return id;
     })
     .then(id => next(id))
@@ -91,7 +91,7 @@ export const reconsider = (
   const { location, ...demand } = input;
   axios.put(`/demands/${id}`, demand)
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
-    // .then(track(id, location))
+    // .then(track(id, spot))
     .then(() => next(id))
     .catch(error => dispatch(receivedApiError(error)));
 };

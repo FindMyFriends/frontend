@@ -13,17 +13,17 @@ const Overview = ({ demand }: Props) => (
     description={demand}
     cards={
       <SolidCard
-        title="Location"
+        title="Spot"
         rows={[
           <TextRow
             key="Coordinates"
             title="Coordinates"
-            text={`${demand.locations[0].coordinates.latitude}, ${demand.locations[0].coordinates.longitude}`}
+            text={`${demand.spots[0].coordinates.latitude}, ${demand.spots[0].coordinates.longitude}`}
           />,
           <TextRow
             key="Met at"
             title="Met at"
-            text={moment(demand.locations[0].met_at.moment).format('YYYY-MM-DD HH:mm')}
+            text={moment(demand.spots[0].met_at.moment).format('YYYY-MM-DD HH:mm')}
           />,
         ]}
       />

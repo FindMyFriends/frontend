@@ -42,7 +42,7 @@ type State = {|
 class Extend extends React.Component<Props, State> {
   state = {
     evolution: {
-      location: {
+      spot: {
         met_at: {
           moment: moment().toISOString(),
           timeline_side: 'exactly',

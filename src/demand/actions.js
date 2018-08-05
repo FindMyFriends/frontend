@@ -5,16 +5,16 @@ export const DEMAND = 'DEMAND';
 export const REQUESTED_DEMAND = 'REQUESTED_DEMAND';
 export const RECEIVED_ALL_DEMANDS = 'RECEIVED_ALL_DEMANDS';
 export const RECEIVED_SINGLE_DEMAND = 'RECEIVED_SINGLE_DEMAND';
-export const REQUESTED_DEMAND_LOCATIONS = 'REQUESTED_DEMAND_LOCATIONS';
-export const RECEIVED_ALL_DEMAND_LOCATIONS = 'RECEIVED_ALL_DEMAND_LOCATIONS';
+export const REQUESTED_DEMAND_SPOTS = 'REQUESTED_DEMAND_SPOTS';
+export const RECEIVED_ALL_DEMAND_SPOTS = 'RECEIVED_ALL_DEMAND_SPOTS';
 
 export const requestedDemand = () => ({
   type: REQUESTED_DEMAND,
   fetching: true,
 });
 
-export const requestedLocations = () => ({
-  type: REQUESTED_DEMAND_LOCATIONS,
+export const requestedsSpots = () => ({
+  type: REQUESTED_DEMAND_SPOTS,
   fetching: true,
 });
 
@@ -34,8 +34,8 @@ export const receivedSingle = (id: string, demand: Object, etag: string) => ({
   fetching: false,
 });
 
-export const receivedLocations = (locations: Array<Object>) => ({
-  type: RECEIVED_ALL_DEMAND_LOCATIONS,
-  locations,
+export const receivedSpots = (spots: Array<Object>) => ({
+  type: RECEIVED_ALL_DEMAND_SPOTS,
+  spots,
   fetching: false,
 });

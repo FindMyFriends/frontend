@@ -31,7 +31,7 @@ class In extends React.Component<Props, State> {
   handleSubmit = () => (
     this.props.enter(
       this.state.credentials,
-      () => window.location.replace('/demands'),
+      () => window.spot.replace('/demands'),
     )
   );
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { omit } from 'lodash';
 import httpBuildQuery from 'http-build-query';
-import { track } from './location/endpoints';
+import { track } from './spot/endpoints';
 import { receivedAll, requestedEvolution, receivedSingle, EVOLUTION } from './actions';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
@@ -70,7 +70,7 @@ export const extend = (
   progress: Object,
   next: (string) => void,
 ) => (dispatch: (mixed) => Object) => {
-  const { location, ...change } = progress;
+  const { spot, ...change } = progress;
   axios.post(
     '/evolutions',
     {
@@ -80,10 +80,10 @@ export const extend = (
   )
     .then((response) => {
       dispatch(receivedSuccessMessage('Evolution has been extended'));
-      return extractedLocationId(response.headers.location);
+      return extractedLocationId(response.headers.spot);
     })
     .then((id) => {
-      track(id, location);
+      track(id, spot);
       return id;
     })
     .then(id => next(id))

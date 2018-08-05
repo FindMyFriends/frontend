@@ -3,13 +3,13 @@ import { getPrettyDescription } from '../description/selects';
 import {
   REQUESTED_DEMAND,
   RECEIVED_ALL_DEMANDS,
-  RECEIVED_SINGLE_DEMAND, REQUESTED_DEMAND_LOCATIONS, RECEIVED_ALL_DEMAND_LOCATIONS,
+  RECEIVED_SINGLE_DEMAND, REQUESTED_DEMAND_SPOTS, RECEIVED_ALL_DEMAND_SPOTS,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
 type stateType = {|
   +single: Object,
-  +locations: Object,
+  +spots: Object,
   +all: Object,
   +etag: ?string,
   +pagination: ?PaginationType,
@@ -24,7 +24,7 @@ const initState = {
     payload: {},
     fetching: true,
   },
-  locations: {
+  spots: {
     payload: {},
     fetching: true,
   },
@@ -65,19 +65,19 @@ export const demand = (state: stateType = initState, action: Object): stateType 
           fetching: action.fetching,
         },
       };
-    case REQUESTED_DEMAND_LOCATIONS:
+    case REQUESTED_DEMAND_SPOTS:
       return {
         ...state,
-        locations: {
-          ...state.locations,
+        spots: {
+          ...state.spots,
           fetching: action.fetching,
         },
       };
-    case RECEIVED_ALL_DEMAND_LOCATIONS:
+    case RECEIVED_ALL_DEMAND_SPOTS:
       return {
         ...state,
-        locations: {
-          payload: action.locations,
+        spots: {
+          payload: action.spots,
           fetching: action.fetching,
         },
       };

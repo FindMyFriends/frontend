@@ -3,10 +3,10 @@ import axios from 'axios';
 
 export const track = (
   id: string,
-  location: Object,
+  spot: Object,
 ) => {
   axios.post(
-    `/evolutions/${id}/locations`,
-    location,
+    `/evolutions/${id}/spots`,
+    spot,
   );
 };

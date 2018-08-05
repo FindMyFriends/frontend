@@ -1,21 +1,21 @@
 // @flow
 import axios from 'axios';
-import { requestedLocations, receivedLocations } from '../actions';
+import { requestedsSpots, receivedSpots } from '../actions';
 import { receivedApiError } from '../../ui/actions';
 
 export const track = (
   id: string,
-  location: Object,
+  spot: Object,
 ) => {
   axios.post(
-    `/demands/${id}/locations`,
-    location,
+    `/demands/${id}/spots`,
+    spot,
   );
 };
 
 export const history = (demand: string) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedLocations());
-  axios.get(`/demands/${demand}/locations`)
-    .then(response => dispatch(receivedLocations(response.data)))
+  dispatch(requestedsSpots());
+  axios.get(`/demands/${demand}/spots`)
+    .then(response => dispatch(receivedSpots(response.data)))
     .catch(error => dispatch(receivedApiError(error)));
 };
