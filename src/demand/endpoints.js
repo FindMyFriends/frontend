@@ -88,7 +88,7 @@ export const reconsider = (
   input: Object,
   next: (string) => void,
 ) => (dispatch: (mixed) => Object) => {
-  const { location, ...demand } = input;
+  const { spot, ...demand } = input;
   axios.put(`/demands/${id}`, demand)
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     // .then(track(id, spot))
