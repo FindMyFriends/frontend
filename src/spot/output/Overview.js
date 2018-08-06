@@ -17,16 +17,17 @@ const SpaceBetween = styled.span`
 
 type Props = {|
   +spots: Array<Object>,
+  +places: Array<Object>,
 |};
-const Overview = ({ spots }: Props) => (
+const Overview = ({ spots, places }: Props) => (
   <Cards>
     {spots.map((spot, position) => (
-      <SpaceBetween>
+      <SpaceBetween key={spot.id}>
         <SolidCard
-          title={`Spot #${position + 1}`}
+          title={places[spot.id].failed ? `Spot #${position + 1}` : places[spot.id].address}
           rows={[
             <TextRow
-              key="Met at"
+              key={`met_at-${spot.id}`}
               title="Met at"
               text={moment(spot.met_at.moment).format('YYYY-MM-DD HH:mm')}
             />,
