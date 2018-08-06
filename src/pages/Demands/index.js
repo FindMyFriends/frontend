@@ -126,8 +126,8 @@ class All extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  demands: state.demand.all.payload || [],
-  total: state.demand.total || 0,
+  demands: state.demand.all.payload,
+  total: state.demand.total,
   pagination: state.demand.pagination,
   fetching: state.demand.all.fetching,
 });

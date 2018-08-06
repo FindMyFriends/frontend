@@ -12,7 +12,7 @@ type stateType = {|
   +spots: Object,
   +all: Object,
   +pagination: ?PaginationType,
-  +total: ?number,
+  +total: number,
 |};
 const initState = {
   single: {
@@ -21,7 +21,7 @@ const initState = {
     etag: null,
   },
   all: {
-    payload: {},
+    payload: [],
     fetching: true,
   },
   spots: {
@@ -29,7 +29,7 @@ const initState = {
     fetching: true,
   },
   pagination: null,
-  total: null,
+  total: 0,
 };
 export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
