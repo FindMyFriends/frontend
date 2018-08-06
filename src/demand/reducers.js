@@ -25,7 +25,7 @@ const initState = {
     fetching: true,
   },
   spots: {
-    payload: {},
+    payload: [],
     fetching: true,
   },
   pagination: null,
