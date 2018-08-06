@@ -11,7 +11,6 @@ type stateType = {|
   +single: Object,
   +spots: Object,
   +all: Object,
-  +etag: ?string,
   +pagination: ?PaginationType,
   +total: ?number,
 |};

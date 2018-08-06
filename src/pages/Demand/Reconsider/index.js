@@ -28,7 +28,7 @@ import steps from '../../../demand/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
 
 type Props = {|
-  +reconsider: (string, Object, (string) => (void)) => (void),
+  +reconsider: (string, Object, string, (string) => (void)) => (void),
   +single: (string, (Object) => (void)) => (void),
   +spotHistory: (string, (Object) => (void)) => (void),
   +schema: () => (void),
