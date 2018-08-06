@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import MetAt from '../../../location/input/parts/MetAt';
+import MetAt from '../../../spot/input/parts/MetAt';
 import { default as descriptionSteps } from '../../../description/input/parts/steps';
 
 const lastStep = (parts: Object) => (
@@ -10,11 +10,11 @@ const lastStep = (parts: Object) => (
 const steps = (props: Object): Object => {
   const descriptionParts = descriptionSteps(props);
   const LAST_DESCRIPTION_PART = lastStep(descriptionParts);
-  const MAIN_LOCATION = LAST_DESCRIPTION_PART + 1;
+  const MAIN_SPOT = LAST_DESCRIPTION_PART + 1;
 
   return {
-    [MAIN_LOCATION]: {
-      title: 'Location',
+    [MAIN_SPOT]: {
+      title: 'Spot',
       parts: [
         {
           component: <MetAt {...props} />,

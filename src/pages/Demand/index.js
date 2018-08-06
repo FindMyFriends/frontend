@@ -10,14 +10,14 @@ import { getSoulmateTotal } from '../../soulmate/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
-import { history as locationHistory } from '../../demand/location/endpoints';
+import { history as spotHistory } from '../../demand/spot/endpoints';
 
 type Props = {|
   +options: () => (void),
   +demand: Object,
   +fetching: boolean,
   +single: (string) => (void),
-  +locationHistory: (string) => (void),
+  +spotHistory: (string) => (void),
   +soulmateInfo: (string) => (void),
   +match: Object,
   +soulmateTotal: number,
@@ -28,7 +28,7 @@ class Demand extends React.Component<Props, any> {
     this.props.options();
     this.props.single(id);
     this.props.soulmateInfo(id);
-    this.props.locationHistory(id);
+    this.props.spotHistory(id);
   }
 
   render() {
@@ -52,7 +52,7 @@ class Demand extends React.Component<Props, any> {
 
 const mapStateToProps = (state) => {
   const demand = getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND));
-  demand.locations = state.demand.locations.payload;
+  demand.spots = state.demand.spots.payload;
   return {
     demand,
     soulmateTotal: getSoulmateTotal(state),
@@ -62,7 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   single: (id: string) => dispatch(single(id)),
-  locationHistory: (id: string) => dispatch(locationHistory(id)),
+  spotHistory: (id: string) => dispatch(spotHistory(id)),
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Demand);

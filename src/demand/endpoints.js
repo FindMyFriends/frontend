@@ -1,13 +1,14 @@
 // @flow
 import axios from 'axios';
 import httpBuildQuery from 'http-build-query';
+import { omit } from 'lodash';
 import {
   requestedDemand,
   receivedAll,
   receivedSingle,
   DEMAND,
 } from './actions';
-import { track } from './location/endpoints';
+import { track } from './spot/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
@@ -36,13 +37,18 @@ export const all = (
     .then(response => dispatch(receivedAll(response.data, response.headers)));
 };
 
-export const single = (id: string, fields: Array<string> = []) => (dispatch: (mixed) => Object) => {
+export const single = (
+  id: string,
+  fields: Array<string> = [],
+  next: (Object) => (void) = () => {},
+) => (dispatch: (mixed) => Object) => {
   dispatch(requestedDemand());
   const query = httpBuildQuery({
     fields: fields.join(','),
   });
   axios.get(`/demands/${id}?${query}`)
-    .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)));
+    .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)))
+    .then(next);
 };
 
 export const retract = (id: string, next: () => void) => (dispatch: (mixed) => Object) => {
@@ -63,16 +69,30 @@ export const saveNote = (
 };
 
 export const add = (input: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
-  const { location, ...demand } = input;
+  const { spots, ...demand } = input;
   axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
       return extractedLocationId(response.headers.location);
     })
     .then((id) => {
-      track(id, location);
+      track(id, spots);
       return id;
     })
     .then(id => next(id))
+    .catch(error => dispatch(receivedApiError(error)));
+};
+
+export const reconsider = (
+  id: string,
+  input: Object,
+  etag: string,
+  next: (string) => void,
+) => (dispatch: (mixed) => Object) => {
+  const { spots, ...demand } = input;
+  axios.put(`/demands/${id}`, omit(demand, ['id', 'created_at', 'seeker_id']), { headers: { 'If-Match': etag } })
+    .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
+    .then(track(id, spots))
+    .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };

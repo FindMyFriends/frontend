@@ -17,11 +17,11 @@ const Approximation = ({
   classes,
   onChange,
 }: Props) => {
-  if (values['location.met_at.timeline_side'] !== 'exactly') {
+  if (values['spot.met_at.timeline_side'] !== 'exactly') {
     return (
       <FormControl className={classes.formControl}>
         <InputLabel>Approximation</InputLabel>
-        <Select value={values['location.met_at.approximation']} onChange={onChange('location.met_at.approximation')}>
+        <Select value={values['spot.met_at.approximation']} onChange={onChange('spot.met_at.approximation')}>
           {range(1, 13).map(hour => <MenuItem key={hour} value={`PT${hour}H`}>{`${hour} hour${hour > 1 ? 's' : ''}`}</MenuItem>)}
         </Select>
       </FormControl>

@@ -41,13 +41,13 @@ class Add extends React.Component<Props, State> {
   state = {
     demand: {
       note: null,
-      location: {
+      spot: {
         coordinates: { // TODO: not complete
           latitude: 50.1,
           longitude: 50.2,
         },
         met_at: {
-          moment: moment().format(),
+          moment: moment().toISOString(true),
           timeline_side: 'exactly',
           approximation: null,
         },

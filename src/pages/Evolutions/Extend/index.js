@@ -42,11 +42,15 @@ type State = {|
 class Extend extends React.Component<Props, State> {
   state = {
     evolution: {
-      location: {
+      spot: {
+        coordinates: { // TODO: make a map
+          latitude: 50.5,
+          longitude: 50.5,
+        },
         met_at: {
-          moment: moment().toISOString(),
-          timeline_side: 'exactly',
-          approximation: '',
+          moment: moment().toISOString(true),
+          timeline_side: 'sooner',
+          approximation: 'PT1H',
         },
       },
     },

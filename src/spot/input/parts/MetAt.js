@@ -23,12 +23,12 @@ const MetAt = ({
   classes,
 }: Props) => {
   const handleTimelineChange = (event) => {
-    if (values['location.met_at.timeline_side'] === 'exactly') {
-      onChange('location.met_at.approximation')({ target: { value: '' } });
+    if (values['spot.met_at.timeline_side'] === 'exactly') {
+      onChange('spot.met_at.approximation')({ target: { value: '' } });
     } else {
-      onChange('location.met_at.approximation')({ target: { value: 'PT1H' } });
+      onChange('spot.met_at.approximation')({ target: { value: 'PT1H' } });
     }
-    onChange('location.met_at.timeline_side')(event);
+    onChange('spot.met_at.timeline_side')(event);
   };
 
   return (
@@ -36,15 +36,15 @@ const MetAt = ({
       <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
         <DateTimePicker
           className={classes.formControl}
-          value={values['location.met_at.moment']}
+          value={values['spot.met_at.moment']}
           onChange={
-            datetime => onChange('location.met_at.moment')({ target: { value: datetime.format() } })
+            datetime => onChange('spot.met_at.moment')({ target: { value: datetime.format() } })
           }
         />
       </MuiPickersUtilsProvider>
       <FormControl className={classes.formControl}>
         <InputLabel>Timeline side</InputLabel>
-        <Select value={values['location.met_at.timeline_side']} onChange={handleTimelineChange}>
+        <Select value={values['spot.met_at.timeline_side']} onChange={handleTimelineChange}>
           {selects.timelineSides.map(timelineSide => (
             <MenuItem key={timelineSide} value={timelineSide}>{timelineSide}</MenuItem>
           ))}
