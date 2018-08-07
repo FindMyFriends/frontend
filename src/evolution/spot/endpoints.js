@@ -5,10 +5,10 @@ export const track = (
   id: string,
   spots: Array<Object>,
 ) => {
-  spots.forEach((spot: Object) => {
+  Promise.all(spots.map(spot => (
     axios.post(
       `/evolutions/${id}/spots`,
       spot,
-    );
-  });
+    )
+  )));
 };

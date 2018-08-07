@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { history as spotHistory } from '../../../demand/spot/endpoints';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
-import type { PaginationType } from '../../../dataset/PaginationType';
 import type { SortType } from '../../../dataset/SortType';
-import { toApiOrdering, withSort } from '../../../dataset/sorts';
+import { toApiOrdering } from '../../../dataset/sorts';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getSoulmateTotal } from '../../../soulmate/reducers';
 
@@ -19,7 +18,6 @@ type Props = {|
   +soulmateTotal: number,
 |};
 type State = {|
-  pagination: PaginationType,
   sort: SortType,
 |};
 class Spots extends React.Component<Props, State> {
@@ -27,10 +25,6 @@ class Spots extends React.Component<Props, State> {
     sort: {
       order: 'desc',
       orderBy: 'assigned_at',
-    },
-    pagination: {
-      page: 1,
-      perPage: 5,
     },
   };
 
@@ -44,10 +38,7 @@ class Spots extends React.Component<Props, State> {
     this.props.spotHistory(this.props.match.params.id, this.state.sort);
   };
 
-  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
-
   render() {
-    const { sort } = this.state;
     const {
       spots,
       fetching,
