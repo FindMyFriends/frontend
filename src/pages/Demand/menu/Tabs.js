@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 export const DEMAND_TYPE = 'demand';
 export const SOULMATES_TYPE = 'soulmates';
+export const SPOTS_TYPE = 'spots';
 
 const styles = theme => ({
   padding: {
@@ -53,6 +54,12 @@ class Tabs extends React.Component<Props, State> {
             label="Demand"
             component={Link}
             to={`/demands/${id}`}
+          />
+          <Tab
+            value={SPOTS_TYPE}
+            label="Spots"
+            component={Link}
+            to={`/demands/${id}/spots`}
           />
           <Tab
             value={SOULMATES_TYPE}

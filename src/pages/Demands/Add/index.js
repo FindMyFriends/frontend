@@ -41,7 +41,7 @@ class Add extends React.Component<Props, State> {
   state = {
     demand: {
       note: null,
-      spot: {
+      spots: [{
         coordinates: { // TODO: not complete
           latitude: 50.1,
           longitude: 50.2,
@@ -51,7 +51,7 @@ class Add extends React.Component<Props, State> {
           timeline_side: 'exactly',
           approximation: null,
         },
-      },
+      }],
       general: {
         firstname: null,
         lastname: null,

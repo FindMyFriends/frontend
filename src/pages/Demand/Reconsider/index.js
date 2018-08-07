@@ -136,7 +136,7 @@ const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   schema: () => dispatch(schema()),
   single: (id: string, next: () => (void)) => dispatch(single(id, [], next)),
-  spotHistory: (id: string, next: () => (void)) => dispatch(spotHistory(id, next)),
+  spotHistory: (id: string, next: () => (void)) => dispatch(spotHistory(id, [], next)),
   reconsider: (
     id: string,
     demand: Object,

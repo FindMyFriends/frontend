@@ -8,6 +8,7 @@ import { default as AddDemand } from '../pages/Demands/Add';
 import { default as SingleDemand } from '../pages/Demand';
 import { default as ReconsiderDemand } from '../pages/Demand/Reconsider';
 import { default as SoulmatesByDemand } from '../pages/Demand/Soulmates';
+import { default as DemandSpots } from '../pages/Demand/Spots';
 import { default as SignIn } from '../pages/Sign/In';
 import { default as SignOut } from '../pages/Sign/Out';
 import { default as AllEvolutions } from '../pages/Evolutions';
@@ -22,6 +23,7 @@ const Routes = (): BrowserRouter => (
       <Layout exact path="/" component={Default} />
       <Layout onEnter={loggedIn} path="/demands/add" component={AddDemand} />
       <Layout onEnter={loggedIn} path="/demands/:id/soulmates" component={SoulmatesByDemand} />
+      <Layout onEnter={loggedIn} path="/demands/:id/spots" component={DemandSpots} />
       <Layout onEnter={loggedIn} path="/demands/:id/reconsider" component={ReconsiderDemand} />
       <Layout onEnter={loggedIn} path="/demands/:id" component={SingleDemand} />
       <Layout onEnter={loggedIn} path="/demands" component={AllDemands} />
