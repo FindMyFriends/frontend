@@ -8,6 +8,7 @@ import type { SortType } from '../../../dataset/SortType';
 import { toApiOrdering } from '../../../dataset/sorts';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getSoulmateTotal } from '../../../soulmate/reducers';
+import Overview from '../../../spot/output/Overview';
 
 type Props = {|
   +spots: Array<Object>,
@@ -48,10 +49,10 @@ class Spots extends React.Component<Props, State> {
     if (fetching) {
       return <Loader />;
     }
-    console.log(spots);
     return (
       <React.Fragment>
         <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={soulmateTotal} />
+        <Overview spots={spots} />
       </React.Fragment>
     );
   }
