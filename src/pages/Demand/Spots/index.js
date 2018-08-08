@@ -14,11 +14,11 @@ import { isFetching } from '../../../spot/reducers';
 
 type Props = {|
   +spots: Array<Object>,
-  +spotPlaces: Array<Object>,
+  +spotPlaces: (Array<Object>) => (void),
   +fetching: boolean,
   +spotHistory: (string, SortType, () => (void)) => (void),
   +soulmateInfo: (string) => (void),
-  +places: (Array<Object>) => (void),
+  +places: Array<Object>,
   +match: Object,
   +soulmateTotal: number,
 |};

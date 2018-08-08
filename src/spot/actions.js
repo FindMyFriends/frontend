@@ -3,7 +3,7 @@
 export const RECEIVED_PLACE = 'RECEIVED_PLACE';
 export const REQUESTED_PLACE = 'REQUESTED_PLACE';
 
-export const receivedPlace = (id: string, address: string, failed: boolean) => ({
+export const receivedPlace = (id: string, address: string, failed: boolean = false) => ({
   type: RECEIVED_PLACE,
   id,
   address,

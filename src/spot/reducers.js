@@ -40,7 +40,7 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
   }
 };
 
-export const isFetching = spot => (
+export const isFetching = (spot: Object) => (
   isEmpty(spot.places)
     || Object.values(spot.places).filter(single => single.fetching).length > 0
 );

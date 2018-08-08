@@ -7,7 +7,7 @@ export type Coordinates = {|
   +longitude: number,
 |};
 
-const place = (id: string, coordinates: Coordinates, next: (void) => {}) => (dispatch) => {
+const place = (id: string, coordinates: Coordinates) => (dispatch: (mixed) => Object) => {
   dispatch(requestedPlace(id));
   axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates.latitude},${coordinates.longitude}`,
@@ -20,11 +20,9 @@ const place = (id: string, coordinates: Coordinates, next: (void) => {}) => (dis
   )
     .then(response => response.data.results[0].formatted_address)
     .then(address => dispatch(receivedPlace(id, address)))
-    .then(next)
     .catch(() => dispatch(receivedPlace(id, 'unknown', true)));
 };
 
-export const places = (spots: Array<Object>, next: (void) => {}) => (dispatch) => {
-  Promise.all(spots.map(spot => dispatch(place(spot.id, spot.coordinates))))
-    .then(next);
+export const places = (spots: Array<Object>) => (dispatch: (mixed) => Object) => {
+  Promise.all(spots.map(spot => dispatch(place(spot.id, spot.coordinates))));
 };
