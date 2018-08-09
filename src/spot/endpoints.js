@@ -1,13 +1,18 @@
 // @flow
 import axios from 'axios';
 import { requestedPlace, receivedPlace } from './actions';
+import { fetchedPlaces } from './reducers';
 
 export type Coordinates = {|
   +latitude: number,
   +longitude: number,
 |};
 
-const place = (id: string, coordinates: Coordinates) => (dispatch: (mixed) => Object) => {
+const place = (
+  id: string,
+  coordinates: Coordinates,
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedPlaces(getState())) return;
   dispatch(requestedPlace(id));
   axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates.latitude},${coordinates.longitude}`,

@@ -9,12 +9,14 @@ import {
 } from './actions';
 import { receivedSuccess, receivedApiError } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
+import { fetchedAll } from './reducers';
 
 export const all = (
   demand: string,
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedAll(getState())) return;
   dispatch(requestedAllByDemand());
   const query = httpBuildQuery({
     page: pagination.page,

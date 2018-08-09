@@ -13,6 +13,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import extractedLocationId from '../api/extractedLocationId';
+import { fetchedAll } from './reducers';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/demands', DEMAND));
@@ -25,7 +26,8 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedAll(getState())) return;
   dispatch(requestedDemand());
   const query = httpBuildQuery({
     page: pagination.page,

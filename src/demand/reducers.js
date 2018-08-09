@@ -1,4 +1,5 @@
 // @flow
+import { isEmpty } from 'lodash';
 import { getPrettyDescription } from '../description/selects';
 import {
   REQUESTED_DEMAND,
@@ -91,3 +92,5 @@ export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
   }
   return { };
 };
+
+export const fetchedAll = (state: Object) => !isEmpty(state.demand.all.payload);

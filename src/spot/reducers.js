@@ -45,3 +45,5 @@ export const isFetching = (spot: Object) => (
   Object.values(spot.places).filter((single: Object) => single.fetching).length > 0
     || isEmpty(spot.places)
 );
+
+export const fetchedPlaces = (state: Object) => !isEmpty(state.spot.places);

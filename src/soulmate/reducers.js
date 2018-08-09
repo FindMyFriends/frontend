@@ -1,4 +1,5 @@
 // @flow
+import { isEmpty } from 'lodash';
 import {
   RECEIVED_ALL_SOULMATES_BY_DEMAND,
   REQUESTED_ALL_SOULMATES_BY_DEMAND,
@@ -52,3 +53,5 @@ export const getSoulmateTotal = (state: Object): number => {
   }
   return state.soulmate.info.total;
 };
+
+export const fetchedAll = (state: Object) => !isEmpty(state.soulmate.all);

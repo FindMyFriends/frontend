@@ -9,6 +9,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import extractedLocationId from '../api/extractedLocationId';
+import { fetchedAll } from './reducers';
 
 export const getScopeOptions = (state: Object): ?Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
@@ -33,7 +34,8 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedAll(getState())) return;
   dispatch(requestedEvolution());
   const next = (allOptions: Object) => {
     const query = httpBuildQuery({

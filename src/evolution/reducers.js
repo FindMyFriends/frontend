@@ -1,4 +1,5 @@
 // @flow
+import { isEmpty } from 'lodash';
 import {
   RECEIVED_ALL_EVOLUTIONS,
   REQUESTED_EVOLUTION,
@@ -71,3 +72,5 @@ export const getPrettyEvolution = (evolution: ?Object, options: ?Object): Object
   }
   return { };
 };
+
+export const fetchedAll = (state: Object) => !isEmpty(state.evolution.all.payload);
