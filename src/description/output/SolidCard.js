@@ -11,7 +11,7 @@ const ResizedCard = styled(Card)`
 `;
 
 type Props = {|
-  +title: string,
+  +title: string | Object,
   +rows: Array<Object>,
 |};
 const SolidCard = ({ title, rows }: Props) => {

@@ -8,7 +8,7 @@ const Header = styled.th`
 `;
 
 type Props = {|
-  +children: string,
+  +children: string | Object,
 |};
 const CardTitle = ({ children }: Props) => (
   <Header>

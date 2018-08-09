@@ -9,7 +9,7 @@ const Row = styled.tr`
 `;
 
 type Props = {|
-  +title: string,
+  +title: string | Object,
   +text: string | Object,
 |};
 export const TextRow = ({ title, text }: Props) => {
