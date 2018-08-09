@@ -17,7 +17,6 @@ export default function withSettings(inherited: Object): Object {
     inherited,
     {
       baseURL: 'https://api.fmf.localhost',
-      data: null,
       headers: {
         common: {
           'Content-Type': 'application/json',
