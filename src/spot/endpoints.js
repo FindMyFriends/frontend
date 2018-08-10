@@ -12,7 +12,7 @@ const place = (
   id: string,
   coordinates: Coordinates,
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
-  if (fetchedPlaces(getState())) return;
+  if (fetchedPlaces(id, getState())) return;
   dispatch(requestedPlace(id));
   axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates.latitude},${coordinates.longitude}`,

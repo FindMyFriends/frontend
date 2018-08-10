@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
 import httpBuildQuery from 'http-build-query';
-import { requestedsSpots, receivedSpots } from '../actions';
+import { requestedSpots, receivedSpots } from '../actions';
 import { receivedApiError } from '../../ui/actions';
 
 export const track = (
@@ -21,7 +21,7 @@ export const history = (
   sorts: Array<string> = [],
   next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedsSpots());
+  dispatch(requestedSpots());
   const query = httpBuildQuery({
     sort: sorts.join(','),
     fields: ['assigned_at', 'coordinates', 'id', 'met_at'].join(','),

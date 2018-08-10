@@ -13,7 +13,7 @@ export const requestedDemand = () => ({
   fetching: true,
 });
 
-export const requestedsSpots = () => ({
+export const requestedSpots = () => ({
   type: REQUESTED_DEMAND_SPOTS,
   fetching: true,
 });

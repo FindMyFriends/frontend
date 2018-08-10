@@ -29,7 +29,9 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
           ...state.places,
           [action.id]: {
             ...state.places[action.id],
-            address: action.address,
+            payload: {
+              address: action.address,
+            },
             failed: action.failed,
             fetching: action.fetching,
           },
@@ -46,4 +48,4 @@ export const isFetching = (spot: Object) => (
     || isEmpty(spot.places)
 );
 
-export const fetchedPlaces = (state: Object) => !isEmpty(state.spot.places);
+export const fetchedPlaces = (id: string, state: Object) => !isEmpty(state.spot.places[id].payload);

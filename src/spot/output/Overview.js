@@ -31,7 +31,7 @@ const Overview = ({ spots, places }: Props) => (
                 <MapIcon />
               </a>
               <br />
-              {places[spot.id].failed ? `Spot #${position + 1}` : places[spot.id].address}
+              {places[spot.id].failed ? `Spot #${position + 1}` : places[spot.id].payload.address}
             </React.Fragment>
           }
           rows={[
