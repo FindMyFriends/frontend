@@ -11,6 +11,7 @@ import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 import { history as spotHistory } from '../../demand/spot/endpoints';
+import { isSpotsFetching, spotsByDemand } from '../../spot/reducers';
 
 type Props = {|
   +options: () => (void),
@@ -54,10 +55,13 @@ class Demand extends React.Component<Props, any> {
 
 const mapStateToProps = (state) => {
   return {
-    spots: state.demand.spots.payload,
+    spots: spotsByDemand(state.spot, state.demand.single.payload.id),
     demand: getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND)),
     soulmateTotal: getSoulmateTotal(state),
-    fetching: state.demand.single.fetching || isFetching(state, DEMAND) || state.soulmate.fetching,
+    fetching: state.demand.single.fetching
+      || isFetching(state, DEMAND)
+      || state.soulmate.fetching
+      || isSpotsFetching(state.spot),
   };
 };
 const mapDispatchToProps = dispatch => ({

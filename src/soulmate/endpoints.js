@@ -17,7 +17,7 @@ export const all = (
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedAll(getState())) return;
-  dispatch(requestedAllByDemand());
+  dispatch(requestedAllByDemand(demand));
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -25,13 +25,13 @@ export const all = (
     sort: sorts.join(','),
   });
   axios.get(`/demands/${demand}/soulmates?${query}`)
-    .then(response => dispatch(receivedAllByDemand(response.data, response.headers)));
+    .then(response => dispatch(receivedAllByDemand(demand, response.data, response.headers)));
 };
 
 export const info = (demand: string) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedInfo());
+  dispatch(requestedInfo(demand));
   axios.head(`/demands/${demand}/soulmates`)
-    .then(response => dispatch(receivedInfo(response.headers)));
+    .then(response => dispatch(receivedInfo(demand, response.headers)));
 };
 
 export const clarify = (

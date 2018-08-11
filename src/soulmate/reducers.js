@@ -55,3 +55,5 @@ export const getSoulmateTotal = (state: Object): number => {
 };
 
 export const fetchedAll = (state: Object) => !isEmpty(state.soulmate.all);
+
+export const fetchedDemandInfo = (demand: string, state: Object) => ;

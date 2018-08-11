@@ -10,10 +10,10 @@ import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getSoulmateTotal } from '../../../soulmate/reducers';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { isFetching } from '../../../spot/reducers';
+import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
-  +spots: Array<Object>,
+  +spotsByDemand: (string) => Array<Object>,
   +spotPlaces: (Array<Object>) => (void),
   +fetching: boolean,
   +spotHistory: (string, SortType, () => (void)) => (void),
@@ -43,13 +43,13 @@ class Spots extends React.Component<Props, State> {
     this.props.spotHistory(
       this.props.match.params.id,
       this.state.sort,
-      () => this.props.spotPlaces(this.props.spots),
+      () => this.props.spotPlaces(this.props.spotsByDemand(id)),
     );
   };
 
   render() {
     const {
-      spots,
+      spotsByDemand,
       fetching,
       match: { params: { id } },
       soulmateTotal,
@@ -61,17 +61,17 @@ class Spots extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={soulmateTotal} />
-        <Overview spots={spots} places={places} />
+        <Overview spots={spotsByDemand(id)} places={places} />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  spots: state.demand.spots.payload,
+  spotsByDemand: (demand: string) => spotsByDemand(state.spot, demand),
   places: state.spot.places,
   soulmateTotal: getSoulmateTotal(state),
-  fetching: state.demand.spots.fetching || isFetching(state.spot),
+  fetching: isSpotsFetching(state.spot) || isPlacesFetching(state.spot),
 });
 const mapDispatchToProps = dispatch => ({
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
