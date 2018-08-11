@@ -7,8 +7,9 @@ import TextRow from '../../description/output/TextRow';
 
 type Props = {|
   +demand: Object,
+  +spots: Array<Object>,
 |};
-const Overview = ({ demand }: Props) => (
+const Overview = ({ demand, spots }: Props) => (
   <DescriptionOverview
     description={demand}
     cards={
@@ -18,12 +19,12 @@ const Overview = ({ demand }: Props) => (
           <TextRow
             key="Coordinates"
             title="Coordinates"
-            text={`${demand.spots[0].coordinates.latitude}, ${demand.spots[0].coordinates.longitude}`}
+            text={`${spots[0].coordinates.latitude}, ${spots[0].coordinates.longitude}`}
           />,
           <TextRow
             key="Met at"
             title="Met at"
-            text={moment(demand.spots[0].met_at.moment).format('YYYY-MM-DD HH:mm')}
+            text={moment(spots[0].met_at.moment).format('YYYY-MM-DD HH:mm')}
           />,
         ]}
       />

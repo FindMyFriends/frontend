@@ -15,6 +15,7 @@ import { history as spotHistory } from '../../demand/spot/endpoints';
 type Props = {|
   +options: () => (void),
   +demand: Object,
+  +spots: Array<Object>,
   +fetching: boolean,
   +single: (string) => (void),
   +spotHistory: (string) => (void),
@@ -37,6 +38,7 @@ class Demand extends React.Component<Props, any> {
       fetching,
       match: { params: { id } },
       soulmateTotal,
+      spots,
     } = this.props;
     if (fetching) {
       return <Loader />;
@@ -44,17 +46,16 @@ class Demand extends React.Component<Props, any> {
     return (
       <React.Fragment>
         <Tabs type={DEMAND_TYPE} id={id} soulmateTotal={soulmateTotal} />
-        <Overview demand={demand} />
+        <Overview demand={demand} spots={spots} />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const demand = getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND));
-  demand.spots = state.demand.spots.payload;
   return {
-    demand,
+    spots: state.demand.spots.payload,
+    demand: getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND)),
     soulmateTotal: getSoulmateTotal(state),
     fetching: state.demand.single.fetching || isFetching(state, DEMAND) || state.soulmate.fetching,
   };
