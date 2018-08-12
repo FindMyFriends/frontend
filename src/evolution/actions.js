@@ -4,10 +4,17 @@ import { fromHeader } from '../dataset/pagination';
 export const EVOLUTION = 'EVOLUTION';
 export const RECEIVED_ALL_EVOLUTIONS = 'RECEIVED_ALL_EVOLUTIONS';
 export const RECEIVED_SINGLE_EVOLUTION = 'RECEIVED_SINGLE_EVOLUTION';
-export const REQUESTED_EVOLUTION = 'REQUESTED_EVOLUTION';
+export const REQUESTED_SINGLE_EVOLUTION = 'REQUESTED_SINGLE_EVOLUTION';
+export const REQUESTED_ALL_EVOLUTIONS = 'REQUESTED_ALL_EVOLUTIONS';
 
-export const requestedEvolution = () => ({
-  type: REQUESTED_EVOLUTION,
+export const requestedAll = () => ({
+  type: REQUESTED_ALL_EVOLUTIONS,
+  fetching: true,
+});
+
+export const requestedSingle = (id: string) => ({
+  type: REQUESTED_SINGLE_EVOLUTION,
+  id,
   fetching: true,
 });
 
