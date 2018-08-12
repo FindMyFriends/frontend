@@ -81,6 +81,7 @@ export const isPlacesFetching = (state: Object, spots: Array<string>): boolean =
   if (isEmpty(state.spot.places)) {
     return true;
   }
+  // $FlowFixMe
   const own = Object.values(state.spot.places)
     .filter((spot: Object) => spots.includes(spot.payload.spotId));
   return own.length === 0 || own.filter((spot: Object) => spot.fetching).length > 0;
@@ -91,5 +92,6 @@ export const fetchedPlaces = (id: string, state: Object): boolean => {
 };
 
 export const fetchedDemandSpots = (demand: string, state: Object): boolean => (
+  // $FlowFixMe
   Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand).length > 0
 );
