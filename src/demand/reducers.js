@@ -2,10 +2,10 @@
 import { isEmpty } from 'lodash';
 import { getPrettyDescription } from '../description/selects';
 import {
-  REQUESTED_SINGLE_DEMAND,
-  REQUESTED_ALL_DEMANDS,
-  RECEIVED_ALL_DEMANDS,
-  RECEIVED_SINGLE_DEMAND,
+  REQUESTED_DEMAND,
+  REQUESTED_DEMANDS,
+  RECEIVED_DEMANDS,
+  RECEIVED_DEMAND,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
@@ -26,7 +26,7 @@ const initState = {
 };
 export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_SINGLE_DEMAND:
+    case RECEIVED_DEMAND:
       return {
         ...state,
         single: {
@@ -37,7 +37,7 @@ export const demand = (state: stateType = initState, action: Object): stateType 
           },
         },
       };
-    case RECEIVED_ALL_DEMANDS:
+    case RECEIVED_DEMANDS:
       return {
         ...state,
         all: {
@@ -47,7 +47,7 @@ export const demand = (state: stateType = initState, action: Object): stateType 
         pagination: action.pagination,
         total: action.total,
       };
-    case REQUESTED_SINGLE_DEMAND:
+    case REQUESTED_DEMAND:
       return {
         ...state,
         single: {
@@ -58,7 +58,7 @@ export const demand = (state: stateType = initState, action: Object): stateType 
           },
         },
       };
-    case REQUESTED_ALL_DEMANDS:
+    case REQUESTED_DEMANDS:
       return {
         ...state,
         all: {
@@ -77,17 +77,17 @@ export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
   return { };
 };
 
-export const fetchedAll = (state: Object) => !isEmpty(state.demand.all.payload);
+export const fetchedAll = (state: Object): boolean => !isEmpty(state.demand.all.payload);
 
-export const fetchedSingle = (id: string, state: Object) => (
+export const fetchedSingle = (id: string, state: Object): boolean => (
   state.demand.single[id] ? !isEmpty(state.demand.single[id].payload) : false
 );
 
-export const getById = (id: string, state: Object) => (
+export const getById = (id: string, state: Object): Object => (
   state.demand.single[id] ? state.demand.single[id].payload : {}
 );
 
-export const isFetching = (id: string, state: Object) => (
+export const isFetching = (id: string, state: Object): boolean => (
   state.demand.single[id] ? state.demand.single[id].fetching : true
 );
 

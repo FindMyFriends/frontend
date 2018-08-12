@@ -1,8 +1,8 @@
 // @flow
 import isEmpty from 'lodash';
 import {
-  RECEIVED_ALL_SOULMATES_BY_DEMAND,
-  REQUESTED_ALL_SOULMATES_BY_DEMAND,
+  RECEIVED_SOULMATES_BY_DEMAND,
+  REQUESTED_SOULMATES_BY_DEMAND,
   REQUESTED_SOULMATE_INFO_BY_DEMAND,
   RECEIVED_SOULMATE_INFO_BY_DEMAND,
 } from './actions';
@@ -17,7 +17,7 @@ const initState = {
 };
 export const soulmate = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case REQUESTED_ALL_SOULMATES_BY_DEMAND:
+    case REQUESTED_SOULMATES_BY_DEMAND:
       return {
         ...state,
         all: {
@@ -37,7 +37,7 @@ export const soulmate = (state: stateType = initState, action: Object): stateTyp
           },
         },
       };
-    case RECEIVED_ALL_SOULMATES_BY_DEMAND:
+    case RECEIVED_SOULMATES_BY_DEMAND:
       return {
         ...state,
         all: {

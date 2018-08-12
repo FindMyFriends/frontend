@@ -3,8 +3,8 @@ import axios from 'axios';
 import httpBuildQuery from 'http-build-query';
 import { omit } from 'lodash';
 import {
-  requestedDemand,
-  requestedAllDemands,
+  requestedSingle,
+  requestedAll,
   receivedAll,
   receivedSingle,
   DEMAND,
@@ -29,7 +29,7 @@ export const all = (
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedAll(getState())) return;
-  dispatch(requestedAllDemands());
+  dispatch(requestedAll());
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -46,7 +46,7 @@ export const single = (
   next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedSingle(id, getState())) return;
-  dispatch(requestedDemand(id));
+  dispatch(requestedSingle(id));
   const query = httpBuildQuery({
     fields: fields.join(','),
   });

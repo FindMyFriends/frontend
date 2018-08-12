@@ -71,13 +71,13 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
   }
 };
 
-export const spotsByDemand = (spot: Object, demand: string) => (
+export const spotsByDemand = (spot: Object, demand: string): Object => (
   Object.values(spot.all.payload).filter(spot => spot.demand_id === demand)
 );
 
 export const isSpotsFetching = (spot: Object) => spot.all.fetching;
 
-export const isPlacesFetching = (spot: Object, spots: Array<string>) => {
+export const isPlacesFetching = (spot: Object, spots: Array<string>): boolean => {
   if (isEmpty(spot.places)) {
     return true;
   }
@@ -86,10 +86,10 @@ export const isPlacesFetching = (spot: Object, spots: Array<string>) => {
   return own.length === 0 || own.filter((single: Object) => single.fetching).length > 0;
 };
 
-export const fetchedPlaces = (id: string, state: Object) => {
+export const fetchedPlaces = (id: string, state: Object): boolean => {
   return !isEmpty(state.spot.places[id]) && !isEmpty(state.spot.places[id].payload);
 };
 
-export const fetchedDemandSpots = (demand: string, state: Object) => (
+export const fetchedDemandSpots = (demand: string, state: Object): boolean => (
   Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand).length > 0
 );

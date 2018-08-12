@@ -1,10 +1,10 @@
 // @flow
 import { isEmpty } from 'lodash';
 import {
-  RECEIVED_ALL_EVOLUTIONS,
-  RECEIVED_SINGLE_EVOLUTION,
-  REQUESTED_SINGLE_EVOLUTION,
-  REQUESTED_ALL_EVOLUTIONS,
+  RECEIVED_EVOLUTIONS,
+  RECEIVED_EVOLUTION,
+  REQUESTED_EVOLUTION,
+  REQUESTED_EVOLUTIONS,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import { getPrettyDescription } from '../description/selects';
@@ -28,7 +28,7 @@ const initState = {
 };
 export const evolution = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_SINGLE_EVOLUTION:
+    case RECEIVED_EVOLUTION:
       return {
         ...state,
         single: {
@@ -39,7 +39,7 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
         },
         etag: action.etag,
       };
-    case RECEIVED_ALL_EVOLUTIONS:
+    case RECEIVED_EVOLUTIONS:
       return {
         ...state,
         all: {
@@ -49,7 +49,7 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
         pagination: action.pagination,
         total: action.total,
       };
-    case REQUESTED_SINGLE_EVOLUTION:
+    case REQUESTED_EVOLUTION:
       return {
         ...state,
         single: {
@@ -60,7 +60,7 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
           },
         },
       };
-    case REQUESTED_ALL_EVOLUTIONS:
+    case REQUESTED_EVOLUTIONS:
       return {
         ...state,
         all: {
