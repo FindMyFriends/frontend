@@ -26,6 +26,7 @@ import {
 } from '../../../description/selects';
 import steps from '../../../demand/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
+import { isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
   +reconsider: (string, Object, string, (string) => (void)) => (void),
@@ -109,7 +110,7 @@ class Extend extends React.Component<Props, State> {
 
 const mapStateToProps = (state) => {
   return {
-    spots: state.demand.spots.payload,
+    spots: spotsByDemand(state, state.demand.single.payload.id),
     demand: state.demand.single.payload,
     etags: {
       demand: state.demand.single.etag,
@@ -129,7 +130,7 @@ const mapStateToProps = (state) => {
       handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
       timelineSides: getTimelineSides(getScopeOptions(state, DEMAND)),
     },
-    fetching: state.demand.fetching || isFetching(state, DEMAND),
+    fetching: state.demand.fetching || isFetching(state, DEMAND) || isSpotsFetching(state),
   };
 };
 const mapDispatchToProps = dispatch => ({

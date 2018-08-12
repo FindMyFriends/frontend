@@ -3,7 +3,8 @@ import axios from 'axios';
 import httpBuildQuery from 'http-build-query';
 import { omit } from 'lodash';
 import {
-  requestedDemand,
+  requestedSingle,
+  requestedAll,
   receivedAll,
   receivedSingle,
   DEMAND,
@@ -13,6 +14,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import extractedLocationId from '../api/extractedLocationId';
+import { fetchedAll, fetchedSingle } from './reducers';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/demands', DEMAND));
@@ -25,8 +27,9 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedDemand());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedAll(getState())) return;
+  dispatch(requestedAll());
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -41,8 +44,9 @@ export const single = (
   id: string,
   fields: Array<string> = [],
   next: (Object) => (void) = () => {},
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedDemand());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedSingle(id, getState())) return;
+  dispatch(requestedSingle(id));
   const query = httpBuildQuery({
     fields: fields.join(','),
   });

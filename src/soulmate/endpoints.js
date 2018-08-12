@@ -4,18 +4,20 @@ import httpBuildQuery from 'http-build-query';
 import {
   receivedAllByDemand,
   requestedAllByDemand,
-  receivedInfo,
-  requestedInfo,
+  receivedInfoByDemand,
+  requestedInfoByDemand,
 } from './actions';
 import { receivedSuccess, receivedApiError } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
+import { fetchedDemandSoulmates, fetchedDemandInfo } from './reducers';
 
 export const all = (
   demand: string,
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedAllByDemand());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedDemandSoulmates(demand, getState())) return;
+  dispatch(requestedAllByDemand(demand));
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -23,13 +25,14 @@ export const all = (
     sort: sorts.join(','),
   });
   axios.get(`/demands/${demand}/soulmates?${query}`)
-    .then(response => dispatch(receivedAllByDemand(response.data, response.headers)));
+    .then(response => dispatch(receivedAllByDemand(demand, response.data, response.headers)));
 };
 
-export const info = (demand: string) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedInfo());
+export const info = (demand: string) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedDemandInfo(demand, getState())) return;
+  dispatch(requestedInfoByDemand(demand));
   axios.head(`/demands/${demand}/soulmates`)
-    .then(response => dispatch(receivedInfo(response.headers)));
+    .then(response => dispatch(receivedInfoByDemand(demand, response.headers)));
 };
 
 export const clarify = (

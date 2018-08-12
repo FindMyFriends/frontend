@@ -5,7 +5,7 @@ import { single, options, getScopeOptions } from '../../evolution/endpoints';
 import { EVOLUTION } from '../../evolution/actions';
 import Loader from '../../ui/Loader';
 import Overview from '../../evolution/output/Overview';
-import { getPrettyEvolution } from '../../evolution/reducers';
+import { getById, getPrettyEvolution, isSingleFetching as isFetchingEvolution } from '../../evolution/reducers';
 import { isFetching } from '../../schema/reducers';
 
 type Props = {|
@@ -31,9 +31,9 @@ class Evolution extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = state => ({
-  evolution: getPrettyEvolution(state.evolution.single.payload, getScopeOptions(state)),
-  fetching: state.evolution.single.fetching || isFetching(state, EVOLUTION),
+const mapStateToProps = (state, { match: { params: { id } } }) => ({
+  evolution: getPrettyEvolution(getById(id, state), getScopeOptions(state)),
+  fetching: isFetchingEvolution(id, state) || isFetching(state, EVOLUTION),
 });
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),

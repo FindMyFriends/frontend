@@ -7,10 +7,10 @@ import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
 import type { SortType } from '../../../dataset/SortType';
 import { toApiOrdering } from '../../../dataset/sorts';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
-import { getSoulmateTotal } from '../../../soulmate/reducers';
+import { getTotal } from '../../../soulmate/reducers';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { isFetching } from '../../../spot/reducers';
+import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
   +spots: Array<Object>,
@@ -67,12 +67,16 @@ class Spots extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => ({
-  spots: state.demand.spots.payload,
-  places: state.spot.places,
-  soulmateTotal: getSoulmateTotal(state),
-  fetching: state.demand.spots.fetching || isFetching(state.spot),
-});
+const mapStateToProps = (state, { match: { params: { id } } }) => {
+  const spots = spotsByDemand(state, id);
+  return {
+    spots,
+    places: state.spot.places,
+    soulmateTotal: getTotal(id, state),
+    fetching: isSpotsFetching(state)
+      || isPlacesFetching(state, spots.map(spot => spot.id)),
+  };
+};
 const mapDispatchToProps = dispatch => ({
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
   spotPlaces: (spots: Array<Object>) => dispatch(spotPlaces(spots)),

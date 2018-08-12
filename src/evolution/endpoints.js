@@ -4,11 +4,12 @@ import moment from 'moment';
 import { omit } from 'lodash';
 import httpBuildQuery from 'http-build-query';
 import { track } from './spot/endpoints';
-import { receivedAll, requestedEvolution, receivedSingle, EVOLUTION } from './actions';
+import { receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION } from './actions';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import extractedLocationId from '../api/extractedLocationId';
+import { fetchedAll, fetchedSingle } from './reducers';
 
 export const getScopeOptions = (state: Object): ?Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
@@ -33,8 +34,9 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedEvolution());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedAll(getState())) return;
+  dispatch(requestedAll());
   const next = (allOptions: Object) => {
     const query = httpBuildQuery({
       page: pagination.page,
@@ -52,8 +54,9 @@ export const single = (
   id: string,
   fields: Array<string> = [],
   next: (Object) => (void) = () => {},
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedEvolution());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedSingle(id, getState())) return;
+  dispatch(requestedSingle(id));
   const query = httpBuildQuery({
     fields: fields.join(','),
   });

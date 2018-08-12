@@ -1,8 +1,9 @@
 // @flow
 import axios from 'axios';
 import httpBuildQuery from 'http-build-query';
-import { requestedsSpots, receivedSpots } from '../actions';
+import { requestedSpots, receivedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
+import { fetchedDemandSpots } from '../../spot/reducers';
 
 export const track = (
   id: string,
@@ -19,9 +20,13 @@ export const track = (
 export const history = (
   demand: string,
   sorts: Array<string> = [],
-  next: (Object) => (void) = () => {},
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedsSpots());
+  next: () => (void) = () => {},
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedDemandSpots(demand, getState())) {
+    next(); // TODO: not transparent enough
+    return;
+  }
+  dispatch(requestedSpots());
   const query = httpBuildQuery({
     sort: sorts.join(','),
     fields: ['assigned_at', 'coordinates', 'id', 'met_at'].join(','),

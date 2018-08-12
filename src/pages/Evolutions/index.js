@@ -9,6 +9,7 @@ import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
+import { isAllFetching } from '../../evolution/reducers';
 
 type Props = {|
   +evolutions: Array<Object>,
@@ -94,10 +95,10 @@ class All extends React.Component<Props, State> {
 
 const mapStateToProps = state => ({
   columns: getScopeColumns(state),
-  evolutions: state.evolution.all.payload || [],
-  total: state.evolution.total || 0,
+  evolutions: state.evolution.all.payload,
+  total: state.evolution.total,
   pagination: state.evolution.pagination,
-  fetching: state.evolution.all.fetching,
+  fetching: isAllFetching(state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (

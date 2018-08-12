@@ -1,30 +1,23 @@
 // @flow
+import { isEmpty } from 'lodash';
 import { getPrettyDescription } from '../description/selects';
 import {
   REQUESTED_DEMAND,
-  RECEIVED_ALL_DEMANDS,
-  RECEIVED_SINGLE_DEMAND, REQUESTED_DEMAND_SPOTS, RECEIVED_ALL_DEMAND_SPOTS,
+  REQUESTED_DEMANDS,
+  RECEIVED_DEMANDS,
+  RECEIVED_DEMAND,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
 type stateType = {|
   +single: Object,
-  +spots: Object,
   +all: Object,
   +pagination: ?PaginationType,
   +total: number,
 |};
 const initState = {
-  single: {
-    payload: {},
-    fetching: true,
-    etag: null,
-  },
+  single: {},
   all: {
-    payload: [],
-    fetching: true,
-  },
-  spots: {
     payload: [],
     fetching: true,
   },
@@ -33,16 +26,19 @@ const initState = {
 };
 export const demand = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_SINGLE_DEMAND:
+    case RECEIVED_DEMAND:
       return {
         ...state,
         single: {
-          payload: action.demand,
-          fetching: action.fetching,
-          etag: action.etag,
+          ...state.single,
+          [action.id]: {
+            payload: action.demand,
+            fetching: action.fetching,
+            etag: action.etag,
+          },
         },
       };
-    case RECEIVED_ALL_DEMANDS:
+    case RECEIVED_DEMANDS:
       return {
         ...state,
         all: {
@@ -57,26 +53,16 @@ export const demand = (state: stateType = initState, action: Object): stateType 
         ...state,
         single: {
           ...state.single,
-          fetching: action.fetching,
+          [action.id]: {
+            payload: {},
+            fetching: action.fetching,
+          },
         },
+      };
+    case REQUESTED_DEMANDS:
+      return {
+        ...state,
         all: {
-          ...state.all,
-          fetching: action.fetching,
-        },
-      };
-    case REQUESTED_DEMAND_SPOTS:
-      return {
-        ...state,
-        spots: {
-          ...state.spots,
-          fetching: action.fetching,
-        },
-      };
-    case RECEIVED_ALL_DEMAND_SPOTS:
-      return {
-        ...state,
-        spots: {
-          payload: action.spots,
           fetching: action.fetching,
         },
       };
@@ -91,3 +77,21 @@ export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
   }
   return { };
 };
+
+export const fetchedAll = (state: Object): boolean => !isEmpty(state.demand.all.payload);
+
+export const fetchedSingle = (id: string, state: Object): boolean => (
+  state.demand.single[id] ? !isEmpty(state.demand.single[id].payload) : false
+);
+
+export const getById = (id: string, state: Object): Object => (
+  state.demand.single[id] ? state.demand.single[id].payload : {}
+);
+
+export const isFetching = (id: string, state: Object): boolean => (
+  state.demand.single[id] ? state.demand.single[id].fetching : true
+);
+
+export const isAllFetching = (state: Object): boolean => state.demand.all.fetching;
+
+export const getTotal = (state: Object): number => state.demand.total;

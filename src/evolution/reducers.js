@@ -1,8 +1,10 @@
 // @flow
+import { isEmpty } from 'lodash';
 import {
-  RECEIVED_ALL_EVOLUTIONS,
+  RECEIVED_EVOLUTIONS,
+  RECEIVED_EVOLUTION,
   REQUESTED_EVOLUTION,
-  RECEIVED_SINGLE_EVOLUTION,
+  REQUESTED_EVOLUTIONS,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import { getPrettyDescription } from '../description/selects';
@@ -19,26 +21,25 @@ const initState = {
     payload: {},
     fetching: true,
   },
-  single: {
-    payload: {},
-    fetching: true,
-  },
+  single: {},
   etag: null,
   pagination: null,
-  total: null,
+  total: 0,
 };
 export const evolution = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_SINGLE_EVOLUTION:
+    case RECEIVED_EVOLUTION:
       return {
         ...state,
         single: {
-          payload: action.evolution,
-          fetching: action.fetching,
+          [action.id]: {
+            payload: action.evolution,
+            fetching: action.fetching,
+          },
         },
         etag: action.etag,
       };
-    case RECEIVED_ALL_EVOLUTIONS:
+    case RECEIVED_EVOLUTIONS:
       return {
         ...state,
         all: {
@@ -53,11 +54,17 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
         ...state,
         single: {
           ...state.single,
-          fetching: action.fetching,
+          [action.id]: {
+            fetching: action.fetching,
+            payload: {},
+          },
         },
+      };
+    case REQUESTED_EVOLUTIONS:
+      return {
+        ...state,
         all: {
-          ...state.all,
-          fetching: action.fetching,
+          fetching: true,
         },
       };
     default:
@@ -71,3 +78,19 @@ export const getPrettyEvolution = (evolution: ?Object, options: ?Object): Object
   }
   return { };
 };
+
+export const fetchedAll = (state: Object): boolean => !isEmpty(state.evolution.all.payload);
+
+export const fetchedSingle = (id: string, state: Object) => (
+  state.evolution.single[id] ? !isEmpty(state.evolution.single[id].payload) : false
+);
+
+export const getById = (id: string, state: Object): Object => (
+  state.evolution.single[id] ? state.evolution.single[id].payload : {}
+);
+
+export const isSingleFetching = (id: string, state: Object): boolean => (
+  state.evolution.single[id] ? state.evolution.single[id].fetching : true
+);
+
+export const isAllFetching = (state: Object): boolean => state.evolution.all.fetching;
