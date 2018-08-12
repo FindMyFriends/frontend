@@ -7,7 +7,7 @@ import merge from 'lodash/merge';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/reducers';
-import { EVOLUTION } from '../../../evolution/actions';
+import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
 import { extend, single, options, schema, getScopeOptions } from '../../../evolution/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
@@ -28,8 +28,9 @@ import steps from '../../../evolution/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
 
 type Props = {|
-  +extend: (Object, (string) => (void)) => (void),
+  +extend: (Object, (string) => (Promise<any>)) => (any),
   +single: (string, (Object) => (void)) => (void),
+  +invalidateAllEvolutions: () => (void),
   +schema: () => (void),
   +options: () => (void),
   +fetching: boolean,
@@ -85,7 +86,9 @@ class Extend extends React.Component<Props, State> {
   handleExtend = () => (
     this.props.extend(
       normalize(this.state.evolution),
-      id => this.props.history.push(`/evolutions/${id}`),
+      (id: string) => Promise.resolve()
+        .then(this.props.invalidateAllEvolutions)
+        .then(this.props.history.push(`/evolutions/${id}`)),
     )
   );
 
@@ -131,5 +134,6 @@ const mapDispatchToProps = dispatch => ({
   schema: () => dispatch(schema()),
   single: (id: string, next: () => (void)) => dispatch(single(id, [], next)),
   extend: (evolution: Object, next: (string) => (void)) => dispatch(extend(evolution, next)),
+  invalidateAllEvolutions: () => dispatch(invalidatedAll()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Extend);
