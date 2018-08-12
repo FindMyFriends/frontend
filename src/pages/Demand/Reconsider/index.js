@@ -26,7 +26,7 @@ import {
 } from '../../../description/selects';
 import steps from '../../../demand/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
-import {isSpotsFetching, spotsByDemand} from '../../../spot/reducers';
+import { isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
   +reconsider: (string, Object, string, (string) => (void)) => (void),

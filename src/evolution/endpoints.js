@@ -9,7 +9,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import extractedLocationId from '../api/extractedLocationId';
-import {fetchedAll, fetchedSingle} from './reducers';
+import { fetchedAll, fetchedSingle } from './reducers';
 
 export const getScopeOptions = (state: Object): ?Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
