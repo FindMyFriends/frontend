@@ -26,7 +26,6 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
         places: {
           ...state.places,
           [action.id]: {
-            ...state.places[action.id],
             payload: {},
             fetching: action.fetching,
           },
@@ -38,7 +37,6 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
         places: {
           ...state.places,
           [action.id]: {
-            ...state.places[action.id],
             payload: {
               spotId: action.id,
               address: action.address,
@@ -52,6 +50,7 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
       return {
         ...state,
         all: {
+          payload: {},
           fetching: action.fetching,
         },
       };
@@ -71,19 +70,20 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
   }
 };
 
-export const spotsByDemand = (spot: Object, demand: string): Object => (
-  Object.values(spot.all.payload).filter(spot => spot.demand_id === demand)
+export const spotsByDemand = (state: Object, demand: string): Object => (
+  // $FlowFixMe
+  Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand)
 );
 
-export const isSpotsFetching = (spot: Object) => spot.all.fetching;
+export const isSpotsFetching = (state: Object) => state.spot.all.fetching;
 
-export const isPlacesFetching = (spot: Object, spots: Array<string>): boolean => {
-  if (isEmpty(spot.places)) {
+export const isPlacesFetching = (state: Object, spots: Array<string>): boolean => {
+  if (isEmpty(state.spot.places)) {
     return true;
   }
-  const own = Object.values(spot.places)
-    .filter((single: Object) => spots.includes(single.payload.spotId));
-  return own.length === 0 || own.filter((single: Object) => single.fetching).length > 0;
+  const own = Object.values(state.spot.places)
+    .filter((spot: Object) => spots.includes(spot.payload.spotId));
+  return own.length === 0 || own.filter((spot: Object) => spot.fetching).length > 0;
 };
 
 export const fetchedPlaces = (id: string, state: Object): boolean => {

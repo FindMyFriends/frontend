@@ -20,7 +20,7 @@ export const track = (
 export const history = (
   demand: string,
   sorts: Array<string> = [],
-  next: (Object) => (void) = () => {},
+  next: () => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedDemandSpots(demand, getState())) {
     next(); // TODO: not transparent enough

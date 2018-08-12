@@ -13,14 +13,14 @@ import { places as spotPlaces } from '../../../spot/endpoints';
 import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
-  +spotsByDemand: (string) => Array<Object>,
+  +spots: Array<Object>,
   +spotPlaces: (Array<Object>) => (void),
-  +fetching: (Array<string>) => boolean,
+  +fetching: boolean,
   +spotHistory: (string, SortType, () => (void)) => (void),
   +soulmateInfo: (string) => (void),
   +places: Array<Object>,
   +match: Object,
-  +getSoulmateTotal: (string) => number,
+  +soulmateTotal: number,
 |};
 type State = {|
   sort: SortType,
@@ -43,39 +43,40 @@ class Spots extends React.Component<Props, State> {
     this.props.spotHistory(
       this.props.match.params.id,
       this.state.sort,
-      () => this.props.spotPlaces(this.props.spotsByDemand(id)),
+      () => this.props.spotPlaces(this.props.spots),
     );
   };
 
   render() {
     const {
-      spotsByDemand,
+      spots,
       fetching,
       match: { params: { id } },
-      getSoulmateTotal,
+      soulmateTotal,
       places,
     } = this.props;
-    const spots = spotsByDemand(id);
-    if (fetching(Object.values(spots).map(spot => spot.id))) {
+    if (fetching) {
       return <Loader />;
     }
     return (
       <React.Fragment>
-        <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={getSoulmateTotal(id)} />
+        <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={soulmateTotal} />
         <Overview spots={spots} places={places} />
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  spotsByDemand: (demand: string) => spotsByDemand(state.spot, demand),
-  places: state.spot.places,
-  getSoulmateTotal: (demand: string) => getTotal(demand, state),
-  fetching: (spots: Array<string>) => (
-    isSpotsFetching(state.spot) || isPlacesFetching(state.spot, spots)
-  ),
-});
+const mapStateToProps = (state, { match: { params: { id } } }) => {
+  const spots = spotsByDemand(state, id);
+  return {
+    spots,
+    places: state.spot.places,
+    soulmateTotal: getTotal(id, state),
+    fetching: isSpotsFetching(state)
+      || isPlacesFetching(state, spots.map(spot => spot.id)),
+  };
+};
 const mapDispatchToProps = dispatch => ({
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
   spotPlaces: (spots: Array<Object>) => dispatch(spotPlaces(spots)),

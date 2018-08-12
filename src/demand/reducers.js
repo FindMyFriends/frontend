@@ -30,6 +30,7 @@ export const demand = (state: stateType = initState, action: Object): stateType 
       return {
         ...state,
         single: {
+          ...state.single,
           [action.id]: {
             payload: action.demand,
             fetching: action.fetching,

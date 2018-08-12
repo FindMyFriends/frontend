@@ -11,12 +11,10 @@ import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching as isSchemaFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 import { history as spotHistory } from '../../demand/spot/endpoints';
-import { isSpotsFetching, spotsByDemand } from '../../spot/reducers';
 
 type Props = {|
   +options: () => (void),
   +demand: Object,
-  +spots: Array<Object>,
   +fetching: boolean,
   +single: (string) => (void),
   +spotHistory: (string) => (void),
@@ -30,7 +28,6 @@ class Demand extends React.Component<Props, any> {
     this.props.options();
     this.props.single(id);
     this.props.soulmateInfo(id);
-    this.props.spotHistory(id);
   }
 
   render() {
@@ -39,7 +36,6 @@ class Demand extends React.Component<Props, any> {
       fetching,
       match: { params: { id } },
       soulmateTotal,
-      spots,
     } = this.props;
     if (fetching) {
       return <Loader />;
@@ -47,25 +43,22 @@ class Demand extends React.Component<Props, any> {
     return (
       <React.Fragment>
         <Tabs type={DEMAND_TYPE} id={id} soulmateTotal={soulmateTotal} />
-        <Overview demand={demand} spots={spots} />
+        <Overview demand={demand} />
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state, { match: { params: { id } } }) => ({
-  spots: spotsByDemand(state.spot, id),
   demand: getPrettyDemand(getById(id, state), getScopeOptions(state, DEMAND)),
   soulmateTotal: getTotal(id, state),
   fetching: isDemandFetching(id, state)
     || isSchemaFetching(state, DEMAND)
-    || isSoulmateFetching(id, state)
-    || isSpotsFetching(state.spot),
+    || isSoulmateFetching(id, state),
 });
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   single: (demand: string) => dispatch(single(demand)),
-  spotHistory: (demand: string) => dispatch(spotHistory(demand)),
   soulmateInfo: (demand: string) => dispatch(soulmateInfo(demand)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Demand);
