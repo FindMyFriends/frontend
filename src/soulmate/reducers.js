@@ -75,7 +75,7 @@ export const getTotal = (
     : 0
 );
 
-export const isFetching = (
+export const singleFetching = (
   demand: string,
   state: Object,
 ) => (

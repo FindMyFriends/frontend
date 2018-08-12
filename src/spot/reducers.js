@@ -70,14 +70,14 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
   }
 };
 
-export const spotsByDemand = (state: Object, demand: string): Object => (
+export const getSpotsByDemand = (state: Object, demand: string): Object => (
   // $FlowFixMe
   Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand)
 );
 
-export const isSpotsFetching = (state: Object) => state.spot.all.fetching;
+export const spotsFetching = (state: Object) => state.spot.all.fetching;
 
-export const isPlacesFetching = (state: Object, spots: Array<string>): boolean => {
+export const placesFetching = (state: Object, spots: Array<string>): boolean => {
   if (isEmpty(state.spot.places)) {
     return true;
   }
@@ -95,3 +95,5 @@ export const fetchedDemandSpots = (demand: string, state: Object): boolean => (
   // $FlowFixMe
   Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand).length > 0
 );
+
+export const getPlaces = (state: Object): Object => state.spot.places;

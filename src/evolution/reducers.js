@@ -89,8 +89,10 @@ export const getById = (id: string, state: Object): Object => (
   state.evolution.single[id] ? state.evolution.single[id].payload : {}
 );
 
-export const isSingleFetching = (id: string, state: Object): boolean => (
+export const singleFetching = (id: string, state: Object): boolean => (
   state.evolution.single[id] ? state.evolution.single[id].fetching : true
 );
 
-export const isAllFetching = (state: Object): boolean => state.evolution.all.fetching;
+export const allFetching = (state: Object): boolean => state.evolution.all.fetching;
+
+export const getTotal = (state: Object): number => state.evolution.total;

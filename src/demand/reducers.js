@@ -88,10 +88,10 @@ export const getById = (id: string, state: Object): Object => (
   state.demand.single[id] ? state.demand.single[id].payload : {}
 );
 
-export const isFetching = (id: string, state: Object): boolean => (
+export const singleFetching = (id: string, state: Object): boolean => (
   state.demand.single[id] ? state.demand.single[id].fetching : true
 );
 
-export const isAllFetching = (state: Object): boolean => state.demand.all.fetching;
+export const allFetching = (state: Object): boolean => state.demand.all.fetching;
 
 export const getTotal = (state: Object): number => state.demand.total;

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { all, markAs } from '../../../soulmate/endpoints';
-import { getAllByDemand, getTotal, isFetching } from '../../../soulmate/reducers';
+import { getAllByDemand, getTotal, singleFetching as soulmateFetching } from '../../../soulmate/reducers';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
 import type { PaginationType } from '../../../dataset/PaginationType';
@@ -94,7 +94,7 @@ class Soulmates extends React.Component<Props, State> {
 const mapStateToProps = (state, { match: { params: { id } } }) => ({
   soulmates: getAllByDemand(id, state),
   total: getTotal(id, state),
-  fetching: isFetching(id, state),
+  fetching: soulmateFetching(id, state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (

@@ -15,7 +15,7 @@ import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
-import { getTotal, isAllFetching } from '../../demand/reducers';
+import { getTotal, allFetching } from '../../demand/reducers';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -130,7 +130,7 @@ const mapStateToProps = state => ({
   demands: state.demand.all.payload,
   total: getTotal(state),
   pagination: state.demand.pagination,
-  fetching: isAllFetching(state),
+  fetching: allFetching(state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (

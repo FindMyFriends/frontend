@@ -10,7 +10,7 @@ import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getTotal } from '../../../soulmate/reducers';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
+import { getPlaces, placesFetching, spotsFetching, getSpotsByDemand } from '../../../spot/reducers';
 
 type Props = {|
   +spots: Array<Object>,
@@ -68,13 +68,13 @@ class Spots extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state, { match: { params: { id } } }) => {
-  const spots = spotsByDemand(state, id);
+  const spots = getSpotsByDemand(state, id);
   return {
     spots,
-    places: state.spot.places,
+    places: getPlaces(state),
     soulmateTotal: getTotal(id, state),
-    fetching: isSpotsFetching(state)
-      || isPlacesFetching(state, spots.map(spot => spot.id)),
+    fetching: spotsFetching(state)
+      || placesFetching(state, spots.map(spot => spot.id)),
   };
 };
 const mapDispatchToProps = dispatch => ({
