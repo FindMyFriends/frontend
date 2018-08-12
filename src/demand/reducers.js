@@ -2,7 +2,8 @@
 import { isEmpty } from 'lodash';
 import { getPrettyDescription } from '../description/selects';
 import {
-  REQUESTED_DEMAND,
+  REQUESTED_SINGLE_DEMAND,
+  REQUESTED_ALL_DEMANDS,
   RECEIVED_ALL_DEMANDS,
   RECEIVED_SINGLE_DEMAND,
 } from './actions';
@@ -15,11 +16,7 @@ type stateType = {|
   +total: number,
 |};
 const initState = {
-  single: {
-    payload: {},
-    fetching: true,
-    etag: null,
-  },
+  single: {},
   all: {
     payload: [],
     fetching: true,
@@ -33,9 +30,11 @@ export const demand = (state: stateType = initState, action: Object): stateType 
       return {
         ...state,
         single: {
-          payload: action.demand,
-          fetching: action.fetching,
-          etag: action.etag,
+          [action.id]: {
+            payload: action.demand,
+            fetching: action.fetching,
+            etag: action.etag,
+          },
         },
       };
     case RECEIVED_ALL_DEMANDS:
@@ -48,13 +47,20 @@ export const demand = (state: stateType = initState, action: Object): stateType 
         pagination: action.pagination,
         total: action.total,
       };
-    case REQUESTED_DEMAND:
+    case REQUESTED_SINGLE_DEMAND:
       return {
         ...state,
         single: {
           ...state.single,
-          fetching: action.fetching,
+          [action.id]: {
+            payload: {},
+            fetching: action.fetching,
+          },
         },
+      };
+    case REQUESTED_ALL_DEMANDS:
+      return {
+        ...state,
         all: {
           ...state.all,
           fetching: action.fetching,
@@ -73,3 +79,15 @@ export const getPrettyDemand = (demand: ?Object, options: ?Object): Object => {
 };
 
 export const fetchedAll = (state: Object) => !isEmpty(state.demand.all.payload);
+
+export const fetchedSingle = (id: string, state: Object) => (
+  state.demand.single[id] ? !isEmpty(state.demand.single[id].payload) : false
+);
+
+export const getById = (id: string, state: Object) => (
+  state.demand.single[id] ? state.demand.single[id].payload : {}
+);
+
+export const isFetching = (id: string, state: Object) => (
+  state.demand.single[id] ? state.demand.single[id].fetching : true
+);

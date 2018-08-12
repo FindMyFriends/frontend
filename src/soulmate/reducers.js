@@ -3,57 +3,95 @@ import { isEmpty } from 'lodash';
 import {
   RECEIVED_ALL_SOULMATES_BY_DEMAND,
   REQUESTED_ALL_SOULMATES_BY_DEMAND,
-  REQUESTED_SOULMATE_INFO,
-  RECEIVED_SOULMATE_INFO,
+  REQUESTED_SOULMATE_INFO_BY_DEMAND,
+  RECEIVED_SOULMATE_INFO_BY_DEMAND,
 } from './actions';
 
 type stateType = {|
-  +all: ?Array<Object>,
-  +info: ?Object,
-  +total: ?number,
-  +fetching: boolean,
+  +all: Object,
+  +info: Object,
 |};
 const initState = {
-  all: null,
-  info: null,
-  total: null,
-  fetching: true,
+  all: {},
+  info: {},
 };
 export const soulmate = (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
-    case RECEIVED_ALL_SOULMATES_BY_DEMAND:
-      return {
-        ...state,
-        all: action.soulmates,
-        total: action.total,
-        fetching: action.fetching,
-      };
     case REQUESTED_ALL_SOULMATES_BY_DEMAND:
-    case REQUESTED_SOULMATE_INFO:
       return {
         ...state,
-        fetching: action.fetching,
+        all: {
+          ...state.all,
+          [action.demand]: {
+            fetching: action.fetching,
+          },
+        },
       };
-    case RECEIVED_SOULMATE_INFO:
+    case REQUESTED_SOULMATE_INFO_BY_DEMAND:
       return {
         ...state,
         info: {
-          total: action.total,
+          ...state.info,
+          [action.demand]: {
+            fetching: action.fetching,
+          },
         },
-        fetching: action.fetching,
+      };
+    case RECEIVED_ALL_SOULMATES_BY_DEMAND:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [action.demand]: {
+            payload: action.soulmates,
+            fetching: action.fetching,
+          },
+        },
+      };
+    case RECEIVED_SOULMATE_INFO_BY_DEMAND:
+      return {
+        ...state,
+        info: {
+          ...state.info,
+          [action.demand]: {
+            payload: {
+              total: action.total,
+            },
+          },
+          fetching: action.fetching,
+        },
       };
     default:
       return state;
   }
 };
 
-export const getSoulmateTotal = (state: Object): number => {
-  if (state.soulmate.info === null) {
-    return 0;
+export const getSoulmateTotal = (
+  demand: string,
+  state: Object,
+): number => {
+  if (state.soulmate.info && state.soulmate.info[demand] && state.soulmate.info[demand].payload) {
+    return state.soulmate.info[demand].payload.total;
   }
-  return state.soulmate.info.total;
+  return 0;
 };
 
-export const fetchedAll = (state: Object) => !isEmpty(state.soulmate.all);
+export const isFetching = (
+  demand: string,
+  state: Object,
+) => (
+  (state.soulmate.all[demand] ? state.soulmate.all[demand].fetching : false)
+    || (state.soulmate.info[demand] ? state.soulmate.info[demand].fetching : false)
+);
 
-export const fetchedDemandInfo = (demand: string, state: Object) => ;
+export const fetchedDemandInfo = (demand: string, state: Object) => (
+  state.soulmate.info
+    && state.soulmate.info[demand]
+    && state.soulmate.info[demand].payload
+);
+
+export const fetchedDemandSoulmates = (demand: string, state: Object) => (
+  state.soulmate.all
+  && state.soulmate.all[demand]
+  && state.soulmate.all[demand].payload
+);

@@ -15,12 +15,12 @@ import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/
 type Props = {|
   +spotsByDemand: (string) => Array<Object>,
   +spotPlaces: (Array<Object>) => (void),
-  +fetching: boolean,
+  +fetching: (Array<string>) => boolean,
   +spotHistory: (string, SortType, () => (void)) => (void),
   +soulmateInfo: (string) => (void),
   +places: Array<Object>,
   +match: Object,
-  +soulmateTotal: number,
+  +getSoulmateTotal: (string) => number,
 |};
 type State = {|
   sort: SortType,
@@ -52,16 +52,17 @@ class Spots extends React.Component<Props, State> {
       spotsByDemand,
       fetching,
       match: { params: { id } },
-      soulmateTotal,
+      getSoulmateTotal,
       places,
     } = this.props;
-    if (fetching) {
+    const spots = spotsByDemand(id);
+    if (fetching(Object.values(spots).map(spot => spot.id))) {
       return <Loader />;
     }
     return (
       <React.Fragment>
-        <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={soulmateTotal} />
-        <Overview spots={spotsByDemand(id)} places={places} />
+        <Tabs type={SPOTS_TYPE} id={id} soulmateTotal={getSoulmateTotal(id)} />
+        <Overview spots={spots} places={places} />
       </React.Fragment>
     );
   }
@@ -70,8 +71,10 @@ class Spots extends React.Component<Props, State> {
 const mapStateToProps = state => ({
   spotsByDemand: (demand: string) => spotsByDemand(state.spot, demand),
   places: state.spot.places,
-  soulmateTotal: getSoulmateTotal(state),
-  fetching: isSpotsFetching(state.spot) || isPlacesFetching(state.spot),
+  getSoulmateTotal: (demand: string) => getSoulmateTotal(demand, state),
+  fetching: (spots: Array<string>) => (
+    isSpotsFetching(state.spot) || isPlacesFetching(state.spot, spots)
+  ),
 });
 const mapDispatchToProps = dispatch => ({
   soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),

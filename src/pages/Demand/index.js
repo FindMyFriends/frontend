@@ -5,10 +5,10 @@ import { single, options } from '../../demand/endpoints';
 import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
-import { getPrettyDemand } from '../../demand/reducers';
-import { getSoulmateTotal } from '../../soulmate/reducers';
+import { getById, getPrettyDemand, isFetching as isDemandFetching } from '../../demand/reducers';
+import { getSoulmateTotal, isFetching as isSoulmateFetching } from '../../soulmate/reducers';
 import { DEMAND } from '../../demand/actions';
-import { getScopeOptions, isFetching } from '../../schema/reducers';
+import { getScopeOptions, isFetching as isSchemaFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 import { history as spotHistory } from '../../demand/spot/endpoints';
 import { isSpotsFetching, spotsByDemand } from '../../spot/reducers';
@@ -53,21 +53,19 @@ class Demand extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    spots: spotsByDemand(state.spot, state.demand.single.payload.id),
-    demand: getPrettyDemand(state.demand.single.payload, getScopeOptions(state, DEMAND)),
-    soulmateTotal: getSoulmateTotal(state),
-    fetching: state.demand.single.fetching
-      || isFetching(state, DEMAND)
-      || state.soulmate.fetching
-      || isSpotsFetching(state.spot),
-  };
-};
+const mapStateToProps = (state, { match: { params: { id } } }) => ({
+  spots: spotsByDemand(state.spot, id),
+  demand: getPrettyDemand(getById(id, state), getScopeOptions(state, DEMAND)),
+  soulmateTotal: getSoulmateTotal(id, state),
+  fetching: isDemandFetching(id, state)
+    || isSchemaFetching(state, DEMAND)
+    || isSoulmateFetching(id, state)
+    || isSpotsFetching(state.spot),
+});
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
-  single: (id: string) => dispatch(single(id)),
-  spotHistory: (id: string) => dispatch(spotHistory(id)),
-  soulmateInfo: (id: string) => dispatch(soulmateInfo(id)),
+  single: (demand: string) => dispatch(single(demand)),
+  spotHistory: (demand: string) => dispatch(spotHistory(demand)),
+  soulmateInfo: (demand: string) => dispatch(soulmateInfo(demand)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Demand);

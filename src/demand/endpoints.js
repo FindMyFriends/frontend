@@ -4,6 +4,7 @@ import httpBuildQuery from 'http-build-query';
 import { omit } from 'lodash';
 import {
   requestedDemand,
+  requestedAllDemands,
   receivedAll,
   receivedSingle,
   DEMAND,
@@ -13,7 +14,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import extractedLocationId from '../api/extractedLocationId';
-import { fetchedAll } from './reducers';
+import { fetchedAll, fetchedSingle } from './reducers';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/demands', DEMAND));
@@ -28,7 +29,7 @@ export const all = (
   pagination: PaginationType,
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedAll(getState())) return;
-  dispatch(requestedDemand());
+  dispatch(requestedAllDemands());
   const query = httpBuildQuery({
     page: pagination.page,
     per_page: pagination.perPage,
@@ -43,8 +44,9 @@ export const single = (
   id: string,
   fields: Array<string> = [],
   next: (Object) => (void) = () => {},
-) => (dispatch: (mixed) => Object) => {
-  dispatch(requestedDemand());
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  if (fetchedSingle(id, getState())) return;
+  dispatch(requestedDemand(id));
   const query = httpBuildQuery({
     fields: fields.join(','),
   });
