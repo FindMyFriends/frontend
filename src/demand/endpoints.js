@@ -45,7 +45,10 @@ export const single = (
   fields: Array<string> = [],
   next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
-  if (fetchedSingle(id, getState())) return;
+  if (fetchedSingle(id, getState())) {
+    next(); // TODO: not transparent
+    return;
+  }
   dispatch(requestedSingle(id));
   const query = httpBuildQuery({
     fields: fields.join(','),

@@ -96,6 +96,10 @@ export const getById = (id: string, state: Object): Object => (
   state.demand.single[id] ? state.demand.single[id].payload : {}
 );
 
+export const getETag = (id: string, state: Object): string => (
+  state.demand.single[id] ? state.demand.single[id].etag : null
+);
+
 export const singleFetching = (id: string, state: Object): boolean => (
   state.demand.single[id] ? state.demand.single[id].fetching : true
 );

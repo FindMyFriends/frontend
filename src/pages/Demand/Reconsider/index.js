@@ -27,7 +27,7 @@ import {
 import steps from '../../../demand/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
 import { spotsFetching, getSpotsByDemand } from '../../../spot/reducers';
-import { singleFetching as demandFetching } from '../../../demand/reducers';
+import { getById as getDemandById, getETag as getDemandETag, singleFetching as demandFetching } from '../../../demand/reducers';
 
 type Props = {|
   +reconsider: (string, Object, string, (string) => (void)) => (void),
@@ -111,10 +111,10 @@ class Extend extends React.Component<Props, State> {
 
 const mapStateToProps = (state, { match: { params: { id } } }) => {
   return {
-    spots: getSpotsByDemand(state, state.demand.single.payload.id),
-    demand: state.demand.single.payload,
+    spots: getSpotsByDemand(state, id),
+    demand: getDemandById(id, state),
     etags: {
-      demand: state.demand.single.etag,
+      demand: getDemandETag(id, state),
     },
     selects: {
       sex: getSex(getScopeOptions(state, DEMAND)),

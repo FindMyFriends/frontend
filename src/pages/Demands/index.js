@@ -81,7 +81,10 @@ class All extends React.Component<Props, State> {
     this.props.saveNote(
       id,
       note,
-      () => Promise.resolve().then(next).then(this.reload),
+      () => Promise.resolve()
+        .then(next)
+        .then(this.props.invalidateAllDemands)
+        .then(this.reload),
     );
   };
 

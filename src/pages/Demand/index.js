@@ -12,7 +12,6 @@ import { getScopeOptions, isFetching as schemaFetching } from '../../schema/redu
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 
 type Props = {|
-  +options: () => (void),
   +demand: Object,
   +fetching: boolean,
   +single: (string) => (void),
@@ -23,7 +22,6 @@ type Props = {|
 class Demand extends React.Component<Props, any> {
   componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    this.props.options();
     this.props.single(id);
     this.props.soulmateInfo(id);
   }
@@ -55,8 +53,7 @@ const mapStateToProps = (state, { match: { params: { id } } }) => ({
     || soulmateFetching(id, state),
 });
 const mapDispatchToProps = dispatch => ({
-  options: () => dispatch(options()),
-  single: (demand: string) => dispatch(single(demand)),
+  single: (demand: string) => dispatch(single(demand, [], dispatch(options()))),
   soulmateInfo: (demand: string) => dispatch(soulmateInfo(demand)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Demand);
