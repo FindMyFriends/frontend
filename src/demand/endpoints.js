@@ -1,6 +1,5 @@
 // @flow
 import axios from 'axios';
-import httpBuildQuery from 'http-build-query';
 import { omit } from 'lodash';
 import {
   requestedSingle,
@@ -30,30 +29,38 @@ export const all = (
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedAll(getState())) return;
   dispatch(requestedAll());
-  const query = httpBuildQuery({
-    page: pagination.page,
-    per_page: pagination.perPage,
-    fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
-    sort: sorts.join(','),
-  });
-  axios.get(`/demands?${query}`)
+  axios.get(
+    '/demands',
+    {
+      params: {
+        page: pagination.page,
+        per_page: pagination.perPage,
+        fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
+        sort: sorts.join(','),
+      },
+    },
+  )
     .then(response => dispatch(receivedAll(response.data, response.headers)));
 };
 
 export const single = (
   id: string,
   fields: Array<string> = [],
-  next: (Object) => (void) = () => {},
+  next: () => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedSingle(id, getState())) {
     next(); // TODO: not transparent
     return;
   }
   dispatch(requestedSingle(id));
-  const query = httpBuildQuery({
-    fields: fields.join(','),
-  });
-  axios.get(`/demands/${id}?${query}`)
+  axios.get(
+    `/demands/${id}`,
+    {
+      params: {
+        fields: fields.join(','),
+      },
+    },
+  )
     .then(response => dispatch(receivedSingle(id, response.data, response.headers.etag)))
     .then(next);
 };

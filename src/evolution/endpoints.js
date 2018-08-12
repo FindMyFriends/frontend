@@ -2,7 +2,6 @@
 import axios from 'axios';
 import moment from 'moment';
 import { omit } from 'lodash';
-import httpBuildQuery from 'http-build-query';
 import { track } from './spot/endpoints';
 import { receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION } from './actions';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
@@ -38,13 +37,17 @@ export const all = (
   if (fetchedAll(getState())) return;
   dispatch(requestedAll());
   const next = (allOptions: Object) => {
-    const query = httpBuildQuery({
-      page: pagination.page,
-      per_page: pagination.perPage,
-      fields: [...Object.keys(allOptions.columns), 'id', 'evolved_at'].join(','),
-      sort: sorts.join(','),
-    });
-    axios.get(`/evolutions?${query}`)
+    axios.get(
+      '/evolutions',
+      {
+        params: {
+          page: pagination.page,
+          per_page: pagination.perPage,
+          fields: [...Object.keys(allOptions.columns), 'id', 'evolved_at'].join(','),
+          sort: sorts.join(','),
+        },
+      },
+    )
       .then(response => dispatch(receivedAll(response.data, response.headers)));
   };
   dispatch(options(next));
@@ -57,10 +60,14 @@ export const single = (
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedSingle(id, getState())) return;
   dispatch(requestedSingle(id));
-  const query = httpBuildQuery({
-    fields: fields.join(','),
-  });
-  axios.get(`/evolutions/${id}?${query}`)
+  axios.get(
+    `/evolutions/${id}`,
+    {
+      params: {
+        fields: fields.join(','),
+      },
+    },
+  )
     .then((response) => {
       dispatch(receivedSingle(id, response.data, response.headers.etag));
       return response.data;

@@ -1,6 +1,5 @@
 // @flow
 import axios from 'axios';
-import httpBuildQuery from 'http-build-query';
 import {
   receivedAllByDemand,
   requestedAllByDemand,
@@ -18,13 +17,17 @@ export const all = (
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedDemandSoulmates(demand, getState())) return;
   dispatch(requestedAllByDemand(demand));
-  const query = httpBuildQuery({
-    page: pagination.page,
-    per_page: pagination.perPage,
-    fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'related_at'].join(','),
-    sort: sorts.join(','),
-  });
-  axios.get(`/demands/${demand}/soulmates?${query}`)
+  axios.get(
+    `/demands/${demand}/soulmates`,
+    {
+      params: {
+        page: pagination.page,
+        per_page: pagination.perPage,
+        fields: ['id', 'evolution_id', 'is_correct', 'is_new', 'position', 'related_at'].join(','),
+        sort: sorts.join(','),
+      },
+    },
+  )
     .then(response => dispatch(receivedAllByDemand(demand, response.data, response.headers)));
 };
 

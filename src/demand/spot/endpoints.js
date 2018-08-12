@@ -1,6 +1,5 @@
 // @flow
 import axios from 'axios';
-import httpBuildQuery from 'http-build-query';
 import { requestedSpots, receivedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
 import { fetchedDemandSpots } from '../../spot/reducers';
@@ -27,11 +26,15 @@ export const history = (
     return;
   }
   dispatch(requestedSpots());
-  const query = httpBuildQuery({
-    sort: sorts.join(','),
-    fields: ['assigned_at', 'coordinates', 'id', 'met_at'].join(','),
-  });
-  axios.get(`/demands/${demand}/spots?${query}`)
+  axios.get(
+    `/demands/${demand}/spots`,
+    {
+      params: {
+        fields: ['assigned_at', 'coordinates', 'id', 'met_at'].join(','),
+        sort: sorts.join(','),
+      },
+    },
+  )
     .then(response => dispatch(receivedSpots(response.data)))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
