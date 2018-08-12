@@ -5,6 +5,7 @@ import {
   RECEIVED_EVOLUTION,
   REQUESTED_EVOLUTION,
   REQUESTED_EVOLUTIONS,
+  INVALIDATED_EVOLUTIONS,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import { getPrettyDescription } from '../description/selects';
@@ -61,6 +62,13 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
         },
       };
     case REQUESTED_EVOLUTIONS:
+      return {
+        ...state,
+        all: {
+          fetching: true,
+        },
+      };
+    case INVALIDATED_EVOLUTIONS:
       return {
         ...state,
         all: {

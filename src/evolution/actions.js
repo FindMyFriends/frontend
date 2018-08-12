@@ -6,6 +6,11 @@ export const RECEIVED_EVOLUTIONS = 'RECEIVED_EVOLUTIONS';
 export const RECEIVED_EVOLUTION = 'RECEIVED_EVOLUTION';
 export const REQUESTED_EVOLUTION = 'REQUESTED_EVOLUTION';
 export const REQUESTED_EVOLUTIONS = 'REQUESTED_EVOLUTIONS';
+export const INVALIDATED_EVOLUTIONS = 'INVALIDATED_EVOLUTIONS';
+
+export const invalidatedAll = () => ({
+  type: INVALIDATED_EVOLUTIONS,
+});
 
 export const requestedAll = () => ({
   type: REQUESTED_EVOLUTIONS,

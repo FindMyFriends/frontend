@@ -10,6 +10,7 @@ import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 import { allFetching as evolutionsFetching, getTotal } from '../../evolution/reducers';
+import { invalidatedAll } from '../../evolution/actions';
 
 type Props = {|
   +evolutions: Array<Object>,
@@ -18,7 +19,8 @@ type Props = {|
   +fetching: boolean,
   +columns: Object,
   +revert: (string, () => (void)) => (void),
-  +requestedConfirm: (string, () => (void)) => (void),
+  +requestedConfirm: (string, (Promise<any>) => (Promise<any>)) => (void),
+  +invalidateAllEvolutions: () => (void),
 |};
 type State = {|
   sort: SortType,
@@ -45,22 +47,35 @@ class All extends React.Component<Props, State> {
     this.props.all(sort, pagination);
   };
 
-  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
+  handleSort = (column: string) => (
+    this.setState(
+      withSort(column, this.state),
+      () => Promise.resolve()
+        .then(this.props.invalidateAllEvolutions)
+        .then(this.reload),
+    )
+  );
 
   handleChangePerPage = (perPage: number) => this.setState(
     withPerPage(perPage, this.state),
-    this.reload,
+    () => Promise.resolve()
+      .then(this.props.invalidateAllEvolutions)
+      .then(this.reload),
   );
 
   handleChangePage = (page: number) => this.setState(
     withPage(page, this.state),
-    this.reload,
+    () => Promise.resolve()
+      .then(this.props.invalidateAllEvolutions)
+      .then(this.reload),
   );
 
   handleRevert = (id: string) => {
     this.props.requestedConfirm(
       'Are you sure, you want to revert evolution change?',
-      () => this.props.revert(id, this.reload),
+      () => Promise.resolve()
+        .then(this.props.invalidateAllEvolutions)
+        .then(() => this.props.revert(id, this.reload)),
     );
   };
 
@@ -110,5 +125,6 @@ const mapDispatchToProps = dispatch => ({
     action: () => (void),
   ) => dispatch(requestedConfirm(content, action)),
   revert: (id: string, next: () => (void)) => dispatch(revert(id, next)),
+  invalidateAllEvolutions: () => dispatch(invalidatedAll()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(All);

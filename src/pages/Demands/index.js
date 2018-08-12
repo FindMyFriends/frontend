@@ -16,6 +16,7 @@ import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 import { getTotal, allFetching } from '../../demand/reducers';
+import { invalidatedAll } from '../../demand/actions';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -31,7 +32,8 @@ type Props = {|
   +fetching: boolean,
   +saveNote: (string, string, () => (mixed)) => (void),
   +retract: (string, () => (void)) => (void),
-  +requestedConfirm: (string, () => (void)) => (void),
+  +requestedConfirm: (string, (Promise<any>) => (Promise<any>)) => (void),
+  +invalidateAllDemands: () => (void),
 |};
 type State = {|
   sort: SortType,
@@ -58,16 +60,21 @@ class All extends React.Component<Props, State> {
     this.props.all(sort, pagination);
   };
 
-  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
+  handleSort = (column: string) => (
+    this.setState(
+      withSort(column, this.state),
+      () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
+    )
+  );
 
   handleChangePerPage = (perPage: number) => this.setState(
     withPerPage(perPage, this.state),
-    this.reload,
+    () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
   );
 
   handleChangePage = (page: number) => this.setState(
     withPage(page, this.state),
-    this.reload,
+    () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
   );
 
   handleNoteSave = (id: string, note: string, next: () => (any)) => {
@@ -81,7 +88,9 @@ class All extends React.Component<Props, State> {
   handleRetract = (id: string) => {
     this.props.requestedConfirm(
       'Are you sure, you want to retract demand?',
-      () => this.props.retract(id, this.reload),
+      () => Promise.resolve()
+        .then(this.props.invalidateAllDemands)
+        .then(() => this.props.retract(id, this.reload)),
     );
   };
 
@@ -139,6 +148,7 @@ const mapDispatchToProps = dispatch => ({
   ) => dispatch(all([toApiOrdering(sort)], pagination)),
   saveNote: (id: string, text: string, next: Promise<any>) => dispatch(saveNote(id, text, next)),
   retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
+  invalidateAllDemands: () => dispatch(invalidatedAll()),
   requestedConfirm: (
     content: string,
     action: () => (void),
