@@ -6,7 +6,7 @@ import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
 import { getById, getPrettyDemand, isFetching as isDemandFetching } from '../../demand/reducers';
-import { getSoulmateTotal, isFetching as isSoulmateFetching } from '../../soulmate/reducers';
+import { getTotal, isFetching as isSoulmateFetching } from '../../soulmate/reducers';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching as isSchemaFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
@@ -56,7 +56,7 @@ class Demand extends React.Component<Props, any> {
 const mapStateToProps = (state, { match: { params: { id } } }) => ({
   spots: spotsByDemand(state.spot, id),
   demand: getPrettyDemand(getById(id, state), getScopeOptions(state, DEMAND)),
-  soulmateTotal: getSoulmateTotal(id, state),
+  soulmateTotal: getTotal(id, state),
   fetching: isDemandFetching(id, state)
     || isSchemaFetching(state, DEMAND)
     || isSoulmateFetching(id, state)

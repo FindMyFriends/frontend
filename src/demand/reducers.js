@@ -62,7 +62,6 @@ export const demand = (state: stateType = initState, action: Object): stateType 
       return {
         ...state,
         all: {
-          ...state.all,
           fetching: action.fetching,
         },
       };
@@ -91,3 +90,7 @@ export const getById = (id: string, state: Object) => (
 export const isFetching = (id: string, state: Object) => (
   state.demand.single[id] ? state.demand.single[id].fetching : true
 );
+
+export const isAllFetching = (state: Object): boolean => state.demand.all.fetching;
+
+export const getTotal = (state: Object): number => state.demand.total;

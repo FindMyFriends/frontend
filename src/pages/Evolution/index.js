@@ -5,7 +5,7 @@ import { single, options, getScopeOptions } from '../../evolution/endpoints';
 import { EVOLUTION } from '../../evolution/actions';
 import Loader from '../../ui/Loader';
 import Overview from '../../evolution/output/Overview';
-import { getById, getPrettyEvolution, isFetching as isFetchingEvolution } from '../../evolution/reducers';
+import { getById, getPrettyEvolution, isSingleFetching as isFetchingEvolution } from '../../evolution/reducers';
 import { isFetching } from '../../schema/reducers';
 
 type Props = {|

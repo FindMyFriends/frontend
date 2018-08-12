@@ -1,7 +1,11 @@
 // @flow
-
 import { isEmpty } from 'lodash';
-import { RECEIVED_PLACE, REQUESTED_PLACE, RECEIVED_SPOTS, REQUESTED_SPOTS } from './actions';
+import {
+  RECEIVED_PLACE,
+  REQUESTED_PLACE,
+  RECEIVED_SPOTS,
+  REQUESTED_SPOTS,
+} from './actions';
 
 type stateType = {|
   +places: Object,
@@ -48,7 +52,6 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
       return {
         ...state,
         all: {
-          ...state.all,
           fetching: action.fetching,
         },
       };

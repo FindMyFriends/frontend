@@ -1,5 +1,5 @@
 // @flow
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash';
 import {
   RECEIVED_ALL_SOULMATES_BY_DEMAND,
   REQUESTED_ALL_SOULMATES_BY_DEMAND,
@@ -66,15 +66,14 @@ export const soulmate = (state: stateType = initState, action: Object): stateTyp
   }
 };
 
-export const getSoulmateTotal = (
+export const getTotal = (
   demand: string,
   state: Object,
-): number => {
-  if (state.soulmate.info && state.soulmate.info[demand] && state.soulmate.info[demand].payload) {
-    return state.soulmate.info[demand].payload.total;
-  }
-  return 0;
-};
+): number => (
+  state.soulmate.info && state.soulmate.info[demand] && state.soulmate.info[demand].payload
+    ? state.soulmate.info[demand].payload.total
+    : 0
+);
 
 export const isFetching = (
   demand: string,
@@ -87,11 +86,15 @@ export const isFetching = (
 export const fetchedDemandInfo = (demand: string, state: Object) => (
   state.soulmate.info
     && state.soulmate.info[demand]
-    && state.soulmate.info[demand].payload
+    && !isEmpty(state.soulmate.info[demand].payload)
 );
 
 export const fetchedDemandSoulmates = (demand: string, state: Object) => (
   state.soulmate.all
-  && state.soulmate.all[demand]
-  && state.soulmate.all[demand].payload
+    && state.soulmate.all[demand]
+    && !isEmpty(state.soulmate.all[demand].payload)
+);
+
+export const getAllByDemand = (demand: string, state: Object) => (
+  state.soulmate.all && state.soulmate.all[demand] ? state.soulmate.all[demand].payload : {}
 );

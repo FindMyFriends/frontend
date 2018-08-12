@@ -7,7 +7,7 @@ import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
 import type { SortType } from '../../../dataset/SortType';
 import { toApiOrdering } from '../../../dataset/sorts';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
-import { getSoulmateTotal } from '../../../soulmate/reducers';
+import { getTotal } from '../../../soulmate/reducers';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
 import { isPlacesFetching, isSpotsFetching, spotsByDemand } from '../../../spot/reducers';
@@ -71,7 +71,7 @@ class Spots extends React.Component<Props, State> {
 const mapStateToProps = state => ({
   spotsByDemand: (demand: string) => spotsByDemand(state.spot, demand),
   places: state.spot.places,
-  getSoulmateTotal: (demand: string) => getSoulmateTotal(demand, state),
+  getSoulmateTotal: (demand: string) => getTotal(demand, state),
   fetching: (spots: Array<string>) => (
     isSpotsFetching(state.spot) || isPlacesFetching(state.spot, spots)
   ),

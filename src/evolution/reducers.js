@@ -64,7 +64,6 @@ export const evolution = (state: stateType = initState, action: Object): stateTy
       return {
         ...state,
         all: {
-          ...state.all,
           fetching: true,
         },
       };
@@ -90,6 +89,8 @@ export const getById = (id: string, state: Object): Object => (
   state.evolution.single[id] ? state.evolution.single[id].payload : {}
 );
 
-export const isFetching = (id: string, state: Object): boolean => (
+export const isSingleFetching = (id: string, state: Object): boolean => (
   state.evolution.single[id] ? state.evolution.single[id].fetching : true
 );
+
+export const isAllFetching = (state: Object): boolean => state.evolution.all.fetching;
