@@ -10,14 +10,12 @@ import { getTotal, isFetching as isSoulmateFetching } from '../../soulmate/reduc
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching as isSchemaFetching } from '../../schema/reducers';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
-import { history as spotHistory } from '../../demand/spot/endpoints';
 
 type Props = {|
   +options: () => (void),
   +demand: Object,
   +fetching: boolean,
   +single: (string) => (void),
-  +spotHistory: (string) => (void),
   +soulmateInfo: (string) => (void),
   +match: Object,
   +soulmateTotal: number,
