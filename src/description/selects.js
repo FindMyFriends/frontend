@@ -1,6 +1,5 @@
 // @flow
-import merge from 'lodash/merge';
-import * as R from 'ramda';
+import { merge, isEmpty } from 'lodash';
 import * as enumSet from '../api/enum';
 import type { ApiEnum, ApiColor } from '../api/enum';
 
@@ -76,10 +75,11 @@ export const translatedField = (field: string): string => {
 };
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
-  if (R.isEmpty(description) || R.isEmpty(options)) {
+  if (isEmpty(description) || isEmpty(options)) {
     return { };
   }
   return merge(
+    {},
     description,
     {
       general: {
