@@ -15,7 +15,6 @@
     "material-ui-pickers": "^1.0.0-rc.10",
     "moment": "^2.22.2",
     "parse-link-header": "^1.0.1",
-    "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-rater": "^0.4.8",
