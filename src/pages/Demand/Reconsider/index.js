@@ -30,7 +30,7 @@ import { spotsFetching, getSpotsByDemand } from '../../../spot/reducers';
 import { getById as getDemandById, getETag as getDemandETag, singleFetching as demandFetching } from '../../../demand/reducers';
 
 type Props = {|
-  +reconsider: (string, Object, string, (string) => (void)) => (void),
+  +reconsider: (string, Object, string, (string) => (Promise<any>)) => (void),
   +single: (string, (Object) => (void)) => (void),
   +spotHistory: (string, (Object) => (void)) => (void),
   +schema: () => (void),
