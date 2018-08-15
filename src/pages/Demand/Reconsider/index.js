@@ -2,13 +2,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
-import merge from 'lodash/merge';
+import { merge, omit } from 'lodash';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching, getScopeOptions } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
-import {history as spotHistory, move} from '../../../demand/spot/endpoints';
+import { history as spotHistory, move } from '../../../demand/spot/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
@@ -84,9 +84,11 @@ class Extend extends React.Component<Props, State> {
   handleReconsider = () => (
     this.props.reconsider(
       this.state.demand.id,
-      normalize(this.state.demand),
+      normalize(omit(this.state.demand, ['spots'])),
       this.props.etags.demand,
-      () => this.props.history.push(`/demands/${this.state.demand.id}`),
+      () => Promise.resolve()
+        .then(() => move(this.state.demand.spots[0].id, this.state.demand.spots[0]))
+        .then(() => this.props.history.push(`/demands/${this.state.demand.id}`)),
     )
   );
 

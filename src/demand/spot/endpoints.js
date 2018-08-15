@@ -20,12 +20,10 @@ export const track = (
 export const move = (
   id: string,
   spot: Object,
-  etag: string,
 ) => {
-  axios.patch(
+  axios.put(
     `/spots/${id}`,
     omit(spot, ['demand_id', 'id', 'assigned_at']),
-    { headers: { 'If-Match': etag } },
   );
 };
 
