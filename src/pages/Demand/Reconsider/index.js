@@ -8,7 +8,7 @@ import NestedStepper from '../../../components/NestedStepper';
 import { isFetching, getScopeOptions } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
-import { history as spotHistory } from '../../../demand/spot/endpoints';
+import {history as spotHistory, move} from '../../../demand/spot/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,

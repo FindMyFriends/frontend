@@ -99,14 +99,12 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
 
 export const reconsider = (
   id: string,
-  input: Object,
+  demand: Object,
   etag: string,
   next: (string) => void,
 ) => (dispatch: (mixed) => Object) => {
-  const { spots, ...demand } = input;
   axios.put(`/demands/${id}`, omit(demand, ['id', 'created_at', 'seeker_id']), { headers: { 'If-Match': etag } })
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
-    .then(track(id, spots))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };
