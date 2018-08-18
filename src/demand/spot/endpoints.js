@@ -41,7 +41,7 @@ export const history = (
     `/demands/${demand}/spots`,
     {
       params: {
-        fields: ['assigned_at', 'coordinates', 'id', 'met_at'].join(','),
+        fields: ['assigned_at', 'coordinates', 'id', 'met_at', 'demand_id'].join(','),
         sort: sorts.join(','),
       },
     },
