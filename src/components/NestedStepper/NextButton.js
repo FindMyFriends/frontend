@@ -11,10 +11,11 @@ const Right = styled.div`
 type Props = {|
   +onClick: () => (void),
   +children: string,
+  +disabled: boolean,
 |};
-const NextButton = ({ onClick, children }: Props) => (
+const NextButton = ({ onClick, children, disabled }: Props) => (
   <Right>
-    <Button variant="raised" onClick={onClick} color="primary">
+    <Button disabled={disabled} variant="raised" onClick={onClick} color="primary">
       {children}
     </Button>
   </Right>

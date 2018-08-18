@@ -9,15 +9,21 @@ type Props = {|
   +step: number,
   +identifiers: Array<Entry>,
   +onTurn: (number) => (void),
+  +disabled: boolean,
 |};
 export default class MinorStepper extends React.PureComponent<Props> {
   render() {
-    const { identifiers, step, onTurn } = this.props;
+    const {
+      identifiers,
+      step,
+      onTurn,
+      disabled,
+    } = this.props;
     return (
       <Stepper nonLinear activeStep={step}>
         {identifiers.map(entry => (
           <Step key={entry.position}>
-            <StepButton onClick={() => onTurn(entry.position)}>
+            <StepButton disabled={disabled} onClick={() => onTurn(entry.position)}>
               {entry.title}
             </StepButton>
           </Step>

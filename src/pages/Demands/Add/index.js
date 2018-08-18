@@ -26,6 +26,7 @@ import {
 } from '../../../description/selects';
 import { getTimelineSides } from '../../../demand/selects';
 import steps from '../../../demand/input/parts/steps';
+import * as validation from '../../../description/validation';
 
 type Props = {|
   +options: () => (void),
@@ -169,6 +170,7 @@ class Add extends React.Component<Props, State> {
     }
     return (
       <NestedStepper
+        valid={validation.isValid(this.state.demand)}
         onAdd={this.handleAdd}
         steps={
           steps({
