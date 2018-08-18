@@ -11,6 +11,7 @@ import Center from '../Center';
 type Props = {|
   +steps: Object,
   +onAdd: () => (void),
+  +valid?: boolean,
 |};
 type State = {|
   step: Step,
@@ -18,7 +19,7 @@ type State = {|
 export default class NestedStepper extends React.Component<Props, State> {
   state = {
     step: {
-      major: 4,
+      major: 0,
       minor: 0,
     },
   };
@@ -53,15 +54,17 @@ export default class NestedStepper extends React.Component<Props, State> {
 
   render() {
     const { step: { major, minor } } = this.state;
-    const { steps, onAdd } = this.props;
+    const { steps, onAdd, valid = true } = this.props;
     return (
       <React.Fragment>
         <MajorStepper
+          disabled={!valid}
           step={major}
           identifiers={majorIdentifiers(steps)}
           onTurn={this.handleMajorTurn}
         />
         <MinorStepper
+          disabled={!valid}
           step={minor}
           identifiers={minorIdentifiers(steps, major)}
           onTurn={this.handleMinorTurn}
@@ -70,6 +73,7 @@ export default class NestedStepper extends React.Component<Props, State> {
           {steps[major].parts[minor].component}
         </Center>
         <ControlButtons
+          disabled={!valid}
           step={this.state.step}
           steps={steps}
           onAdd={onAdd}

@@ -12,6 +12,7 @@ type Props = {|
   +onAdd: () => (void),
   +onNext: () => (void),
   +onPrevious: () => (void),
+  +disabled: boolean,
 |};
 const ControlButtons = ({
   step,
@@ -19,17 +20,22 @@ const ControlButtons = ({
   onAdd,
   onNext,
   onPrevious,
+  disabled,
 }: Props) => {
   const nextButtons = () => {
     if (isLast(step, steps)) {
-      return <AddButton key={1} onClick={onAdd}>Add</AddButton>;
+      return <AddButton disabled={disabled} key={1} onClick={onAdd}>Add</AddButton>;
     }
-    return <NextButton key={2} onClick={onNext}>Next</NextButton>;
+    return <NextButton disabled={disabled} key={2} onClick={onNext}>Next</NextButton>;
   };
 
   const previousButtons = () => {
     if (!isFirst(step)) {
-      return <PreviousButton key={3} onClick={onPrevious}>Previous</PreviousButton>;
+      return (
+        <PreviousButton disabled={disabled} key={3} onClick={onPrevious}>
+          Previous
+        </PreviousButton>
+      );
     }
     return null;
   };

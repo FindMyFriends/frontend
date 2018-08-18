@@ -1,6 +1,7 @@
 // @flow
 import { merge, isEmpty } from 'lodash';
 import * as enumSet from '../api/enum';
+import type { Age, UnitValue } from './types';
 import type { ApiEnum, ApiColor } from '../api/enum';
 
 export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
@@ -38,16 +39,8 @@ export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
   options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
 
-type UnitValue = {|
-  +unit: ?string,
-  +value: ?number,
-|};
 const formattedUnitValue = (unitValue: UnitValue): string => `${unitValue.value || ''} ${unitValue.unit || ''}`;
 
-type Age = {|
-  +from: number,
-  +to: number,
-|};
 export const formattedAge = (age: Age): string => `${age.from} - ${age.to}`;
 
 // TODO: Rename and include key
