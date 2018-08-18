@@ -13,7 +13,7 @@ type Props = {|
   +text: string | Object,
 |};
 export const TextRow = ({ title, text }: Props) => {
-  if (text) {
+  if (typeof text === 'string' && text.trim().length > 0) {
     return (
       <Row>
         <CardTitle>{title}</CardTitle>

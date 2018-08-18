@@ -13,20 +13,24 @@ const ResizedCard = styled(Card)`
 type Props = {|
   +title: string | Object,
   +rows: Array<Object>,
+  +isEmpty?: boolean,
 |};
-const SolidCard = ({ title, rows }: Props) => {
-  return (
-    <ResizedCard>
-      <CardHeader title={title} />
-      <CardContent>
-        <table>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
-      </CardContent>
-    </ResizedCard>
-  );
+const SolidCard = ({ title, rows, isEmpty = false }: Props) => {
+  if (!isEmpty) {
+    return (
+      <ResizedCard>
+        <CardHeader title={title} />
+        <CardContent>
+          <table>
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </CardContent>
+      </ResizedCard>
+    );
+  }
+  return null;
 };
 
 export default SolidCard;

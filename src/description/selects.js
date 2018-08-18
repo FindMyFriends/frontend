@@ -48,7 +48,7 @@ type Age = {|
   +from: number,
   +to: number,
 |};
-const formattedAge = (age: Age): string => `${age.from} - ${age.to}`;
+export const formattedAge = (age: Age): string => `${age.from} - ${age.to}`;
 
 // TODO: Rename and include key
 export const guessedFormatting = (value: Object | string): Object | string => {

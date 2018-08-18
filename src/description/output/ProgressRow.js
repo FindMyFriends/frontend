@@ -17,12 +17,14 @@ type Props = {|
   +value: number,
 |};
 export const ProgressRow = ({ title, value }: Props) => (
-  <Row>
-    <CardTitle>{title}</CardTitle>
-    <ProgressTd title={value}>
-      <OutputRating current={value} max={10} />
-    </ProgressTd>
-  </Row>
+  value ? (
+    <Row>
+      <CardTitle>{title}</CardTitle>
+      <ProgressTd title={value}>
+        <OutputRating current={value} max={10} />
+      </ProgressTd>
+    </Row>
+  ) : null
 );
 
 export default ProgressRow;
