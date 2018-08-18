@@ -7,6 +7,7 @@ import {
   RECEIVED_DEMANDS,
   RECEIVED_DEMAND,
   INVALIDATED_DEMANDS,
+  INVALIDATED_DEMAND,
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
@@ -72,6 +73,16 @@ export const demand = (state: stateType = initState, action: Object): stateType 
         ...state,
         all: {
           fetching: true,
+        },
+      };
+    case INVALIDATED_DEMAND:
+      return {
+        ...state,
+        single: {
+          [action.id]: {
+            payload: {},
+            fetching: true,
+          },
         },
       };
     default:

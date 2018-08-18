@@ -6,6 +6,7 @@ import {
   requestedAll,
   receivedAll,
   receivedSingle,
+  invalidatedSingle,
   DEMAND,
 } from './actions';
 import { track } from './spot/endpoints';
@@ -105,6 +106,7 @@ export const reconsider = (
 ) => (dispatch: (mixed) => Object) => {
   axios.put(`/demands/${id}`, omit(demand, ['id', 'created_at', 'seeker_id']), { headers: { 'If-Match': etag } })
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
+    .then(() => dispatch(invalidatedSingle(id)))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };

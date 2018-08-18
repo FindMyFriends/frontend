@@ -7,9 +7,15 @@ export const RECEIVED_DEMANDS = 'RECEIVED_DEMANDS';
 export const RECEIVED_DEMAND = 'RECEIVED_DEMAND';
 export const REQUESTED_DEMAND = 'REQUESTED_DEMAND';
 export const INVALIDATED_DEMANDS = 'INVALIDATED_DEMANDS';
+export const INVALIDATED_DEMAND = 'INVALIDATED_DEMAND';
 
 export const invalidatedAll = () => ({
   type: INVALIDATED_DEMANDS,
+});
+
+export const invalidatedSingle = (id: string) => ({
+  type: INVALIDATED_DEMAND,
+  id,
 });
 
 export const requestedSingle = (id: string) => ({
