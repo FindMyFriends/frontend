@@ -19,13 +19,13 @@ export const receivedOptions = (options: Object, scope: string) => ({
 });
 
 export const requestedSchema = (scope: string) => ({
-  type: RECEIVED_SCHEMA,
+  type: REQUESTED_SCHEMA,
   fetching: true,
   scope,
 });
 
 export const requestedOptions = (scope: string) => ({
-  type: RECEIVED_SCHEMA_OPTIONS,
+  type: REQUESTED_SCHEMA_OPTIONS,
   fetching: true,
   scope,
 });

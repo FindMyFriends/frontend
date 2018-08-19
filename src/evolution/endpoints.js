@@ -22,7 +22,7 @@ export const getScopeColumns = (state: Object): ?Object => (
     : null
 );
 
-export const options = (next: (Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
+export const options = (next: (?Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/evolutions', EVOLUTION, next));
 };
 
@@ -35,16 +35,19 @@ export const all = (
   pagination: PaginationType,
   next: () => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
-  if (fetchedAll(getState())) return;
+  if (fetchedAll(getState())) {
+    next();
+    return;
+  }
   dispatch(requestedAll());
-  dispatch(options((allOptions: Object) => (
+  dispatch(options((allOptions: ?Object) => (
     axios.get(
       '/evolutions',
       {
         params: {
           page: pagination.page,
           per_page: pagination.perPage,
-          fields: [...Object.keys(allOptions.columns), 'id', 'evolved_at'].join(','),
+          fields: [...Object.keys(allOptions ? allOptions.columns : {}), 'id', 'evolved_at'].join(','),
           sort: sorts.join(','),
         },
       },
