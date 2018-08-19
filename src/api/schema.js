@@ -32,7 +32,8 @@ export const loadSchema = (uri: string) => {
   return Promise.resolve(schema(uri));
 };
 
-export const loadOptions = (uri: string) => {
-  return axios.options(uri)
-    .then(response => response.data);
+export const loadOptions = (uri: string, next: (Object) => (void)) => {
+  axios.options(uri)
+    .then(response => response.data)
+    .then(next);
 };
