@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
-import merge from 'lodash/merge';
+import { merge, cloneDeep } from 'lodash';
 import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
@@ -157,6 +157,29 @@ class Add extends React.Component<Props, State> {
     })
   );
 
+  handleAppendedSpot = () => (
+    this.setState({
+      ...this.state,
+      demand: {
+        ...this.state.demand,
+        spots: [
+          ...this.state.demand.spots,
+          cloneDeep([...this.state.demand.spots].pop()),
+        ],
+      },
+    })
+  );
+
+  handleDetachedSpot = (position: number) => (
+    this.setState({
+      ...this.state,
+      demand: {
+        ...this.state.demand,
+        spots: this.state.demand.spots.splice(position, 1),
+      },
+    })
+  );
+
   handleAdd = () => {
     this.props.add(
       normalize(this.state.demand),
@@ -175,6 +198,8 @@ class Add extends React.Component<Props, State> {
         steps={
           steps({
             ...this.props,
+            onSpotAppend: this.handleAppendedSpot,
+            onSpotDetach: (position: number) => this.handleDetachedSpot(position),
             onChange: this.handleChange,
             values: flatten(this.state.demand),
           })

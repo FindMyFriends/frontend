@@ -13,22 +13,24 @@ import Approximation from './Approximation';
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
+  +position: number,
   +selects: Object,
   +classes: Object,
 |};
 const Spot = ({
+  position,
   onChange,
   values,
   selects,
   classes,
 }: Props) => {
   const handleTimelineChange = (event) => {
-    if (values['spots.0.met_at.timeline_side'] === 'exactly') {
-      onChange('spots.0.met_at.approximation')({ target: { value: '' } });
+    if (values[`spots.${position}.met_at.timeline_side`] === 'exactly') {
+      onChange(`spots.${position}.met_at.approximation`)({ target: { value: '' } });
     } else {
-      onChange('spots.0.met_at.approximation')({ target: { value: 'PT1H' } });
+      onChange(`spots.${position}.met_at.approximation`)({ target: { value: 'PT1H' } });
     }
-    onChange('spots.0.met_at.timeline_side')(event);
+    onChange(`spots.${position}.met_at.timeline_side`)(event);
   };
 
   return (
@@ -36,21 +38,22 @@ const Spot = ({
       <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
         <DateTimePicker
           className={classes.formControl}
-          value={values['spots.0.met_at.moment']}
+          value={values[`spots.${position}.met_at.moment`]}
           onChange={
-            datetime => onChange('spots.0.met_at.moment')({ target: { value: datetime.format() } })
+            datetime => onChange(`spots.${position}.met_at.moment`)({ target: { value: datetime.format() } })
           }
         />
       </MuiPickersUtilsProvider>
       <FormControl className={classes.formControl}>
         <InputLabel>Timeline side</InputLabel>
-        <Select value={values['spots.0.met_at.timeline_side'] || ''} onChange={handleTimelineChange}>
+        <Select value={values[`spots.${position}.met_at.timeline_side`] || ''} onChange={handleTimelineChange}>
           {selects.timelineSides.map(timelineSide => (
             <MenuItem key={timelineSide} value={timelineSide}>{timelineSide}</MenuItem>
           ))}
         </Select>
       </FormControl>
       <Approximation
+        position={position}
         selects={selects}
         values={values}
         classes={classes}
