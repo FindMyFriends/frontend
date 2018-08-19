@@ -33,10 +33,11 @@ export const schema = () => (dispatch: (mixed) => Object) => {
 export const all = (
   sorts: Array<string>,
   pagination: PaginationType,
+  next: () => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   if (fetchedAll(getState())) return;
   dispatch(requestedAll());
-  const next = (allOptions: Object) => {
+  dispatch(options((allOptions: Object) => (
     axios.get(
       '/evolutions',
       {
@@ -48,9 +49,9 @@ export const all = (
         },
       },
     )
-      .then(response => dispatch(receivedAll(response.data, response.headers)));
-  };
-  dispatch(options(next));
+      .then(response => dispatch(receivedAll(response.data, response.headers)))
+      .then(next)
+  )));
 };
 
 export const single = (

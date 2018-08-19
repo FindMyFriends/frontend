@@ -104,3 +104,6 @@ export const singleFetching = (id: string, state: Object): boolean => (
 export const allFetching = (state: Object): boolean => state.evolution.all.fetching;
 
 export const getTotal = (state: Object): number => state.evolution.total;
+
+export const mostPriorColumnIdentifiers = (columns: Object): Array<string> =>
+  Object.keys(columns).slice(0, 3);
