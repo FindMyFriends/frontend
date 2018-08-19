@@ -9,15 +9,20 @@ import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
-import { allFetching as evolutionsFetching, getTotal } from '../../evolution/reducers';
+import {
+  allFetching as evolutionsFetching,
+  getTotal,
+  mostPriorColumnIdentifiers,
+} from '../../evolution/reducers';
 import { invalidatedAll } from '../../evolution/actions';
+import { translatedFields } from '../../description/selects';
 
 type Props = {|
+  +columns: Object,
   +evolutions: Array<Object>,
-  +all: (SortType, PaginationType) => (void),
+  +all: (SortType, PaginationType, () => (void)) => (void),
   +total: number,
   +fetching: boolean,
-  +columns: Object,
   +revert: (string, () => (void)) => (void),
   +requestedConfirm: (string, (Promise<any>) => (Promise<any>)) => (void),
   +invalidateAllEvolutions: () => (void),
@@ -25,6 +30,7 @@ type Props = {|
 type State = {|
   sort: SortType,
   pagination: PaginationType,
+  columns: Array<string>,
 |};
 class All extends React.Component<Props, State> {
   state = {
@@ -32,19 +38,21 @@ class All extends React.Component<Props, State> {
       order: 'desc',
       orderBy: 'evolved_at',
     },
+    columns: [],
     pagination: {
       page: 1,
       perPage: 5,
     },
   };
 
-  componentDidMount() {
-    this.reload();
-  }
+  componentDidMount = () => (
+    this.reload(() =>
+      this.setState({ ...this.state, columns: mostPriorColumnIdentifiers(this.props.columns) }))
+  );
 
-  reload = () => {
+  reload = (next: () => (void) = () => {}) => {
     const { sort, pagination } = this.state;
-    this.props.all(sort, pagination);
+    this.props.all(sort, pagination, next);
   };
 
   handleSort = (column: string) => (
@@ -79,13 +87,17 @@ class All extends React.Component<Props, State> {
     );
   };
 
+  handleSortSelectionChange = event => this.setState({
+    ...this.state,
+    columns: event.target.value,
+  });
+
   render() {
     const { sort, pagination } = this.state;
     const {
       evolutions,
       total,
       fetching,
-      columns,
     } = this.props;
     if (fetching) {
       return <Loader />;
@@ -93,7 +105,8 @@ class All extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Table
-          columns={columns}
+          columns={this.state.columns}
+          possibleColumns={translatedFields(this.props.columns)}
           rows={evolutions}
           sort={sort}
           pagination={pagination}
@@ -102,6 +115,7 @@ class All extends React.Component<Props, State> {
           onPageChange={page => this.handleChangePage(page)}
           onPerPageChange={perPage => this.handleChangePerPage(perPage)}
           onRevert={this.handleRevert}
+          onSortSelectionChange={this.handleSortSelectionChange}
         />
       </React.Fragment>
     );
@@ -119,7 +133,8 @@ const mapDispatchToProps = dispatch => ({
   all: (
     sort: SortType,
     pagination: PaginationType,
-  ) => dispatch(all([toApiOrdering(sort)], pagination)),
+    next: () => (void) = () => {},
+  ) => dispatch(all([toApiOrdering(sort)], pagination, next)),
   requestedConfirm: (
     content: string,
     action: () => (void),

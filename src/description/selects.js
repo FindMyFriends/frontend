@@ -1,5 +1,5 @@
 // @flow
-import { merge, isEmpty } from 'lodash';
+import { merge, isEmpty, mapValues } from 'lodash';
 import * as enumSet from '../api/enum';
 import type { Age, UnitValue } from './types';
 import type { ApiEnum, ApiColor } from '../api/enum';
@@ -55,17 +55,16 @@ export const guessedFormatting = (value: Object | string): Object | string => {
   return value;
 };
 
-export const translatedField = (field: string): string => {
-  const possibilities = {
-    'general.firstname': 'Firstname',
-    'general.lastname': 'Lastname',
-    'general.sex': 'Sex',
-  };
-  if (field in possibilities) {
-    return possibilities[field];
-  }
-  return field;
+const columnWithIdentifiers = {
+  'general.firstname': 'Firstname',
+  'general.lastname': 'Lastname',
+  'general.sex': 'Sex',
 };
+
+export const translatedField = (field: string): string => columnWithIdentifiers[field];
+
+export const translatedFields = (columns: Object): Object =>
+  mapValues(columns, (count, identifier) => translatedField(identifier));
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (isEmpty(description) || isEmpty(options)) {

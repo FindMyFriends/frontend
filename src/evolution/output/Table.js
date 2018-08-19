@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { mapValues, values } from 'lodash';
+import { isEmpty } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,19 +21,21 @@ import SortTableHead from '../../dataset/SortTableHead';
 import { guessedFormatting, translatedField } from '../../description/selects';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
+import SortColumnSelect from './SortColumnSelect';
 
-const columnIdentificators = (columns: Object): Array<string> => (
-  values(mapValues(columns, (count, id) => id))
-);
+const MostRight = styled.span`
+  float: right;
+  padding-right: 10px;
+`;
 
-const columnsToHeaders = (columns: Object): Array<Object> => {
+const columnsToHeaders = (columns: Array<string>): Array<Object> => {
   const header = id => ({
     id,
     sortable: true,
     label: translatedField(id),
   });
   return [
-    ...columnIdentificators(columns).map(header),
+    ...columns.map(header),
     { id: 'evolved_at', sortable: true, label: 'Evolved at' },
     { id: 'action', sortable: false, label: '' },
   ];
@@ -51,7 +54,8 @@ const styles = () => ({
   },
 });
 type TableProps = {|
-  +columns: Object,
+  +columns: Array<string>,
+  +possibleColumns: Object,
   +rows: Array<Object>,
   +sort: SortType,
   +pagination: PaginationType,
@@ -59,6 +63,7 @@ type TableProps = {|
   +onPageChange: number => (void),
   +onPerPageChange: number => (void),
   +onRevert: string => (void),
+  +onSortSelectionChange: () => (void),
   +total: number,
   +classes: Object,
 |};
@@ -73,10 +78,21 @@ const Table = ({
   total,
   classes,
   columns,
+  onSortSelectionChange,
+  possibleColumns,
 }: TableProps) => {
   return (
     <Paper>
       <EnhancedTableToolbar />
+      {isEmpty(possibleColumns) ? null : (
+        <MostRight>
+          <SortColumnSelect
+            possibleColumns={possibleColumns}
+            onChange={onSortSelectionChange}
+            columns={columns}
+          />
+        </MostRight>
+      )}
       <MaterialTable style={{ overflowX: 'auto' }} aria-labelledby="tableTitle">
         <SortTableHead
           order={order}
@@ -87,7 +103,7 @@ const Table = ({
         <TableBody>
           {rows.map(evolution => (
             <TableRow hover key={evolution.id}>
-              {columnIdentificators(columns).map(id => (
+              {columns.map(id => (
                 <TableCell key={id}>{guessedFormatting(id.split('.').reduce((object, key) => object[key], evolution))}</TableCell>
               ))}
               <TableCell>{moment(evolution.evolved_at).format('YYYY-MM-DD')}</TableCell>
