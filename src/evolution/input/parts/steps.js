@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { default as descriptionSteps, MAIN_GENERAL } from '../../../description/input/parts/steps';
-import MetAt from '../../../spot/input/parts/MetAt';
+import Spot from '../../../spot/input/parts/Spot';
 import General from '../../../description/input/parts/General';
 
 // TODO: Move - common with demands
@@ -29,7 +29,7 @@ const steps = (props: Object): Object => {
       title: 'Spot',
       parts: [
         {
-          component: <MetAt {...props} />,
+          component: <Spot {...props} />,
           title: 'Met at',
         },
       ],

@@ -16,7 +16,7 @@ type Props = {|
   +selects: Object,
   +classes: Object,
 |};
-const MetAt = ({
+const Spot = ({
   onChange,
   values,
   selects,
@@ -60,4 +60,4 @@ const MetAt = ({
   );
 };
 
-export default withFormStyles()(MetAt);
+export default withFormStyles()(Spot);
