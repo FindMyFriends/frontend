@@ -9,6 +9,7 @@ import { default as SingleDemand } from '../pages/Demand';
 import { default as ReconsiderDemand } from '../pages/Demand/Reconsider';
 import { default as SoulmatesByDemand } from '../pages/Demand/Soulmates';
 import { default as DemandSpots } from '../pages/Demand/Spots';
+import { default as EvolutionSpots } from '../pages/Evolution/Spots';
 import { default as SignIn } from '../pages/Sign/In';
 import { default as SignOut } from '../pages/Sign/Out';
 import { default as AllEvolutions } from '../pages/Evolutions';
@@ -30,6 +31,7 @@ const Routes = (): BrowserRouter => (
       <Layout path="/sign/in" component={SignIn} />
       <Layout path="/sign/out" component={SignOut} />
       <Layout onEnter={loggedIn} path="/evolutions/:id/extend" component={ExtendEvolution} />
+      <Layout onEnter={loggedIn} path="/evolutions/:id/spots" component={EvolutionSpots} />
       <Layout onEnter={loggedIn} path="/evolutions/:id" component={SingleEvolution} />
       <Layout onEnter={loggedIn} path="/evolutions" component={AllEvolutions} />
       <Layout path="*" component={Error404} />

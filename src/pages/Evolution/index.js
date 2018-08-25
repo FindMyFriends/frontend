@@ -7,6 +7,7 @@ import Loader from '../../ui/Loader';
 import Overview from '../../evolution/output/Overview';
 import { getById, getPrettyEvolution, singleFetching as fetchingEvolution } from '../../evolution/reducers';
 import { isFetching } from '../../schema/reducers';
+import { default as Tabs, EVOLUTION_TYPE } from './menu/Tabs';
 
 type Props = {|
   +evolution: Object,
@@ -23,11 +24,16 @@ class Evolution extends React.Component<Props, any> {
   }
 
   render() {
-    const { evolution, fetching } = this.props;
+    const { evolution, fetching, match: { params: { id } } } = this.props;
     if (fetching) {
       return <Loader />;
     }
-    return <Overview evolution={evolution} />;
+    return (
+      <React.Fragment>
+        <Tabs type={EVOLUTION_TYPE} id={id} />
+        <Overview evolution={evolution} />
+      </React.Fragment>
+    );
   }
 }
 
