@@ -25,7 +25,7 @@ const Spots = ({
   return (
     <React.Fragment>
       {spots.map((spot: Object, position: number) => (
-        <React.Fragment key={position}>
+        <React.Fragment key={spot.id}>
           <Spot
             onChange={onChange}
             values={values}
