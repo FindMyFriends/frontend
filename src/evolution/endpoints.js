@@ -57,6 +57,8 @@ export const all = (
   )));
 };
 
+const omittedChange = (change: Object) => omit(change, ['id', 'seeker_id', 'general.age']);
+
 export const single = (
   id: string,
   fields: Array<string> = [],
@@ -76,7 +78,7 @@ export const single = (
       dispatch(receivedSingle(id, response.data, response.headers.etag));
       return response.data;
     })
-    .then(evolution => omit(evolution, ['id', 'seeker_id', 'general.age']))
+    .then(evolution => omittedChange(evolution))
     .then(evolution => next(evolution));
 };
 

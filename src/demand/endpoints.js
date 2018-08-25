@@ -15,6 +15,7 @@ import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../
 import type { PaginationType } from '../dataset/PaginationType';
 import extractedLocationId from '../api/extractedLocationId';
 import { fetchedAll, fetchedSingle } from './reducers';
+import { omittedSpot } from '../spot/endpoints';
 import { getSpotsByDemand } from '../spot/reducers';
 import { invalidatedByDemand } from '../spot/actions';
 
@@ -100,6 +101,8 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
     .catch(error => dispatch(receivedApiError(error)));
 };
 
+const omittedDemand = (demand: Object) => omit(demand, ['id', 'created_at', 'seeker_id']);
+
 export const reconsider = (
   id: string,
   input: Object,
@@ -107,13 +110,13 @@ export const reconsider = (
   next: (string) => void,
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
   const { spots, ...demand } = input;
-  axios.put(`/demands/${id}`, omit(demand, ['id', 'created_at', 'seeker_id']), { headers: { 'If-Match': etag } })
+  axios.put(`/demands/${id}`, omittedDemand(demand), { headers: { 'If-Match': etag } })
     .then(() => dispatch(invalidatedSingle(id)))
     .then(() => {
       // TODO: not good, select items to update/insert
       Promise.resolve()
         .then(() => forget(id, getSpotsByDemand(getState(), id).map(spot => spot.id)))
-        .then(() => track(id, spots.map(spot => omit(spot, ['demand_id', 'assigned_at', 'id']))))
+        .then(() => track(id, spots.map(spot => omittedSpot(spot))))
         .then(() => dispatch(invalidatedByDemand(id)));
     })
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
