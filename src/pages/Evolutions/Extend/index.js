@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
 import moment from 'moment';
-import merge from 'lodash/merge';
+import { merge, cloneDeep } from 'lodash';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/reducers';
@@ -92,6 +92,30 @@ class Extend extends React.Component<Props, State> {
     )
   );
 
+  // TODO: Common with demand
+  handleAppendedSpot = () => (
+    this.setState({
+      ...this.state,
+      evolution: {
+        ...this.state.evolution,
+        spots: [
+          ...this.state.evolution.spots,
+          cloneDeep([...this.state.evolution.spots].pop()),
+        ],
+      },
+    })
+  );
+
+  handleDetachedSpot = (position: number) => {
+    this.setState({
+      ...this.state,
+      evolution: {
+        ...this.state.evolution,
+        spots: this.state.evolution.spots.filter((spot, index) => index !== position),
+      },
+    });
+  };
+
   render() {
     if (this.props.fetching) {
       return <Loader />;
@@ -103,6 +127,8 @@ class Extend extends React.Component<Props, State> {
           steps({
             ...this.props,
             onChange: this.handleChange,
+            onSpotAppend: this.handleAppendedSpot,
+            onSpotDetach: (position: number) => this.handleDetachedSpot(position),
             values: flatten(this.state.evolution),
           })
         }

@@ -37,7 +37,7 @@ const Overview = ({ spots, places }: Props) => (
           rows={[
             <TextRow
               key={`met_at-${spot.id}`}
-              title="Met at"
+              title="Location and time"
               text={moment(spot.met_at.moment).format('YYYY-MM-DD HH:mm')}
             />,
           ]}

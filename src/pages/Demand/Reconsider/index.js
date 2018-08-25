@@ -2,13 +2,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flatten, unflatten } from 'flat';
-import { merge, omit } from 'lodash';
+import { cloneDeep, merge } from 'lodash';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching, getScopeOptions } from '../../../schema/reducers';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
-import { history as spotHistory, move } from '../../../demand/spot/endpoints';
+import { history as spotHistory } from '../../../demand/spot/endpoints';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
@@ -84,13 +84,34 @@ class Extend extends React.Component<Props, State> {
   handleReconsider = () => (
     this.props.reconsider(
       this.state.demand.id,
-      normalize(omit(this.state.demand, ['spots'])),
+      normalize(this.state.demand),
       this.props.etags.demand,
-      () => Promise.resolve()
-        .then(() => move(this.state.demand.spots[0].id, this.state.demand.spots[0]))
-        .then(() => this.props.history.push(`/demands/${this.state.demand.id}`)),
+      () => this.props.history.push(`/demands/${this.state.demand.id}`),
     )
   );
+
+  handleAppendedSpot = () => (
+    this.setState({
+      ...this.state,
+      demand: {
+        ...this.state.demand,
+        spots: [
+          ...this.state.demand.spots,
+          cloneDeep([...this.state.demand.spots].pop()),
+        ],
+      },
+    })
+  );
+
+  handleDetachedSpot = (position: number) => {
+    this.setState({
+      ...this.state,
+      demand: {
+        ...this.state.demand,
+        spots: this.state.demand.spots.filter((spot, index) => index !== position),
+      },
+    });
+  };
 
   render() {
     if (this.props.fetching) {
@@ -103,6 +124,8 @@ class Extend extends React.Component<Props, State> {
           steps({
             ...this.props,
             onChange: this.handleChange,
+            onSpotAppend: this.handleAppendedSpot,
+            onSpotDetach: (position: number) => this.handleDetachedSpot(position),
             values: flatten(this.state.demand),
           })
         }

@@ -17,6 +17,13 @@ export const track = (
   )));
 };
 
+export const forget = (
+  id: string,
+  spotIds: Array<string>,
+) => {
+  Promise.all(spotIds.map(spotId => axios.delete(`/demands/${id}/spots/${spotId}`)));
+};
+
 export const move = (
   id: string,
   spot: Object,

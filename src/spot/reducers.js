@@ -1,11 +1,16 @@
 // @flow
-import { isEmpty } from 'lodash';
+import { isEmpty, pickBy } from 'lodash';
 import {
   RECEIVED_PLACE,
   REQUESTED_PLACE,
   RECEIVED_SPOTS,
   REQUESTED_SPOTS,
+  INVALIDATE_SPOTS_BY_DEMAND,
 } from './actions';
+
+export const getSpotsWithoutDemand = (spots: Object, demand: string) => (
+  pickBy(spots, spot => spot.demand_id !== demand)
+);
 
 type stateType = {|
   +places: Object,
@@ -63,6 +68,13 @@ export const spot = (state: stateType = initState, action: Object): stateType =>
             ...action.spots,
           },
           fetching: action.fetching,
+        },
+      };
+    case INVALIDATE_SPOTS_BY_DEMAND:
+      return {
+        ...state,
+        all: {
+          payload: getSpotsWithoutDemand(state.all.payload, action.demand),
         },
       };
     default:

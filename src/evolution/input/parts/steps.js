@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { default as descriptionSteps, MAIN_GENERAL } from '../../../description/input/parts/steps';
-import MetAt from '../../../spot/input/parts/MetAt';
+import Spots from '../../../spot/input/parts/Spots';
 import General from '../../../description/input/parts/General';
 
 // TODO: Move - common with demands
@@ -12,7 +12,7 @@ const lastStep = (parts: Object) => (
 const steps = (props: Object): Object => {
   const descriptionParts = descriptionSteps(props);
   const LAST_DESCRIPTION_PART = lastStep(descriptionParts);
-  const MAIN_SPOT = LAST_DESCRIPTION_PART + 1;
+  const MAIN_SPOTS = LAST_DESCRIPTION_PART + 1;
 
   return {
     ...descriptionSteps(props),
@@ -25,12 +25,12 @@ const steps = (props: Object): Object => {
         },
       ],
     },
-    [MAIN_SPOT]: {
-      title: 'Spot',
+    [MAIN_SPOTS]: {
+      title: 'Spots',
       parts: [
         {
-          component: <MetAt {...props} />,
-          title: 'Met at',
+          component: <Spots {...props} />,
+          title: 'Location and time',
         },
       ],
     },
