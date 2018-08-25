@@ -170,15 +170,15 @@ class Add extends React.Component<Props, State> {
     })
   );
 
-  handleDetachedSpot = (position: number) => (
+  handleDetachedSpot = (position: number) => {
     this.setState({
       ...this.state,
       demand: {
         ...this.state.demand,
-        spots: this.state.demand.spots.splice(position, 1),
+        spots: this.state.demand.spots.filter((spot, index) => index !== position),
       },
-    })
-  );
+    });
+  };
 
   handleAdd = () => {
     this.props.add(

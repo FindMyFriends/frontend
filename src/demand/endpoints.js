@@ -9,12 +9,14 @@ import {
   invalidatedSingle,
   DEMAND,
 } from './actions';
-import { track } from './spot/endpoints';
+import { forget, track } from './spot/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
 import extractedLocationId from '../api/extractedLocationId';
 import { fetchedAll, fetchedSingle } from './reducers';
+import { getSpotsByDemand } from '../spot/reducers';
+import { invalidatedByDemand } from '../spot/actions';
 
 export const options = () => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/demands', DEMAND));
@@ -100,13 +102,21 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
 
 export const reconsider = (
   id: string,
-  demand: Object,
+  input: Object,
   etag: string,
   next: (string) => void,
-) => (dispatch: (mixed) => Object) => {
+) => (dispatch: (mixed) => Object, getState: () => Object) => {
+  const { spots, ...demand } = input;
   axios.put(`/demands/${id}`, omit(demand, ['id', 'created_at', 'seeker_id']), { headers: { 'If-Match': etag } })
-    .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     .then(() => dispatch(invalidatedSingle(id)))
+    .then(() => {
+      // TODO: not good, select items to update/insert
+      Promise.resolve()
+        .then(() => forget(id, getSpotsByDemand(getState(), id).map(spot => spot.id)))
+        .then(() => track(id, spots.map(spot => omit(spot, ['demand_id', 'assigned_at', 'id']))))
+        .then(() => dispatch(invalidatedByDemand(id)));
+    })
+    .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))
     .then(next)
     .catch(error => dispatch(receivedApiError(error)));
 };

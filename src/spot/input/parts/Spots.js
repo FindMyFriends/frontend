@@ -26,7 +26,6 @@ const Spots = ({
     <React.Fragment>
       {spots.map((spot: Object, position: number) => (
         <React.Fragment key={position}>
-          <hr />
           <Spot
             onChange={onChange}
             values={values}
@@ -35,7 +34,7 @@ const Spots = ({
             position={position}
           />
           {spots.length > 1 && (
-            <Button variant="raised" onClick={position => onSpotDetach(position)} color="secondary">
+            <Button variant="raised" onClick={() => onSpotDetach(position)} color="secondary">
               -
             </Button>
           )}
