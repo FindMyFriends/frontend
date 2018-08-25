@@ -4,39 +4,41 @@ import * as enumSet from '../api/enum';
 import type { Age, UnitValue } from './types';
 import type { ApiEnum, ApiColor } from '../api/enum';
 
-export const getSex = (options: ?Object): Array<string> => (options ? options.general.sex : []);
-export const getEthnicGroups = (options: ?Object): Array<ApiEnum> => (
-  options ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
+export const getSex = (options: Object): Array<string> => (
+  !isEmpty(options) ? options.general.sex : []
 );
-export const getBodyBuilds = (options: ?Object): Array<ApiEnum> => (
-  options ? enumSet.toEnum(options.body.build) : enumSet.empty()
+export const getEthnicGroups = (options: Object): Array<ApiEnum> => (
+  !isEmpty(options) ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
 );
-export const getBreastSizes = (options: ?Object): Array<string> => (
-  options ? options.body.breast_size : []
+export const getBodyBuilds = (options: Object): Array<ApiEnum> => (
+  !isEmpty(options) ? enumSet.toEnum(options.body.build) : enumSet.empty()
 );
-export const getHairStyles = (options: ?Object): Array<ApiEnum> => (
-  options ? enumSet.toEnum(options.hair.style) : enumSet.empty()
+export const getBreastSizes = (options: Object): Array<string> => (
+  !isEmpty(options) ? options.body.breast_size : []
 );
-export const getHairColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
+export const getHairStyles = (options: Object): Array<ApiEnum> => (
+  !isEmpty(options) ? enumSet.toEnum(options.hair.style) : enumSet.empty()
 );
-export const getBeardColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.beard.color) : enumSet.emptyColor()
+export const getHairColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.hair.color) : enumSet.emptyColor()
 );
-export const getEyebrowColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.eyebrow.color) : enumSet.emptyColor()
+export const getBeardColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.beard.color) : enumSet.emptyColor()
 );
-export const getEyeColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
+export const getEyebrowColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.eyebrow.color) : enumSet.emptyColor()
 );
-export const getNailsColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.hands.nails.color) : enumSet.emptyColor()
+export const getEyeColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.definitions.eye.color) : enumSet.emptyColor()
 );
-export const getHandHairColors = (options: ?Object): Array<ApiColor> => (
-  options ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
+export const getNailsColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.hands.nails.color) : enumSet.emptyColor()
 );
-export const getFaceShapes = (options: ?Object): Array<ApiEnum> => (
-  options ? enumSet.toEnum(options.face.shape) : enumSet.empty()
+export const getHandHairColors = (options: Object): Array<ApiColor> => (
+  !isEmpty(options) ? enumSet.toColorEnum(options.hands.hair.color) : enumSet.emptyColor()
+);
+export const getFaceShapes = (options: Object): Array<ApiEnum> => (
+  !isEmpty(options) ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
 
 const formattedUnitValue = (unitValue: UnitValue): string => `${unitValue.value || ''} ${unitValue.unit || ''}`;

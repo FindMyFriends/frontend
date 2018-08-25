@@ -13,6 +13,7 @@ export const schema = (state: Object = {}, action: Object) => {
       return {
         ...state,
         [action.scope]: {
+          ...state[action.scope],
           options: action.options,
           fetching: action.fetching,
         },
@@ -21,6 +22,7 @@ export const schema = (state: Object = {}, action: Object) => {
       return {
         ...state,
         [action.scope]: {
+          ...state[action.scope],
           schema: action.schema,
           fetching: action.fetching,
         },
@@ -29,6 +31,7 @@ export const schema = (state: Object = {}, action: Object) => {
       return {
         ...state,
         [action.scope]: {
+          ...state[action.scope],
           fetching: action.fetching,
           schema: {},
         },
@@ -37,6 +40,7 @@ export const schema = (state: Object = {}, action: Object) => {
       return {
         ...state,
         [action.scope]: {
+          ...state[action.scope],
           fetching: action.fetching,
           options: {},
         },
@@ -49,8 +53,8 @@ export const schema = (state: Object = {}, action: Object) => {
 export const getScopeOptions = (
   state: Object,
   scope: string,
-): ?Object => (
-  state.schema[scope] ? state.schema[scope].options : null
+): Object => (
+  state.schema[scope] ? state.schema[scope].options : {}
 );
 
 export const isFetching = (

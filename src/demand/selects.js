@@ -1,5 +1,7 @@
 // @flow
 
-export const getTimelineSides = (options: ?Object): Array<string> => (
-  options ? options.spot.met_at.timeline_side : []
+import { isEmpty } from 'lodash';
+
+export const getTimelineSides = (options: Object): Array<string> => (
+  !isEmpty(options) ? options.spot.met_at.timeline_side : []
 );

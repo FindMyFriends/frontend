@@ -10,10 +10,10 @@ import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../
 import extractedLocationId from '../api/extractedLocationId';
 import { fetchedAll, fetchedSingle } from './reducers';
 
-export const getScopeOptions = (state: Object): ?Object => (
+export const getScopeOptions = (state: Object): Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
     ? state.schema[EVOLUTION].options.options
-    : null
+    : {}
 );
 
 export const getScopeColumns = (state: Object): ?Object => (
