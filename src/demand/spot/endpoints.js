@@ -1,6 +1,5 @@
 // @flow
 import axios from 'axios';
-import { omit } from 'lodash';
 import { requestedSpots, receivedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
 import { fetchedDemandSpots } from '../../spot/reducers';
@@ -22,16 +21,6 @@ export const forget = (
   spotIds: Array<string>,
 ) => {
   Promise.all(spotIds.map(spotId => axios.delete(`/demands/${id}/spots/${spotId}`)));
-};
-
-export const move = (
-  id: string,
-  spot: Object,
-) => {
-  axios.put(
-    `/spots/${id}`,
-    omit(spot, ['demand_id', 'id', 'assigned_at']),
-  );
 };
 
 export const history = (

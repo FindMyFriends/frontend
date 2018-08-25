@@ -1,5 +1,6 @@
 // @flow
 import axios from 'axios';
+import { omit } from 'lodash';
 import { requestedPlace, receivedPlace } from './actions';
 import { fetchedPlaces } from './reducers';
 
@@ -7,6 +8,8 @@ export type Coordinates = {|
   +latitude: number,
   +longitude: number,
 |};
+
+export const omittedSpot = (spot: Object) => omit(spot, ['demand_id', 'evolution_id', 'assigned_at', 'id']);
 
 const place = (
   id: string,
