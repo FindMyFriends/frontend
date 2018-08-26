@@ -13,10 +13,10 @@ import { forget, track } from './spot/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
-import extractedLocationId from '../api/extractedLocationId';
-import { fetchedAll, fetchedSingle } from './reducers';
+import extractedLocationId from '../api/response';
+import { fetchedAll, fetchedSingle } from './selects';
 import { omittedSpot } from '../spot/endpoints';
-import { getSpotsByDemand } from '../spot/reducers';
+import { getSpotsByDemand } from '../spot/selects';
 import { invalidatedByDemand } from '../spot/actions';
 
 export const options = () => (dispatch: (mixed) => Object) => {

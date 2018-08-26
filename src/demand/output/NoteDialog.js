@@ -22,9 +22,7 @@ export default class NoteDialog extends React.Component<Props, State> {
     note: '',
   };
 
-  componentDidMount() {
-    this.resetNote();
-  }
+  componentDidMount = () => this.resetNote();
 
   resetNote = () => this.setState({ ...this.state, note: this.props.note || '' });
   handleClose = () => Promise.resolve().then(() => this.setState({ ...this.state, open: false }));

@@ -1,5 +1,5 @@
 // @flow
-export type CredentialsType = {|
+export type Credentials = {|
   email: string,
   password: string,
 |};

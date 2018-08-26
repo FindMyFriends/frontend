@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { fetchedEvolutionSpots } from '../../spot/reducers';
+import { fetchedEvolutionSpots } from '../../spot/selects';
 import { receivedSpots, requestedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
 

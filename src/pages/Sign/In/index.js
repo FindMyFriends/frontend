@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Form from './../../../sign/in/input/Form';
 import { enter } from '../../../sign/endpoints';
-import type { CredentialsType } from '../../../sign/in/input/CredentialsType';
+import type { Credentials } from '../../../sign/types';
 
 type Props = {|
-  +enter: (CredentialsType, () => (void)) => (void)
+  +enter: (Credentials, () => (void)) => (void)
 |};
 type State = {|
-  credentials: CredentialsType,
+  credentials: Credentials,
 |};
 class In extends React.Component<Props, State> {
   state = {
@@ -48,7 +48,7 @@ class In extends React.Component<Props, State> {
 
 const mapDispatchToProps = dispatch => ({
   enter: (
-    credentials: CredentialsType,
+    credentials: Credentials,
     next: () => (void),
   ) => dispatch(enter(credentials.email, credentials.password, next)),
 });

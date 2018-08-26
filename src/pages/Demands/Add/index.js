@@ -6,7 +6,7 @@ import { merge, cloneDeep } from 'lodash';
 import moment from 'moment';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { getScopeOptions, isFetching } from '../../../schema/reducers';
+import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
 import normalize from '../../../description/input/normalize';
@@ -137,10 +137,10 @@ class Add extends React.Component<Props, State> {
     },
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.options();
     this.props.schema();
-  }
+  };
 
   handleChange = name => event => (
     this.setState({

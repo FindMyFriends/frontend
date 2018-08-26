@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { omit } from 'lodash';
 import { requestedPlace, receivedPlace } from './actions';
-import { fetchedPlaces } from './reducers';
+import { fetchedPlaces } from './selects';
 
 export type Coordinates = {|
   +latitude: number,

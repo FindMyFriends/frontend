@@ -3,14 +3,8 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import MapIcon from '@material-ui/icons/Map';
-import SolidCard from '../../description/output/SolidCard';
-import TextRow from '../../description/output/TextRow';
-
-const Cards = styled.div`
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: center;
-`;
+import * as Card from '../../components/Card';
+import * as Row from '../../components/Card/Row';
 
 const SpaceBetween = styled.span`
   padding-right: 10px;
@@ -21,10 +15,10 @@ type Props = {|
   +places: Array<Object>,
 |};
 const Overview = ({ spots, places }: Props) => (
-  <Cards>
+  <Card.Container>
     {spots.map((spot, position) => (
       <SpaceBetween key={spot.id}>
-        <SolidCard
+        <Card.Solid
           title={
             <React.Fragment>
               <a href={`https://www.google.com/maps/@${spot.coordinates.latitude},${spot.coordinates.longitude},15z`}>
@@ -35,7 +29,7 @@ const Overview = ({ spots, places }: Props) => (
             </React.Fragment>
           }
           rows={[
-            <TextRow
+            <Row.Text
               key={`met_at-${spot.id}`}
               title="Location and time"
               text={moment(spot.met_at.moment).format('YYYY-MM-DD HH:mm')}
@@ -44,7 +38,7 @@ const Overview = ({ spots, places }: Props) => (
         />
       </SpaceBetween>
     ))}
-  </Cards>
+  </Card.Container>
 );
 
 export default Overview;

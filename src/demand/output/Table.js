@@ -8,8 +8,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -20,6 +18,7 @@ import NoteDialog from './NoteDialog';
 import SortTableHead from '../../dataset/SortTableHead';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
 
 const columns = [
   { id: 'general.firstname', sortable: true, label: 'Firstname' },
@@ -29,14 +28,6 @@ const columns = [
   { id: 'note', sortable: false, label: 'Note' },
   { id: 'action', sortable: false, label: '' },
 ];
-
-const EnhancedTableToolbar = () => (
-  <Toolbar>
-    <Typography variant="title" id="tableTitle">
-      Demands
-    </Typography>
-  </Toolbar>
-);
 
 const styles = () => ({
   deleteIconHover: {
@@ -50,7 +41,7 @@ const styles = () => ({
     },
   },
 });
-type TableProps = {|
+type Props = {|
   +rows: Array<Object>,
   +sort: SortType,
   +pagination: PaginationType,
@@ -73,7 +64,7 @@ const Table = ({
   pagination: { page, perPage },
   total,
   classes,
-}: TableProps) => (
+}: Props) => (
   <Paper>
     <EnhancedTableToolbar />
     <MaterialTable style={{ overflowX: 'auto' }} aria-labelledby="tableTitle">

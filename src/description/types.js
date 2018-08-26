@@ -5,6 +5,10 @@ export type Age = {|
   +to: number,
 |};
 
+export type BirthYear = {|
+  ...Age,
+|};
+
 export type UnitValue = {|
   +unit: ?string,
   +value: ?number,

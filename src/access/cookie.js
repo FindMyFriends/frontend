@@ -4,7 +4,7 @@ import { serialize, parse } from 'cookie';
 const name = 'sessid';
 const THRESHOLD = 10;
 
-export type Cookie = {|
+type Cookie = {|
   +token: ?string,
 |};
 

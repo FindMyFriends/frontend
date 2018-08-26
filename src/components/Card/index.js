@@ -5,9 +5,14 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 
-const ResizedCard = styled(Card)`
+const Resized = styled(Card)`
   width: 300px;
   margin-top: 10px;
+`;
+export const Container = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
 `;
 
 type Props = {|
@@ -15,10 +20,10 @@ type Props = {|
   +rows: Array<Object>,
   +isEmpty?: boolean,
 |};
-const SolidCard = ({ title, rows, isEmpty = false }: Props) => {
+export const Solid = ({ title, rows, isEmpty = false }: Props) => {
   if (!isEmpty) {
     return (
-      <ResizedCard>
+      <Resized>
         <CardHeader title={title} />
         <CardContent>
           <table>
@@ -27,10 +32,8 @@ const SolidCard = ({ title, rows, isEmpty = false }: Props) => {
             </tbody>
           </table>
         </CardContent>
-      </ResizedCard>
+      </Resized>
     );
   }
   return null;
 };
-
-export default SolidCard;

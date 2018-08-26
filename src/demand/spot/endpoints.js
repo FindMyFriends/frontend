@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { requestedSpots, receivedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
-import { fetchedDemandSpots } from '../../spot/reducers';
+import { fetchedDemandSpots } from '../../spot/selects';
 
 export const track = (
   id: string,

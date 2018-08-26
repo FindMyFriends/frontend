@@ -8,7 +8,7 @@ import {
 } from './actions';
 import { receivedSuccess, receivedApiError } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
-import { fetchedDemandSoulmates, fetchedDemandInfo } from './reducers';
+import { fetchedDemandSoulmates, fetchedDemandInfo } from './selects';
 
 export const all = (
   demand: string,

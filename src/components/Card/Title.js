@@ -10,7 +10,7 @@ const Header = styled.th`
 type Props = {|
   +children: string | Object,
 |};
-const CardTitle = ({ children }: Props) => (
+const Title = ({ children }: Props) => (
   <Header>
     <Typography variant="subheading">
       {children}
@@ -18,4 +18,4 @@ const CardTitle = ({ children }: Props) => (
   </Header>
 );
 
-export default CardTitle;
+export default Title;

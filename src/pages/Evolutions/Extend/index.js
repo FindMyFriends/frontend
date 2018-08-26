@@ -6,7 +6,7 @@ import moment from 'moment';
 import { merge, cloneDeep } from 'lodash';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { isFetching } from '../../../schema/reducers';
+import { isFetching } from '../../../schema/selects';
 import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
 import { extend, single, options, schema, getScopeOptions } from '../../../evolution/endpoints';
 import normalize from '../../../description/input/normalize';

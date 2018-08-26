@@ -5,10 +5,10 @@ import { single, options } from '../../demand/endpoints';
 import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
-import { getById, getPrettyDemand, singleFetching as demandFetching } from '../../demand/reducers';
-import { getTotal, singleFetching as soulmateFetching } from '../../soulmate/reducers';
+import { getById, getPrettyDemand, singleFetching as demandFetching } from '../../demand/selects';
+import { getTotal, singleFetching as soulmateFetching } from '../../soulmate/selects';
 import { DEMAND } from '../../demand/actions';
-import { getScopeOptions, isFetching as schemaFetching } from '../../schema/reducers';
+import { getScopeOptions, isFetching as schemaFetching } from '../../schema/selects';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
 
 type Props = {|
@@ -20,11 +20,11 @@ type Props = {|
   +soulmateTotal: number,
 |};
 class Demand extends React.Component<Props, any> {
-  componentDidMount() {
+  componentDidMount = () => {
     const { match: { params: { id } } } = this.props;
     this.props.single(id);
     this.props.soulmateInfo(id);
-  }
+  };
 
   render() {
     const {

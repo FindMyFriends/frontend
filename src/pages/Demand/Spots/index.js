@@ -7,10 +7,10 @@ import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
 import type { SortType } from '../../../dataset/SortType';
 import { toApiOrdering } from '../../../dataset/sorts';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
-import { getTotal } from '../../../soulmate/reducers';
+import { getTotal } from '../../../soulmate/selects';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { getPlaces, placesFetching, spotsFetching, getSpotsByDemand } from '../../../spot/reducers';
+import { getPlaces, placesFetching, spotsFetching, getSpotsByDemand } from '../../../spot/selects';
 
 type Props = {|
   +spots: Array<Object>,
@@ -33,9 +33,7 @@ class Spots extends React.Component<Props, State> {
     },
   };
 
-  componentDidMount() {
-    this.reload();
-  }
+  componentDidMount = () => this.reload();
 
   reload = () => {
     const { match: { params: { id } } } = this.props;

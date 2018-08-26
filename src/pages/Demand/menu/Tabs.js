@@ -31,9 +31,7 @@ class Tabs extends React.Component<Props, State> {
     type: DEMAND_TYPE,
   };
 
-  componentDidMount() {
-    this.resetType();
-  }
+  componentDidMount = () => this.resetType();
 
   resetType = () => this.setState({ type: this.props.type });
   handleChange = (event: any, type: string) => this.setState({ type });

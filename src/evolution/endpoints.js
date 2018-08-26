@@ -7,8 +7,8 @@ import { receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION }
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
-import extractedLocationId from '../api/extractedLocationId';
-import { fetchedAll, fetchedSingle } from './reducers';
+import extractedLocationId from '../api/response';
+import { fetchedAll, fetchedSingle } from './selects';
 
 export const getScopeOptions = (state: Object): Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options

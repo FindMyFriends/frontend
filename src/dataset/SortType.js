@@ -1,5 +1,5 @@
 // @flow
-export type OrderType = 'asc' | 'desc';
+type OrderType = 'asc' | 'desc';
 
 export type SortType = {|
   +order: OrderType,

@@ -1,5 +1,5 @@
 import test from 'ava';
-import { getSpotsWithoutDemand } from '../reducers';
+import { getSpotsWithoutDemand } from '../selects';
 
 test('picking by demand_id', (assert) => {
   const spots = {

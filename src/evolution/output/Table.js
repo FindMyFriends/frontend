@@ -53,7 +53,7 @@ const styles = () => ({
     },
   },
 });
-type TableProps = {|
+type Props = {|
   +columns: Array<string>,
   +possibleColumns: Object,
   +rows: Array<Object>,
@@ -80,7 +80,7 @@ const Table = ({
   columns,
   onSortSelectionChange,
   possibleColumns,
-}: TableProps) => {
+}: Props) => {
   return (
     <Paper>
       <EnhancedTableToolbar />

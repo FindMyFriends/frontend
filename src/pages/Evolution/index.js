@@ -5,8 +5,8 @@ import { single, options, getScopeOptions } from '../../evolution/endpoints';
 import { EVOLUTION } from '../../evolution/actions';
 import Loader from '../../ui/Loader';
 import Overview from '../../evolution/output/Overview';
-import { getById, getPrettyEvolution, singleFetching as fetchingEvolution } from '../../evolution/reducers';
-import { isFetching } from '../../schema/reducers';
+import { getById, getPrettyEvolution, singleFetching as fetchingEvolution } from '../../evolution/selects';
+import { isFetching } from '../../schema/selects';
 import { default as Tabs, EVOLUTION_TYPE } from './menu/Tabs';
 
 type Props = {|

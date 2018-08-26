@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import type { CredentialsType } from './CredentialsType';
+import type { Credentials } from '../../types';
 import { withFormStyles } from '../../../description/input/parts/withFormStyles';
 
 const Center = styled.div`
@@ -20,7 +20,7 @@ type Props = {|
   +classes: Object,
   +onChange: (string) => (void),
   +onSubmit: () => (void),
-  +credentials: CredentialsType,
+  +credentials: Credentials,
 |};
 const Form = ({
   onChange,

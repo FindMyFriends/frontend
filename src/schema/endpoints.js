@@ -6,7 +6,7 @@ import {
   requestedSchema,
 } from './actions';
 import { loadOptions, loadSchema } from '../api/schema';
-import { fetchedSchema, fetchedOptions, getScopeOptions } from './reducers';
+import { fetchedSchema, fetchedOptions, getScopeOptions } from './selects';
 
 export const options = (
   uri: string,

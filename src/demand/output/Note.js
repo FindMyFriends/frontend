@@ -12,12 +12,12 @@ const styles = () => ({
   },
 });
 
-type NoteProps = {|
+type Props = {|
   +children: ?string,
   +onClick: () => (void),
   +classes: Object,
 |};
-const Note = ({ children, onClick, classes }: NoteProps) => (
+const Note = ({ children, onClick, classes }: Props) => (
   <Icon
     onClick={onClick}
     className={children ? classes.iconHover : null}

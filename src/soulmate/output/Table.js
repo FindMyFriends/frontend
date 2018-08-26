@@ -8,29 +8,20 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import grey from '@material-ui/core/colors/grey';
 import { default as EvolutionIcon } from '../../evolution/output/Icon';
 import SortTableHead from '../../dataset/SortTableHead';
-import YesNo from './YesNo';
+import { YesNoMaybe } from '../../components/Card/Decision';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
 
 const columns = [
   { id: 'position', sortable: true, label: '#' },
   { id: 'related_at', sortable: true, label: 'Related at' },
   { id: 'action', sortable: false, label: '' },
 ];
-
-const EnhancedTableToolbar = () => (
-  <Toolbar>
-    <Typography variant="title" id="tableTitle">
-      Soulmates
-    </Typography>
-  </Toolbar>
-);
 
 const styles = () => ({
   iconHover: {
@@ -39,7 +30,7 @@ const styles = () => ({
     },
   },
 });
-type TableProps = {|
+type Props = {|
   +rows: Array<Object>,
   +sort: SortType,
   +pagination: PaginationType,
@@ -60,7 +51,7 @@ const Table = ({
   pagination: { page, perPage },
   total,
   classes,
-}: TableProps) => (
+}: Props) => (
   <Paper>
     <EnhancedTableToolbar />
     <MaterialTable style={{ overflowX: 'auto' }} aria-labelledby="tableTitle">
@@ -83,14 +74,14 @@ const Table = ({
                   style={{ margin: 5, cursor: 'pointer' }}
                 />
               </Link>
-              <YesNo
+              <YesNoMaybe
                 color="action"
                 className={classes.iconHover}
                 style={{ margin: 5, cursor: 'pointer' }}
                 onClick={() => onMarkAs(soulmate.id, !soulmate.is_correct)}
               >
                 {soulmate.is_correct}
-              </YesNo>
+              </YesNoMaybe>
             </TableCell>
           </TableRow>
         ))}

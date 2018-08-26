@@ -16,9 +16,7 @@ export default class IndeterminateCheckbox extends React.Component<Props, State>
     checked: INDETERMINATE,
   };
 
-  componentDidMount() {
-    this.reset();
-  }
+  componentDidMount = () => this.reset();
 
   reset = () => this.setState({
     checked: this.props.checked === null ? INDETERMINATE : this.props.checked,

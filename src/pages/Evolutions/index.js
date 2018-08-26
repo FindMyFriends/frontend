@@ -13,7 +13,7 @@ import {
   allFetching as evolutionsFetching,
   getTotal,
   mostPriorColumnIdentifiers,
-} from '../../evolution/reducers';
+} from '../../evolution/selects';
 import { invalidatedAll } from '../../evolution/actions';
 import { translatedFields } from '../../description/selects';
 

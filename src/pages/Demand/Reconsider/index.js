@@ -5,7 +5,7 @@ import { flatten, unflatten } from 'flat';
 import { cloneDeep, merge } from 'lodash';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { isFetching, getScopeOptions } from '../../../schema/reducers';
+import { isFetching, getScopeOptions } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
 import { history as spotHistory } from '../../../demand/spot/endpoints';
@@ -25,9 +25,13 @@ import {
   getHandHairColors,
 } from '../../../description/selects';
 import steps from '../../../demand/input/parts/steps';
-import { getTimelineSides } from '../../../demand/selects';
-import { spotsFetching, getSpotsByDemand } from '../../../spot/reducers';
-import { getById as getDemandById, getETag as getDemandETag, singleFetching as demandFetching } from '../../../demand/reducers';
+import { spotsFetching, getSpotsByDemand } from '../../../spot/selects';
+import {
+  getById as getDemandById,
+  getETag as getDemandETag,
+  singleFetching as demandFetching,
+  getTimelineSides,
+} from '../../../demand/selects';
 
 type Props = {|
   +reconsider: (string, Object, string, (string) => (Promise<any>)) => (void),
@@ -50,7 +54,7 @@ class Extend extends React.Component<Props, State> {
     demand: {},
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { match: { params: { id } } } = this.props;
     this.props.options();
     this.props.schema();
@@ -63,7 +67,7 @@ class Extend extends React.Component<Props, State> {
         id,
         () => this.setState({ demand: { ...this.state.demand, spots: this.props.spots } }),
       ));
-  }
+  };
 
   // TODO: Move - common with demand
   handleChange = name => event => (

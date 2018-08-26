@@ -15,7 +15,7 @@ import type { SortType } from '../../dataset/SortType';
 import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
-import { getTotal, allFetching } from '../../demand/reducers';
+import { getTotal, allFetching } from '../../demand/selects';
 import { invalidatedAll } from '../../demand/actions';
 
 const BottomRightNavigation = styled.div`
@@ -51,9 +51,7 @@ class All extends React.Component<Props, State> {
     },
   };
 
-  componentDidMount() {
-    this.reload();
-  }
+  componentDidMount = () => this.reload();
 
   reload = () => {
     const { sort, pagination } = this.state;
