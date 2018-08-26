@@ -1,23 +1,26 @@
 // @flow
-import axios from 'axios';
-import { receivedApiError, receivedSuccess as receivedSuccessMessage } from './../ui/actions';
-import { setCookie, deleteCookie } from '../access/cookie';
+import { create, invalidate } from '../token/endpoints';
+import { deleteCookie, setCookie } from '../access/cookie';
+import { receivedSuccess as receivedSuccessMessage } from '../ui/actions';
+import type { Credentials } from './types';
 
 export const enter = (
-  email: string,
-  password: string,
+  credentials: Credentials,
   next: (void) => void,
 ) => (dispatch: (mixed) => Object) => {
-  axios.post('/tokens', { email, password })
-    .then(response => setCookie(response.data))
-    .then(() => dispatch(receivedSuccessMessage('You have been successfully signed in')))
-    .then(next)
-    .catch(error => dispatch(receivedApiError(error)));
+  dispatch(create(
+    credentials.email,
+    credentials.password,
+    data => Promise.resolve()
+      .then(() => setCookie(data))
+      .then(() => dispatch(receivedSuccessMessage('You have been successfully signed in')))
+      .then(next),
+  ));
 };
 
 export const exit = (next: (void) => void) => (dispatch: (mixed) => Object) => {
-  axios.delete('/tokens')
-    .finally(deleteCookie)
-    .finally(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
-    .finally(next);
+  invalidate(() => Promise.resolve()
+    .then(deleteCookie)
+    .then(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
+    .then(next));
 };

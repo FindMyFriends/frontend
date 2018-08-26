@@ -8,7 +8,8 @@ import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/selects';
 import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
-import { extend, single, options, schema, getScopeOptions } from '../../../evolution/endpoints';
+import { extend, single, options, schema } from '../../../evolution/endpoints';
+import { getScopeOptions } from '../../../evolution/selects';
 import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,

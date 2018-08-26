@@ -10,18 +10,6 @@ import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../
 import extractedLocationId from '../api/response';
 import { fetchedAll, fetchedSingle } from './selects';
 
-export const getScopeOptions = (state: Object): Object => (
-  state.schema[EVOLUTION] && state.schema[EVOLUTION].options
-    ? state.schema[EVOLUTION].options.options
-    : {}
-);
-
-export const getScopeColumns = (state: Object): ?Object => (
-  state.schema[EVOLUTION] && state.schema[EVOLUTION].options
-    ? state.schema[EVOLUTION].options.columns
-    : null
-);
-
 export const options = (next: (?Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/evolutions', EVOLUTION, next));
 };

@@ -39,7 +39,7 @@ export const all = (
       params: {
         page: pagination.page,
         per_page: pagination.perPage,
-        fields: ['general', 'soulmates', 'id', 'created_at', 'note'].join(','),
+        fields: ['general', 'id', 'created_at', 'note'].join(','),
         sort: sorts.join(','),
       },
     },

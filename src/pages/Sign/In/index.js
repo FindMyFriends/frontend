@@ -50,6 +50,6 @@ const mapDispatchToProps = dispatch => ({
   enter: (
     credentials: Credentials,
     next: () => (void),
-  ) => dispatch(enter(credentials.email, credentials.password, next)),
+  ) => dispatch(enter(credentials, next)),
 });
 export default connect(null, mapDispatchToProps)(In);

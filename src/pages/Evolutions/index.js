@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Table from './../../evolution/output/Table';
-import { all, getScopeColumns, revert } from '../../evolution/endpoints';
+import { all, revert } from '../../evolution/endpoints';
 import { toApiOrdering, withSort } from './../../dataset/sorts';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
@@ -13,6 +13,7 @@ import {
   allFetching as evolutionsFetching,
   getTotal,
   mostPriorColumnIdentifiers,
+  getScopeColumns,
 } from '../../evolution/selects';
 import { invalidatedAll } from '../../evolution/actions';
 import * as columns from '../../dataset/columns';
