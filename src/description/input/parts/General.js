@@ -58,7 +58,7 @@ const General = ({
   ethnicGroup: (
     <EthnicGroupInput
       key="ethnicGroup"
-      onChange={onChange}
+      onChange={onChange('general.ethnic_group_id')}
       value={values['general.ethnic_group_id'] || ''}
       selects={selects.ethnicGroups}
       classes={classes}

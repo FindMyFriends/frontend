@@ -19,7 +19,7 @@ const EthnicGroupInput = ({
 }: Props) => (
   <FormControl className={classes.formControl}>
     <InputLabel>Ethnic group</InputLabel>
-    <Select value={value || ''} onChange={onChange('general.ethnic_group_id')}>
+    <Select value={value || ''} onChange={onChange}>
       {selects.map(ethnicGroup => (
         <MenuItem key={ethnicGroup.id} value={ethnicGroup.id}>
           {ethnicGroup.name}

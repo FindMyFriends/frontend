@@ -1,20 +1,22 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { flatten, unflatten } from 'flat';
 import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
 import type { RegistrationData } from '../../../sign/types';
 import { getEthnicGroups, getSex } from '../../../description/selects';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
-import { DESCRIPTION, schema } from '../../../description/endpoints';
+import { DESCRIPTION, options } from '../../../description/endpoints';
 import Loader from '../../../ui/Loader';
 
 type Props = {|
   +signUp: (RegistrationData, () => (void)) => (void),
-  +schema: (void) => (void),
+  +options: (void) => (void),
   +selects: Object,
   +fetching: boolean,
+  +history: Object,
 |};
 type State = {|
   registrationData: RegistrationData,
@@ -22,35 +24,35 @@ type State = {|
 class Up extends React.Component<Props, State> {
   state = {
     registrationData: {
-      email: 'me@fmf.com',
-      password: 'heslo123',
+      email: null,
+      password: null,
       general: {
-        firstname: 'Dom',
-        lastname: 'Klapuch',
-        ethnic_group_id: 1,
-        sex: 'man',
+        firstname: null,
+        lastname: null,
+        ethnic_group_id: null,
+        sex: null,
         age: { from: 22, to: 22 },
       },
     },
   };
 
   componentDidMount = () => {
-    this.props.schema();
+    this.props.options();
   };
 
   handleChange = name => event => (
     this.setState({
-      registrationData: {
+      registrationData: unflatten({
         ...this.state.registrationData,
         [name]: event.target.value,
-      },
+      }),
     })
   );
 
   handleSubmit = () => (
     this.props.signUp(
       this.state.registrationData,
-      () => window.location.replace('/demands'),
+      () => this.props.history.push('sign/in'),
     )
   );
 
@@ -58,7 +60,6 @@ class Up extends React.Component<Props, State> {
     if (this.props.fetching) {
       return <Loader />;
     }
-    console.log(this.props.selects);
     return (
       <Center>
         <Form
@@ -82,7 +83,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = dispatch => ({
-  schema: () => dispatch(schema()),
+  options: () => dispatch(options()),
   signUp: (
     registrationData: RegistrationData,
     next: () => (void),

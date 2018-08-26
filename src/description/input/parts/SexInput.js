@@ -19,7 +19,7 @@ const SexInput = ({
 }: Props) => (
   <FormControl className={classes.formControl}>
     <InputLabel>Sex</InputLabel>
-    <Select value={value || ''} onChange={onChange('general.sex')}>
+    <Select value={value || ''} onChange={onChange}>
       {selects.map(sex => <MenuItem key={sex} value={sex}>{sex}</MenuItem>)}
     </Select>
   </FormControl>

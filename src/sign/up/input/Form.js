@@ -57,13 +57,13 @@ const Form = ({
       />
     </FormControl>
     <SexInput
-      onChange={onChange}
+      onChange={onChange('general.sex')}
       value={registrationData.general.sex}
       selects={selects.sex}
       classes={classes}
     />
     <EthnicGroupInput
-      onChange={onChange}
+      onChange={onChange('general.ethnic_group_id')}
       value={registrationData.general.ethnic_group_id}
       selects={selects.ethnicGroups}
       classes={classes}
