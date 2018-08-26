@@ -2,11 +2,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Form from './../../../sign/in/input/Form';
-import { enter } from '../../../sign/endpoints';
+import { signIn } from '../../../sign/endpoints';
+import Center from '../../../components/Center';
 import type { Credentials } from '../../../sign/types';
 
 type Props = {|
-  +enter: (Credentials, () => (void)) => (void)
+  +signIn: (Credentials, () => (void)) => (void)
 |};
 type State = {|
   credentials: Credentials,
@@ -29,7 +30,7 @@ class In extends React.Component<Props, State> {
   );
 
   handleSubmit = () => (
-    this.props.enter(
+    this.props.signIn(
       this.state.credentials,
       () => window.location.replace('/demands'),
     )
@@ -37,19 +38,21 @@ class In extends React.Component<Props, State> {
 
   render() {
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        onChange={this.handleChange}
-        credentials={this.state.credentials}
-      />
+      <Center>
+        <Form
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}
+          credentials={this.state.credentials}
+        />
+      </Center>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  enter: (
+  signIn: (
     credentials: Credentials,
     next: () => (void),
-  ) => dispatch(enter(credentials, next)),
+  ) => dispatch(signIn(credentials, next)),
 });
 export default connect(null, mapDispatchToProps)(In);

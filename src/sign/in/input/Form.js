@@ -1,20 +1,11 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import type { Credentials } from '../../types';
 import { withFormStyles } from '../../../description/input/parts/withFormStyles';
-
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content:flex-start; 
-  flex-direction: column;
-  margin-top: 20px;
-`;
 
 type Props = {|
   +classes: Object,
@@ -28,7 +19,7 @@ const Form = ({
   credentials,
   classes,
 }: Props) => (
-  <Center>
+  <React.Fragment>
     <FormControl className={classes.formControl}>
       <InputLabel>Email</InputLabel>
       <Input
@@ -39,12 +30,13 @@ const Form = ({
     <FormControl className={classes.formControl}>
       <InputLabel>Password</InputLabel>
       <Input
+        type="password"
         onChange={onChange('password')}
         value={credentials.password}
       />
     </FormControl>
     <Button variant="raised" onClick={onSubmit} color="primary">Sign in</Button>
-  </Center>
+  </React.Fragment>
 );
 
 export default withFormStyles()(Form);
