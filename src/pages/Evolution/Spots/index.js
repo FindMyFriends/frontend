@@ -29,9 +29,7 @@ class Spots extends React.Component<Props, State> {
     },
   };
 
-  componentDidMount() {
-    this.reload();
-  }
+  componentDidMount = () => this.reload();
 
   reload = () => {
     this.props.spotHistory(

@@ -17,11 +17,11 @@ type Props = {|
   +match: Object,
 |};
 class Evolution extends React.Component<Props, any> {
-  componentDidMount() {
+  componentDidMount = () => {
     const { match: { params: { id } } } = this.props;
     this.props.options();
     this.props.single(id);
-  }
+  };
 
   render() {
     const { evolution, fetching, match: { params: { id } } } = this.props;

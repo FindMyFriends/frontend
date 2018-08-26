@@ -57,7 +57,7 @@ class Extend extends React.Component<Props, State> {
     },
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { match: { params: { id } } } = this.props;
     this.props.options();
     this.props.schema();
@@ -65,7 +65,7 @@ class Extend extends React.Component<Props, State> {
       id,
       evolution => this.setState({ evolution: { ...evolution, ...this.state.evolution } }),
     );
-  }
+  };
 
   // TODO: Move - common with demand
   handleChange = name => event => (
