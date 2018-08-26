@@ -2,17 +2,23 @@
 import { serialize, parse } from 'cookie';
 
 const name = 'sessid';
+const THRESHOLD = 10;
 
 export type Cookie = {|
   +token: ?string,
 |};
 
-export const setCookie = (cookie: Cookie): void => {
+type Authorization = {|
+  +token: string,
+  +expiration: number,
+|};
+
+export const setCookie = (authorization: Authorization): void => {
   const options = {
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: authorization.expiration - THRESHOLD,
     path: '/',
   };
-  window.document.cookie = serialize(name, cookie.token, options);
+  window.document.cookie = serialize(name, authorization.token, options);
 };
 
 export const deleteCookie = (): void => {
