@@ -3,7 +3,7 @@ import React from 'react';
 import { YesNoMaybe } from '../../components/Card/Decision';
 import * as Row from '../../components/Card/Row';
 import * as Card from '../../components/Card';
-import { formattedAge } from '../selects';
+import { formattedAge } from '../formats';
 
 const isEmpty = (items: Array<string>) => (
   items.filter(item => item).map(item => item.toString().trim()).filter(item => item).length === 0

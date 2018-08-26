@@ -15,7 +15,7 @@ import {
   mostPriorColumnIdentifiers,
 } from '../../evolution/selects';
 import { invalidatedAll } from '../../evolution/actions';
-import { translatedFields } from '../../description/selects';
+import * as columns from '../../dataset/columns';
 
 type Props = {|
   +columns: Object,
@@ -106,7 +106,7 @@ class All extends React.Component<Props, State> {
       <React.Fragment>
         <Table
           columns={this.state.columns}
-          possibleColumns={translatedFields(this.props.columns)}
+          possibleColumns={columns.translations(this.props.columns)}
           rows={evolutions}
           sort={sort}
           pagination={pagination}

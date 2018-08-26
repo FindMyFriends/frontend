@@ -18,7 +18,7 @@ import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
 import EnhancedTableToolbar from './EnhanedTableToolbar';
 import SortTableHead from '../../dataset/SortTableHead';
-import { guessedFormatting, translatedField } from '../../description/selects';
+import { dotsToValue, translation } from '../../dataset/columns';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import SortColumnSelect from './SortColumnSelect';
@@ -32,7 +32,7 @@ const columnsToHeaders = (columns: Array<string>): Array<Object> => {
   const header = id => ({
     id,
     sortable: true,
-    label: translatedField(id),
+    label: translation(id),
   });
   return [
     ...columns.map(header),
@@ -104,7 +104,9 @@ const Table = ({
           {rows.map(evolution => (
             <TableRow hover key={evolution.id}>
               {columns.map(id => (
-                <TableCell key={id}>{guessedFormatting(id.split('.').reduce((object, key) => object[key], evolution))}</TableCell>
+                <TableCell key={id}>
+                  {dotsToValue(id, evolution)}
+                </TableCell>
               ))}
               <TableCell>{moment(evolution.evolved_at).format('YYYY-MM-DD')}</TableCell>
               <TableCell numeric>

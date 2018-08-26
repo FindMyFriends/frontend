@@ -1,7 +1,7 @@
 // @flow
-import { merge, isEmpty, mapValues } from 'lodash';
+import { merge, isEmpty } from 'lodash';
 import * as enumSet from '../api/enum';
-import type { Age, UnitValue } from './types';
+import { formattedUnitValue } from './formats';
 import type { ApiEnum, ApiColor } from '../api/enum';
 
 export const getSex = (options: Object): Array<string> => (
@@ -40,33 +40,6 @@ export const getHandHairColors = (options: Object): Array<ApiColor> => (
 export const getFaceShapes = (options: Object): Array<ApiEnum> => (
   !isEmpty(options) ? enumSet.toEnum(options.face.shape) : enumSet.empty()
 );
-
-const formattedUnitValue = (unitValue: UnitValue): string => `${unitValue.value || ''} ${unitValue.unit || ''}`;
-
-export const formattedAge = (age: Age): string => `${age.from} - ${age.to}`;
-
-// TODO: Rename and include key
-export const guessedFormatting = (value: Object | string): Object | string => {
-  if (typeof value === 'object') {
-    if ('value' in value && 'unit' in value) {
-      return formattedUnitValue(value);
-    } else if ('from' in value && 'to' in value) {
-      return formattedAge(value);
-    }
-  }
-  return value;
-};
-
-const columnWithIdentifiers = {
-  'general.firstname': 'Firstname',
-  'general.lastname': 'Lastname',
-  'general.sex': 'Sex',
-};
-
-export const translatedField = (field: string): string => columnWithIdentifiers[field];
-
-export const translatedFields = (columns: Object): Object =>
-  mapValues(columns, (count, identifier) => translatedField(identifier));
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {
   if (isEmpty(description) || isEmpty(options)) {
