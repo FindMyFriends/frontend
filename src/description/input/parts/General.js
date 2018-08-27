@@ -3,12 +3,11 @@ import React from 'react';
 import { omit, values } from 'lodash';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import AgeRangeInput from './AgeRangeInput';
 import { withFormStyles } from './withFormStyles';
-import SexInput from './SexInput';
+import ConditionalSexInput from './ConditionalSexInput';
+import EthnicGroupInput from './EthnicGroupInput';
 
 const withoutIgnores = (
   components: Object,
@@ -48,7 +47,7 @@ const General = ({
     </FormControl>
   ),
   sex: (
-    <SexInput
+    <ConditionalSexInput
       key="sex"
       onChange={onChange}
       values={values}
@@ -57,16 +56,13 @@ const General = ({
     />
   ),
   ethnicGroup: (
-    <FormControl key="ethnicGroup" className={classes.formControl}>
-      <InputLabel>Ethnic group</InputLabel>
-      <Select value={values['general.ethnic_group_id'] || ''} onChange={onChange('general.ethnic_group_id')}>
-        {selects.ethnicGroups.map(ethnicGroup => (
-          <MenuItem key={ethnicGroup.id} value={ethnicGroup.id}>
-            {ethnicGroup.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <EthnicGroupInput
+      key="ethnicGroup"
+      onChange={onChange('general.ethnic_group_id')}
+      value={values['general.ethnic_group_id'] || ''}
+      selects={selects.ethnicGroups}
+      classes={classes}
+    />
   ),
   age: (
     <AgeRangeInput

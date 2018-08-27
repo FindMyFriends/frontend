@@ -7,22 +7,26 @@ import Select from '@material-ui/core/Select';
 
 type Props = {|
   +onChange: (Object) => (void),
-  +value: ?string,
+  +value: ?number | ?string,
   +selects: Object,
   +classes: Object,
 |};
-const SexInput = ({
+const EthnicGroupInput = ({
   onChange,
   value,
   selects,
   classes,
 }: Props) => (
   <FormControl className={classes.formControl}>
-    <InputLabel>Sex</InputLabel>
+    <InputLabel>Ethnic group</InputLabel>
     <Select value={value || ''} onChange={onChange}>
-      {selects.map(sex => <MenuItem key={sex} value={sex}>{sex}</MenuItem>)}
+      {selects.map(ethnicGroup => (
+        <MenuItem key={ethnicGroup.id} value={ethnicGroup.id}>
+          {ethnicGroup.name}
+        </MenuItem>
+      ))}
     </Select>
   </FormControl>
 );
 
-export default SexInput;
+export default EthnicGroupInput;

@@ -1,10 +1,11 @@
 // @flow
 import { create, invalidate } from '../token/endpoints';
+import { join } from '../seeker/endpoints';
 import { deleteCookie, setCookie } from '../access/cookie';
 import { receivedSuccess as receivedSuccessMessage } from '../ui/actions';
-import type { Credentials } from './types';
+import type { Credentials, RegistrationData } from './types';
 
-export const enter = (
+export const signIn = (
   credentials: Credentials,
   next: (void) => void,
 ) => (dispatch: (mixed) => Object) => {
@@ -18,9 +19,25 @@ export const enter = (
   ));
 };
 
-export const exit = (next: (void) => void) => (dispatch: (mixed) => Object) => {
+export const signOut = (next: (void) => void) => (dispatch: (mixed) => Object) => {
   invalidate(() => Promise.resolve()
     .then(deleteCookie)
     .then(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
     .then(next));
 };
+
+export const signUp = (
+  data: RegistrationData,
+  next: (Object) => Promise<any>,
+) => (dispatch: (mixed) => Object) => (
+  dispatch(join(
+    {
+      ...data,
+      general: {
+        ...data.general,
+        birth_year: parseInt(data.general.birth_year, 10),
+      },
+    },
+    next,
+  ))
+);
