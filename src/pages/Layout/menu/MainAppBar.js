@@ -13,8 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
-import ExitToApp from '@material-ui/icons/ExitToApp';
+import SignOutIcon from '@material-ui/icons/PowerSettingsNew';
+import SignUpIcon from '@material-ui/icons/AccountCircle';
+import SignInIcon from '@material-ui/icons/ExitToApp';
 import { default as DemandIcon } from '../../../demand/output/Icon';
 import { default as EvolutionIcon } from '../../../evolution/output/Icon';
 import ListItemLink from './ListItemLink';
@@ -147,8 +148,13 @@ class MainAppBar extends React.Component<Props, State> {
             <React.Fragment>
               {
                 loggedIn()
-                  ? (<ListItemLink href="/sign/out" icon={<ExitToApp />}>Sign out</ListItemLink>)
-                  : (<ListItemLink href="/sign/in" icon={<PowerSettingsNew />}>Sign in</ListItemLink>)
+                  ? (<ListItemLink href="/sign/out" icon={<SignOutIcon />}>Sign out</ListItemLink>)
+                  : (
+                    <React.Fragment>
+                      <ListItemLink href="/sign/in" icon={<SignInIcon />}>Sign in</ListItemLink>
+                      <ListItemLink href="/sign/up" icon={<SignUpIcon />}>Sign up</ListItemLink>
+                    </React.Fragment>
+                  )
               }
             </React.Fragment>
           </List>
