@@ -3,8 +3,7 @@ import { create, invalidate } from '../token/endpoints';
 import { join } from '../seeker/endpoints';
 import { deleteCookie, setCookie } from '../access/cookie';
 import { receivedSuccess as receivedSuccessMessage } from '../ui/actions';
-import type { Credentials } from './types';
-import type { RegistrationData } from '../seeker/types';
+import type { Credentials, RegistrationData } from './types';
 
 export const signIn = (
   credentials: Credentials,

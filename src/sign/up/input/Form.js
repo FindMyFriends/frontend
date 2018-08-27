@@ -6,14 +6,14 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withFormStyles } from '../../../description/input/parts/withFormStyles';
-import type { RegistrationData } from '../../../seeker/types';
+import type { RegistrationData } from '../../../sign/types';
 import SexInput from '../../../description/input/parts/SexInput';
 import EthnicGroupInput from '../../../description/input/parts/EthnicGroupInput';
 import BirthYearInput from '../../../description/input/parts/BirthYearInput';
 
 type Props = {|
   +classes: Object,
-  +onChange: (string) => (void),
+  +onChange: (string) => (Object),
   +onSubmit: () => (void),
   +selects: Object,
   +registrationData: RegistrationData,

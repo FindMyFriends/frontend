@@ -6,8 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 type Props = {|
-  +onChange: (string) => ((Object) => (void)),
-  +value: ?string,
+  +onChange: (Object) => (void),
+  +value: ?number | ?string,
   +selects: Object,
   +classes: Object,
 |};

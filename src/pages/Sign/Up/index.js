@@ -5,7 +5,7 @@ import { unflatten } from 'flat';
 import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
-import type { RegistrationData } from '../../../seeker/types';
+import type { RegistrationData } from '../../../sign/types';
 import { getEthnicGroups, getSex } from '../../../description/selects';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DESCRIPTION, options } from '../../../description/endpoints';
@@ -86,7 +86,7 @@ const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   signUp: (
     registrationData: RegistrationData,
-    next: () => (void),
+    next: (Object) => (Promise<any>),
   ) => dispatch(signUp(registrationData, next)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Up);

@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
 import { receivedApiError } from '../ui/actions';
-import type { RegistrationData } from './types';
+import type { RegistrationData } from '../sign/types';
 
 export const join = (
   data: RegistrationData,
