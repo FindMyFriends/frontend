@@ -9,6 +9,7 @@ import { withFormStyles } from '../../../description/input/parts/withFormStyles'
 import type { RegistrationData } from '../../../seeker/types';
 import SexInput from '../../../description/input/parts/SexInput';
 import EthnicGroupInput from '../../../description/input/parts/EthnicGroupInput';
+import BirthYearInput from '../../../description/input/parts/BirthYearInput';
 
 type Props = {|
   +classes: Object,
@@ -56,6 +57,11 @@ const Form = ({
         value={registrationData.general.lastname}
       />
     </FormControl>
+    <BirthYearInput
+      onChange={onChange('general.birth_year')}
+      value={registrationData.general.birth_year}
+      classes={classes}
+    />
     <SexInput
       onChange={onChange('general.sex')}
       value={registrationData.general.sex}

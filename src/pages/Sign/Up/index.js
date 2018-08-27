@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { flatten, unflatten } from 'flat';
+import { unflatten } from 'flat';
 import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
-import type { RegistrationData } from '../../../sign/types';
+import type { RegistrationData } from '../../../seeker/types';
 import { getEthnicGroups, getSex } from '../../../description/selects';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DESCRIPTION, options } from '../../../description/endpoints';
@@ -31,7 +31,7 @@ class Up extends React.Component<Props, State> {
         lastname: null,
         ethnic_group_id: null,
         sex: null,
-        age: { from: 22, to: 22 },
+        birth_year: null,
       },
     },
   };
@@ -52,7 +52,7 @@ class Up extends React.Component<Props, State> {
   handleSubmit = () => (
     this.props.signUp(
       this.state.registrationData,
-      () => this.props.history.push('sign/in'),
+      () => this.props.history.push('/sign/in'),
     )
   );
 

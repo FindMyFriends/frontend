@@ -31,5 +31,14 @@ export const signUp = (
   data: RegistrationData,
   next: (Object) => Promise<any>,
 ) => (dispatch: (mixed) => Object) => (
-  dispatch(join(data, next))
+  dispatch(join(
+    {
+      ...data,
+      general: {
+        ...data.general,
+        birth_year: parseInt(data.general.birth_year, 10),
+      },
+    },
+    next,
+  ))
 );

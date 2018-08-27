@@ -1,6 +1,4 @@
 // @flow
-import type { BirthYear } from '../description/types';
-
 export type RegistrationData = {|
   +email: string,
   +password: string,
@@ -9,6 +7,6 @@ export type RegistrationData = {|
     +lastname: string,
     +sex: string,
     +ethnic_group_id: number,
-    +birth_year: BirthYear,
+    +birth_year: number,
   },
 |};
