@@ -38,6 +38,8 @@ export const signUp = (
         birth_year: parseInt(data.general.birth_year, 10),
       },
     },
-    next,
+    joinInformation => Promise.resolve()
+      .then(() => dispatch(receivedSuccessMessage('To complete sign up process, please follow email instructions.')))
+      .then(() => next(joinInformation)),
   ))
 );
