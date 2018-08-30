@@ -13,6 +13,7 @@ import { default as EvolutionSpots } from '../pages/Evolution/Spots';
 import { default as SignIn } from '../pages/Sign/In';
 import { default as SignUp } from '../pages/Sign/Up';
 import { default as SignOut } from '../pages/Sign/Out';
+import { default as Activation } from '../pages/Activation';
 import { default as AllEvolutions } from '../pages/Evolutions';
 import { default as SingleEvolution } from '../pages/Evolution';
 import { default as ExtendEvolution } from '../pages/Evolutions/Extend';
@@ -32,6 +33,7 @@ const Routes = (): BrowserRouter => (
       <Layout path="/sign/in" component={SignIn} />
       <Layout path="/sign/up" component={SignUp} />
       <Layout path="/sign/out" component={SignOut} />
+      <Layout path="/activation/:code" component={Activation} />
       <Layout onEnter={loggedIn} path="/evolutions/:id/extend" component={ExtendEvolution} />
       <Layout onEnter={loggedIn} path="/evolutions/:id/spots" component={EvolutionSpots} />
       <Layout onEnter={loggedIn} path="/evolutions/:id" component={SingleEvolution} />
