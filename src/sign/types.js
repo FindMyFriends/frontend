@@ -1,7 +1,14 @@
 // @flow
+import type { Error } from '../validation';
+
 export type Credentials = {|
   email: string,
   password: string,
+|};
+
+export type CredentialsErrors = {|
+  email: Error,
+  password: Error,
 |};
 
 export type RegistrationData = {|
@@ -17,13 +24,13 @@ export type RegistrationData = {|
 |};
 
 export type RegistrationDataErrors = {|
-  +email: ?string,
-  +password: ?string,
+  +email: Error,
+  +password: Error,
   +general: {
-    +firstname: ?string,
-    +lastname: ?string,
-    +sex: ?string,
-    +ethnic_group_id: ?string,
-    +birth_year: ?string,
+    +firstname: Error,
+    +lastname: Error,
+    +sex: Error,
+    +ethnic_group_id: Error,
+    +birth_year: Error,
   },
 |};

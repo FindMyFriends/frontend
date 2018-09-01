@@ -1,6 +1,6 @@
 // @flow
-import * as validation from '../validation';
-import type { RegistrationData, RegistrationDataErrors } from './types';
+import * as validation from '../../validation/index';
+import type { RegistrationData, RegistrationDataErrors } from '../types';
 
 export const errors = (registrationData: RegistrationData): RegistrationDataErrors => ({
   email: validation.email(registrationData.email),

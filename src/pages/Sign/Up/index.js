@@ -10,7 +10,7 @@ import { getEthnicGroups, getSex } from '../../../description/selects';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DESCRIPTION, options } from '../../../description/endpoints';
 import Loader from '../../../ui/Loader';
-import * as validation from '../../../sign/validation';
+import * as validation from '../../../sign/up/validation';
 
 type Props = {|
   +signUp: (RegistrationData, () => (void)) => (void),

@@ -4,19 +4,25 @@ import { connect } from 'react-redux';
 import Form from './../../../sign/in/input/Form';
 import { signIn } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
-import type { Credentials } from '../../../sign/types';
+import type { Credentials, CredentialsErrors } from '../../../sign/types';
+import * as validation from '../../../sign/in/validation';
 
 type Props = {|
-  +signIn: (Credentials, () => (void)) => (void)
+  +signIn: (Credentials, () => (void)) => (void),
 |};
 type State = {|
   credentials: Credentials,
+  errors: CredentialsErrors,
 |};
 class In extends React.Component<Props, State> {
   state = {
     credentials: {
       email: 'me@fmf.com',
       password: 'heslo123',
+    },
+    errors: {
+      email: null,
+      password: null,
     },
   };
 
@@ -26,15 +32,23 @@ class In extends React.Component<Props, State> {
         ...this.state.credentials,
         [name]: event.target.value,
       },
+      errors: {
+        ...this.state.errors,
+        [name]: null,
+      },
     })
   );
 
-  handleSubmit = () => (
-    this.props.signIn(
-      this.state.credentials,
-      () => window.location.replace('/demands'),
-    )
-  );
+  handleSubmit = () => {
+    if (validation.anyErrors(this.state.credentials)) {
+      this.setState({ ...this.state, errors: validation.errors(this.state.credentials) });
+    } else {
+      this.props.signIn(
+        this.state.credentials,
+        () => window.location.replace('/demands'),
+      );
+    }
+  };
 
   render() {
     return (
@@ -43,6 +57,7 @@ class In extends React.Component<Props, State> {
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
           credentials={this.state.credentials}
+          errors={this.state.errors}
         />
       </Center>
     );

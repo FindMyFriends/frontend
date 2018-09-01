@@ -2,6 +2,8 @@
 import * as emailValidator from 'email-validator';
 import { trim, inRange } from 'lodash';
 
+export type Error = ?string;
+
 const REQUIRED = 'REQUIRED';
 const NOT_EMAIL = 'NOT_EMAIL';
 const MIN_6_CHARS = 'MIN_6_CHARS';
@@ -24,7 +26,6 @@ export const password = (value: ?string) => {
 
 export const birthYearRange = (value: ?number) => {
   if (required(value)) return required(value);
-  // $FlowFixMe
   else if (!inRange(value, 1850, 2018)) return BIRTH_YEAR_OUT_OF_RANGE;
   return null;
 };
