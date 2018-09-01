@@ -5,11 +5,12 @@ import { unflatten } from 'flat';
 import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
-import type { RegistrationData } from '../../../sign/types';
+import type { RegistrationData, RegistrationDataErrors } from '../../../sign/types';
 import { getEthnicGroups, getSex } from '../../../description/selects';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DESCRIPTION, options } from '../../../description/endpoints';
 import Loader from '../../../ui/Loader';
+import * as validation from '../../../sign/validation';
 
 type Props = {|
   +signUp: (RegistrationData, () => (void)) => (void),
@@ -20,10 +21,22 @@ type Props = {|
 |};
 type State = {|
   registrationData: RegistrationData,
+  errors: RegistrationDataErrors,
 |};
 class Up extends React.Component<Props, State> {
   state = {
     registrationData: {
+      email: null,
+      password: null,
+      general: {
+        firstname: null,
+        lastname: null,
+        ethnic_group_id: null,
+        sex: null,
+        birth_year: null,
+      },
+    },
+    errors: {
       email: null,
       password: null,
       general: {
@@ -46,15 +59,23 @@ class Up extends React.Component<Props, State> {
         ...this.state.registrationData,
         [name]: event.target.value,
       }),
+      errors: unflatten({
+        ...this.state.errors,
+        [name]: null,
+      }),
     })
   );
 
-  handleSubmit = () => (
-    this.props.signUp(
-      this.state.registrationData,
-      () => this.props.history.push('/sign/in'),
-    )
-  );
+  handleSubmit = () => {
+    if (validation.anyErrors(this.state.registrationData)) {
+      this.setState({ ...this.state, errors: validation.errors(this.state.registrationData) });
+    } else {
+      this.props.signUp(
+        this.state.registrationData,
+        () => this.props.history.push('/sign/in'),
+      );
+    }
+  };
 
   render() {
     if (this.props.fetching) {
@@ -67,6 +88,7 @@ class Up extends React.Component<Props, State> {
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
           registrationData={this.state.registrationData}
+          errors={this.state.errors}
         />
       </Center>
     );

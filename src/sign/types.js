@@ -15,3 +15,15 @@ export type RegistrationData = {|
     +birth_year: ?number,
   },
 |};
+
+export type RegistrationDataErrors = {|
+  +email: ?string,
+  +password: ?string,
+  +general: {
+    +firstname: ?string,
+    +lastname: ?string,
+    +sex: ?string,
+    +ethnic_group_id: ?string,
+    +birth_year: ?string,
+  },
+|};
