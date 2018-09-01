@@ -1,30 +1,37 @@
 // @flow
 import React from 'react';
-import InputRating from '../../../components/Rating/InputRating';
-import LengthInput from './LengthInput';
+import FormControl from '@material-ui/core/FormControl/FormControl';
+import InputLabel from '@material-ui/core/InputLabel/InputLabel';
+import Select from '@material-ui/core/Select/Select';
+import MenuItem from '@material-ui/core/MenuItem/MenuItem';
+import { withFormStyles } from './withFormStyles';
 import ColorInput from './ColorInput';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
   +values: Object,
   +selects: Object,
+  +classes: Object,
 |};
-const Hair = ({
+const Nails = ({
   onChange,
   values,
   selects,
+  classes,
 }: Props) => (
   <React.Fragment>
     <ColorInput colors={selects.nailsColors} value={values['hands.nails.color_id']} onChange={onChange('hands.nails.color_id')}>
       Color
     </ColorInput>
-    <LengthInput onChange={onChange('hands.nails.length.value')} value={values['hands.nails.length.value']}>
-      Length
-    </LengthInput>
-    <InputRating current={values['hands.nails.care']} onChange={onChange('hands.nails.care')}>
-      Care
-    </InputRating>
+    <FormControl className={classes.formControl}>
+      <InputLabel>Length</InputLabel>
+      <Select value={values['hands.nails.length_id'] || ''} onChange={onChange('hands.nails.length_id')}>
+        {selects.nailsLegths.map(length => (
+          <MenuItem key={length.id} value={length.id}>{length.name}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   </React.Fragment>
 );
 
-export default Hair;
+export default withFormStyles()(Nails);

@@ -9,7 +9,6 @@ import { isFetching, getScopeOptions } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
 import { history as spotHistory } from '../../../demand/spot/endpoints';
-import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
   getBreastSizes,
@@ -22,7 +21,9 @@ import {
   getEyebrowColors,
   getEyeColors,
   getNailsColors,
-  getHandHairColors,
+  getBeardLengths,
+  getBeardStyles,
+  getHairLengths,
 } from '../../../description/selects';
 import steps from '../../../demand/input/parts/steps';
 import { spotsFetching, getSpotsByDemand } from '../../../spot/selects';
@@ -88,7 +89,7 @@ class Extend extends React.Component<Props, State> {
   handleReconsider = () => (
     this.props.reconsider(
       this.state.demand.id,
-      normalize(this.state.demand),
+      this.state.demand,
       this.props.etags.demand,
       () => this.props.history.push(`/demands/${this.state.demand.id}`),
     )
@@ -152,12 +153,14 @@ const mapStateToProps = (state, { match: { params: { id } } }) => {
       breastSizes: getBreastSizes(getScopeOptions(state, DEMAND)),
       hairStyles: getHairStyles(getScopeOptions(state, DEMAND)),
       hairColors: getHairColors(getScopeOptions(state, DEMAND)),
+      hairLengths: getHairLengths(getScopeOptions(state, DEMAND)),
       faceShapes: getFaceShapes(getScopeOptions(state, DEMAND)),
       beardColors: getBeardColors(getScopeOptions(state, DEMAND)),
       eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),
       eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
       nailsColors: getNailsColors(getScopeOptions(state, DEMAND)),
-      handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
+      beardStyles: getBeardStyles(getScopeOptions(state, DEMAND)),
+      beardLengths: getBeardLengths(getScopeOptions(state, DEMAND)),
       timelineSides: getTimelineSides(getScopeOptions(state, DEMAND)),
     },
     fetching: demandFetching(id, state) || isFetching(state, DEMAND) || spotsFetching(state),

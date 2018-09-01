@@ -9,8 +9,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import { withFormStyles } from './withFormStyles';
-import MassInput from './MassInput';
-import LengthInput from './LengthInput';
 
 const styles = {
   radioGroup: {
@@ -61,12 +59,6 @@ const Body = ({
         ))}
       </Select>
     </FormControl>
-    <MassInput onChange={onChange('body.weight.value')} value={values['body.weight.value']}>
-      Weight
-    </MassInput>
-    <LengthInput onChange={onChange('body.height.value')} value={values['body.height.value']}>
-      Height
-    </LengthInput>
     <BreastSizeBySex
       onChange={onChange}
       values={values}

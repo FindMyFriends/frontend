@@ -29,14 +29,10 @@ const Overview = ({ description, cards = null }: Props) => {
         title="Body"
         isEmpty={isEmpty([
           description.body.build,
-          description.body.weight,
-          description.body.height,
           description.body.breast_size,
         ])}
         rows={[
           <Row.Text key="Build" title="Build" text={description.body.build} />,
-          <Row.Text key="Weight" title="Weight" text={description.body.weight} />,
-          <Row.Text key="Height" title="Height" text={description.body.height} />,
           <Row.Text key="Breast size" title="Breast size" text={description.body.breast_size} />,
         ]}
       />
@@ -104,37 +100,22 @@ const Overview = ({ description, cards = null }: Props) => {
         title="Hands"
         isEmpty={isEmpty([
           description.hands.care,
-          description.hands.vein_visibility,
-          description.hands.joint_visibility,
+          description.hands.visible_veins,
         ])}
         rows={[
           <Row.Progress key="Care" title="Care" value={description.hands.care} />,
-          <Row.Progress key="Vein visibility" title="Vein visibility" value={description.hands.vein_visibility} />,
-          <Row.Progress key="Joint visibility" title="Joint visibility" value={description.hands.joint_visibility} />,
+          <Row.Text key="Vein visibility" title="Vein visibility" text={<YesNoMaybe>{description.hands.visible_veins}</YesNoMaybe>} />,
         ]}
       />
       <Card.Solid
         title="Nails"
         isEmpty={isEmpty([
-          description.hands.nails.care,
           description.hands.nails.color,
           description.hands.nails.length,
         ])}
         rows={[
-          <Row.Progress key="Care" title="Care" value={description.hands.nails.care} />,
           <Row.Text key="Color" title="Color" text={description.hands.nails.color} />,
           <Row.Text key="Length" title="Length" text={description.hands.nails.length} />,
-        ]}
-      />
-      <Card.Solid
-        title="Hand hair"
-        isEmpty={isEmpty([
-          description.hands.hair.amount,
-          description.hands.hair.color,
-        ])}
-        rows={[
-          <Row.Progress key="Amount" title="Amount" value={description.hands.hair.amount} />,
-          <Row.Text key="Color" title="Color" text={description.hands.hair.color} />,
         ]}
       />
       {cards}

@@ -5,7 +5,6 @@ import Body from './Body';
 import Hair from './Hair';
 import { default as GeneralFace } from './Face/General';
 import { default as GeneralHands } from './Hands/General';
-import { default as HandsHair } from './Hands/Hair';
 import Beard from './Beard';
 import Eyebrow from './Eyebrow';
 import Eyes from './Eyes';
@@ -48,7 +47,7 @@ const steps = (props: Object): Object => {
         },
         {
           component: <GeneralFace {...props} />,
-          title: 'General info about face',
+          title: 'Face',
         },
         {
           component: <Beard {...props} />,
@@ -78,10 +77,6 @@ const steps = (props: Object): Object => {
         {
           component: <Nails {...props} />,
           title: 'Nails',
-        },
-        {
-          component: <HandsHair {...props} />,
-          title: 'Hair',
         },
       ],
     },

@@ -10,7 +10,6 @@ import { isFetching } from '../../../schema/selects';
 import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
 import { extend, single, options, schema } from '../../../evolution/endpoints';
 import { getScopeOptions } from '../../../evolution/selects';
-import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
   getBreastSizes,
@@ -23,7 +22,9 @@ import {
   getEyebrowColors,
   getEyeColors,
   getNailsColors,
-  getHandHairColors,
+  getHairLengths,
+  getBeardStyles,
+  getBeardLengths,
 } from '../../../description/selects';
 import steps from '../../../evolution/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
@@ -86,7 +87,7 @@ class Extend extends React.Component<Props, State> {
 
   handleExtend = () => (
     this.props.extend(
-      normalize(this.state.evolution),
+      this.state.evolution,
       (id: string) => Promise.resolve()
         .then(this.props.invalidateAllEvolutions)
         .then(this.props.history.push(`/evolutions/${id}`)),
@@ -151,7 +152,9 @@ const mapStateToProps = state => ({
     eyebrowColors: getEyebrowColors(getScopeOptions(state)),
     eyeColors: getEyeColors(getScopeOptions(state)),
     nailsColors: getNailsColors(getScopeOptions(state)),
-    handHairColors: getHandHairColors(getScopeOptions(state)),
+    hairLengths: getHairLengths(getScopeOptions(state)),
+    beardStyles: getBeardStyles(getScopeOptions(state)),
+    beardLengths: getBeardLengths(getScopeOptions(state)),
     timelineSides: getTimelineSides(getScopeOptions(state)),
   },
   fetching: state.evolution.fetching || isFetching(state, EVOLUTION),

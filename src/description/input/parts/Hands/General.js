@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
 import InputRating from '../../../../components/Rating/InputRating';
+import IndeterminateCheckbox from '../../../../components/MUI/IndeterminateCheckbox';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -11,12 +13,15 @@ const General = ({ onChange, values }: Props) => (
     <InputRating current={values['hands.care']} onChange={onChange('hands.care')}>
       Care
     </InputRating>
-    <InputRating current={values['hands.vein_visibility']} onChange={onChange('hands.vein_visibility')}>
-      Vein visibility
-    </InputRating>
-    <InputRating current={values['hands.joint_visibility']} onChange={onChange('hands.joint_visibility')}>
-      Joint visibility
-    </InputRating>
+    <FormControlLabel
+      label="Visible veins"
+      control={
+        <IndeterminateCheckbox
+          checked={values['hands.visible_veins']}
+          onChange={onChange('hands.visible_veins')}
+        />
+      }
+    />
   </React.Fragment>
 );
 

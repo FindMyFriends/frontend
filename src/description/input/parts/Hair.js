@@ -7,7 +7,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import IndeterminateCheckbox from '../../../components/MUI/IndeterminateCheckbox';
-import LengthInput from './LengthInput';
 import { withFormStyles } from './withFormStyles';
 import ColorInput from './ColorInput';
 
@@ -73,9 +72,14 @@ const Hair = ({
     <ColorInput colors={selects.hairColors} value={values['hair.color_id']} onChange={onChange('hair.color_id')}>
       Color
     </ColorInput>
-    <LengthInput value={values['hair.length.value']} onChange={onChange('hair.length.value')}>
-      Length
-    </LengthInput>
+    <FormControl className={classes.formControl}>
+      <InputLabel>Length</InputLabel>
+      <Select value={values['hair.length_id'] || ''} onChange={onChange('hair.length_id')}>
+        {selects.hairLengths.map(length => (
+          <MenuItem key={length.id} value={length.id}>{length.name}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
     <FormGroup>
       <FormControlLabel
         label="Nature"

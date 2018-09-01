@@ -9,7 +9,6 @@ import NestedStepper from '../../../components/NestedStepper';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
-import normalize from '../../../description/input/normalize';
 import {
   getBodyBuilds,
   getBreastSizes,
@@ -22,7 +21,9 @@ import {
   getEyebrowColors,
   getEyeColors,
   getNailsColors,
-  getHandHairColors,
+  getHairLengths,
+  getBeardStyles,
+  getBeardLengths,
 } from '../../../description/selects';
 import { getTimelineSides } from '../../../demand/selects';
 import steps from '../../../demand/input/parts/steps';
@@ -66,22 +67,11 @@ class Add extends React.Component<Props, State> {
       body: {
         breast_size: null,
         build_id: null,
-        height: {
-          value: null,
-          unit: 'cm',
-        },
-        weight: {
-          value: null,
-          unit: 'kg',
-        },
       },
       hair: {
         color_id: null,
         style_id: null,
-        length: {
-          value: null,
-          unit: 'cm',
-        },
+        length_id: null,
         nature: null,
         highlights: null,
         roots: null,
@@ -93,11 +83,8 @@ class Add extends React.Component<Props, State> {
       },
       beard: {
         color_id: null,
-        style: null,
-        length: {
-          value: null,
-          unit: 'cm',
-        },
+        style_id: null,
+        length_id: null,
       },
       eyebrow: {
         color_id: null,
@@ -119,19 +106,10 @@ class Add extends React.Component<Props, State> {
       },
       hands: {
         care: null,
-        vein_visibility: null,
-        joint_visibility: null,
+        visible_veins: null,
         nails: {
-          care: null,
-          length: {
-            value: null,
-            unit: 'cm',
-          },
+          length_id: null,
           color_id: null,
-        },
-        hair: {
-          color_id: null,
-          amount: null,
         },
       },
     },
@@ -182,7 +160,7 @@ class Add extends React.Component<Props, State> {
 
   handleAdd = () => {
     this.props.add(
-      normalize(this.state.demand),
+      this.state.demand,
       (id: string) => this.props.history.push(`/demands/${id}`),
     );
   };
@@ -222,7 +200,9 @@ const mapStateToProps = state => ({
     eyebrowColors: getEyebrowColors(getScopeOptions(state, DEMAND)),
     eyeColors: getEyeColors(getScopeOptions(state, DEMAND)),
     nailsColors: getNailsColors(getScopeOptions(state, DEMAND)),
-    handHairColors: getHandHairColors(getScopeOptions(state, DEMAND)),
+    hairLengths: getHairLengths(getScopeOptions(state, DEMAND)),
+    beardStyles: getBeardStyles(getScopeOptions(state, DEMAND)),
+    beardLengths: getBeardLengths(getScopeOptions(state, DEMAND)),
     timelineSides: getTimelineSides(getScopeOptions(state, DEMAND)),
   },
   fetching: isFetching(state, DEMAND),
