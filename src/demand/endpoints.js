@@ -13,7 +13,7 @@ import { forget, track } from './spot/endpoints';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { PaginationType } from '../dataset/PaginationType';
-import extractedLocationId from '../api/response';
+import * as response from '../api/response';
 import { fetchedAll, fetchedSingle } from './selects';
 import { omittedSpot } from '../spot/endpoints';
 import { getSpotsByDemand } from '../spot/selects';
@@ -91,8 +91,9 @@ export const add = (input: Object, next: (string) => void) => (dispatch: (mixed)
   axios.post('/demands', demand)
     .then((response) => {
       dispatch(receivedSuccessMessage('Demand has been added'));
-      return extractedLocationId(response.headers.location);
+      return response.headers;
     })
+    .then(headers => response.extractedLocationId(headers.location))
     .then((id) => {
       track(id, spots);
       return id;

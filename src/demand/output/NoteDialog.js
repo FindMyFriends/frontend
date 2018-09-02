@@ -23,13 +23,12 @@ export default class NoteDialog extends React.Component<Props, State> {
   };
 
   componentDidMount = () => this.resetNote();
-
   resetNote = () => this.setState({ ...this.state, note: this.props.note || '' });
-  handleClose = () => Promise.resolve().then(() => this.setState({ ...this.state, open: false }));
+  close = () => Promise.resolve().then(() => this.setState({ ...this.state, open: false }));
   handleClickOpen = () => this.setState({ ...this.state, open: true });
-  handleCloseReset = () => this.handleClose().then(this.resetNote);
+  handleClose = () => this.close().then(this.resetNote);
   handleChange = (event: Object) => this.setState({ ...this.state, note: event.target.value });
-  handleSave = () => this.props.onSave(this.state.note, this.handleClose);
+  handleSave = () => this.props.onSave(this.state.note, this.close);
 
   render() {
     return (
@@ -37,7 +36,7 @@ export default class NoteDialog extends React.Component<Props, State> {
         <Note onClick={this.handleClickOpen}>{this.props.note}</Note>
         <Dialog
           open={this.state.open}
-          onClose={this.handleCloseReset}
+          onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Note</DialogTitle>
@@ -53,7 +52,7 @@ export default class NoteDialog extends React.Component<Props, State> {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseReset} color="primary">Cancel</Button>
+            <Button onClick={this.handleClose} color="primary">Cancel</Button>
             <Button onClick={this.handleSave} color="primary">Save</Button>
           </DialogActions>
         </Dialog>

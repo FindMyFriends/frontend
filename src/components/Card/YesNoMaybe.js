@@ -3,11 +3,10 @@ import React from 'react';
 import YesIcon from '@material-ui/icons/Check';
 import NoIcon from '@material-ui/icons/Close';
 
-
 type Props = {
   +children: ?boolean,
 };
-export const YesNoMaybe = ({ children, ...passedProps }: Props) => {
+export default ({ children, ...passedProps }: Props) => {
   const props = {
     style: {
       fontSize: 15,

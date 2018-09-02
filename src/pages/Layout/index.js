@@ -8,7 +8,7 @@ import Error403 from '../Error/Error403';
 type Props = {
   +component: any,
 };
-const Layout = ({ component: Component, ...rest }: Props): Route => (
+export default ({ component: Component, ...rest }: Props): Route => (
   <Route
     {...rest}
     render={(props) => {
@@ -31,5 +31,3 @@ const Layout = ({ component: Component, ...rest }: Props): Route => (
     }}
   />
 );
-
-export default Layout;

@@ -6,7 +6,7 @@ import {
   REQUESTED_SCHEMA_OPTIONS,
 } from './actions';
 
-export const schema = (state: Object = {}, action: Object) => {
+export default (state: Object = {}, action: Object) => {
   switch (action.type) {
     case RECEIVED_SCHEMA_OPTIONS:
       return {

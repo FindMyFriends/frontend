@@ -1,5 +1,6 @@
 // @flow
 import { fromHeader } from '../dataset/pagination';
+import * as response from '../api/response';
 
 export const EVOLUTION = 'EVOLUTION';
 export const RECEIVED_EVOLUTIONS = 'RECEIVED_EVOLUTIONS';
@@ -26,7 +27,7 @@ export const requestedSingle = (id: string) => ({
 export const receivedAll = (evolutions: Array<Object>, headers: Object) => ({
   type: RECEIVED_EVOLUTIONS,
   evolutions,
-  total: parseInt(headers['x-total-count'], 10),
+  total: response.extractedTotalCount(headers),
   pagination: fromHeader(headers.link),
   fetching: false,
 });

@@ -5,8 +5,6 @@ import { default as DescriptionOverview } from '../../description/output/Overvie
 type Props = {|
   +evolution: Object,
 |};
-const Overview = ({ evolution }: Props) => (
+export default ({ evolution }: Props) => (
   <DescriptionOverview description={evolution} />
 );
-
-export default Overview;

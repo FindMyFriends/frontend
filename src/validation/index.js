@@ -1,5 +1,6 @@
 // @flow
 import * as emailValidator from 'email-validator';
+import { flatten } from 'flat';
 import { trim, inRange } from 'lodash';
 
 export type Error = ?string;
@@ -36,3 +37,7 @@ export const toMessage = (error: string) => ({
   MIN_6_CHARS: 'Use at least 6 chars',
   BIRTH_YEAR_OUT_OF_RANGE: 'Range from 1850 to 2018',
 }[error]);
+
+export const anyErrors = (validations: Object): boolean => (
+  Object.values(flatten(validations)).filter(validation => validation).length > 0
+);

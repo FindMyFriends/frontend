@@ -15,13 +15,5 @@ export const errors = (registrationData: RegistrationData): RegistrationDataErro
 });
 
 export const anyErrors = (registrationData: RegistrationData): boolean => (
-  [
-    validation.email(registrationData.email),
-    validation.password(registrationData.password),
-    validation.required(registrationData.general.firstname),
-    validation.required(registrationData.general.lastname),
-    validation.required(registrationData.general.sex),
-    validation.birthYearRange(registrationData.general.birth_year),
-    validation.required(registrationData.general.ethnic_group_id),
-  ].filter(value => value).length > 0
+  validation.anyErrors(errors(registrationData))
 );

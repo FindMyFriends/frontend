@@ -5,19 +5,15 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
+import type { SortColumnType } from './SortColumnType';
 
-type SortColumn = {|
-  +id: string,
-  +sortable: boolean,
-  +label: string,
-|};
 type Props = {|
-  +columns: Array<SortColumn>,
+  +columns: Array<SortColumnType>,
   +onSort: (string) => (void),
   +order: string,
   +orderBy: string,
 |};
-const SortTableHead = ({
+export default ({
   order,
   orderBy,
   onSort,
@@ -47,5 +43,3 @@ const SortTableHead = ({
     </TableRow>
   </TableHead>
 );
-
-export default SortTableHead;

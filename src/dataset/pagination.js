@@ -10,14 +10,14 @@ export const fromHeader = (link: string): PaginationType => {
   };
 };
 
-const paginateWithReset = (perPage: number): PaginationType => ({
+const withReset = (perPage: number): PaginationType => ({
   page: 1,
   perPage,
 });
 
 export const withPerPage = (perPage: number, state: Object): Object => ({
   ...state,
-  pagination: paginateWithReset(perPage),
+  pagination: withReset(perPage),
 });
 
 export const withPage = (page: number, state: Object): Object => ({

@@ -9,7 +9,7 @@ type Props = {|
   +max: number,
   +current: number,
 |};
-const OutputRating = ({ max, current }: Props) => (
+export default ({ max, current }: Props) => (
   <Rater
     total={max}
     rating={current}
@@ -18,5 +18,3 @@ const OutputRating = ({ max, current }: Props) => (
     <CustomRating size={SMALL} />
   </Rater>
 );
-
-export default OutputRating;

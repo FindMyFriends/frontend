@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import { trim } from 'lodash';
 import Typography from '@material-ui/core/Typography';
 import Title from '../Title';
 import OutputRating from '../../Rating/OutputRating';
@@ -17,7 +18,7 @@ type TextProps = {|
   +text: string | Object,
 |};
 export const Text = ({ title, text }: TextProps) => {
-  if (typeof text === 'string' && text.trim().length > 0) {
+  if (typeof text === 'string' && trim(text).length > 0) {
     return (
       <Row>
         <Title>{title}</Title>

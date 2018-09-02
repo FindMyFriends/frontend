@@ -1,9 +1,7 @@
 // @flow
-
 import type { Age } from './types';
 
 const isFilledAge = (age: Age): bool => age.from !== null && age.to !== null;
-
 const isFilled = (value: ?mixed) => value !== null;
 
 export const isValid = (description: Object): boolean => {
