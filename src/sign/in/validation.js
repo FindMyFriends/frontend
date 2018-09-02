@@ -8,8 +8,5 @@ export const errors = (credentials: Credentials): CredentialsErrors => ({
 });
 
 export const anyErrors = (credentials: Credentials): boolean => (
-  [
-    validation.email(credentials.email),
-    validation.password(credentials.password),
-  ].filter(value => value).length > 0
+  validation.anyErrors(errors(credentials))
 );
