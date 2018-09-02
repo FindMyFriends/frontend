@@ -14,7 +14,7 @@ const initState = {
   all: {},
   info: {},
 };
-export const soulmate = (state: stateType = initState, action: Object): stateType => {
+export default (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case REQUESTED_SOULMATES_BY_DEMAND:
       return {

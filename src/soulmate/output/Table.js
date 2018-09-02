@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import grey from '@material-ui/core/colors/grey';
 import { default as EvolutionIcon } from '../../evolution/output/Icon';
 import SortTableHead from '../../dataset/SortTableHead';
-import { YesNoMaybe } from '../../components/Card/Decision';
+import YesNoMaybe from '../../components/Card/YesNoMaybe';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import EnhancedTableToolbar from './EnhancedTableToolbar';

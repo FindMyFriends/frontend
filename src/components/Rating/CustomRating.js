@@ -10,7 +10,7 @@ type Props = {|
   isActive?: boolean,
   size: 'big' | 'small',
 |};
-const CustomRating = ({ willBeActive, isActive, size }: Props) => {
+export default ({ willBeActive, isActive, size }: Props) => {
   if (isActive) {
     return (size === BIG ? <BigDot /> : <SmallDot />);
   } else if (willBeActive) {
@@ -18,5 +18,3 @@ const CustomRating = ({ willBeActive, isActive, size }: Props) => {
   }
   return (size === BIG ? <EmptyBigDot /> : <EmptySmallDot />);
 };
-
-export default CustomRating;

@@ -24,7 +24,7 @@ const initState = {
   pagination: null,
   total: 0,
 };
-export const demand = (state: stateType = initState, action: Object): stateType => {
+export default (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case RECEIVED_DEMAND:
       return {

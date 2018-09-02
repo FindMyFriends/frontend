@@ -19,7 +19,7 @@ const initState = {
     fetching: true,
   },
 };
-export const spot = (state: stateType = initState, action: Object): stateType => {
+export default (state: stateType = initState, action: Object): stateType => {
   switch (action.type) {
     case REQUESTED_PLACE:
       return {

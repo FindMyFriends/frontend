@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { YesNoMaybe } from '../../components/Card/Decision';
+import YesNoMaybe from '../../components/Card/YesNoMaybe';
 import * as Row from '../../components/Card/Row';
 import * as Card from '../../components/Card';
 import { formattedAge } from '../formats';
