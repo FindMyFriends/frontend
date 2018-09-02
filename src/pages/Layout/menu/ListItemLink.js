@@ -11,7 +11,7 @@ type Props = {|
   +href: string,
   +icon: Object,
 |};
-const ListItemLink = ({ children, href, icon }: Props) => (
+export default ({ children, href, icon }: Props) => (
   <ListItem button>
     <Link to={href}>
       <ListItemIcon>{icon}</ListItemIcon>

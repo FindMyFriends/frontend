@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { flatten, unflatten } from 'flat';
+import { flatten } from 'flat';
 import moment from 'moment';
-import { merge, cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
+import * as events from '../../../components/form/events';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/selects';
@@ -69,18 +70,10 @@ class Extend extends React.Component<Props, State> {
     );
   };
 
-  // TODO: Move - common with demand
   handleChange = name => event => (
     this.setState({
       evolution: {
-        ...merge(
-          this.state.evolution,
-          unflatten({
-            [name]: event.target.type === 'checkbox'
-              ? event.target.checked
-              : event.target.value,
-          }),
-        ),
+        ...events.flattenChange(event, name, this.state.evolution),
       },
     })
   );

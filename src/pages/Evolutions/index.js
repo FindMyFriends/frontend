@@ -49,8 +49,10 @@ class All extends React.Component<Props, State> {
   };
 
   componentDidMount = () => (
-    this.reload(() =>
-      this.setState({ ...this.state, columns: mostPriorColumnIdentifiers(this.props.columns) }))
+    this.reload(() => this.setState({
+      ...this.state,
+      columns: mostPriorColumnIdentifiers(this.props.columns),
+    }))
   );
 
   reload = (next: () => (void) = () => {}) => {
