@@ -24,5 +24,3 @@ const NormalLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;
-
-export default ListItemLink;
