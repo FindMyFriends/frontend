@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { mapValues } from 'lodash';
+import { injectIntl } from 'react-intl';
 import Table from './../../evolution/output/Table';
 import { all, revert } from '../../evolution/endpoints';
 import { toApiOrdering, withSort } from './../../dataset/sorts';
@@ -16,7 +18,6 @@ import {
   getScopeColumns,
 } from '../../evolution/selects';
 import { invalidatedAll } from '../../evolution/actions';
-import * as columns from '../../dataset/columns';
 
 type Props = {|
   +columns: Object,
@@ -27,6 +28,7 @@ type Props = {|
   +revert: (string, () => (void)) => (void),
   +requestedConfirm: (string, (Promise<any>) => (Promise<any>)) => (void),
   +invalidateAllEvolutions: () => (void),
+  +intl: Object,
 |};
 type State = {|
   sort: SortType,
@@ -99,6 +101,7 @@ class All extends React.Component<Props, State> {
       evolutions,
       total,
       fetching,
+      intl,
     } = this.props;
     if (fetching) {
       return <Loader />;
@@ -107,7 +110,7 @@ class All extends React.Component<Props, State> {
       <React.Fragment>
         <Table
           columns={this.state.columns}
-          possibleColumns={columns.translations(this.props.columns)}
+          possibleColumns={mapValues(this.props.columns, (count, id) => intl.formatMessage({ id }))}
           rows={evolutions}
           sort={sort}
           pagination={pagination}
@@ -143,4 +146,4 @@ const mapDispatchToProps = dispatch => ({
   revert: (id: string, next: () => (void)) => dispatch(revert(id, next)),
   invalidateAllEvolutions: () => dispatch(invalidatedAll()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(All);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(All));

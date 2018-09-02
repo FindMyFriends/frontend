@@ -16,23 +16,25 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
+import { injectIntl } from 'react-intl';
 import EnhancedTableToolbar from './EnhanedTableToolbar';
 import SortTableHead from '../../dataset/SortTableHead';
-import { dotsToValue, translation } from '../../dataset/columns';
+import { dotsToValue } from '../../dataset/columns';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import SortColumnSelect from './SortColumnSelect';
+import type { SortColumnType } from '../../dataset/SortColumnType';
 
 const MostRight = styled.span`
   float: right;
   padding-right: 10px;
 `;
 
-const columnsToHeaders = (columns: Array<string>): Array<Object> => {
+const columnsToHeaders = (columns: Array<string>, intl: Object): Array<SortColumnType> => {
   const header = id => ({
     id,
     sortable: true,
-    label: translation(id),
+    label: intl.formatMessage({ id }),
   });
   return [
     ...columns.map(header),
@@ -66,6 +68,7 @@ type Props = {|
   +onSortSelectionChange: () => (void),
   +total: number,
   +classes: Object,
+  +intl: Object,
 |};
 const Table = ({
   onSort,
@@ -80,6 +83,7 @@ const Table = ({
   columns,
   onSortSelectionChange,
   possibleColumns,
+  intl,
 }: Props) => {
   return (
     <Paper>
@@ -98,7 +102,7 @@ const Table = ({
           order={order}
           orderBy={orderBy}
           onSort={onSort}
-          columns={columnsToHeaders(columns)}
+          columns={columnsToHeaders(columns, intl)}
         />
         <TableBody>
           {rows.map(evolution => (
@@ -149,4 +153,4 @@ const Table = ({
   );
 };
 
-export default withStyles(styles)(Table);
+export default withStyles(styles)(injectIntl(Table));

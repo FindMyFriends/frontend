@@ -8,12 +8,7 @@ export const track = (
   id: string,
   spots: Array<Object>,
 ) => {
-  Promise.all(spots.map(spot => (
-    axios.post(
-      `/demands/${id}/spots`,
-      spot,
-    )
-  )));
+  Promise.all(spots.map(spot => (axios.post(`/demands/${id}/spots`, spot))));
 };
 
 export const forget = (

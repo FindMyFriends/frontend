@@ -3,11 +3,7 @@ import React from 'react';
 import { default as descriptionSteps, MAIN_GENERAL } from '../../../description/input/parts/steps';
 import Spots from '../../../spot/input/parts/Spots';
 import General from '../../../description/input/parts/General';
-
-// TODO: Move - common with demands
-const lastStep = (parts: Object) => (
-  Math.max(...Object.keys(parts).map(number => parseInt(number, 10)))
-);
+import { lastStep } from '../../../components/NestedStepper/moves';
 
 const steps = (props: Object): Object => {
   const descriptionParts = descriptionSteps(props);

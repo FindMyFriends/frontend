@@ -19,15 +19,16 @@ import SortTableHead from '../../dataset/SortTableHead';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
+import type { SortColumnType } from '../../dataset/SortColumnType';
 
-const columns = [
+const getColumns = (): Array<SortColumnType> => ([
   { id: 'general.firstname', sortable: true, label: 'Firstname' },
   { id: 'general.lastname', sortable: true, label: 'Lastname' },
   { id: 'general.sex', sortable: true, label: 'Sex' },
   { id: 'created_at', sortable: true, label: 'Created at' },
   { id: 'note', sortable: false, label: 'Note' },
   { id: 'action', sortable: false, label: '' },
-];
+]);
 
 const styles = () => ({
   deleteIconHover: {
@@ -72,7 +73,7 @@ const Table = ({
         order={order}
         orderBy={orderBy}
         onSort={onSort}
-        columns={columns}
+        columns={getColumns()}
       />
       <TableBody>
         {rows.map(demand => (

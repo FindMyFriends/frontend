@@ -16,12 +16,13 @@ import YesNoMaybe from '../../components/Card/YesNoMaybe';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
+import type { SortColumnType } from '../../dataset/SortColumnType';
 
-const columns = [
+const getColumns = (): Array<SortColumnType> => ([
   { id: 'position', sortable: true, label: '#' },
   { id: 'related_at', sortable: true, label: 'Related at' },
   { id: 'action', sortable: false, label: '' },
-];
+]);
 
 const styles = () => ({
   iconHover: {
@@ -59,7 +60,7 @@ const Table = ({
         order={order}
         orderBy={orderBy}
         onSort={onSort}
-        columns={columns}
+        columns={getColumns()}
       />
       <TableBody>
         {rows.map(soulmate => (

@@ -6,17 +6,17 @@ import {
   REQUESTED_CONFIRM,
 } from './actions';
 
-type stateType = {|
+type State = {|
   +content: ?string,
   +type: ?string,
   +action: () => mixed,
 |};
-const initState = {
+const init = {
   content: null,
   type: null,
   action: () => null,
 };
-export default (state: stateType = initState, action: Object): Object => {
+export default (state: State = init, action: Object): State => {
   switch (action.type) {
     case RECEIVED_API_ERROR:
     case RECEIVED_SUCCESS:

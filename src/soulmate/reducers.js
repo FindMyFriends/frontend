@@ -6,15 +6,15 @@ import {
   RECEIVED_SOULMATE_INFO_BY_DEMAND,
 } from './actions';
 
-type stateType = {|
+type State = {|
   +all: Object,
   +info: Object,
 |};
-const initState = {
+const init = {
   all: {},
   info: {},
 };
-export default (state: stateType = initState, action: Object): stateType => {
+export default (state: State = init, action: Object): State => {
   switch (action.type) {
     case REQUESTED_SOULMATES_BY_DEMAND:
       return {

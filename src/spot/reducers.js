@@ -8,18 +8,18 @@ import {
 } from './actions';
 import { getSpotsWithoutDemand } from './selects';
 
-type stateType = {|
+type State = {|
   +places: Object,
   +all: Object,
 |};
-const initState = {
+const init = {
   places: {},
   all: {
     payload: {},
     fetching: true,
   },
 };
-export default (state: stateType = initState, action: Object): stateType => {
+export default (state: State = init, action: Object): State => {
   switch (action.type) {
     case REQUESTED_PLACE:
       return {

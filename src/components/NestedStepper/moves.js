@@ -41,3 +41,7 @@ export const isFirst = (current: Step): boolean => current.major === 0 && curren
 export const isLast = (current: Step, steps: Object): boolean => (
   max(steps[current.major].parts) === current.minor && max(steps) === current.major
 );
+
+export const lastStep = (parts: Object) => (
+  Math.max(...Object.keys(parts).map(number => parseInt(number, 10)))
+);

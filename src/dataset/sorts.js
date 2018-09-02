@@ -2,7 +2,7 @@
 import type { SortType } from './SortType';
 import type { PaginationType } from './PaginationType';
 
-export const toggleSort = (sort: SortType, orderBy: string): SortType => {
+const toggle = (sort: SortType, orderBy: string): SortType => {
   if (sort.orderBy === orderBy) {
     return {
       order: sort.order === 'asc' ? 'desc' : 'asc',
@@ -32,7 +32,7 @@ const sortWithReset = (
   pagination: PaginationType,
 ): sortWithResetType => {
   return {
-    sort: toggleSort(sort, column),
+    sort: toggle(sort, column),
     pagination: {
       page: 1,
       perPage: pagination.perPage,

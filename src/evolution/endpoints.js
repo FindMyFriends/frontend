@@ -7,7 +7,7 @@ import { receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION }
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
-import extractedLocationId from '../api/response';
+import * as response from '../api/response';
 import { fetchedAll, fetchedSingle } from './selects';
 
 export const options = (next: (?Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
@@ -84,8 +84,9 @@ export const extend = (
   )
     .then((response) => {
       dispatch(receivedSuccessMessage('Evolution has been extended'));
-      return extractedLocationId(response.headers.location);
+      return response.headers;
     })
+    .then(headers => response.extractedLocationId(headers.location))
     .then((id) => {
       track(id, spots);
       return id;

@@ -9,13 +9,13 @@ import {
 } from './actions';
 import type { PaginationType } from '../dataset/PaginationType';
 
-type stateType = {|
+type State = {|
   +single: Object,
   +all: Object,
   +pagination: ?PaginationType,
   +total: number,
 |};
-const initState = {
+const init = {
   single: {},
   all: {
     payload: [],
@@ -24,7 +24,7 @@ const initState = {
   pagination: null,
   total: 0,
 };
-export default (state: stateType = initState, action: Object): stateType => {
+export default (state: State = init, action: Object): State => {
   switch (action.type) {
     case RECEIVED_DEMAND:
       return {

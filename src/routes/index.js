@@ -20,7 +20,7 @@ import { default as ExtendEvolution } from '../pages/Evolutions/Extend';
 import Error404 from '../pages/Error/Error404';
 import { loggedIn } from '../access/cookie';
 
-const Routes = (): BrowserRouter => (
+export default () => (
   <BrowserRouter>
     <Switch>
       <Layout exact path="/" component={Default} />
@@ -42,5 +42,3 @@ const Routes = (): BrowserRouter => (
     </Switch>
   </BrowserRouter>
 );
-
-export default Routes;

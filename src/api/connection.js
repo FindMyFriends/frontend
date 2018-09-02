@@ -1,5 +1,6 @@
 // @flow
-import merge from 'lodash/merge';
+import { merge, pickBy } from 'lodash';
+import * as Qs from 'qs';
 import { getCookie } from '../access/cookie';
 
 const dynamicHeaders = (): Object => {
@@ -24,6 +25,7 @@ export default function withSettings(inherited: Object): Object {
           ...dynamicHeaders(),
         },
       },
+      paramsSerializer: params => Qs.stringify(pickBy(params, param => param !== ''), { arrayFormat: 'brackets' }),
     },
   );
 }
