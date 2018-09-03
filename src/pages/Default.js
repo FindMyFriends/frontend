@@ -1,8 +1,13 @@
 // @flow
 import React from 'react';
+import Map from '../spot/output/Map';
 
-const Default = () => (
-  <h1>FMF</h1>
-);
+class Default extends React.Component {
+  render() {
+    return (
+      <Map />
+    );
+  }
+}
 
 export default Default;
