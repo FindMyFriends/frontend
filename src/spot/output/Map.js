@@ -3,17 +3,27 @@ import React from 'react';
 import { GoogleMap, withGoogleMap, withScriptjs, Marker } from 'react-google-maps';
 import { compose, withProps, lifecycle } from 'recompose';
 
-const Map = ({ onMarkerMounted, onPositionChanged }) => (
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+type Props = {|
+  +onMarkerMounted: (Object) => (void),
+  +onPositionChanged: ((string) => (void)) => (void),
+  +onMarkerPositionChange: (string) => (void),
+  +position: {| +latitude: number, +longitude: number |}
+|};
+const Map = ({
+  position = { latitude: 10, longitude: 20 },
+  onMarkerMounted,
+  onPositionChanged,
+  onMarkerPositionChange,
+}: Props) => (
+  <GoogleMap defaultZoom={8} defaultCenter={{ lat: position.latitude, lng: position.longitude }}>
     {<Marker
-      position={{ lat: -34.397, lng: 150.644 }}
+      position={{ lat: position.latitude, lng: position.longitude }}
       draggable
       ref={onMarkerMounted}
-      onPositionChanged={onPositionChanged}
+      onPositionChanged={onPositionChanged(onMarkerPositionChange)}
     />}
   </GoogleMap>
 );
-
 
 export default compose(
   withProps({
@@ -27,13 +37,15 @@ export default compose(
       const refs = {};
 
       this.setState({
-        position: null,
         onMarkerMounted: (ref) => {
           refs.marker = ref;
         },
-        onPositionChanged: () => {
-          const position = refs.marker.getPosition();
-          console.log(position.toString());
+        onPositionChanged: onMarkerPositionChange => () => {
+          const matches = refs.marker.getPosition().toString().match(/\((.+),\s(.+)\)/);
+          onMarkerPositionChange({
+            latitude: parseFloat(matches[1]),
+            longitude: parseFloat(matches[2]),
+          });
         },
       });
     },
