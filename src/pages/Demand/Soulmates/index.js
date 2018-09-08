@@ -8,8 +8,9 @@ import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
 import type { PaginationType } from '../../../dataset/PaginationType';
 import type { SortType } from '../../../dataset/SortType';
 import Table from '../../../soulmate/output/Table';
-import { toApiOrdering, withSort } from '../../../dataset/sorts';
-import { withPage, withPerPage } from '../../../dataset/pagination';
+import { toApiOrdering } from '../../../dataset/formats';
+import { getSourcePagination, getSourceSorting } from '../../../dataset/selects';
+import { changePerPage, receivedInit, sort, turnPage } from '../../../dataset/actions';
 
 type Props = {|
   +soulmates: Array<Object>,
@@ -18,40 +19,49 @@ type Props = {|
   +all: (string, SortType, PaginationType) => (void),
   +markAs: (string, boolean, () => (void)) => (void),
   +match: Object,
+  +sorting: SortType,
+  +sort: (string, SortType) => (void),
+  +turnPage: (number, PaginationType) => (void),
+  +changePerPage: (number, PaginationType) => (void),
+  +initSortAndPaging: (SortType, PaginationType) => (void),
+  +pagination: PaginationType,
 |};
 type State = {|
   pagination: PaginationType,
   sort: SortType,
 |};
-class Soulmates extends React.Component<Props, State> {
-  state = {
-    sort: {
-      order: 'desc',
-      orderBy: 'related_at',
-    },
-    pagination: {
-      page: 1,
-      perPage: 5,
-    },
+class All extends React.Component<Props, State> {
+  componentDidMount = () => {
+    Promise.resolve()
+      .then(() => this.props.initSortAndPaging({ order: 'desc', orderBy: 'related_at' }, { page: 1, perPage: 5 }))
+      .then(this.reload);
   };
-
-  componentDidMount = () => this.reload();
 
   reload = () => {
-    const { sort, pagination } = this.state;
-    this.props.all(this.props.match.params.id, sort, pagination);
+    const {
+      sorting,
+      pagination,
+      match: { params: { id } },
+    } = this.props;
+    this.props.all(id, sorting, pagination);
   };
 
-  handleSort = (column: string) => this.setState(withSort(column, this.state), this.reload);
-
-  handleChangePerPage = (perPage: number) => this.setState(
-    withPerPage(perPage, this.state),
-    this.reload,
+  handleSort = (orderBy: string) => (
+    Promise.resolve()
+      .then(() => this.props.sort(orderBy, this.props.sorting))
+      .then(this.reload)
   );
 
-  handleChangePage = (page: number) => this.setState(
-    withPage(page, this.state),
-    this.reload,
+  handleChangePerPage = (perPage: number) => (
+    Promise.resolve()
+      .then(() => this.props.changePerPage(perPage, this.props.pagination))
+      .then(this.reload)
+  );
+
+  handleChangePage = (page: number) => (
+    Promise.resolve()
+      .then(() => this.props.turnPage(page, this.props.pagination))
+      .then(this.reload)
   );
 
   handleMarkAs = (id: string, as: boolean) => this.props.markAs(
@@ -61,12 +71,13 @@ class Soulmates extends React.Component<Props, State> {
   );
 
   render() {
-    const { sort, pagination } = this.state;
     const {
       soulmates,
       total,
       fetching,
       match: { params: { id } },
+      sorting,
+      pagination,
     } = this.props;
     if (fetching) {
       return <Loader />;
@@ -76,7 +87,7 @@ class Soulmates extends React.Component<Props, State> {
         <Tabs type={SOULMATES_TYPE} id={id} soulmateTotal={total} />
         <Table
           rows={soulmates}
-          sort={sort}
+          sort={sorting}
           pagination={pagination}
           total={total}
           onMarkAs={(id, as) => this.handleMarkAs(id, as)}
@@ -89,10 +100,14 @@ class Soulmates extends React.Component<Props, State> {
   }
 }
 
+const SOURCE_NAME = 'demand/soulmates';
+
 const mapStateToProps = (state, { match: { params: { id } } }) => ({
   soulmates: getAllByDemand(id, state),
   total: getTotal(id, state),
   fetching: soulmateFetching(id, state),
+  sorting: getSourceSorting(SOURCE_NAME, state),
+  pagination: getSourcePagination(SOURCE_NAME, state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (
@@ -105,5 +120,18 @@ const mapDispatchToProps = dispatch => ({
     as: boolean,
     next: () => (void),
   ) => dispatch(markAs(soulmate, as, next)),
+  sort: (orderBy: string, current: SortType) => dispatch(sort(SOURCE_NAME, orderBy, current)),
+  turnPage: (
+    page: number,
+    current: PaginationType,
+  ) => dispatch(turnPage(SOURCE_NAME, page, current)),
+  changePerPage: (
+    perPage: number,
+    current: PaginationType,
+  ) => dispatch(changePerPage(SOURCE_NAME, perPage, current)),
+  initSortAndPaging: (
+    sorting: SortType,
+    paging: PaginationType,
+  ) => dispatch(receivedInit(SOURCE_NAME, sorting, paging)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Soulmates);
+export default connect(mapStateToProps, mapDispatchToProps)(All);

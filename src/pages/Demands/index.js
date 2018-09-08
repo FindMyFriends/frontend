@@ -9,14 +9,15 @@ import styled from 'styled-components';
 import Center from '../../components/Center';
 import Table from './../../demand/output/Table';
 import { all, saveNote, retract } from '../../demand/endpoints';
-import { toApiOrdering, withSort } from './../../dataset/sorts';
+import { toApiOrdering } from '../../dataset/formats';
 import type { PaginationType } from '../../dataset/PaginationType';
 import type { SortType } from '../../dataset/SortType';
-import { withPage, withPerPage } from '../../dataset/pagination';
 import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 import { getTotal, allFetching } from '../../demand/selects';
 import { invalidatedAll } from '../../demand/actions';
+import { sort, turnPage, changePerPage, receivedInit } from '../../dataset/actions';
+import { getSourcePagination, getSourceSorting } from '../../dataset/selects';
 
 const BottomRightNavigation = styled.div`
   position: absolute;
@@ -34,45 +35,44 @@ type Props = {|
   +retract: (string, () => (void)) => (void),
   +requestedConfirm: (string, (Promise<any>) => (Promise<any>)) => (void),
   +invalidateAllDemands: () => (void),
+  +sorting: SortType,
+  +sort: (string, SortType) => (void),
+  +turnPage: (number, PaginationType) => (void),
+  +changePerPage: (number, PaginationType) => (void),
+  +initSortAndPaging: (SortType, PaginationType) => (void),
+  +pagination: PaginationType,
 |};
-type State = {|
-  sort: SortType,
-  pagination: PaginationType,
-|};
-class All extends React.Component<Props, State> {
-  state = {
-    sort: {
-      order: 'desc',
-      orderBy: 'created_at',
-    },
-    pagination: {
-      page: 1,
-      perPage: 5,
-    },
+class All extends React.Component<Props> {
+  componentDidMount = () => {
+    Promise.resolve()
+      .then(() => this.props.initSortAndPaging({ order: 'desc', orderBy: 'created_at' }, { page: 1, perPage: 5 }))
+      .then(this.reload);
   };
-
-  componentDidMount = () => this.reload();
 
   reload = () => {
-    const { sort, pagination } = this.state;
-    this.props.all(sort, pagination);
+    const { sorting, pagination } = this.props;
+    this.props.all(sorting, pagination);
   };
 
-  handleSort = (column: string) => (
-    this.setState(
-      withSort(column, this.state),
-      () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
-    )
+  handleSort = (orderBy: string) => (
+    Promise.resolve()
+      .then(() => this.props.sort(orderBy, this.props.sorting))
+      .then(this.props.invalidateAllDemands)
+      .then(this.reload)
   );
 
-  handleChangePerPage = (perPage: number) => this.setState(
-    withPerPage(perPage, this.state),
-    () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
+  handleChangePerPage = (perPage: number) => (
+    Promise.resolve()
+      .then(() => this.props.changePerPage(perPage, this.props.pagination))
+      .then(this.props.invalidateAllDemands)
+      .then(this.reload)
   );
 
-  handleChangePage = (page: number) => this.setState(
-    withPage(page, this.state),
-    () => Promise.resolve().then(this.props.invalidateAllDemands).then(this.reload),
+  handleChangePage = (page: number) => (
+    Promise.resolve()
+      .then(() => this.props.turnPage(page, this.props.pagination))
+      .then(this.props.invalidateAllDemands)
+      .then(this.reload)
   );
 
   handleNoteSave = (id: string, note: string, next: () => (any)) => {
@@ -96,8 +96,14 @@ class All extends React.Component<Props, State> {
   };
 
   render() {
-    const { sort, pagination } = this.state;
-    const { demands, total, fetching } = this.props;
+    const {
+      demands,
+      total,
+      fetching,
+      sorting,
+      pagination,
+    } = this.props;
+
     if (fetching) {
       return <Loader />;
     }
@@ -113,7 +119,7 @@ class All extends React.Component<Props, State> {
             : (
               <Table
                 rows={demands}
-                sort={sort}
+                sort={sorting}
                 pagination={pagination}
                 total={total}
                 onNoteSave={this.handleNoteSave}
@@ -136,11 +142,15 @@ class All extends React.Component<Props, State> {
   }
 }
 
+
+const SOURCE_NAME = 'demands/all';
+
 const mapStateToProps = state => ({
   demands: state.demand.all.payload,
   total: getTotal(state),
-  pagination: state.demand.pagination,
   fetching: allFetching(state),
+  sorting: getSourceSorting(SOURCE_NAME, state),
+  pagination: getSourcePagination(SOURCE_NAME, state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (
@@ -150,6 +160,19 @@ const mapDispatchToProps = dispatch => ({
   saveNote: (id: string, text: string, next: Promise<any>) => dispatch(saveNote(id, text, next)),
   retract: (id: string, next: () => (void)) => dispatch(retract(id, next)),
   invalidateAllDemands: () => dispatch(invalidatedAll()),
+  sort: (orderBy: string, current: SortType) => dispatch(sort(SOURCE_NAME, orderBy, current)),
+  turnPage: (
+    page: number,
+    current: PaginationType,
+  ) => dispatch(turnPage(SOURCE_NAME, page, current)),
+  changePerPage: (
+    perPage: number,
+    current: PaginationType,
+  ) => dispatch(changePerPage(SOURCE_NAME, perPage, current)),
+  initSortAndPaging: (
+    sorting: SortType,
+    paging: PaginationType,
+  ) => dispatch(receivedInit(SOURCE_NAME, sorting, paging)),
   requestedConfirm: (
     content: string,
     action: () => (void),

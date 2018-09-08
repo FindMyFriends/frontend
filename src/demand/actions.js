@@ -1,5 +1,4 @@
 // @flow
-import { fromHeader } from '../dataset/pagination';
 import * as response from '../api/response';
 
 export const DEMAND = 'DEMAND';
@@ -34,7 +33,6 @@ export const receivedAll = (demands: Array<Object>, headers: Object) => ({
   type: RECEIVED_DEMANDS,
   demands,
   total: response.extractedTotalCount(headers),
-  pagination: fromHeader(headers.link),
   fetching: false,
 });
 

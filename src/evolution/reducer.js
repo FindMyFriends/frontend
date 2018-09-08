@@ -6,13 +6,11 @@ import {
   REQUESTED_EVOLUTIONS,
   INVALIDATED_EVOLUTIONS,
 } from './actions';
-import type { PaginationType } from '../dataset/PaginationType';
 
 type State = {|
   +single: Object,
   +all: Object,
   +etag: ?string,
-  +pagination: ?PaginationType,
   +total: ?number,
 |};
 const init = {
@@ -22,7 +20,6 @@ const init = {
   },
   single: {},
   etag: null,
-  pagination: null,
   total: 0,
 };
 export default (state: State = init, action: Object): State => {
@@ -45,7 +42,6 @@ export default (state: State = init, action: Object): State => {
           payload: action.evolutions,
           fetching: action.fetching,
         },
-        pagination: action.pagination,
         total: action.total,
       };
     case REQUESTED_EVOLUTION:

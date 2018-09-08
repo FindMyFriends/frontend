@@ -1,5 +1,4 @@
 // @flow
-import { fromHeader } from '../dataset/pagination';
 import * as response from '../api/response';
 
 export const RECEIVED_SOULMATES_BY_DEMAND = 'RECEIVED_SOULMATES_BY_DEMAND';
@@ -12,7 +11,6 @@ export const receivedAllByDemand = (demand: string, soulmates: Array<Object>, he
   soulmates,
   demand,
   total: response.extractedTotalCount(headers),
-  pagination: fromHeader(headers.link),
   fetching: false,
 });
 

@@ -6,6 +6,7 @@ import schema from '../schema/reducer';
 import soulmate from '../soulmate/reducer';
 import evolution from '../evolution/reducer';
 import spot from '../spot/reducer';
+import dataset from '../dataset/reducer';
 
 export default combineReducers({
   demand,
@@ -14,4 +15,5 @@ export default combineReducers({
   soulmate,
   evolution,
   spot,
+  dataset,
 });

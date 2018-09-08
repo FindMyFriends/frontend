@@ -5,7 +5,7 @@ import { history as spotHistory } from '../../../demand/spot/endpoints';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
 import type { SortType } from '../../../dataset/SortType';
-import { toApiOrdering } from '../../../dataset/sorts';
+import { toApiOrdering } from '../../../dataset/formats';
 import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getTotal } from '../../../soulmate/selects';
 import Overview from '../../../spot/output/Overview';

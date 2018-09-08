@@ -7,12 +7,10 @@ import {
   INVALIDATED_DEMANDS,
   INVALIDATED_DEMAND,
 } from './actions';
-import type { PaginationType } from '../dataset/PaginationType';
 
 type State = {|
   +single: Object,
   +all: Object,
-  +pagination: ?PaginationType,
   +total: number,
 |};
 const init = {
@@ -21,7 +19,6 @@ const init = {
     payload: [],
     fetching: true,
   },
-  pagination: null,
   total: 0,
 };
 export default (state: State = init, action: Object): State => {
@@ -45,7 +42,6 @@ export default (state: State = init, action: Object): State => {
           payload: action.demands,
           fetching: action.fetching,
         },
-        pagination: action.pagination,
         total: action.total,
       };
     case REQUESTED_DEMAND:
