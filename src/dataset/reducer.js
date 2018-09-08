@@ -4,17 +4,8 @@ import {
   RECEIVED_PAGINATION,
   RECEIVED_INIT_SORTING_AND_PAGING,
 } from './actions';
-import type { PaginationType } from '../dataset/PaginationType';
-import type { SortType } from './SortType';
 
-type State = {|
-  +source: string,
-  +pagination: ?PaginationType,
-  +sorting: ?SortType,
-|};
-const init = {
-};
-export default (state: State = init, action: Object): State => {
+export default (state: Object = {}, action: Object): Object => {
   switch (action.type) {
     case RECEIVED_SORTING:
       return {
