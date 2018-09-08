@@ -36,7 +36,7 @@ export const all = (
           page: pagination.page,
           per_page: pagination.perPage,
           fields: [...Object.keys(allOptions ? allOptions.columns : {}), 'id', 'evolved_at'].join(','),
-          sort: sorts.join(','),
+          sort: [...sorts, '+id'].join(','),
         },
       },
     )

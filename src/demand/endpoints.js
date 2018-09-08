@@ -40,7 +40,7 @@ export const all = (
         page: pagination.page,
         per_page: pagination.perPage,
         fields: ['general', 'id', 'created_at', 'note'].join(','),
-        sort: sorts.join(','),
+        sort: [...sorts, '+id'].join(','),
       },
     },
   )
