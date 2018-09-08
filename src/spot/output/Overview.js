@@ -31,8 +31,13 @@ const Overview = ({ spots, places }: Props) => (
           rows={[
             <Row.Text
               key={`met_at-${spot.id}`}
-              title="Location and time"
+              title="Time"
               text={moment(spot.met_at.moment).format('YYYY-MM-DD HH:mm')}
+            />,
+            spot.met_at.approximation && <Row.Text
+              key={`approximation-${spot.id}`}
+              title="Approximation"
+              text={`${spot.met_at.timeline_side} ${spot.met_at.approximation}`}
             />,
           ]}
         />
