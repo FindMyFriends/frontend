@@ -5,6 +5,7 @@ import {
   REQUESTED_EVOLUTION,
   REQUESTED_EVOLUTIONS,
   INVALIDATED_EVOLUTIONS,
+  RECEIVED_EVOLUTIONS_COLUMNS,
 } from './actions';
 
 type State = {|
@@ -12,12 +13,14 @@ type State = {|
   +all: Object,
   +etag: ?string,
   +total: ?number,
+  +columns: Array<string>,
 |};
 const init = {
   all: {
     payload: {},
     fetching: true,
   },
+  columns: [],
   single: {},
   etag: null,
   total: 0,
@@ -68,6 +71,11 @@ export default (state: State = init, action: Object): State => {
         all: {
           fetching: true,
         },
+      };
+    case RECEIVED_EVOLUTIONS_COLUMNS:
+      return {
+        ...state,
+        columns: action.columns,
       };
     default:
       return state;

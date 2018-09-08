@@ -14,14 +14,15 @@ import {
   allFetching as evolutionsFetching,
   getTotal,
   mostPriorColumnIdentifiers,
-  getScopeColumns,
+  getScopeAvailableColumns,
+  getColumns,
 } from '../../evolution/selects';
-import { invalidatedAll } from '../../evolution/actions';
+import { invalidatedAll, receivedColumns } from '../../evolution/actions';
 import { changePerPage, receivedInit, sort, turnPage } from '../../dataset/actions';
 import { getSourcePagination, getSourceSorting } from '../../dataset/selects';
 
 type Props = {|
-  +columns: Object,
+  +availableColumns: Object,
   +evolutions: Array<Object>,
   +all: (SortType, PaginationType, () => (void)) => (void),
   +total: number,
@@ -36,19 +37,16 @@ type Props = {|
   +changePerPage: (number, PaginationType) => (void),
   +initSortAndPaging: (SortType, PaginationType) => (void),
   +pagination: PaginationType,
+  +columns: Object,
+  +setColumns: (Array<string>) => (void)
 |};
 class All extends React.Component<Props> {
-  state = {
-    columns: [],
-  };
-
   componentDidMount = () => {
     Promise.resolve()
       .then(() => this.props.initSortAndPaging({ order: 'desc', orderBy: 'evolved_at' }, { page: 1, perPage: 5 }))
-      .then(() => this.reload(() => this.setColumns(mostPriorColumnIdentifiers(this.props.columns))));
+      .then(() => this.reload(() =>
+        this.props.setColumns(mostPriorColumnIdentifiers(this.props.availableColumns))));
   };
-
-  setColumns = (columns: Object) => this.setState({ ...this.state, columns });
 
   reload = (next: () => (void) = () => {}) => {
     const { sorting, pagination } = this.props;
@@ -85,10 +83,7 @@ class All extends React.Component<Props> {
     );
   };
 
-  handleSortSelectionChange = event => this.setState({
-    ...this.state,
-    columns: event.target.value,
-  });
+  handleSortSelectionChange = event => this.props.setColumns(event.target.value);
 
   render() {
     const {
@@ -98,6 +93,8 @@ class All extends React.Component<Props> {
       intl,
       sorting,
       pagination,
+      columns,
+      availableColumns,
     } = this.props;
 
     if (fetching) {
@@ -106,8 +103,8 @@ class All extends React.Component<Props> {
     return (
       <React.Fragment>
         <Table
-          columns={this.state.columns}
-          possibleColumns={mapValues(this.props.columns, (count, id) => intl.formatMessage({ id }))}
+          columns={columns}
+          possibleColumns={mapValues(availableColumns, (count, id) => intl.formatMessage({ id }))}
           rows={evolutions}
           sort={sorting}
           pagination={pagination}
@@ -126,12 +123,13 @@ class All extends React.Component<Props> {
 const SOURCE_NAME = 'evolutions/all';
 
 const mapStateToProps = state => ({
-  columns: getScopeColumns(state),
+  availableColumns: getScopeAvailableColumns(state),
   evolutions: state.evolution.all.payload,
   total: getTotal(state),
   fetching: evolutionsFetching(state),
   sorting: getSourceSorting(SOURCE_NAME, state),
   pagination: getSourcePagination(SOURCE_NAME, state),
+  columns: getColumns(state),
 });
 const mapDispatchToProps = dispatch => ({
   all: (
@@ -158,5 +156,6 @@ const mapDispatchToProps = dispatch => ({
     sorting: SortType,
     paging: PaginationType,
   ) => dispatch(receivedInit(SOURCE_NAME, sorting, paging)),
+  setColumns: (columns: Array<string>) => dispatch(receivedColumns(columns)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(All));

@@ -7,6 +7,7 @@ export const RECEIVED_EVOLUTION = 'RECEIVED_EVOLUTION';
 export const REQUESTED_EVOLUTION = 'REQUESTED_EVOLUTION';
 export const REQUESTED_EVOLUTIONS = 'REQUESTED_EVOLUTIONS';
 export const INVALIDATED_EVOLUTIONS = 'INVALIDATED_EVOLUTIONS';
+export const RECEIVED_EVOLUTIONS_COLUMNS = 'RECEIVED_EVOLUTIONS_COLUMNS';
 
 export const invalidatedAll = () => ({
   type: INVALIDATED_EVOLUTIONS,
@@ -36,4 +37,9 @@ export const receivedSingle = (id: string, evolution: Object, etag: string) => (
   evolution,
   etag,
   fetching: false,
+});
+
+export const receivedColumns = (columns: Array<string>) => ({
+  type: RECEIVED_EVOLUTIONS_COLUMNS,
+  columns,
 });
