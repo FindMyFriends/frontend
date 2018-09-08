@@ -4,7 +4,7 @@ import { GoogleMap, withGoogleMap, withScriptjs, Marker } from 'react-google-map
 import { compose, withProps, lifecycle } from 'recompose';
 
 type Props = {|
-  +onMarkerMounted: (Object) => (void),
+  +onMarkerMounted: () => (void),
   +onPositionChanged: ((string) => (void)) => (void),
   +onMarkerPositionChange: (string) => (void),
   +position: {| +latitude: number, +longitude: number |}
