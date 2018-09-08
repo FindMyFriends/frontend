@@ -9,6 +9,7 @@ import { MuiPickersUtilsProvider, DateTimePicker } from 'material-ui-pickers';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import { withFormStyles } from '../../../description/input/parts/withFormStyles';
 import Approximation from './Approximation';
+import Map from '../../output/Map';
 
 type Props = {|
   +onChange: (string) => ((Object) => (void)),
@@ -58,6 +59,15 @@ const Spot = ({
         values={values}
         classes={classes}
         onChange={onChange}
+      />
+      <Map
+        position={
+          {
+            latitude: values[`spots.${position}.coordinates.latitude`],
+            longitude: values[`spots.${position}.coordinates.longitude`],
+          }
+        }
+        onMarkerPositionChange={coordinates => onChange(`spots.${position}.coordinates`)({ target: { value: coordinates } })}
       />
     </React.Fragment>
   );
