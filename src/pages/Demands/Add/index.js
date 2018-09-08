@@ -8,7 +8,7 @@ import * as events from '../../../components/form/events';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { getScopeOptions, isFetching } from '../../../schema/selects';
-import { DEMAND } from '../../../demand/actions';
+import { DEMAND, invalidatedAll } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
 import {
   getBodyBuilds,
@@ -33,9 +33,10 @@ import * as validation from '../../../description/validation';
 type Props = {|
   +options: () => (void),
   +schema: () => (void),
-  +add: (Object, (string) => (void)) => (void),
+  +add: (Object, (string) => (Promise<any>)) => (void),
   +fetching: boolean,
   +history: Object,
+  +invalidateAllDemands: () => (void),
 |};
 type State = {|
   demand: Object,
@@ -155,7 +156,9 @@ class Add extends React.Component<Props, State> {
   handleAdd = () => {
     this.props.add(
       this.state.demand,
-      (id: string) => this.props.history.push(`/demands/${id}`),
+      (id: string) => Promise.resolve()
+        .then(this.props.invalidateAllDemands)
+        .then(() => this.props.history.push(`/demands/${id}`)),
     );
   };
 
@@ -204,6 +207,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
   schema: () => dispatch(schema()),
-  add: (demand: Object, next: (string) => (void)) => dispatch(add(demand, next)),
+  add: (demand: Object, next: (Promise<any>) => (void)) => dispatch(add(demand, next)),
+  invalidateAllDemands: () => dispatch(invalidatedAll()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

@@ -86,7 +86,7 @@ export const saveNote = (
     .catch(error => dispatch(receivedApiError(error)));
 };
 
-export const add = (input: Object, next: (string) => void) => (dispatch: (mixed) => Object) => {
+export const add = (input: Object, next: Promise<any> => void) => (dispatch: (mixed) => Object) => {
   const { spots, ...demand } = input;
   axios.post('/demands', demand)
     .then((response) => {
