@@ -5,24 +5,24 @@ import {
   REQUESTED_EVOLUTION,
   REQUESTED_EVOLUTIONS,
   INVALIDATED_EVOLUTIONS,
+  RECEIVED_EVOLUTIONS_COLUMNS,
 } from './actions';
-import type { PaginationType } from '../dataset/PaginationType';
 
 type State = {|
   +single: Object,
   +all: Object,
   +etag: ?string,
-  +pagination: ?PaginationType,
   +total: ?number,
+  +columns: Array<string>,
 |};
 const init = {
   all: {
     payload: {},
     fetching: true,
   },
+  columns: [],
   single: {},
   etag: null,
-  pagination: null,
   total: 0,
 };
 export default (state: State = init, action: Object): State => {
@@ -45,7 +45,6 @@ export default (state: State = init, action: Object): State => {
           payload: action.evolutions,
           fetching: action.fetching,
         },
-        pagination: action.pagination,
         total: action.total,
       };
     case REQUESTED_EVOLUTION:
@@ -72,6 +71,11 @@ export default (state: State = init, action: Object): State => {
         all: {
           fetching: true,
         },
+      };
+    case RECEIVED_EVOLUTIONS_COLUMNS:
+      return {
+        ...state,
+        columns: action.columns,
       };
     default:
       return state;

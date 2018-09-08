@@ -5,7 +5,7 @@ import { history as spotHistory } from '../../../evolution/spot/endpoints';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
 import type { SortType } from '../../../dataset/SortType';
-import { toApiOrdering } from '../../../dataset/sorts';
+import { toApiOrdering } from '../../../dataset/formats';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
 import { getPlaces, placesFetching, spotsFetching, getSpotsByEvolution } from '../../../spot/selects';

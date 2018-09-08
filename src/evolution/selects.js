@@ -37,8 +37,10 @@ export const getScopeOptions = (state: Object): Object => (
     : {}
 );
 
-export const getScopeColumns = (state: Object): ?Object => (
+export const getScopeAvailableColumns = (state: Object): ?Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
     ? state.schema[EVOLUTION].options.columns
     : null
 );
+
+export const getColumns = (state: Object): Object => state.evolution.columns;
