@@ -45,7 +45,7 @@ class Add extends React.Component<Props, State> {
     demand: {
       note: null,
       spots: [{
-        coordinates: { // TODO: not complete
+        coordinates: {
           latitude: 50.1,
           longitude: 50.2,
         },
@@ -163,7 +163,6 @@ class Add extends React.Component<Props, State> {
     if (this.props.fetching) {
       return <Loader />;
     }
-    console.log(this.state.demand.spots);
     return (
       <NestedStepper
         valid={validation.isValid(this.state.demand)}

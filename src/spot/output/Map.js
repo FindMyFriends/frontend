@@ -10,7 +10,7 @@ type Props = {|
   +position: {| +latitude: number, +longitude: number |}
 |};
 const Map = ({
-  position = { latitude: 10, longitude: 20 },
+  position,
   onMarkerMounted,
   onPositionChanged,
   onMarkerPositionChange,
@@ -29,7 +29,7 @@ export default compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: '200px' }} />,
-    containerElement: <div style={{ height: '400px', width: '400px' }} />,
+    containerElement: <div style={{ height: '220px', width: '400px' }} />,
     mapElement: <div style={{ height: '200px', width: '400px' }} />,
   }),
   lifecycle({

@@ -19,7 +19,7 @@ type State = {|
 export default class NestedStepper extends React.Component<Props, State> {
   state = {
     step: {
-      major: 4,
+      major: 0,
       minor: 0,
     },
   };

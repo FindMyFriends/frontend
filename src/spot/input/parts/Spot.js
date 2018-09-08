@@ -61,7 +61,12 @@ const Spot = ({
         onChange={onChange}
       />
       <Map
-        position={values[`spots.${position}.coordinates`]}
+        position={
+          {
+            latitude: values[`spots.${position}.coordinates.latitude`],
+            longitude: values[`spots.${position}.coordinates.longitude`],
+          }
+        }
         onMarkerPositionChange={coordinates => onChange(`spots.${position}.coordinates`)({ target: { value: coordinates } })}
       />
     </React.Fragment>
