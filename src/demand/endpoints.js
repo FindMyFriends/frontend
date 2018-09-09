@@ -15,7 +15,7 @@ import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../
 import type { PaginationType } from '../dataset/PaginationType';
 import * as response from '../api/response';
 import { fetchedAll, fetchedSingle } from './selects';
-import { omittedSpot } from '../spot/endpoints';
+import { forgottenSpots, move, movedSpots, newSpots } from '../spot/endpoints';
 import { getSpotsByDemand } from '../spot/selects';
 import { invalidatedByDemand } from '../spot/actions';
 
@@ -114,10 +114,11 @@ export const reconsider = (
   axios.put(`/demands/${id}`, omittedDemand(demand), { headers: { 'If-Match': etag } })
     .then(() => dispatch(invalidatedSingle(id)))
     .then(() => {
-      // TODO: not good, select items to update/insert
+      const storedSpots = getSpotsByDemand(getState(), id);
       Promise.resolve()
-        .then(() => forget(id, getSpotsByDemand(getState(), id).map(spot => spot.id)))
-        .then(() => track(id, spots.map(spot => omittedSpot(spot))))
+        .then(() => forget(id, forgottenSpots(spots, storedSpots).map(spot => spot.id)))
+        .then(() => move(movedSpots(spots, storedSpots)))
+        .then(() => track(id, newSpots(spots)))
         .then(() => dispatch(invalidatedByDemand(id)));
     })
     .then(dispatch(receivedSuccessMessage('Demand has been reconsidered')))

@@ -3,12 +3,13 @@ import axios from 'axios';
 import { requestedSpots, receivedSpots } from '../../spot/actions';
 import { receivedApiError } from '../../ui/actions';
 import { fetchedDemandSpots } from '../../spot/selects';
+import { omittedSpot } from '../../spot/endpoints';
 
 export const track = (
   id: string,
   spots: Array<Object>,
 ) => {
-  Promise.all(spots.map(spot => (axios.post(`/demands/${id}/spots`, spot))));
+  Promise.all(spots.map(spot => (axios.post(`/demands/${id}/spots`, omittedSpot(spot)))));
 };
 
 export const forget = (

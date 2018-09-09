@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { flatten } from 'flat';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 import * as events from '../../../components/form/events';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
@@ -95,7 +95,7 @@ class Extend extends React.Component<Props, State> {
         ...this.state.demand,
         spots: [
           ...this.state.demand.spots,
-          cloneDeep([...this.state.demand.spots].pop()),
+          omit(cloneDeep([...this.state.demand.spots].pop()), ['id']),
         ],
       },
     })

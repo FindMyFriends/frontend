@@ -34,3 +34,25 @@ const place = (
 export const places = (spots: Array<Object>) => (dispatch: (mixed) => Object) => {
   Promise.all(spots.map(spot => dispatch(place(spot.id, spot.coordinates))));
 };
+
+export const move = (spots: Array<Object>) => (
+  Promise.all(spots.map(spot => (axios.put(`/spots/${spot.id}`, omittedSpot(spot)))))
+);
+
+export const newSpots = (spots: Array<Object>): Array<Object> => spots.filter(spot => typeof spot.id === 'undefined');
+
+export const forgottenSpots = (
+  passed: Array<Object>,
+  stored: Array<Object>,
+): Array<Object> => {
+  const ids = passed.map(spot => spot.id).filter(spot => spot);
+  return stored.filter(spot => !ids.includes(spot.id));
+};
+
+export const movedSpots = (
+  passed: Array<Object>,
+  stored: Array<Object>,
+): Array<Object> => {
+  const ids = stored.map(spot => spot.id).filter(spot => spot);
+  return passed.filter(spot => ids.includes(spot.id));
+};
