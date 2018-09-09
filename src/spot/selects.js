@@ -5,7 +5,7 @@ export const getSpotsWithoutDemand = (spots: Object, demand: string) => (
   pickBy(spots, spot => spot.demand_id !== demand)
 );
 
-export const getSpotsByDemand = (state: Object, demand: string): Object => (
+export const getSpotsByDemand = (state: Object, demand: string): Array<Object> => (
   // $FlowFixMe
   Object.values(state.spot.all.payload).filter(spot => spot.demand_id === demand)
 );
