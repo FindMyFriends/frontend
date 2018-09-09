@@ -13,7 +13,7 @@ type Props = {|
   +value: number,
   +classes: Object,
   +error: ?string,
-  +birthYear: ?ApiRange,
+  +birthYear: ApiRange,
 |};
 const BirthYearInput = ({
   classes,
