@@ -1,7 +1,7 @@
 // @flow
 import { merge, isEmpty } from 'lodash';
 import * as enumSet from '../api/enum';
-import type { ApiEnum, ApiColor } from '../api/enum';
+import type { ApiEnum, ApiColor, ApiRange } from '../api/enum';
 
 export const getSex = (options: Object): Array<string> => (
   !isEmpty(options) ? options.general.sex : []
@@ -44,6 +44,11 @@ export const getNailsColors = (options: Object): Array<ApiColor> => (
 );
 export const getFaceShapes = (options: Object): Array<ApiEnum> => (
   !isEmpty(options) ? enumSet.toEnum(options.face.shape) : enumSet.empty()
+);
+export const getAge = (schema: Object): ApiRange => (
+  !isEmpty(schema)
+    ? enumSet.toRange(schema.definitions.age)
+    : enumSet.emptyRange()
 );
 
 export const getPrettyDescription = (description: Object, options: Object): Object => {

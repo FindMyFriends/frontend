@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as events from '../../../components/form/events';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { getScopeOptions, isFetching } from '../../../schema/selects';
+import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/selects';
 import { DEMAND, invalidatedAll } from '../../../demand/actions';
 import { options, schema, add } from '../../../demand/endpoints';
 import {
@@ -25,6 +25,7 @@ import {
   getHairLengths,
   getBeardStyles,
   getBeardLengths,
+  getAge,
 } from '../../../description/selects';
 import { getTimelineSides } from '../../../demand/selects';
 import steps from '../../../demand/input/parts/steps';
@@ -186,6 +187,7 @@ class Add extends React.Component<Props, State> {
 
 const mapStateToProps = state => ({
   selects: {
+    age: getAge(getScopeSchema(state, DEMAND)),
     sex: getSex(getScopeOptions(state, DEMAND)),
     ethnicGroups: getEthnicGroups(getScopeOptions(state, DEMAND)),
     bodyBuilds: getBodyBuilds(getScopeOptions(state, DEMAND)),

@@ -70,6 +70,7 @@ const General = ({
       classes={classes}
       values={values}
       onChange={onChange}
+      age={selects.age}
     />
   ),
 }, ignores));

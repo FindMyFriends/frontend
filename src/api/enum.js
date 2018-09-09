@@ -1,10 +1,14 @@
 // @flow
-import mapValues from 'lodash/mapValues';
-import values from 'lodash/values';
+import { mapValues, values, pick } from 'lodash';
 
 export type ApiEnum = {|
   +id: ?number,
   +name: ?mixed,
+|};
+
+export type ApiRange = {|
+  +minimum: ?number,
+  +maximum: ?number,
 |};
 
 export type ApiColor = {|
@@ -32,7 +36,15 @@ export const emptyColor = (): Array<ApiColor> => {
   ];
 };
 
+export const emptyRange = (): ApiRange => {
+  return {
+    minimum: null,
+    maximum: null,
+  };
+};
+
 export const toEnum = (options: Object): Array<ApiEnum> => values(options);
+export const toRange = (options: Object): ApiRange => pick(options, ['minimum', 'maximum']);
 
 export const toColorEnum = (options: Object): Array<ApiColor> => (
   values(mapValues(options, (color, id) => ({
