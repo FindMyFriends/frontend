@@ -1,9 +1,10 @@
 // @flow
+import memoize from 'memoizee';
 import * as validation from '../../validation/index';
 import type { RegistrationData, RegistrationDataErrors } from '../types';
 import type { ApiRange } from '../../api/enum';
 
-export const errors = (
+export const errors = memoize((
   registrationData: RegistrationData,
   birthYear: ApiRange,
 ): RegistrationDataErrors => ({
@@ -16,7 +17,7 @@ export const errors = (
     birth_year: validation.birthYearRange(registrationData.general.birth_year, birthYear),
     ethnic_group_id: validation.required(registrationData.general.ethnic_group_id),
   },
-});
+}));
 
 export const anyErrors = (registrationData: RegistrationData, birthYear: ApiRange): boolean => (
   validation.anyErrors(errors(registrationData, birthYear))

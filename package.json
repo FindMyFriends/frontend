@@ -14,6 +14,7 @@
     "lodash": "^4.17.10",
     "lscache": "^1.1.0",
     "material-ui-pickers": "^1.0.0-rc.10",
+    "memoizee": "^0.4.14",
     "moment": "^2.22.2",
     "parse-link-header": "^1.0.1",
     "qs": "^6.5.2",
