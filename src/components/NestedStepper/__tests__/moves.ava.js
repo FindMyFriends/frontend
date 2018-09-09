@@ -1,5 +1,10 @@
 import test from 'ava';
-import { next, previous, isFirst, isLast } from '../moves';
+import {
+  next,
+  previous,
+  isFirst,
+  isLast,
+} from '../moves';
 
 test('moving next', (assert) => {
   const parts = {
