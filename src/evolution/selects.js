@@ -28,8 +28,9 @@ export const allFetching = (state: Object): boolean => state.evolution.all.fetch
 
 export const getTotal = (state: Object): number => state.evolution.total;
 
-export const mostPriorColumnIdentifiers = (columns: Object): Array<string> =>
-  Object.keys(columns).slice(0, 3);
+export const mostPriorColumnIdentifiers = (columns: Object): Array<string> => (
+  Object.keys(columns).slice(0, 3)
+);
 
 export const getScopeOptions = (state: Object): Object => (
   state.schema[EVOLUTION] && state.schema[EVOLUTION].options
