@@ -19,7 +19,7 @@ const Overview = ({ spots, places }: Props) => (
     {spots.map((spot, position) => (
       <SpaceBetween key={spot.id}>
         <Card.Solid
-          title={
+          title={(
             <React.Fragment>
               <a href={`https://www.google.com/maps/@${spot.coordinates.latitude},${spot.coordinates.longitude},15z`}>
                 <MapIcon />
@@ -27,18 +27,20 @@ const Overview = ({ spots, places }: Props) => (
               <br />
               {places[spot.id].failed ? `Spot #${position + 1}` : places[spot.id].payload.address}
             </React.Fragment>
-          }
+)}
           rows={[
             <Row.Text
               key={`met_at-${spot.id}`}
               title="Time"
               text={moment(spot.met_at.moment).format('YYYY-MM-DD HH:mm')}
             />,
-            spot.met_at.approximation && <Row.Text
+            spot.met_at.approximation && (
+            <Row.Text
               key={`approximation-${spot.id}`}
               title="Approximation"
               text={`${moment.duration(spot.met_at.approximation).humanize()} ${spot.met_at.timeline_side}`}
-            />,
+            />
+            ),
           ]}
         />
       </SpaceBetween>

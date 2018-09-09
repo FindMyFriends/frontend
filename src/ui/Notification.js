@@ -1,7 +1,9 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { discardedMessage, RECEIVED_API_ERROR, RECEIVED_SUCCESS, REQUESTED_CONFIRM } from './actions';
+import {
+  discardedMessage, RECEIVED_API_ERROR, RECEIVED_SUCCESS, REQUESTED_CONFIRM,
+} from './actions';
 import Snackbar from './Snackbar';
 import Alert from './Alert';
 import Confirmation from './Confirmation';

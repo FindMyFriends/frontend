@@ -11,8 +11,9 @@ const NOT_EMAIL = 'NOT_EMAIL';
 const MIN_6_CHARS = 'MIN_6_CHARS';
 const BIRTH_YEAR_OUT_OF_RANGE = 'BIRTH_YEAR_OUT_OF_RANGE';
 
-export const required = (value: ?mixed) =>
-  (value === null || trim(value).length === 0 ? REQUIRED : null);
+export const required = (value: ?mixed) => (
+  value === null || trim(value).length === 0 ? REQUIRED : null
+);
 
 export const email = (value: ?string) => {
   if (required(value)) return required(value);

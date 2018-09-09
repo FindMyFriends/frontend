@@ -77,4 +77,3 @@ export default (state: State = init, action: Object): State => {
       return state;
   }
 };
-
