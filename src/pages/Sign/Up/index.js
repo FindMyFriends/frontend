@@ -6,7 +6,7 @@ import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
 import type { RegistrationData, RegistrationDataErrors } from '../../../sign/types';
-import { getBirthYears, getEthnicGroups, getSex } from '../../../seeker/selects';
+import { getBirthYear, getEthnicGroups, getSex } from '../../../seeker/selects';
 import { options, schema, SEEKER } from '../../../seeker/endpoints';
 import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/selects';
 import Loader from '../../../ui/Loader';
@@ -69,11 +69,11 @@ class Up extends React.Component<Props, State> {
   );
 
   handleSubmit = () => {
-    const { selects: { birthYears } } = this.props;
-    if (validation.anyErrors(this.state.registrationData, birthYears)) {
+    const { selects: { birthYear } } = this.props;
+    if (validation.anyErrors(this.state.registrationData, birthYear)) {
       this.setState({
         ...this.state,
-        errors: validation.errors(this.state.registrationData, birthYears),
+        errors: validation.errors(this.state.registrationData, birthYear),
       });
     } else {
       this.props.signUp(
@@ -106,7 +106,7 @@ const mapStateToProps = (state) => {
     selects: {
       sex: getSex(getScopeOptions(state, SEEKER)),
       ethnicGroups: getEthnicGroups(getScopeOptions(state, SEEKER)),
-      birthYears: getBirthYears(getScopeSchema(state, SEEKER)),
+      birthYear: getBirthYear(getScopeSchema(state, SEEKER)),
     },
     fetching: isFetching(state, SEEKER),
   };

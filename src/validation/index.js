@@ -26,9 +26,9 @@ export const password = (value: ?string) => {
   return null;
 };
 
-export const birthYearRange = (value: ?number, birthYears: ApiRange) => {
+export const birthYearRange = (value: ?number, birthYear: ApiRange) => {
   if (required(value)) return required(value);
-  else if (!inRange(value, birthYears.min, birthYears.max)) return BIRTH_YEAR_OUT_OF_RANGE;
+  else if (!inRange(value, birthYear.min, birthYear.max)) return BIRTH_YEAR_OUT_OF_RANGE;
   return null;
 };
 

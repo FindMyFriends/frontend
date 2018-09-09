@@ -13,19 +13,19 @@ type Props = {|
   +value: number,
   +classes: Object,
   +error: ?string,
-  +birthYears: ?ApiRange,
+  +birthYear: ?ApiRange,
 |};
 const BirthYearInput = ({
   classes,
   value,
   onChange,
   error,
-  birthYears,
+  birthYear,
 }: Props) => {
   return (
     <FormControl error={!!error} className={classes.formControl}>
       <InputLabel>Birth year</InputLabel>
-      <Input type="number" inputProps={birthYears} onChange={onChange} value={value || ''} />
+      <Input type="number" inputProps={birthYear} onChange={onChange} value={value || ''} />
       {error && <FormHelperText id="name-error-text">{toMessage(error)}</FormHelperText>}
     </FormControl>
   );

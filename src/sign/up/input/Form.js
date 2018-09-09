@@ -69,7 +69,7 @@ const Form = ({
       error={errors.general.birth_year}
       onChange={onChange('general.birth_year')}
       value={registrationData.general.birth_year}
-      birthYears={selects.birthYears}
+      birthYear={selects.birthYear}
       classes={classes}
     />
     <SexInput
