@@ -7,8 +7,8 @@ export type ApiEnum = {|
 |};
 
 export type ApiRange = {|
-  +min: ?number,
-  +max: ?number,
+  +minimum: ?number,
+  +maximum: ?number,
 |};
 
 export type ApiColor = {|
@@ -38,13 +38,13 @@ export const emptyColor = (): Array<ApiColor> => {
 
 export const emptyRange = (): ApiRange => {
   return {
-    min: null,
-    max: null,
+    minimum: null,
+    maximum: null,
   };
 };
 
 export const toEnum = (options: Object): Array<ApiEnum> => values(options);
-export const toRange = (options: Object): ApiRange => pick(options, ['min', 'max']);
+export const toRange = (options: Object): ApiRange => pick(options, ['minimum', 'maximum']);
 
 export const toColorEnum = (options: Object): Array<ApiColor> => (
   values(mapValues(options, (color, id) => ({

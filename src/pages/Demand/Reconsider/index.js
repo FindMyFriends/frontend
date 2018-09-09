@@ -6,7 +6,7 @@ import { cloneDeep, omit } from 'lodash';
 import * as events from '../../../components/form/events';
 import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
-import { isFetching, getScopeOptions } from '../../../schema/selects';
+import { isFetching, getScopeOptions, getScopeSchema } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
 import { reconsider, single, options, schema } from '../../../demand/endpoints';
 import { history as spotHistory } from '../../../demand/spot/endpoints';
@@ -25,6 +25,7 @@ import {
   getBeardLengths,
   getBeardStyles,
   getHairLengths,
+  getAge,
 } from '../../../description/selects';
 import steps from '../../../demand/input/parts/steps';
 import { spotsFetching, getSpotsByDemand } from '../../../spot/selects';
@@ -140,6 +141,7 @@ const mapStateToProps = (state, { match: { params: { id } } }) => {
       demand: getDemandETag(id, state),
     },
     selects: {
+      age: getAge(getScopeSchema(state, DEMAND)),
       sex: getSex(getScopeOptions(state, DEMAND)),
       ethnicGroups: getEthnicGroups(getScopeOptions(state, DEMAND)),
       bodyBuilds: getBodyBuilds(getScopeOptions(state, DEMAND)),

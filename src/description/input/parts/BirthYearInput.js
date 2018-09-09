@@ -22,10 +22,11 @@ const BirthYearInput = ({
   error,
   birthYear,
 }: Props) => {
+  const { minimum: min, maximum: max } = birthYear;
   return (
     <FormControl error={!!error} className={classes.formControl}>
       <InputLabel>Birth year</InputLabel>
-      <Input type="number" inputProps={birthYear} onChange={onChange} value={value || ''} />
+      <Input type="number" inputProps={{ min, max }} onChange={onChange} value={value || ''} />
       {error && <FormHelperText id="name-error-text">{toMessage(error)}</FormHelperText>}
     </FormControl>
   );

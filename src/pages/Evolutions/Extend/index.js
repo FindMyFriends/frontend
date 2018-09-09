@@ -10,7 +10,7 @@ import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/selects';
 import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
 import { extend, single, options, schema } from '../../../evolution/endpoints';
-import { getScopeOptions } from '../../../evolution/selects';
+import { getScopeOptions, getScopeSchema } from '../../../evolution/selects';
 import {
   getBodyBuilds,
   getBreastSizes,
@@ -26,6 +26,7 @@ import {
   getHairLengths,
   getBeardStyles,
   getBeardLengths,
+  getAge,
 } from '../../../description/selects';
 import steps from '../../../evolution/input/parts/steps';
 import { getTimelineSides } from '../../../demand/selects';
@@ -134,6 +135,7 @@ class Extend extends React.Component<Props, State> {
 
 const mapStateToProps = state => ({
   selects: {
+    age: getAge(getScopeSchema(state)),
     sex: getSex(getScopeOptions(state)),
     ethnicGroups: getEthnicGroups(getScopeOptions(state)),
     bodyBuilds: getBodyBuilds(getScopeOptions(state)),

@@ -9,7 +9,6 @@ export const getSex = (options: Object): Array<string> => (
 export const getEthnicGroups = (options: Object): Array<ApiEnum> => (
   !isEmpty(options) ? enumSet.toEnum(options.general.ethnic_group) : enumSet.empty()
 );
-
 export const getBirthYear = (schema: Object): ApiRange => (
   !isEmpty(schema)
     ? enumSet.toRange(schema.properties.general.properties.birth_year)
