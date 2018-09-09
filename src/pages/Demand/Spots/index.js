@@ -10,7 +10,12 @@ import { info as soulmateInfo } from '../../../soulmate/endpoints';
 import { getTotal } from '../../../soulmate/selects';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { getPlaces, placesFetching, spotsFetching, getSpotsByDemand } from '../../../spot/selects';
+import {
+  getPlaces,
+  placesFetching,
+  spotsFetching,
+  getSpotsByDemand,
+} from '../../../spot/selects';
 
 type Props = {|
   +spots: Array<Object>,

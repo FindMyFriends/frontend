@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { unflatten } from 'flat';
-import Form from './../../../sign/up/input/Form';
+import Form from '../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
 import type { RegistrationData, RegistrationDataErrors } from '../../../sign/types';
@@ -56,25 +56,25 @@ class Up extends React.Component<Props, State> {
   };
 
   handleChange = name => event => (
-    this.setState({
+    this.setState(prevState => ({
       registrationData: unflatten({
-        ...this.state.registrationData,
+        ...prevState.registrationData,
         [name]: event.target.value,
       }),
       errors: unflatten({
-        ...this.state.errors,
+        ...prevState.errors,
         [name]: null,
       }),
-    })
+    }))
   );
 
   handleSubmit = () => {
     const { selects: { birthYear } } = this.props;
     if (validation.anyErrors(this.state.registrationData, birthYear)) {
-      this.setState({
-        ...this.state,
-        errors: validation.errors(this.state.registrationData, birthYear),
-      });
+      this.setState(prevState => ({
+        ...prevState,
+        errors: validation.errors(prevState.registrationData, birthYear),
+      }));
     } else {
       this.props.signUp(
         this.state.registrationData,

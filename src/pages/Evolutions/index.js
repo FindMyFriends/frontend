@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { mapValues } from 'lodash';
 import { injectIntl } from 'react-intl';
-import Table from './../../evolution/output/Table';
+import Table from '../../evolution/output/Table';
 import { all, revert } from '../../evolution/endpoints';
 import { toApiOrdering } from '../../dataset/formats';
 import type { PaginationType } from '../../dataset/PaginationType';
@@ -18,7 +18,12 @@ import {
   getColumns,
 } from '../../evolution/selects';
 import { invalidatedAll, receivedColumns } from '../../evolution/actions';
-import { changePerPage, receivedInit, sort, turnPage } from '../../dataset/actions';
+import {
+  changePerPage,
+  receivedInit,
+  sort,
+  turnPage,
+} from '../../dataset/actions';
 import { getSourcePagination, getSourceSorting } from '../../dataset/selects';
 
 type Props = {|
@@ -42,10 +47,12 @@ type Props = {|
 |};
 class All extends React.Component<Props> {
   componentDidMount = () => {
+    const reload = this.reload(() => (
+      this.props.setColumns(mostPriorColumnIdentifiers(this.props.availableColumns))
+    ));
     Promise.resolve()
       .then(() => this.props.initSortAndPaging({ order: 'desc', orderBy: 'evolved_at' }, { page: 1, perPage: 5 }))
-      .then(() => this.reload(() =>
-        this.props.setColumns(mostPriorColumnIdentifiers(this.props.availableColumns))));
+      .then(reload);
   };
 
   reload = (next: () => (void) = () => {}) => {

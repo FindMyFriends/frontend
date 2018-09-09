@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import Form from './../../../sign/in/input/Form';
+import Form from '../../../sign/in/input/Form';
 import { signIn } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
 import type { Credentials, CredentialsErrors } from '../../../sign/types';
@@ -27,21 +27,24 @@ class In extends React.Component<Props, State> {
   };
 
   handleChange = name => event => (
-    this.setState({
+    this.setState(prevState => ({
       credentials: {
-        ...this.state.credentials,
+        ...prevState.credentials,
         [name]: event.target.value,
       },
       errors: {
-        ...this.state.errors,
+        ...prevState.errors,
         [name]: null,
       },
-    })
+    }))
   );
 
   handleSubmit = () => {
     if (validation.anyErrors(this.state.credentials)) {
-      this.setState({ ...this.state, errors: validation.errors(this.state.credentials) });
+      this.setState(prevState => ({
+        ...prevState,
+        errors: validation.errors(prevState.credentials),
+      }));
     } else {
       this.props.signIn(
         this.state.credentials,

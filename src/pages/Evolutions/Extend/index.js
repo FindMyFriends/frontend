@@ -9,7 +9,12 @@ import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching } from '../../../schema/selects';
 import { EVOLUTION, invalidatedAll } from '../../../evolution/actions';
-import { extend, single, options, schema } from '../../../evolution/endpoints';
+import {
+  extend,
+  single,
+  options,
+  schema,
+} from '../../../evolution/endpoints';
 import { getScopeOptions, getScopeSchema } from '../../../evolution/selects';
 import {
   getBodyBuilds,
@@ -67,16 +72,18 @@ class Extend extends React.Component<Props, State> {
     this.props.schema();
     this.props.single(
       id,
-      evolution => this.setState({ evolution: { ...evolution, ...this.state.evolution } }),
+      evolution => this.setState(prevState => ({
+        evolution: { ...evolution, ...prevState.evolution },
+      })),
     );
   };
 
   handleChange = name => event => (
-    this.setState({
+    this.setState(prevState => ({
       evolution: {
-        ...events.flattenChange(event, name, this.state.evolution),
+        ...events.flattenChange(event, name, prevState.evolution),
       },
-    })
+    }))
   );
 
   handleExtend = () => (
@@ -90,26 +97,26 @@ class Extend extends React.Component<Props, State> {
 
   // TODO: Common with demand
   handleAppendedSpot = () => (
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       evolution: {
-        ...this.state.evolution,
+        ...prevState.evolution,
         spots: [
-          ...this.state.evolution.spots,
-          cloneDeep([...this.state.evolution.spots].pop()),
+          ...prevState.evolution.spots,
+          cloneDeep([...prevState.evolution.spots].pop()),
         ],
       },
-    })
+    }))
   );
 
   handleDetachedSpot = (position: number) => {
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       evolution: {
-        ...this.state.evolution,
-        spots: this.state.evolution.spots.filter((spot, index) => index !== position),
+        ...prevState.evolution,
+        spots: prevState.evolution.spots.filter((spot, index) => index !== position),
       },
-    });
+    }));
   };
 
   render() {

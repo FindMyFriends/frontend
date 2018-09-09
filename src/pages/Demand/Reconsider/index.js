@@ -8,7 +8,12 @@ import Loader from '../../../ui/Loader';
 import NestedStepper from '../../../components/NestedStepper';
 import { isFetching, getScopeOptions, getScopeSchema } from '../../../schema/selects';
 import { DEMAND } from '../../../demand/actions';
-import { reconsider, single, options, schema } from '../../../demand/endpoints';
+import {
+  reconsider,
+  single,
+  options,
+  schema,
+} from '../../../demand/endpoints';
 import { history as spotHistory } from '../../../demand/spot/endpoints';
 import {
   getBodyBuilds,
@@ -68,16 +73,18 @@ class Extend extends React.Component<Props, State> {
       ))
       .then(() => this.props.spotHistory(
         id,
-        () => this.setState({ demand: { ...this.state.demand, spots: this.props.spots } }),
+        () => this.setState(prevState => ({
+          demand: { ...prevState.demand, spots: this.props.spots },
+        })),
       ));
   };
 
   handleChange = name => event => (
-    this.setState({
+    this.setState(prevState => ({
       demand: {
-        ...events.flattenChange(event, name, this.state.demand),
+        ...events.flattenChange(event, name, prevState.demand),
       },
-    })
+    }))
   );
 
   handleReconsider = () => (
@@ -90,26 +97,26 @@ class Extend extends React.Component<Props, State> {
   );
 
   handleAppendedSpot = () => (
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       demand: {
-        ...this.state.demand,
+        ...prevState.demand,
         spots: [
-          ...this.state.demand.spots,
-          omit(cloneDeep([...this.state.demand.spots].pop()), ['id']),
+          ...prevState.demand.spots,
+          omit(cloneDeep([...prevState.demand.spots].pop()), ['id']),
         ],
       },
-    })
+    }))
   );
 
   handleDetachedSpot = (position: number) => (
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       demand: {
-        ...this.state.demand,
-        spots: this.state.demand.spots.filter((spot, index) => index !== position),
+        ...prevState.demand,
+        spots: prevState.demand.spots.filter((spot, index) => index !== position),
       },
-    })
+    }))
   );
 
   render() {

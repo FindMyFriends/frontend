@@ -8,7 +8,12 @@ import type { SortType } from '../../../dataset/SortType';
 import { toApiOrdering } from '../../../dataset/formats';
 import Overview from '../../../spot/output/Overview';
 import { places as spotPlaces } from '../../../spot/endpoints';
-import { getPlaces, placesFetching, spotsFetching, getSpotsByEvolution } from '../../../spot/selects';
+import {
+  getPlaces,
+  placesFetching,
+  spotsFetching,
+  getSpotsByEvolution,
+} from '../../../spot/selects';
 
 type Props = {|
   +spots: Array<Object>,

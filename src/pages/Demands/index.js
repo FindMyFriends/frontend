@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import Center from '../../components/Center';
-import Table from './../../demand/output/Table';
+import Table from '../../demand/output/Table';
 import { all, saveNote, retract } from '../../demand/endpoints';
 import { toApiOrdering } from '../../dataset/formats';
 import type { PaginationType } from '../../dataset/PaginationType';
@@ -16,7 +16,12 @@ import Loader from '../../ui/Loader';
 import { requestedConfirm } from '../../ui/actions';
 import { getTotal, allFetching } from '../../demand/selects';
 import { invalidatedAll } from '../../demand/actions';
-import { sort, turnPage, changePerPage, receivedInit } from '../../dataset/actions';
+import {
+  sort,
+  turnPage,
+  changePerPage,
+  receivedInit,
+} from '../../dataset/actions';
 import { getSourcePagination, getSourceSorting } from '../../dataset/selects';
 
 const BottomRightNavigation = styled.div`
