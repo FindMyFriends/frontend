@@ -37,7 +37,7 @@ const Overview = ({ spots, places }: Props) => (
             spot.met_at.approximation && <Row.Text
               key={`approximation-${spot.id}`}
               title="Approximation"
-              text={`${spot.met_at.timeline_side} ${spot.met_at.approximation}`}
+              text={`${moment.duration(spot.met_at.approximation).humanize()} ${spot.met_at.timeline_side}`}
             />,
           ]}
         />
