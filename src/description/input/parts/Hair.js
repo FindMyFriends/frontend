@@ -21,12 +21,12 @@ const HighlightsForDyed = ({ onChange, values }: PartialProps) => {
   return (
     <FormControlLabel
       label="Highlights"
-      control={
+      control={(
         <IndeterminateCheckbox
           checked={values['hair.highlights']}
           onChange={onChange('hair.highlights')}
         />
-      }
+)}
     />
   );
 };
@@ -38,12 +38,12 @@ const RootsForDyed = ({ onChange, values }: PartialProps) => {
   return (
     <FormControlLabel
       label="Roots"
-      control={
+      control={(
         <IndeterminateCheckbox
           checked={values['hair.roots']}
           onChange={onChange('hair.roots')}
         />
-      }
+)}
     />
   );
 };
@@ -83,12 +83,12 @@ const Hair = ({
     <FormGroup>
       <FormControlLabel
         label="Nature"
-        control={
+        control={(
           <IndeterminateCheckbox
             checked={values['hair.nature']}
             onChange={onChange('hair.nature')}
           />
-        }
+)}
       />
       <HighlightsForDyed onChange={onChange} values={values} />
       <RootsForDyed onChange={onChange} values={values} />

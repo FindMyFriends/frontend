@@ -35,12 +35,12 @@ const General = ({
     </FormControl>
     <FormControlLabel
       label="Freckles"
-      control={
+      control={(
         <IndeterminateCheckbox
           checked={values['face.freckles']}
           onChange={onChange('face.freckles')}
         />
-      }
+)}
     />
   </React.Fragment>
 );
