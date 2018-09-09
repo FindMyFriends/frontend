@@ -2,6 +2,7 @@
 import * as emailValidator from 'email-validator';
 import { flatten } from 'flat';
 import { trim, inRange } from 'lodash';
+import type { ApiRange } from '../api/enum';
 
 export type Error = ?string;
 
@@ -25,9 +26,9 @@ export const password = (value: ?string) => {
   return null;
 };
 
-export const birthYearRange = (value: ?number) => {
+export const birthYearRange = (value: ?number, birthYears: ApiRange) => {
   if (required(value)) return required(value);
-  else if (!inRange(value, 1850, 2018)) return BIRTH_YEAR_OUT_OF_RANGE;
+  else if (!inRange(value, birthYears.min, birthYears.max)) return BIRTH_YEAR_OUT_OF_RANGE;
   return null;
 };
 

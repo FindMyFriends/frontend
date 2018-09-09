@@ -6,15 +6,16 @@ import Form from './../../../sign/up/input/Form';
 import { signUp } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
 import type { RegistrationData, RegistrationDataErrors } from '../../../sign/types';
-import { getEthnicGroups, getSex } from '../../../description/selects';
-import { getScopeOptions, isFetching } from '../../../schema/selects';
-import { DESCRIPTION, options } from '../../../description/endpoints';
+import { getBirthYears, getEthnicGroups, getSex } from '../../../seeker/selects';
+import { options, schema, SEEKER } from '../../../seeker/endpoints';
+import { getScopeOptions, getScopeSchema, isFetching } from '../../../schema/selects';
 import Loader from '../../../ui/Loader';
 import * as validation from '../../../sign/up/validation';
 
 type Props = {|
   +signUp: (RegistrationData, () => (void)) => (void),
   +options: (void) => (void),
+  +schema: (void) => (void),
   +selects: Object,
   +fetching: boolean,
   +history: Object,
@@ -51,6 +52,7 @@ class Up extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this.props.options();
+    this.props.schema();
   };
 
   handleChange = name => event => (
@@ -67,8 +69,12 @@ class Up extends React.Component<Props, State> {
   );
 
   handleSubmit = () => {
-    if (validation.anyErrors(this.state.registrationData)) {
-      this.setState({ ...this.state, errors: validation.errors(this.state.registrationData) });
+    const { selects: { birthYears } } = this.props;
+    if (validation.anyErrors(this.state.registrationData, birthYears)) {
+      this.setState({
+        ...this.state,
+        errors: validation.errors(this.state.registrationData, birthYears),
+      });
     } else {
       this.props.signUp(
         this.state.registrationData,
@@ -98,14 +104,16 @@ class Up extends React.Component<Props, State> {
 const mapStateToProps = (state) => {
   return {
     selects: {
-      sex: getSex(getScopeOptions(state, DESCRIPTION)),
-      ethnicGroups: getEthnicGroups(getScopeOptions(state, DESCRIPTION)),
+      sex: getSex(getScopeOptions(state, SEEKER)),
+      ethnicGroups: getEthnicGroups(getScopeOptions(state, SEEKER)),
+      birthYears: getBirthYears(getScopeSchema(state, SEEKER)),
     },
-    fetching: isFetching(state, DESCRIPTION),
+    fetching: isFetching(state, SEEKER),
   };
 };
 const mapDispatchToProps = dispatch => ({
   options: () => dispatch(options()),
+  schema: () => dispatch(schema()),
   signUp: (
     registrationData: RegistrationData,
     next: (Object) => (Promise<any>),
