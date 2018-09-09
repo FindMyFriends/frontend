@@ -15,7 +15,12 @@ import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../
 import type { PaginationType } from '../dataset/PaginationType';
 import * as response from '../api/response';
 import { fetchedAll, fetchedSingle } from './selects';
-import { forgottenSpots, move, movedSpots, newSpots } from '../spot/endpoints';
+import {
+  forgottenSpots,
+  move,
+  movedSpots,
+  newSpots,
+} from '../spot/endpoints';
 import { getSpotsByDemand } from '../spot/selects';
 import { invalidatedByDemand } from '../spot/actions';
 

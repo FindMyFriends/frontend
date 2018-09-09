@@ -43,4 +43,3 @@ export const receivedSingle = (id: string, demand: Object, etag: string) => ({
   etag,
   fetching: false,
 });
-
