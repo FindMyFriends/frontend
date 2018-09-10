@@ -31,26 +31,20 @@ export default class NestedStepper extends React.Component<Props, State> {
     },
   });
 
-  handleMinorTurn = (minor: number) => (
-    this.setState({
-      step: {
-        ...this.state.step,
-        minor,
-      },
-    })
-  );
+  handleMinorTurn = (minor: number) => this.setState(prevState => ({
+    step: {
+      ...prevState.step,
+      minor,
+    },
+  }));
 
-  handleNextTurn = () => (
-    this.setState({
-      step: next(this.state.step, this.props.steps),
-    })
-  );
+  handleNextTurn = () => this.setState(prevState => ({
+    step: next(prevState.step, this.props.steps),
+  }));
 
-  handlePreviousTurn = () => (
-    this.setState({
-      step: previous(this.state.step, this.props.steps),
-    })
-  );
+  handlePreviousTurn = () => this.setState(prevState => ({
+    step: previous(prevState.step, this.props.steps),
+  }));
 
   render() {
     const { step: { major, minor } } = this.state;

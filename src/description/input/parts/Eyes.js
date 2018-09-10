@@ -42,7 +42,7 @@ const Eye = ({
       </ColorInput>
       <FormControlLabel
         label="Lenses"
-        control={
+        control={(
           <IndeterminateCheckbox
             checked={values[`eye.${side}.lenses`]}
             onChange={
@@ -56,7 +56,7 @@ const Eye = ({
               }
             }
           />
-        }
+)}
       />
     </React.Fragment>
   );
@@ -84,7 +84,7 @@ class Eyes extends React.Component<EyesProps, EyesState> {
   };
 
   handleSameChange = () => {
-    this.setState({ same: !this.state.same });
+    this.setState(prevState => ({ same: !prevState.same }));
     const { values, onChange } = this.props;
     const distributeOnChange = (from, to) => onChange(from)({ target: { value: values[to], type: 'any' } });
     distributeOnChange('eye.left.lenses', 'eye.right.lenses');
@@ -100,13 +100,13 @@ class Eyes extends React.Component<EyesProps, EyesState> {
     const components = [
       <Center key="same">
         <FormControlLabel
-          control={
+          control={(
             <Checkbox
               checked={this.state.same}
               onChange={this.handleSameChange}
               color="primary"
             />
-          }
+)}
           label="Same"
         />
       </Center>,

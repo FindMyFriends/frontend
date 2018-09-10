@@ -36,7 +36,7 @@ export default class IndeterminateCheckbox extends React.Component<Props, State>
     } else if (this.state.checked === true) {
       this.setState({ checked: INDETERMINATE }, next);
     } else {
-      this.setState({ checked: !this.state.checked }, next);
+      this.setState(prevState => ({ checked: !prevState.checked }), next);
     }
   };
 

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { withFormStyles } from '../../../description/input/parts/withFormStyles';
-import type { RegistrationData } from '../../../sign/types';
+import type { RegistrationData } from '../../types';
 import SexInput from '../../../description/input/parts/SexInput';
 import EthnicGroupInput from '../../../description/input/parts/EthnicGroupInput';
 import BirthYearInput from '../../../description/input/parts/BirthYearInput';

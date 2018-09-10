@@ -23,11 +23,20 @@ export default class NoteDialog extends React.Component<Props, State> {
   };
 
   componentDidMount = () => this.resetNote();
-  resetNote = () => this.setState({ ...this.state, note: this.props.note || '' });
-  close = () => Promise.resolve().then(() => this.setState({ ...this.state, open: false }));
-  handleClickOpen = () => this.setState({ ...this.state, open: true });
+
+  resetNote = () => this.setState(prevState => ({ ...prevState, note: this.props.note || '' }));
+
+  close = () => Promise.resolve()
+    .then(() => this.setState(prevState => ({ ...prevState, open: false })));
+
+  handleClickOpen = () => this.setState(prevState => ({ ...prevState, open: true }));
+
   handleClose = () => this.close().then(this.resetNote);
-  handleChange = (event: Object) => this.setState({ ...this.state, note: event.target.value });
+
+  handleChange = (event: Object) => this.setState(
+    prevState => ({ ...prevState, note: event.target.value }),
+  );
+
   handleSave = () => this.props.onSave(this.state.note, this.close);
 
   render() {

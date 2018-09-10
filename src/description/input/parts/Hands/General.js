@@ -15,12 +15,12 @@ const General = ({ onChange, values }: Props) => (
     </InputRating>
     <FormControlLabel
       label="Visible veins"
-      control={
+      control={(
         <IndeterminateCheckbox
           checked={values['hands.visible_veins']}
           onChange={onChange('hands.visible_veins')}
         />
-      }
+)}
     />
   </React.Fragment>
 );

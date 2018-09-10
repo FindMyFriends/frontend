@@ -1,6 +1,11 @@
 // @flow
 import React from 'react';
-import { GoogleMap, withGoogleMap, withScriptjs, Marker } from 'react-google-maps';
+import {
+  GoogleMap,
+  withGoogleMap,
+  withScriptjs,
+  Marker,
+} from 'react-google-maps';
 import { compose, withProps, lifecycle } from 'recompose';
 
 type Props = {|

@@ -124,34 +124,34 @@ class Add extends React.Component<Props, State> {
   };
 
   handleChange = name => event => (
-    this.setState({
+    this.setState(prevState => ({
       demand: {
-        ...events.flattenChange(event, name, this.state.demand),
+        ...events.flattenChange(event, name, prevState.demand),
       },
-    })
+    }))
   );
 
   handleAppendedSpot = () => (
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       demand: {
-        ...this.state.demand,
+        ...prevState.demand,
         spots: [
-          ...this.state.demand.spots,
-          cloneDeep([...this.state.demand.spots].pop()),
+          ...prevState.demand.spots,
+          cloneDeep([...prevState.demand.spots].pop()),
         ],
       },
-    })
+    }))
   );
 
   handleDetachedSpot = (position: number) => {
-    this.setState({
-      ...this.state,
+    this.setState(prevState => ({
+      ...prevState,
       demand: {
-        ...this.state.demand,
-        spots: this.state.demand.spots.filter((spot, index) => index !== position),
+        ...prevState.demand,
+        spots: prevState.demand.spots.filter((spot, index) => index !== position),
       },
-    });
+    }));
   };
 
   handleAdd = () => {

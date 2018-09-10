@@ -4,6 +4,9 @@
     "airbnb",
   ],
   "rules": {
+    "no-else-return": 0, // weird
+    "react/destructuring-assignment": 0, // used for dispatch, ..
+
     "import/no-named-default": 0,
     "import/no-named-as-default": 0, // Multiple exports because of Redux state and tests
     "import/prefer-default-export": 0, // Multiple exports because of Redux state and tests

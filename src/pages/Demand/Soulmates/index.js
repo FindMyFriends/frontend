@@ -10,7 +10,12 @@ import type { SortType } from '../../../dataset/SortType';
 import Table from '../../../soulmate/output/Table';
 import { toApiOrdering } from '../../../dataset/formats';
 import { getSourcePagination, getSourceSorting } from '../../../dataset/selects';
-import { changePerPage, receivedInit, sort, turnPage } from '../../../dataset/actions';
+import {
+  changePerPage,
+  receivedInit,
+  sort,
+  turnPage,
+} from '../../../dataset/actions';
 
 type Props = {|
   +soulmates: Array<Object>,

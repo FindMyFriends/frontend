@@ -102,6 +102,7 @@ class MainAppBar extends React.Component<Props, State> {
   };
 
   handleDrawerOpen = () => this.setState({ open: true });
+
   handleDrawerClose = () => this.setState({ open: false });
 
   render() {

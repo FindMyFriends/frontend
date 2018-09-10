@@ -3,7 +3,9 @@ import axios from 'axios';
 import moment from 'moment';
 import { omit } from 'lodash';
 import { track } from './spot/endpoints';
-import { receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION } from './actions';
+import {
+  receivedAll, requestedSingle, requestedAll, receivedSingle, EVOLUTION,
+} from './actions';
 import { options as schemaOptions, schema as schemaStructure } from '../schema/endpoints';
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
