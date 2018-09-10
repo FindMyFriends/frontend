@@ -47,7 +47,7 @@ type Props = {|
 |};
 class All extends React.Component<Props> {
   componentDidMount = () => {
-    const reload = this.reload(() => (
+    const reload = () => this.reload(() => (
       this.props.setColumns(mostPriorColumnIdentifiers(this.props.availableColumns))
     ));
     Promise.resolve()
