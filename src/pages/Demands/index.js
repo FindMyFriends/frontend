@@ -25,9 +25,8 @@ import {
 import { getSourcePagination, getSourceSorting } from '../../dataset/selects';
 
 const BottomRightNavigation = styled.div`
-  position: absolute;
   bottom: 0;
-  right: 0;
+  float: right;
   padding: 20px;
 `;
 
