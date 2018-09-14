@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Form from '../../../sign/in/input/Form';
 import { signIn } from '../../../sign/endpoints';
 import Center from '../../../components/Center';
@@ -9,14 +10,16 @@ import * as validation from '../../../sign/in/validation';
 
 type Props = {|
   +signIn: (Credentials, () => (void)) => (void),
-  +history: Object,
+  +location: Object,
 |};
 type State = {|
   credentials: Credentials,
   errors: CredentialsErrors,
+  redirectToReferrer: boolean,
 |};
 class In extends React.Component<Props, State> {
   state = {
+    redirectToReferrer: false,
     credentials: {
       email: 'me@fmf.com',
       password: 'heslo123',
@@ -49,12 +52,19 @@ class In extends React.Component<Props, State> {
     } else {
       this.props.signIn(
         this.state.credentials,
-        () => this.props.history.push('/demands'),
+        () => this.setState(prevState => ({ ...prevState, redirectToReferrer: true })),
       );
     }
   };
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/demands' } };
+    const { redirectToReferrer } = this.state;
+
+    if (redirectToReferrer) {
+      return <Redirect to={from} />;
+    }
+
     return (
       <Center>
         <Form
