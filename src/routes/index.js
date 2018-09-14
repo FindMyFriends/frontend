@@ -18,26 +18,26 @@ import { default as AllEvolutions } from '../pages/Evolutions';
 import { default as SingleEvolution } from '../pages/Evolution';
 import { default as ExtendEvolution } from '../pages/Evolutions/Extend';
 import Error404 from '../pages/Error/Error404';
-import { loggedIn } from '../access/cookie';
+import { loggedIn } from '../access/session';
 
 export default () => (
   <BrowserRouter>
     <Switch>
       <Layout exact path="/" component={Default} />
-      <Layout onEnter={loggedIn} path="/demands/add" component={AddDemand} />
-      <Layout onEnter={loggedIn} path="/demands/:id/soulmates" component={SoulmatesByDemand} />
-      <Layout onEnter={loggedIn} path="/demands/:id/spots" component={DemandSpots} />
-      <Layout onEnter={loggedIn} path="/demands/:id/reconsider" component={ReconsiderDemand} />
-      <Layout onEnter={loggedIn} path="/demands/:id" component={SingleDemand} />
-      <Layout onEnter={loggedIn} path="/demands" component={AllDemands} />
+      <Layout authenticated={loggedIn} path="/demands/add" component={AddDemand} />
+      <Layout authenticated={loggedIn} path="/demands/:id/soulmates" component={SoulmatesByDemand} />
+      <Layout authenticated={loggedIn} path="/demands/:id/spots" component={DemandSpots} />
+      <Layout authenticated={loggedIn} path="/demands/:id/reconsider" component={ReconsiderDemand} />
+      <Layout authenticated={loggedIn} path="/demands/:id" component={SingleDemand} />
+      <Layout authenticated={loggedIn} path="/demands" component={AllDemands} />
       <Layout path="/sign/in" component={SignIn} />
       <Layout path="/sign/up" component={SignUp} />
       <Layout path="/sign/out" component={SignOut} />
       <Layout path="/activation/:code" component={Activation} />
-      <Layout onEnter={loggedIn} path="/evolutions/:id/extend" component={ExtendEvolution} />
-      <Layout onEnter={loggedIn} path="/evolutions/:id/spots" component={EvolutionSpots} />
-      <Layout onEnter={loggedIn} path="/evolutions/:id" component={SingleEvolution} />
-      <Layout onEnter={loggedIn} path="/evolutions" component={AllEvolutions} />
+      <Layout authenticated={loggedIn} path="/evolutions/:id/extend" component={ExtendEvolution} />
+      <Layout authenticated={loggedIn} path="/evolutions/:id/spots" component={EvolutionSpots} />
+      <Layout authenticated={loggedIn} path="/evolutions/:id" component={SingleEvolution} />
+      <Layout authenticated={loggedIn} path="/evolutions" component={AllEvolutions} />
       <Layout path="*" component={Error404} />
     </Switch>
   </BrowserRouter>

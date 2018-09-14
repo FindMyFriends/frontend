@@ -19,7 +19,7 @@ import SignInIcon from '@material-ui/icons/ExitToApp';
 import { default as DemandIcon } from '../../../demand/output/Icon';
 import { default as EvolutionIcon } from '../../../evolution/output/Icon';
 import ListItemLink from './ListItemLink';
-import { loggedIn } from '../../../access/cookie';
+import { loggedIn } from '../../../access/session';
 
 const drawerWidth = 240;
 

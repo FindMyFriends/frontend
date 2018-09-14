@@ -16,3 +16,12 @@ export const create = (
 export const invalidate = (next: (void) => Promise<any>) => (
   axios.delete('/tokens').finally(next)
 );
+
+export const refresh = (
+  token: ?string,
+  next: (Object) => (void),
+) => (
+  axios.post('/refresh_tokens', { token })
+    .then(response => response.data)
+    .then(next)
+);

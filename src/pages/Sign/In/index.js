@@ -9,6 +9,7 @@ import * as validation from '../../../sign/in/validation';
 
 type Props = {|
   +signIn: (Credentials, () => (void)) => (void),
+  +history: Object,
 |};
 type State = {|
   credentials: Credentials,
@@ -48,7 +49,7 @@ class In extends React.Component<Props, State> {
     } else {
       this.props.signIn(
         this.state.credentials,
-        () => window.location.replace('/demands'),
+        () => this.props.history.push('/demands'),
       );
     }
   };
