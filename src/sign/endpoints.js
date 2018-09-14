@@ -1,7 +1,7 @@
 // @flow
 import { create, invalidate } from '../token/endpoints';
 import { join } from '../seeker/endpoints';
-import { deleteCookie, setCookie } from '../access/cookie';
+import * as session from '../access/session';
 import { receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import type { Credentials, RegistrationData } from './types';
 
@@ -13,7 +13,7 @@ export const signIn = (
     credentials.email,
     credentials.password,
     data => Promise.resolve()
-      .then(() => setCookie(data))
+      .then(() => session.start({ expiration: data.expiration, value: data.token }))
       .then(() => dispatch(receivedSuccessMessage('You have been successfully signed in')))
       .then(next),
   ));
@@ -21,7 +21,7 @@ export const signIn = (
 
 export const signOut = (next: (void) => void) => (dispatch: (mixed) => Object) => {
   invalidate(() => Promise.resolve()
-    .then(deleteCookie)
+    .then(session.destroy)
     .then(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
     .then(next));
 };
