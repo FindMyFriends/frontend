@@ -19,10 +19,9 @@ export const signIn = (
   ));
 };
 
-export const signOut = (next: (void) => void) => (dispatch: (mixed) => Object) => {
+export const signOut = (next: (void) => void) => {
   invalidate(() => Promise.resolve()
     .then(session.destroy)
-    .then(() => dispatch(receivedSuccessMessage('You have been successfully signed out')))
     .then(next));
 };
 

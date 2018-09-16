@@ -1,23 +1,13 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import { signOut } from '../../../sign/endpoints';
 
-type Props = {|
-  +exit: (() => (void)) => (void),
-  +history: Object,
-|};
-class Out extends React.Component<Props> {
+export default class extends React.PureComponent<*> {
   componentWillMount() {
-    this.props.exit(() => this.props.history.push('/sign/in'));
+    signOut(() => window.location.replace('/sign/in'));
   }
 
   render() {
     return null;
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  exit: (next: () => (void)) => dispatch(signOut(next)),
-});
-export default connect(null, mapDispatchToProps)(Out);
