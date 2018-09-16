@@ -20,8 +20,10 @@ export const invalidate = (next: (void) => Promise<any>) => (
 export const refresh = (
   token: ?string,
   next: (Object) => (void),
+  error: () => (void),
 ) => (
   axios.post('/refresh_tokens', { token })
     .then(response => response.data)
     .then(next)
+    .catch(error)
 );

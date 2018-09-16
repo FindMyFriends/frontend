@@ -10,13 +10,11 @@ type Props = {
 export default ({ component: Component, ...rest }: Props): Route => (
   <Route
     {...rest}
-    render={(props) => {
-      return (
-        <React.Fragment>
-          <Notification />
-          <MainAppBar component={<Component {...props} />} />
-        </React.Fragment>
-      );
-    }}
+    render={props => (
+      <React.Fragment>
+        <Notification />
+        <MainAppBar component={<Component {...props} />} />
+      </React.Fragment>
+    )}
   />
 );

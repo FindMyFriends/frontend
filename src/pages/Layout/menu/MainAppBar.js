@@ -19,7 +19,7 @@ import SignInIcon from '@material-ui/icons/ExitToApp';
 import { default as DemandIcon } from '../../../demand/output/Icon';
 import { default as EvolutionIcon } from '../../../evolution/output/Icon';
 import ListItemLink from './ListItemLink';
-import { loggedIn } from '../../../access/session';
+import * as session from '../../../access/session';
 
 const drawerWidth = 240;
 
@@ -140,15 +140,15 @@ class MainAppBar extends React.Component<Props, State> {
           <Divider />
           <List>
             <React.Fragment>
-              {loggedIn() ? <ListItemLink href="/demands" icon={<DemandIcon />}>Demands</ListItemLink> : null}
-              {loggedIn() ? <ListItemLink href="/evolutions" icon={<EvolutionIcon />}>Evolutions</ListItemLink> : null}
+              {session.exists() ? <ListItemLink href="/demands" icon={<DemandIcon />}>Demands</ListItemLink> : null}
+              {session.exists() ? <ListItemLink href="/evolutions" icon={<EvolutionIcon />}>Evolutions</ListItemLink> : null}
             </React.Fragment>
           </List>
-          {loggedIn() ? <Divider /> : null}
+          {session.exists() ? <Divider /> : null}
           <List>
             <React.Fragment>
               {
-                loggedIn()
+                session.exists()
                   ? (<ListItemLink href="/sign/out" icon={<SignOutIcon />}>Sign out</ListItemLink>)
                   : (
                     <React.Fragment>
