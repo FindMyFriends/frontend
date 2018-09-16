@@ -33,10 +33,10 @@ export default ({ history }: Props) => (
       <Private path="/demands/:id/reconsider" component={ReconsiderDemand} />
       <Private path="/demands/:id" component={SingleDemand} />
       <Private path="/demands" component={AllDemands} />
-      <Public path="/sign/in" component={SignIn} />
-      <Public path="/sign/up" component={SignUp} />
-      <Public path="/sign/out" component={SignOut} />
-      <Public path="/activation/:code" component={Activation} />
+      <Public restrictive path="/sign/in" component={SignIn} />
+      <Public restrictive path="/sign/up" component={SignUp} />
+      <Private path="/sign/out" component={SignOut} />
+      <Public restrictive path="/activation/:code" component={Activation} />
       <Private path="/evolutions/:id/extend" component={ExtendEvolution} />
       <Private path="/evolutions/:id/spots" component={EvolutionSpots} />
       <Private path="/evolutions/:id" component={SingleEvolution} />
