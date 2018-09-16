@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
 import Default from '../pages/Default';
 import { default as AllDemands } from '../pages/Demands';
 import { default as AddDemand } from '../pages/Demands/Add';
@@ -17,29 +17,31 @@ import { default as AllEvolutions } from '../pages/Evolutions';
 import { default as SingleEvolution } from '../pages/Evolution';
 import { default as ExtendEvolution } from '../pages/Evolutions/Extend';
 import Error404 from '../pages/Error/Error404';
-import { loggedIn } from '../access/session';
 import Public from './Public';
 import Private from './Private';
 
-export default () => (
-  <BrowserRouter>
+type Props = {|
+  +history: Object,
+|};
+export default ({ history }: Props) => (
+  <Router history={history}>
     <Switch>
       <Public exact path="/" component={Default} />
-      <Private authenticated={loggedIn} path="/demands/add" component={AddDemand} />
-      <Private authenticated={loggedIn} path="/demands/:id/soulmates" component={SoulmatesByDemand} />
-      <Private authenticated={loggedIn} path="/demands/:id/spots" component={DemandSpots} />
-      <Private authenticated={loggedIn} path="/demands/:id/reconsider" component={ReconsiderDemand} />
-      <Private authenticated={loggedIn} path="/demands/:id" component={SingleDemand} />
-      <Private authenticated={loggedIn} path="/demands" component={AllDemands} />
+      <Private path="/demands/add" component={AddDemand} />
+      <Private path="/demands/:id/soulmates" component={SoulmatesByDemand} />
+      <Private path="/demands/:id/spots" component={DemandSpots} />
+      <Private path="/demands/:id/reconsider" component={ReconsiderDemand} />
+      <Private path="/demands/:id" component={SingleDemand} />
+      <Private path="/demands" component={AllDemands} />
       <Public path="/sign/in" component={SignIn} />
       <Public path="/sign/up" component={SignUp} />
       <Public path="/sign/out" component={SignOut} />
       <Public path="/activation/:code" component={Activation} />
-      <Private authenticated={loggedIn} path="/evolutions/:id/extend" component={ExtendEvolution} />
-      <Private authenticated={loggedIn} path="/evolutions/:id/spots" component={EvolutionSpots} />
-      <Private authenticated={loggedIn} path="/evolutions/:id" component={SingleEvolution} />
-      <Private authenticated={loggedIn} path="/evolutions" component={AllEvolutions} />
+      <Private path="/evolutions/:id/extend" component={ExtendEvolution} />
+      <Private path="/evolutions/:id/spots" component={EvolutionSpots} />
+      <Private path="/evolutions/:id" component={SingleEvolution} />
+      <Private path="/evolutions" component={AllEvolutions} />
       <Public component={Error404} />
     </Switch>
-  </BrowserRouter>
+  </Router>
 );

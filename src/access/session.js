@@ -44,6 +44,6 @@ export const getTtl = (): ?number => {
   return !cookie || !cookie[TTL_NAME] ? null : cookie[TTL_NAME];
 };
 
-export const loggedIn = (): boolean => getValue() !== null;
+export const exists = (): boolean => getValue() !== null;
 
 export const expired = (): boolean => getTtl() === null;
