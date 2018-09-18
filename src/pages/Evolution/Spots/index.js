@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography/Typography';
 import { history as spotHistory } from '../../../evolution/spot/endpoints';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SPOTS_TYPE } from '../menu/Tabs';
@@ -14,6 +15,7 @@ import {
   spotsFetching,
   getSpotsByEvolution,
 } from '../../../spot/selects';
+import Center from '../../../components/Center';
 
 type Props = {|
   +spots: Array<Object>,
@@ -57,7 +59,13 @@ class Spots extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Tabs type={SPOTS_TYPE} id={id} />
-        <Overview spots={spots} places={places} />
+        {spots.length === 0 ? (
+          <Center>
+            <Typography variant="display1">No spots.</Typography>
+          </Center>
+        ) : (
+          <Overview spots={spots} places={places} />
+        )}
       </React.Fragment>
     );
   }

@@ -18,9 +18,8 @@ export const getSpotsByEvolution = (state: Object, evolution: string): Object =>
 export const spotsFetching = (state: Object) => state.spot.all.fetching;
 
 export const placesFetching = (state: Object, spots: Array<string>): boolean => {
-  if (isEmpty(state.spot.places)) {
-    return true;
-  }
+  if (spots.length === 0) return false;
+  if (isEmpty(state.spot.places)) return true;
   // $FlowFixMe
   const own = Object.values(state.spot.places)
     .filter((spot: Object) => spots.includes(spot.payload.spotId));
