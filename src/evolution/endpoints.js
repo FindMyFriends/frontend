@@ -10,7 +10,7 @@ import { options as schemaOptions, schema as schemaStructure } from '../schema/e
 import type { PaginationType } from '../dataset/PaginationType';
 import { receivedApiError, receivedSuccess as receivedSuccessMessage } from '../ui/actions';
 import * as response from '../api/response';
-import { fetchedAll, fetchedSingle } from './selects';
+import { fetchedAll, fetchedSingle, getById } from './selects';
 
 export const options = (next: (?Object) => (void) = () => {}) => (dispatch: (mixed) => Object) => {
   dispatch(schemaOptions('/evolutions', EVOLUTION, next));
@@ -54,7 +54,10 @@ export const single = (
   fields: Array<string> = [],
   next: (Object) => (void) = () => {},
 ) => (dispatch: (mixed) => Object, getState: () => Object) => {
-  if (fetchedSingle(id, getState())) return;
+  if (fetchedSingle(id, getState())) {
+    next(getById(id, getState()));
+    return;
+  }
   dispatch(requestedSingle(id));
   axios.get(
     `/evolutions/${id}`,
