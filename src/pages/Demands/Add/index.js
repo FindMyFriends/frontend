@@ -123,13 +123,14 @@ class Add extends React.Component<Props, State> {
     this.props.schema();
   };
 
-  handleChange = name => event => (
+  handleChange = name => (event) => {
+    event.persist();
     this.setState(prevState => ({
       demand: {
         ...events.flattenChange(event, name, prevState.demand),
       },
-    }))
-  );
+    }));
+  };
 
   handleAppendedSpot = () => (
     this.setState(prevState => ({

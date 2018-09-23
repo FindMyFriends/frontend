@@ -33,9 +33,10 @@ export default class NoteDialog extends React.Component<Props, State> {
 
   handleClose = () => this.close().then(this.resetNote);
 
-  handleChange = (event: Object) => this.setState(
-    prevState => ({ ...prevState, note: event.target.value }),
-  );
+  handleChange = (event: Object) => {
+    event.persist();
+    this.setState(prevState => ({ ...prevState, note: event.target.value }));
+  };
 
   handleSave = () => this.props.onSave(this.state.note, this.close);
 

@@ -78,13 +78,14 @@ class Extend extends React.Component<Props, State> {
     );
   };
 
-  handleChange = name => event => (
+  handleChange = name => (event) => {
+    event.persist();
     this.setState(prevState => ({
       evolution: {
         ...events.flattenChange(event, name, prevState.evolution),
       },
-    }))
-  );
+    }));
+  };
 
   handleExtend = () => (
     this.props.extend(

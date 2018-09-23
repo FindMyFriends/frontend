@@ -30,7 +30,8 @@ class In extends React.Component<Props, State> {
     },
   };
 
-  handleChange = name => event => (
+  handleChange = name => (event) => {
+    event.persist();
     this.setState(prevState => ({
       credentials: {
         ...prevState.credentials,
@@ -40,8 +41,8 @@ class In extends React.Component<Props, State> {
         ...prevState.errors,
         [name]: null,
       },
-    }))
-  );
+    }));
+  };
 
   handleSubmit = () => {
     if (validation.anyErrors(this.state.credentials)) {

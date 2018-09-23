@@ -55,7 +55,8 @@ class Up extends React.Component<Props, State> {
     this.props.schema();
   };
 
-  handleChange = name => event => (
+  handleChange = name => (event) => {
+    event.persist();
     this.setState(prevState => ({
       registrationData: unflatten({
         ...prevState.registrationData,
@@ -65,8 +66,8 @@ class Up extends React.Component<Props, State> {
         ...prevState.errors,
         [name]: null,
       }),
-    }))
-  );
+    }));
+  };
 
   handleSubmit = () => {
     const { selects: { birthYear } } = this.props;
