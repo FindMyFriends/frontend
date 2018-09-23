@@ -83,7 +83,7 @@ export const extend = (
   axios.post(
     '/evolutions',
     {
-      ...change,
+      ...omittedChange(change),
       evolved_at: moment().toISOString(true),
     },
   )

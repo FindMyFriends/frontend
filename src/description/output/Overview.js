@@ -3,7 +3,7 @@ import React from 'react';
 import YesNoMaybe from '../../components/Card/YesNoMaybe';
 import * as Row from '../../components/Card/Row';
 import * as Card from '../../components/Card';
-import { formattedAge } from '../formats';
+import { formattedRangeAge, formattedAge } from '../formats';
 
 const isEmpty = (items: Array<string>) => (
   items.filter(item => item).map(item => item.toString().trim()).filter(item => item).length === 0
@@ -19,6 +19,7 @@ const Overview = ({ description, cards = null }: Props) => {
       <Card.Solid
         title="General"
         rows={[
+          <Row.Text key="AgeRange" title="Age" text={formattedRangeAge(description.general.age)} />,
           <Row.Text key="Age" title="Age" text={formattedAge(description.general.age)} />,
           <Row.Text key="Ethnic group" title="Ethnic group" text={description.general.ethnic_group} />,
           <Row.Text key="Sex" title="Sex" text={description.general.sex} />,

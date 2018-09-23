@@ -15,7 +15,7 @@ const ProgressTd = styled.td`
 
 type TextProps = {|
   +title: string | Object,
-  +text: string | Object,
+  +text: ?string | ?Object,
 |};
 export const Text = ({ title, text }: TextProps) => {
   if (typeof text === 'string' && trim(text).length > 0) {
