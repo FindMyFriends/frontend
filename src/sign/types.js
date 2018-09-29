@@ -21,6 +21,11 @@ export type RegistrationData = {|
     +ethnic_group_id: ?number,
     +birth_year: ?number,
   },
+  +contact: {
+    +facebook: ?string,
+    +instagram: ?string,
+    +phone_number: ?string,
+  },
 |};
 
 export type RegistrationDataErrors = {|
@@ -32,5 +37,10 @@ export type RegistrationDataErrors = {|
     +sex: Error,
     +ethnic_group_id: Error,
     +birth_year: Error,
+  },
+  +contact: {
+    +facebook: ?string,
+    +instagram: ?string,
+    +phone_number: ?string,
   },
 |};

@@ -36,6 +36,11 @@ class Up extends React.Component<Props, State> {
         sex: null,
         birth_year: null,
       },
+      contact: {
+        facebook: null,
+        instagram: null,
+        phone_number: null,
+      },
     },
     errors: {
       email: null,
@@ -46,6 +51,11 @@ class Up extends React.Component<Props, State> {
         ethnic_group_id: null,
         sex: null,
         birth_year: null,
+      },
+      contact: {
+        facebook: null,
+        instagram: null,
+        phone_number: null,
       },
     },
   };

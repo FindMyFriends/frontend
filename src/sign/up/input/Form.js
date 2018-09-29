@@ -86,6 +86,31 @@ const Form = ({
       selects={selects.ethnicGroups}
       classes={classes}
     />
+    <Typography variant="title" color="inherit">Contact</Typography>
+    <FormControl error={!!errors.contact.facebook} className={classes.formControl}>
+      <InputLabel>Facebook</InputLabel>
+      <Input
+        onChange={onChange('contact.facebook')}
+        value={registrationData.contact.facebook || ''}
+      />
+      {errors.contact.facebook && <FormHelperText id="name-error-text">{toMessage(errors.contact.facebook)}</FormHelperText>}
+    </FormControl>
+    <FormControl error={!!errors.contact.instagram} className={classes.formControl}>
+      <InputLabel>Instagram</InputLabel>
+      <Input
+        onChange={onChange('contact.instagram')}
+        value={registrationData.contact.instagram || ''}
+      />
+      {errors.contact.instagram && <FormHelperText id="name-error-text">{toMessage(errors.contact.instagram)}</FormHelperText>}
+    </FormControl>
+    <FormControl error={!!errors.contact.phone_number} className={classes.formControl}>
+      <InputLabel>Phone number</InputLabel>
+      <Input
+        onChange={onChange('contact.phone_number')}
+        value={registrationData.contact.phone_number || ''}
+      />
+      {errors.contact.phone_number && <FormHelperText id="name-error-text">{toMessage(errors.contact.phone_number)}</FormHelperText>}
+    </FormControl>
     <Button variant="raised" onClick={onSubmit} color="primary">
       Sign up
     </Button>
