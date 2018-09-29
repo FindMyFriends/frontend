@@ -17,6 +17,11 @@ export const errors = memoize((
     birth_year: validation.birthYearRange(registrationData.general.birth_year, birthYear),
     ethnic_group_id: validation.required(registrationData.general.ethnic_group_id),
   },
+  contact: {
+    facebook: null,
+    instagram: null,
+    phone_number: null,
+  },
 }));
 
 export const anyErrors = (registrationData: RegistrationData, birthYear: ApiRange): boolean => (
