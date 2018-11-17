@@ -14,8 +14,14 @@ export const singleFetching = (
   demand: string,
   state: Object,
 ) => (
-  (state.soulmate.all[demand] ? state.soulmate.all[demand].fetching : false)
-    || (state.soulmate.info[demand] ? state.soulmate.info[demand].fetching : false)
+  state.soulmate.all[demand] ? state.soulmate.all[demand].fetching : true
+);
+
+export const singleInfoFetching = (
+  demand: string,
+  state: Object,
+) => (
+  state.soulmate.info[demand] ? state.soulmate.info[demand].fetching : true
 );
 
 export const fetchedDemandInfo = (demand: string, state: Object) => (

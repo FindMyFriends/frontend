@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { all, markAs } from '../../../soulmate/endpoints';
-import { getAllByDemand, getTotal, singleFetching as soulmateFetching } from '../../../soulmate/selects';
+import { all, info, markAs } from '../../../soulmate/endpoints';
+import { getAllByDemand, getTotal, singleFetching as soulmateFetching, singleInfoFetching as soulmateSingleFetching } from '../../../soulmate/selects';
 import Loader from '../../../ui/Loader';
 import { default as Tabs, SOULMATES_TYPE } from '../menu/Tabs';
 import type { PaginationType } from '../../../dataset/PaginationType';
@@ -87,6 +87,7 @@ class All extends React.Component<Props, State> {
     if (fetching) {
       return <Loader />;
     }
+    console.log(this.props);
     return (
       <React.Fragment>
         <Tabs type={SOULMATES_TYPE} id={id} soulmateTotal={total} />
@@ -110,7 +111,7 @@ const SOURCE_NAME = 'demand/soulmates';
 const mapStateToProps = (state, { match: { params: { id } } }) => ({
   soulmates: getAllByDemand(id, state),
   total: getTotal(id, state),
-  fetching: soulmateFetching(id, state),
+  fetching: soulmateFetching(id, state) || soulmateSingleFetching(id, state),
   sorting: getSourceSorting(SOURCE_NAME, state),
   pagination: getSourcePagination(SOURCE_NAME, state),
 });
@@ -119,7 +120,7 @@ const mapDispatchToProps = dispatch => ({
     id: string,
     sort: SortType,
     pagination: PaginationType,
-  ) => dispatch(all(id, [toApiOrdering(sort)], pagination)),
+  ) => Promise.resolve().then(() => dispatch(all(id, [toApiOrdering(sort)], pagination))).then(dispatch(info(id))),
   markAs: (
     soulmate: string,
     as: boolean,

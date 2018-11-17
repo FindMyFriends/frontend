@@ -6,7 +6,7 @@ import { info as soulmateInfo } from '../../soulmate/endpoints';
 import Loader from '../../ui/Loader';
 import Overview from '../../demand/output/Overview';
 import { getById, getPrettyDemand, singleFetching as demandFetching } from '../../demand/selects';
-import { getTotal, singleFetching as soulmateFetching } from '../../soulmate/selects';
+import { getTotal, singleInfoFetching as soulmateInfoFetching } from '../../soulmate/selects';
 import { DEMAND } from '../../demand/actions';
 import { getScopeOptions, isFetching as schemaFetching } from '../../schema/selects';
 import { default as Tabs, DEMAND_TYPE } from './menu/Tabs';
@@ -50,7 +50,7 @@ const mapStateToProps = (state, { match: { params: { id } } }) => ({
   soulmateTotal: getTotal(id, state),
   fetching: demandFetching(id, state)
     || schemaFetching(state, DEMAND)
-    || soulmateFetching(id, state),
+    || soulmateInfoFetching(id, state),
 });
 const mapDispatchToProps = dispatch => ({
   single: (demand: string) => dispatch(single(demand, [], dispatch(options()))),

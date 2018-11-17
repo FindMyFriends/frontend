@@ -68,7 +68,7 @@ const Table = ({
             <TableCell>{soulmate.position}</TableCell>
             <TableCell>{moment(soulmate.related_at).format('YYYY-MM-DD')}</TableCell>
             <TableCell numeric>
-              <Link to={`/demands/${soulmate.id}`}>
+              <Link to={`/evolutions/${soulmate.evolution_id}`}>
                 <EvolutionIcon
                   color="action"
                   className={classes.iconHover}
